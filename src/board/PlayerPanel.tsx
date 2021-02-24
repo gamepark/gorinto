@@ -1,13 +1,17 @@
 import { css } from "@emotion/core";
 import { FC } from "react";
 
-const PlayerPanel : FC<{key:string, understanding:any, position:number, score:number}> = ({position, understanding, score}) => {
+const PlayerPanel : FC<{color:string, understanding:any, position:number, score:number}> = ({color, position, understanding, score}) => {
 
     return(
 
         <div css={playerPanelStyle(position)}>
 
-            <div css={playerScoreStyle}>Score : {score}</div>
+            <div css={playerHeaderStyle}>
+
+                <span>Couleur : {color} - </span> <span>Score : {score}</span>
+
+            </div>
 
             <div css={playerElementStyle}>
 
@@ -35,13 +39,12 @@ background-color : grey;
 border : 1px solid black;
 `
 
-const playerScoreStyle = css`
+const playerHeaderStyle = css`
 position : absolute;
 top : 5%;
 left : 5%;
 width : 100%
 height : 20%;
-border : 1px solid black;
 font-size:24px;
 `
 

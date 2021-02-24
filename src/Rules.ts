@@ -1,5 +1,9 @@
-import {SequentialGame} from '@gamepark/workshop'
+import {SequentialGame, shuffle} from '@gamepark/workshop'
+import { GoalCards } from './cards/GoalCards'
+import { keyElementCards } from './cards/KeyElement'
 import Game from './types/Game'
+import GoalCard from './types/GoalCard'
+import KeyElementCard from './types/KeyElementCard'
 import Move from './types/Move'
 import Player from './types/Player'
 import PlayerColor from './types/PlayerColor'
@@ -12,7 +16,9 @@ const GorintoRules: GameType = {
     return {
       season:1,
       players:setupPlayers(),
-      activePlayer:PlayerColor.black
+      activePlayer:PlayerColor.black,
+      twoKeyElementCards : setupTwoKeyElementCards(),
+      twoGoalCards : setupTwoGoalCards()
     }
   },
   getPlayerIds(game: Game): PlayerColor[] {
@@ -51,6 +57,29 @@ function setupPlayers():Player[] {
     {color:PlayerColor.white, understanding:{void:0,wind:0,fire:0,water:0,earth:0}, score:0}
   ] 
     
+}
+
+function setupTwoKeyElementCards():KeyElementCard[] {
+  const result = shuffle(keyElementCards);
+  return[result[0], result[1]];
+}
+
+function setupTwoGoalCards():GoalCard[] {
+  const arrayGoalCards : GoalCard[] = shuffle(GoalCards);
+  const result : GoalCard[] = [];
+  const conflictLetters : string[] = [];
+  arrayGoalCards.forEach(element => {
+
+    if (element.conflictLetter === ""){
+      result.push(element);
+    }
+    else if (conflictLetters.includes(element.conflictLetter) === false){
+      result.push(element);
+    }
+  });
+
+  return [result[0],result[1]];
+
 }
 
 export default GorintoRules

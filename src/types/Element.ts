@@ -1,9 +1,9 @@
 enum Element {
-    void='void',
-    wind='wind',
-    fire='fire',
-    water='water',
-    earth='earth'
+    Void='void',
+    Wind='wind',
+    Fire='fire',
+    Water='water',
+    Earth='earth'
 }
 
 export default Element

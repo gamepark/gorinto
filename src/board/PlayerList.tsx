@@ -7,7 +7,7 @@ const PlayerList : FC<{game:Game}> = ({game}) => {
 
     return(
 
-        <div css={messageDePaix}>
+        <div css={playerPanelStyle}>
             
             {game.players.map((player, index) => 
            
@@ -15,7 +15,7 @@ const PlayerList : FC<{game:Game}> = ({game}) => {
                          understanding = {player.understanding}
                          score = {player.score}
                          position = {index}
-
+                         color = {player.color}
             />
            
             )}
@@ -26,7 +26,7 @@ const PlayerList : FC<{game:Game}> = ({game}) => {
 
 }
 
-const messageDePaix = css`
+const playerPanelStyle = css`
 position:absolute;
 right:0;
 background-color:lightgrey;

@@ -15,7 +15,7 @@ const Board : FC<{game:Game}> = ({game}) => {
 const boardStyle = css`
     position : absolute;
     left : 20%;
-    width : 50%;
+    width : 56.25%;
     height :100%;
     border : 1px solid black;
     background-image : url('../images/board.jpg');
