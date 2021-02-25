@@ -42,16 +42,16 @@ border : 1px solid black;
 const playerHeaderStyle = css`
 position : absolute;
 top : 5%;
-left : 5%;
+right : 5%;
 width : 100%
 height : 20%;
-font-size:24px;
+font-size:20px;
 `
 
 const playerElementStyle = css`
 position : absolute;
 top : 25%;
-left : 5%;
+right : 5%;
 
 `
 

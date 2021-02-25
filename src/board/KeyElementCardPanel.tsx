@@ -20,11 +20,13 @@ const keyElementCardPanelStyle = (position:number, image:string) => css`
 position : absolute;
 top : ${position * 25}%;
 left : 0px;
-border : 1px solid black;
 width:100%;
 height:25%;
 
-background-image:${image}
+background-image:url(${image});
+background-size: contain;
+background-repeat: no-repeat;
+background-position:center;
 `
 
 export default KeyElementCardPanel

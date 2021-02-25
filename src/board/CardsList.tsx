@@ -41,8 +41,6 @@ const cardsListStyle = css`
 position:absolute;
 top:10%;
 left:0;
-background-color:lightgrey;
-border : black 1px solid;
 width:20%;
 height:90%;
 `

@@ -1,30 +1,35 @@
 import Element from "../types/Element";
 import KeyElementCard from "../types/KeyElementCard";
+import keyElement1 from '../images/KeyElement1.jpg';
+import keyElement2 from '../images/KeyElement2.jpg';
+import keyElement3 from '../images/KeyElement3.jpg';
+import keyElement4 from '../images/KeyElement4.jpg';
+import keyElement5 from '../images/KeyElement5.jpg';
 
 const {Void, Wind, Fire, Water, Earth} = Element
 
 export const VoidCard : KeyElementCard = {
-    image:"url(../images/KeyElement1.jpg)",
+    image:keyElement1,
     element : Void 
 }
 
 export const WindCard : KeyElementCard = {
-    image:"url(../images/KeyElement2.jpg)",
+    image:keyElement2,
     element : Wind
 }
 
 export const FireCard : KeyElementCard = {
-    image:"url(../images/KeyElement3.jpg)",
+    image:keyElement3,
     element : Fire
 }
 
 export const WaterCard : KeyElementCard = {
-    image:"url(../images/KeyElement4.jpg)",
+    image:keyElement4,
     element : Water
 }
 
 export const EarthCard : KeyElementCard = {
-    image:"url(../images/KeyElement5.jpg)",
+    image:keyElement5,
     element : Earth
 }
 

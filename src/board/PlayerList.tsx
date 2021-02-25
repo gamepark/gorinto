@@ -32,7 +32,7 @@ right:0;
 background-color:lightgrey;
 border:black 1px solid;
 text-align:right;
-width:25%;
+width:23%;
 height:100%;`
 
 
