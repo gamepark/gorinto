@@ -11,8 +11,9 @@ type Game = {
     twoKeyElementCards : KeyElementCard[];
     twoGoalCards : GoalCard[];
     elementTilesDeck : ElementTile[];
-    HorizontalPath : ElementTile[];
-    VerticalPath : ElementTile[];
+    horizontalPath : ElementTile[];
+    verticalPath : ElementTile[];
+    mountainBoard : ElementTile[][][];
 }
 
 export default Game

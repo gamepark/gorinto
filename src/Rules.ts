@@ -24,8 +24,9 @@ const GorintoRules: GameType = {
       twoKeyElementCards : setupTwoKeyElementCards(),
       twoGoalCards : setupTwoGoalCards(),
       elementTilesDeck : setupElementTilesDeck(),
-      HorizontalPath : [],
-      VerticalPath : []
+      horizontalPath : [],
+      verticalPath : [],
+      mountainBoard : []
     }
   },
   getPlayerIds(game: Game): PlayerColor[] {
@@ -50,9 +51,14 @@ const GorintoRules: GameType = {
 
   getAutomaticMove(game : Game){
     
-    // (le jeu démarre et on doit setup les paths) | (il n'y a plus assez de tuiles pour un nouveau tour de jeu par rapport au nb de joueurs)
-    if ((game.HorizontalPath.length === 0 && game.VerticalPath.length === 0) || (filledSpacesinPaths(game) < game.players.length)) {
+    // (game start and we have to setup the paths) | (there's not enough tiles on the paths to make a whole game turn)
+    if ((game.horizontalPath.length === 0 && game.verticalPath.length === 0) || (filledSpacesinPaths(game) < game.players.length)) {
       refillPaths(game);
+      
+    }
+    // game start and we have to setup the moutain.
+    if (game.mountainBoard.length === 0){
+      setupMountain(game);
     }
     
   },
@@ -106,22 +112,22 @@ function setupElementTilesDeck():ElementTile[] {
 
 function filledSpacesinPaths(game:Game):number {
   let countEmpty = 0;
-  for (let i = 0; i < game.HorizontalPath.length;i++){
-    if (game.HorizontalPath[i].element !== Element.Earth    // Don't know a way to shorten the code here
-      && game.HorizontalPath[i].element !==Element.Fire     // === "" return an error
-      && game.HorizontalPath[i].element !==Element.Void
-      && game.HorizontalPath[i].element !==Element.Water
-      && game.HorizontalPath[i].element !==Element.Wind){
+  for (let i = 0; i < game.horizontalPath.length;i++){
+    if (game.horizontalPath[i].element !== Element.Earth    // Don't know a way to shorten the code here
+      && game.horizontalPath[i].element !==Element.Fire     // === "" return an error
+      && game.horizontalPath[i].element !==Element.Void
+      && game.horizontalPath[i].element !==Element.Water
+      && game.horizontalPath[i].element !==Element.Wind){
         countEmpty=+1;
     }
   }
 
-  for (let i = 0; i < game.VerticalPath.length;i++){
-    if (game.VerticalPath[i].element !== Element.Earth      // Same here
-      && game.VerticalPath[i].element !==Element.Fire
-      && game.VerticalPath[i].element !==Element.Void
-      && game.VerticalPath[i].element !==Element.Water
-      && game.VerticalPath[i].element !==Element.Wind){
+  for (let i = 0; i < game.verticalPath.length;i++){
+    if (game.verticalPath[i].element !== Element.Earth      // Same here
+      && game.verticalPath[i].element !==Element.Fire
+      && game.verticalPath[i].element !==Element.Void
+      && game.verticalPath[i].element !==Element.Water
+      && game.verticalPath[i].element !==Element.Wind){
         countEmpty=+1;
     }
   }
@@ -147,9 +153,27 @@ function refillPaths(game:Game):void {
     } 
   }
 
-  game.HorizontalPath = hResult;
-  game.VerticalPath = vResult;
+  game.horizontalPath = hResult;
+  game.verticalPath = vResult;
 
+}
+
+function setupMountain(game:Game):void {
+  let i, j : number = 0;
+  for (i = 0 ; i < 5 ; i++){
+    game.mountainBoard[i] = [];
+    for (j = 0 ; j < 5 ; j++){
+      game.mountainBoard[i][j] = [];
+      game.mountainBoard[i][j][0] = game.elementTilesDeck.pop() !;    // Escaped the "pop undefined" issue
+      game.mountainBoard[i][j][1] = game.elementTilesDeck.pop() !;    // Same
+    }
+  }
+  for (i = 1 ; i < 4 ; i++){
+    for (j = 1 ; j < 4 ; j++){
+      game.mountainBoard[i][j][2] = game.elementTilesDeck.pop() !;      // Same
+    }
+  }
+  game.mountainBoard[2][2][3] = game.elementTilesDeck.pop() !;         // Same
 }
 
 export default GorintoRules
