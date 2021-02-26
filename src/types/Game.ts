@@ -1,5 +1,4 @@
 import ElementTile from "./ElementTile"
-import GoalCard from "./GoalCard"
 import KeyElementCard from "./KeyElementCard"
 import Player from "./Player"
 import PlayerColor from "./PlayerColor"
@@ -9,7 +8,7 @@ type Game = {
     activePlayer? : PlayerColor;
     players : Player[];
     twoKeyElementCards : KeyElementCard[];
-    twoGoalCards : GoalCard[];
+    twoGoals : number[];
     elementTilesDeck : ElementTile[];
     horizontalPath : ElementTile[];
     verticalPath : ElementTile[];

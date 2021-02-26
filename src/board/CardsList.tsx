@@ -1,7 +1,8 @@
 import { css } from "@emotion/core";
 import { FC } from "react";
+import { Goals } from "../cards/Goals";
 import Game from "../types/Game";
-import GoalCardPanel from "./GoalCardPanel";
+import GoalCard from "./GoalCard";
 import KeyElementCardPanel from "./KeyElementCardPanel";
 
 const CardsList : FC<{game:Game}> = ({game}) => {
@@ -19,14 +20,11 @@ const CardsList : FC<{game:Game}> = ({game}) => {
                 />
             )}
 
-            {game.twoGoalCards.map((card, index) =>
+            {game.twoGoals.map((goalNumber, index) =>
             
-                <GoalCardPanel key = {card.goal}
-                               image = {card.image}
-                               goal = {card.goal}
-                               goalSubtitle = {card.goalSubtitle}
-                               conflictLetter = {card.conflictLetter}
-                               position = {index}
+                <GoalCard goal = {Goals[goalNumber]}
+                          key = {index}
+                          position = {index}
                 />
             
             )}

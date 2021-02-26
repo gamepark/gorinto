@@ -2,12 +2,17 @@ import { css } from '@emotion/core'
 import { FC } from "react"
 import Game from '../types/Game'
 import board from '../images/board.jpg'
+import HorizontalPathPanel from './HorizontalPathPanel'
 
 const Board : FC<{game:Game}> = ({game}) => {
 
     return (
 
-        <div css={boardStyle}> {game.season}</div>
+        <div css={boardStyle}>
+
+            <HorizontalPathPanel game = {game} />
+        
+        </div>
 
     )
 
