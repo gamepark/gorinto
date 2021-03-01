@@ -1,12 +1,12 @@
 import {GameWithIncompleteInformation, SequentialGame, shuffle, WithAutomaticMoves} from '@gamepark/workshop'
 import { elementDeck } from './cards/Elements'
 import { Goals } from './cards/Goals'
-import { keyElementCards } from './cards/KeyElement'
+import { Keys } from './cards/KeyElement'
+import Element from './types/Element'
 // import Element from './types/Element'
 import ElementTile from './types/ElementTile'
 import Game from './types/Game'
 import GameView, { isGame } from './types/GameView'
-import KeyElementCard from './types/KeyElementCard'
 import Move from './types/Move'
 import MoveType from './types/MoveType'
 import { MoveView } from './types/MoveView'
@@ -21,7 +21,7 @@ type GameType = SequentialGame<Game, Move, PlayerColor>
 // @ts-ignore
 const GorintoRules: GameType = {
   setup(): Game {
-    const game = {
+    const game:Game = {
       season:1,
       players:setupPlayers(),
       activePlayer:PlayerColor.black,
@@ -33,7 +33,7 @@ const GorintoRules: GameType = {
       mountainBoard : []
     }
 
-    // REMPLIR MOUNTAIN
+    game.mountainBoard = setupMountain(game)
 
     return game
 
@@ -61,14 +61,10 @@ const GorintoRules: GameType = {
   getAutomaticMove(game : Game){
     
     // (game start and we have to setup the paths) | (there's not enough tiles on the paths to make a whole game turn)
-    if ((game.horizontalPath.length === 0 && game.verticalPath.length === 0)) {
+    if ((game.horizontalPath.length === 0 && game.verticalPath.length === 0) || (filledSpacesinPaths(game) < game.players.length)) {
       return refillPaths() ;
       
     }
-    // // game start and we have to setup the moutain.
-    // if (game.mountainBoard.length === 0){
-    //   setupMountain(game);
-    // }
 
     return
     
@@ -88,10 +84,8 @@ const GorintoRules: GameType = {
       case 'REFILL_PATHS' : 
         
         if (isGame(game)){
-          console.log(game.elementTilesDeck);
           game.horizontalPath = game.elementTilesDeck.splice(0,5);
           game.verticalPath = game.elementTilesDeck.splice(0,5);
-          console.log(game.horizontalPath);
         } else if (isRefillPathsView(move)) {
 
           game.horizontalPath = move.horizontalPath
@@ -135,13 +129,13 @@ function setupPlayers():Player[] {
     
 }
 
-function setupTwoKeyElementCards():KeyElementCard[] {
-  const result = shuffle(keyElementCards);
+function setupTwoKeyElementCards():number[] {
+  const result : number[] = shuffle(Array.from(Keys.keys()));     // Take only the key, not all infos with heavy pictures
   return[result[0], result[1]];
 }
 
 function setupTwoGoals():number[] {
-  const arrayGoalCards : number[] = shuffle(Array.from(Goals.keys()));
+  const arrayGoalCards : number[] = shuffle(Array.from(Goals.keys()));    // Take only the key, not all infos with heavy pictures
   const result : number[] = [];
   const conflictLetters : string[] = [];
   arrayGoalCards.forEach(element => {
@@ -164,70 +158,55 @@ function setupElementTilesDeck():ElementTile[] {
   return result;
 }
 
-// function filledSpacesinPaths(game:Game):number {
-//   let countEmpty = 0;
-//   for (let i = 0; i < game.horizontalPath.length;i++){
-//     if (game.horizontalPath[i].element !== Element.Earth    // Don't know a way to shorten the code here
-//       && game.horizontalPath[i].element !==Element.Fire     // === "" return an error
-//       && game.horizontalPath[i].element !==Element.Void
-//       && game.horizontalPath[i].element !==Element.Water
-//       && game.horizontalPath[i].element !==Element.Wind){
-//         countEmpty=+1;
-//     }
-//   }
+ function filledSpacesinPaths(game:Game):number {
 
-//   for (let i = 0; i < game.verticalPath.length;i++){
-//     if (game.verticalPath[i].element !== Element.Earth      // Same here
-//       && game.verticalPath[i].element !==Element.Fire
-//       && game.verticalPath[i].element !==Element.Void
-//       && game.verticalPath[i].element !==Element.Water
-//       && game.verticalPath[i].element !==Element.Wind){
-//         countEmpty=+1;
-//     }
-//   }
-//   return countEmpty;
-// }
+  let countEmpty = 0;
 
-// function refillPaths(game:Game):void {
-//   const hResult:ElementTile[] = [];
-//   const vResult:ElementTile[] = [];
-//   for (let i=0; i<5;i++){
-//     if(game.elementTilesDeck.length !== 0){
-//       hResult.push(game.elementTilesDeck.pop() !);    // Exclamation point in order to escaped
-//     }                                                // the "pop undefined" issue
-//     else{
-//       console.log("error : Empty Deck ! Can't refill Paths !")
-//     }                                                       
-//   }                                                  
-//   for (let i=0; i<5;i++){
-//     if(game.elementTilesDeck.length !== 0){
-//       vResult.push(game.elementTilesDeck.pop() !);    // same here
-//     } else{
-//       console.log("error : Empty Deck ! Can't refill Paths")
-//     } 
-//   }
+  if (game.horizontalPath.length === 0 && game.verticalPath.length === 0){
+    return 0;
+  }
 
-//   game.horizontalPath = hResult;
-//   game.verticalPath = vResult;
+  for (let i = 0; i < 5;i++){
 
-// }
+    if (game.horizontalPath[i].element !== Element.Earth    // Don't know a way to shorten the code here
+      && game.horizontalPath[i].element !== Element.Fire     // === "" return an type error
+      && game.horizontalPath[i].element !== Element.Void
+      && game.horizontalPath[i].element !== Element.Water
+      && game.horizontalPath[i].element !== Element.Wind){
+        countEmpty++;
+    }
+  }
 
-// function setupMountain(game:Game):void {
-//   let i, j : number = 0;
-//   for (i = 0 ; i < 5 ; i++){
-//     game.mountainBoard[i] = [];
-//     for (j = 0 ; j < 5 ; j++){
-//       game.mountainBoard[i][j] = [];
-//       game.mountainBoard[i][j][0] = game.elementTilesDeck.pop() !;    // Escaped the "pop undefined" issue
-//       game.mountainBoard[i][j][1] = game.elementTilesDeck.pop() !;    // Same
-//     }
-//   }
-//   for (i = 1 ; i < 4 ; i++){
-//     for (j = 1 ; j < 4 ; j++){
-//       game.mountainBoard[i][j][2] = game.elementTilesDeck.pop() !;      // Same
-//     }
-//   }
-//   game.mountainBoard[2][2][3] = game.elementTilesDeck.pop() !;         // Same
-// }
+  for (let i = 0; i < 5;i++){
+    if (game.verticalPath[i].element !== Element.Earth      // Same here
+      && game.verticalPath[i].element !== Element.Fire
+      && game.verticalPath[i].element !== Element.Void
+      && game.verticalPath[i].element !== Element.Water
+      && game.verticalPath[i].element !== Element.Wind){
+        countEmpty++;
+    }
+  }
+  return 10 - countEmpty;
+}
+
+function setupMountain(game:Game):ElementTile[][][] {
+  let i, j : number = 0;
+  let result : ElementTile[][][] = [];
+  for (i = 0 ; i < 5 ; i++){
+    result[i] = [];
+    for (j = 0 ; j < 5 ; j++){
+      result[i][j] = [];
+      result[i][j][0] = game.elementTilesDeck.pop() !;    // Escaped the "pop undefined" issue
+      result[i][j][1] = game.elementTilesDeck.pop() !;    // Same
+    }
+  }
+  for (i = 1 ; i < 4 ; i++){
+    for (j = 1 ; j < 4 ; j++){
+      result[i][j][2] = game.elementTilesDeck.pop() !;      // Same
+    }
+  }
+  result[2][2][3] = game.elementTilesDeck.pop() !;         // Same
+  return result;
+}
 
 export default GorintoRules

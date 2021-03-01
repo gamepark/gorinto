@@ -1,14 +1,14 @@
 import { css } from "@emotion/core";
 import { FC } from "react";
-import Element from "../types/Element";
+import KeyElementCard from "../types/KeyElementCard";
 
-const KeyElementCardPanel : FC<{image:string, element:Element, position:number}> = ({image, element, position}) => {
+const KeyElementCardPanel : FC<{keyCard : KeyElementCard, position:number}> = ({keyCard, position}) => {
 
     return(
 
-        <div css={keyElementCardPanelStyle(position, image)}>
+        <div css={keyElementCardPanelStyle(position, keyCard.image)}>
 
-            <span>Elément Clé : {element}</span>
+            <span>Elément Clé : {keyCard.element}</span>
 
         </div>
 

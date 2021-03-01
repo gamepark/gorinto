@@ -33,7 +33,7 @@ export const EarthCard : KeyElementCard = {
     element : Earth
 }
 
-export const keyElementCards : KeyElementCard[] = [
+export const Keys : KeyElementCard[] = [
     VoidCard,
     WindCard,
     FireCard,
