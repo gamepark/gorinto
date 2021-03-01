@@ -2,11 +2,11 @@ import { css } from "@emotion/core";
 import { FC } from "react";
 import Element from "../types/Element";
 
-const ElementTile : FC<{image:string, element:Element, position:number}> = ({image, element, position}) => {
+const ElementTile : FC<{image:string, element:Element, position:number}> = ({image, element}) => {
 
     return(
 
-        <div css={elementTileStyle(position, image)}>
+        <div css={elementTileStyle(image)}>
 
             <span>{element}</span>
 
@@ -16,11 +16,11 @@ const ElementTile : FC<{image:string, element:Element, position:number}> = ({ima
 
 }
 
-const elementTileStyle = (position:number, image : string) => css`
+const elementTileStyle = (image : string) => css`
 position : absolute;
-left : ${position * 10}%;
+left : 0%;
 top : 0%;
-width : 10%;
+width : 100%;
 height:100%;
 
 background-image : url(${image});

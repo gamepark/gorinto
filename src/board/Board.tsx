@@ -3,6 +3,7 @@ import { FC } from "react"
 import Game from '../types/Game'
 import board from '../images/board.jpg'
 import HorizontalPathPanel from './HorizontalPathPanel'
+import VerticalPathPanel from './VerticalPathPanel'
 
 const Board : FC<{game:Game}> = ({game}) => {
 
@@ -11,6 +12,7 @@ const Board : FC<{game:Game}> = ({game}) => {
         <div css={boardStyle}>
 
             <HorizontalPathPanel game = {game} />
+            <VerticalPathPanel game = {game} />
         
         </div>
 

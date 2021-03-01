@@ -166,7 +166,7 @@ function setupElementTilesDeck():ElementTile[] {
     return 0;
   }
 
-  for (let i = 0; i < 5;i++){
+  for (let i = 0 ; i < 5 ; i++){
 
     if (game.horizontalPath[i].element !== Element.Earth    // Don't know a way to shorten the code here
       && game.horizontalPath[i].element !== Element.Fire     // === "" return an type error

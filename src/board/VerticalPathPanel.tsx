@@ -3,13 +3,13 @@ import { FC } from "react";
 import Game from "../types/Game";
 import ElementTile from "./ElementTile";
 
-const HorizontalPathPanel : FC<{game : Game}> = ({game}) => {
+const VerticalPathPanel : FC<{game : Game}> = ({game}) => {
 
     return(
 
-        <div css = {horizontalPathPanel}>
+        <div css = {verticalPathPanel}>
 
-            {game.horizontalPath.map((tile, index) => 
+            {game.verticalPath.map((tile, index) => 
             
             <div css={positionningTile(index)} key = {index}> 
 
@@ -34,20 +34,20 @@ const HorizontalPathPanel : FC<{game : Game}> = ({game}) => {
 
 const positionningTile = (position : number) => css`
 position:absolute;
-top:0%;
-left:${0.5+19.5*position}%;
-width:15%;
-height:100%;
+top:${0.5+19.5*position}%;
+left:0%;
+width:100%;
+height:15%;
 `
 
-const horizontalPathPanel = css`
+const verticalPathPanel = css`
 position : absolute;
-top : 2%;
-left : 18%;
-width : 82%;
-height : 11%;
+top : 19.5%;
+left : 1%;
+width : 11%;
+height : 82%;
 margin-left:2%;
 margin-right:2%;
 `
 
-export default HorizontalPathPanel
+export default VerticalPathPanel

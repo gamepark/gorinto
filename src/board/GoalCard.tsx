@@ -7,9 +7,6 @@ const GoalCard : FC<{goal:Goal, position:number}> = ({goal, position}) => {
 
     const {t} = useTranslation()
 
-    console.log("le goal : ")
-    console.log(goal)
-
     return(
 
         <div css={goalCardPanelStyle(position, goal.image)}>
