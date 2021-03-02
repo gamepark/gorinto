@@ -37,10 +37,12 @@ const CardsList : FC<{game:Game}> = ({game}) => {
 
 const cardsListStyle = css`
 position:absolute;
-top:10%;
+top:15%;
 left:0;
 width:20%;
-height:90%;
+height:85%;
+background-color:lightgrey;
+border-right:1px black solid;
 `
 
 export default CardsList

@@ -24,13 +24,12 @@ const Board : FC<{game:Game}> = ({game}) => {
 
 const boardStyle = css`
     position : absolute;
-    left : 20%;
-    width : 56.5%;
-    height :100%;
-    border : 1px solid black;
+    top : 5%;
+    left : 23%;
+    width : 53.4375%;
+    height :95%;
     background-image : url(${board});
-    background-size:contain;
-    background-repeat:no-repeat;
+    background-size:cover;
     background-position:center;
 
 `

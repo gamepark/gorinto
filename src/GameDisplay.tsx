@@ -2,6 +2,7 @@ import { Letterbox } from '@gamepark/workshop'
 import {FC} from 'react'
 import Board from './board/Board';
 import CardsList from './board/CardsList';
+import Header from './board/Header';
 import PlayerList from './board/PlayerList';
 import SeasonIndicator from './board/SeasonIndicator';
 import Game from './types/Game'
@@ -13,9 +14,10 @@ const GameDisplay: FC<{game:Game}> = ({game}) => {
   return (
     <Letterbox top={0}>
 
+      <Header game = {game} />
       <SeasonIndicator season = {game.season} />
       <CardsList game = {game} />
-      <Board game={game} />
+      <Board game = {game} />
       <PlayerList game = {game}/>
       
 

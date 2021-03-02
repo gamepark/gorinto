@@ -1,25 +1,52 @@
 import { css } from '@emotion/core'
 import { FC } from "react"
 import SeasonBoard from '../images/SeasonBoard.jpg'
+import SeasonMarker from '../images/seasonMarkerTemporary.png'
 
 const SeasonIndicator : FC<{season:number}> = ({season}) => {
 
     return (
 
-        <div css={seasonIndicatorStyle}> {season} </div>
+        <div css={seasonIndicatorStyle}> 
+        
+            <div css={seasonMarker(season)}> 
+
+                <img src={SeasonMarker} alt="marker" css={seasonMarkerSize} />
+                
+            </div>
+            
+        </div>
 
     )
 
 }
 
+const seasonMarker = (position:number) => css`
+position:absolute;
+height:88%;
+width:24%;
+left:${(position-1)*25}%;
+top:0%;
+`
+
+const seasonMarkerSize = css`
+position:absolute;
+height:65%;
+left:15%;
+top:15%;
+`
+
 const seasonIndicatorStyle = css`
     position:absolute;
     width: 20%;
     height:10%;
+    top:5%;
+    background-color:lightgrey;
     background-image : url(${SeasonBoard});
     background-size: contain;
     background-repeat: no-repeat;
     background-position:center top;
+    border-right:1px black solid;
 `
 
 export default SeasonIndicator

@@ -1,5 +1,10 @@
 import { css } from "@emotion/core";
 import { FC } from "react";
+import ElementVoid from "../images/ElementVoid.png";
+import ElementWind from "../images/ElementWind.png";
+import ElementFire from "../images/ElementFire.png";
+import ElementWater from "../images/ElementWater.png";
+import ElementEarth from "../images/ElementEarth.png";
 
 const PlayerPanel : FC<{color:string, understanding:any, position:number, score:number}> = ({color, position, understanding, score}) => {
 
@@ -15,11 +20,11 @@ const PlayerPanel : FC<{color:string, understanding:any, position:number, score:
 
             <div css={playerElementStyle}>
 
-                <span>Void : {understanding.void} </span>
-                <span>Wind : {understanding.wind} </span>
-                <span>Fire : {understanding.fire} </span>
-                <span>Water : {understanding.water} </span>
-                <span>Earth : {understanding.earth} </span>
+                <span> <img src ={ElementVoid} alt="void" css={smallImagesStyle}/> : {understanding.void} </span>
+                <span> <img src ={ElementWind} alt="void" css={smallImagesStyle}/> : {understanding.wind} </span>
+                <span> <img src ={ElementFire} alt="void" css={smallImagesStyle}/> : {understanding.fire} </span>
+                <span> <img src ={ElementWater} alt="void" css={smallImagesStyle}/> : {understanding.water} </span>
+                <span> <img src ={ElementEarth} alt="void" css={smallImagesStyle}/> : {understanding.earth} </span>
 
             </div>
 
@@ -29,14 +34,20 @@ const PlayerPanel : FC<{color:string, understanding:any, position:number, score:
 
 }
 
+const smallImagesStyle = css`
+width:5%;
+height:5%;
+`
+
 const playerPanelStyle = (position:number) => css`
 position : absolute;
 top : ${position * 25}%;
-right : 0px;
+right : 0%;
 width : 100%;
 height : 25%;
 background-color : grey;
-border : 1px solid black;
+border-top:1px black solid;
+border-bottom:1px black solid;
 `
 
 const playerHeaderStyle = css`

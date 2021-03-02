@@ -65,23 +65,19 @@ height:100%;
 
 const positionningTile = (position : number) => css`
 position:absolute;
-bottom:${0+4*position}%;
-left:${0+4*position}%;
-width:80%;
-height:80%;
+bottom:${0+6*position}%;
+left:${0+6*position}%;
+width:70%;
+height:70%;
 
 z-index:${1+position};
 `
 const mountainPanelStyle = css`
 position : absolute;
-top : 18%;
-left : 16%;
-width : 81.5%;
+top : 17.5%;
+left : 17.5%;
+width : 82%;
 height : 81.5%;
-margin-left:2%;
-margin-right:2%;
-
-border : red 2px solid;
 `
 
 export default MountainPanel

@@ -24,7 +24,7 @@ const GorintoRules: GameType = {
     const game:Game = {
       season:1,
       players:setupPlayers(),
-      activePlayer:PlayerColor.black,
+      activePlayer:PlayerColor.black,                 // The real setup is below, this is a fake
       twoKeyElementCards : setupTwoKeyElementCards(),
       twoGoals : setupTwoGoals(),
       elementTilesDeck : setupElementTilesDeck(),
@@ -33,6 +33,7 @@ const GorintoRules: GameType = {
       mountainBoard : []
     }
 
+    game.activePlayer = setupFirstPlayer(game)
     game.mountainBoard = setupMountain(game)
 
     return game
@@ -127,6 +128,18 @@ function setupPlayers():Player[] {
     {color:PlayerColor.white, understanding:{void:0,wind:0,fire:0,water:0,earth:0}, score:0}
   ] 
     
+}
+
+function setupFirstPlayer(game:Game):PlayerColor {      // Maybe a way to shorten the code here
+  const number : PlayerColor[] = [];
+  for (let i = 0 ; i < game.players.length ; i++){
+    number.push(game.players[i].color);
+  }
+
+  return shuffle(number)[0];
+  
+
+
 }
 
 function setupTwoKeyElementCards():number[] {
