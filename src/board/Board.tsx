@@ -4,6 +4,7 @@ import Game from '../types/Game'
 import board from '../images/board.jpg'
 import HorizontalPathPanel from './HorizontalPathPanel'
 import VerticalPathPanel from './VerticalPathPanel'
+import MountainPanel from './MountainPanel'
 
 const Board : FC<{game:Game}> = ({game}) => {
 
@@ -13,6 +14,7 @@ const Board : FC<{game:Game}> = ({game}) => {
 
             <HorizontalPathPanel game = {game} />
             <VerticalPathPanel game = {game} />
+            <MountainPanel game = {game} />
         
         </div>
 
