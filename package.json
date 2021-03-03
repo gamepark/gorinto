@@ -13,6 +13,8 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "i18next": "^19.9.0",
+    "i18next-icu": "^2.0.2",
+    "intl-messageformat": "^9.5.2",
     "lodash.shuffle": "^4.2.0",
     "react": "^17.0.1",
     "react-dnd": "^11.1.3",

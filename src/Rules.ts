@@ -2,7 +2,6 @@ import {GameWithIncompleteInformation, SequentialGame, shuffle, WithAutomaticMov
 import { elementDeck } from './cards/Elements'
 import { Goals } from './cards/Goals'
 import { Keys } from './cards/KeyElement'
-import Element from './types/Element'
 // import Element from './types/Element'
 import ElementTile from './types/ElementTile'
 import Game from './types/Game'
@@ -12,7 +11,8 @@ import MoveType from './types/MoveType'
 import { MoveView } from './types/MoveView'
 import Player from './types/Player'
 import PlayerColor from './types/PlayerColor'
-import { isRefillPathsView, refillPaths } from './types/RefillPaths'
+import { isRefillPathsView, refillPaths } from './moves/RefillPaths'
+import MoveTile from './moves/MoveTile'
 
 type GameType = SequentialGame<Game, Move, PlayerColor>
   & WithAutomaticMoves<Game, Move>
@@ -33,15 +33,16 @@ const GorintoRules: GameType = {
       mountainBoard : []
     }
 
-    game.activePlayer = setupFirstPlayer(game)
-    game.mountainBoard = setupMountain(game)
+    game.activePlayer = setupFirstActivePlayer(game);
+    game.players = setupIsFirstPlayer(game);
+    game.mountainBoard = setupMountain(game);
 
     return game
 
   },
   getPlayerIds(game: Game): PlayerColor[] {
     console.log(game)
-    return [];
+    return game.players.map(player => player.color);
   },
   getPlayerName(playerId: PlayerColor, t: (name: string) => string): string {
     switch (playerId) {
@@ -73,7 +74,23 @@ const GorintoRules: GameType = {
 
   getLegalMoves(game: Game): Move[] {
     console.log(game)
-    return [];
+    const moves : MoveTile[] = [];
+    
+
+      for(let x = 0;x<5;x++){
+        for (let y = 0 ; y<5;y++){
+          if (game.horizontalPath[x]){
+            moves.push({type:MoveType.MoveTile, path:"horizontal", x, y});
+          }
+          if (game.verticalPath[y]){
+            moves.push({type:MoveType.MoveTile, path:"vertical", x, y});
+          }
+        }
+      }
+  
+
+
+    return moves;
   },
 
   play(move: Move | MoveView, game: Game | GameView, playerId: PlayerColor): void {
@@ -82,7 +99,7 @@ const GorintoRules: GameType = {
     console.log(playerId)
 
     switch (move.type){
-      case 'REFILL_PATHS' : 
+      case MoveType.RefillPaths : {
         
         if (isGame(game)){
           game.horizontalPath = game.elementTilesDeck.splice(0,5);
@@ -93,7 +110,26 @@ const GorintoRules: GameType = {
           game.verticalPath = move.verticalPath
 
         }
-        break    
+        break
+
+      }
+      case MoveType.MoveTile : {
+
+        const element = move.path === "horizontal" ? game.horizontalPath[move.x] : game.verticalPath[move.y];
+        
+
+          game.mountainBoard[move.x][move.y].push(element!);
+
+          if (move.path === "horizontal"){
+            game.horizontalPath[move.x] = null;
+          } else {
+            game.verticalPath[move.y] = null;
+          }
+
+      }
+
+      
+
 
     }
 
@@ -124,22 +160,32 @@ const GorintoRules: GameType = {
 
 function setupPlayers():Player[] {
   return[
-    {color:PlayerColor.black, understanding:{void:0,wind:0,fire:0,water:0,earth:0}, score:0},
-    {color:PlayerColor.white, understanding:{void:0,wind:0,fire:0,water:0,earth:0}, score:0}
+    {color:PlayerColor.black, understanding:{void:0,wind:0,fire:0,water:0,earth:0}, score:0, isFirst:true},
+    {color:PlayerColor.white, understanding:{void:0,wind:0,fire:0,water:0,earth:0}, score:0, isFirst:false} 
   ] 
     
 }
 
-function setupFirstPlayer(game:Game):PlayerColor {      // Maybe a way to shorten the code here
+function setupFirstActivePlayer(game:Game):PlayerColor {      // Maybe a way to shorten the code here
   const number : PlayerColor[] = [];
   for (let i = 0 ; i < game.players.length ; i++){
     number.push(game.players[i].color);
   }
 
   return shuffle(number)[0];
-  
 
+}
 
+function setupIsFirstPlayer(game:Game):Player[] {
+  let result : Player[] = game.players;
+  for (let i=0;i<game.players.length;i++){
+    if (result[i].color === game.activePlayer){
+      result[i].isFirst = true;
+    } else {
+      result[i].isFirst = false;
+    }
+  }
+  return result
 }
 
 function setupTwoKeyElementCards():number[] {
@@ -167,39 +213,8 @@ function setupTwoGoals():number[] {
 }
 
 function setupElementTilesDeck():ElementTile[] {
-  const result = shuffle(Array.from(elementDeck))
+  const result = shuffle(Array.from(elementDeck))           // Modifier ici avec .keys()
   return result;
-}
-
- function filledSpacesinPaths(game:Game):number {
-
-  let countEmpty = 0;
-
-  if (game.horizontalPath.length === 0 && game.verticalPath.length === 0){
-    return 0;
-  }
-
-  for (let i = 0 ; i < 5 ; i++){
-
-    if (game.horizontalPath[i].element !== Element.Earth    // Don't know a way to shorten the code here
-      && game.horizontalPath[i].element !== Element.Fire     // === "" return an type error
-      && game.horizontalPath[i].element !== Element.Void
-      && game.horizontalPath[i].element !== Element.Water
-      && game.horizontalPath[i].element !== Element.Wind){
-        countEmpty++;
-    }
-  }
-
-  for (let i = 0; i < 5;i++){
-    if (game.verticalPath[i].element !== Element.Earth      // Same here
-      && game.verticalPath[i].element !== Element.Fire
-      && game.verticalPath[i].element !== Element.Void
-      && game.verticalPath[i].element !== Element.Water
-      && game.verticalPath[i].element !== Element.Wind){
-        countEmpty++;
-    }
-  }
-  return 10 - countEmpty;
 }
 
 function setupMountain(game:Game):ElementTile[][][] {
@@ -220,6 +235,12 @@ function setupMountain(game:Game):ElementTile[][][] {
   }
   result[2][2][3] = game.elementTilesDeck.pop() !;         // Same
   return result;
+}
+
+function filledSpacesinPaths(game:Game):number {
+
+  return game.horizontalPath.reduce((sum, space) => space ? sum+1 : sum, 0) + 
+         game.verticalPath.reduce((sum, space) => space ? sum+1 : sum, 0)
 }
 
 export default GorintoRules

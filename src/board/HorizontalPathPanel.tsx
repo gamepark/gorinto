@@ -5,11 +5,13 @@ import ElementTile from "./ElementTile";
 
 const HorizontalPathPanel : FC<{game : Game}> = ({game}) => {
 
+
+
     return(
 
         <div css = {horizontalPathPanel}>
 
-            {game.horizontalPath.map((tile, index) => 
+            {game.horizontalPath.map((tile, index) => tile ? 
             
             <div css={positionningTile(index)} key = {index}> 
 
@@ -17,11 +19,12 @@ const HorizontalPathPanel : FC<{game : Game}> = ({game}) => {
                              image = {tile.image}
                              element = {tile.element}
                              position = {index}
+                             draggableItem = {{type:"Element", path: "horizontal", position: index}}
                 />
 
             </div>
 
-
+            : null
         
         )}
 

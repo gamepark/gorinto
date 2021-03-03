@@ -1,18 +1,45 @@
 import { css } from "@emotion/core";
+import { Draggable } from "@gamepark/workshop";
 import { FC } from "react";
 import Element from "../types/Element";
+import ElementInPath from "../types/ElementInPath";
 
-const ElementTile : FC<{image:string, element:Element, position:number}> = ({image, element}) => {
+type Props = {
 
-    return(
+    image:string, 
+    element:Element, 
+    position:number, 
+    draggableItem?: ElementInPath
 
-        <div css={elementTileStyle(image)}>
+}
 
-            <span>{element}</span>
+const ElementTile : FC<Props> = ({image, element, draggableItem}) => {
 
-        </div>
+    if (draggableItem){
 
-    )
+        return(
+
+            <Draggable item={draggableItem} css={elementTileStyle(image)}>
+    
+                    <span>{element}</span>
+    
+            </Draggable>
+    
+        )
+
+    } else {
+
+        return(
+
+            <div css={elementTileStyle(image)}>
+
+                <span>{element}</span>
+
+            </div>
+
+        )
+
+    }
 
 }
 

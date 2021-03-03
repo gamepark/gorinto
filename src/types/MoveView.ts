@@ -1,4 +1,4 @@
 import Move from "./Move";
-import { RefillPathsView } from "./RefillPaths";
+import { RefillPathsView } from "../moves/RefillPaths";
 
 export type MoveView = Move | RefillPathsView

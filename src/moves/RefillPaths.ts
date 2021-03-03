@@ -1,11 +1,11 @@
-import ElementTile from './ElementTile'
-import MoveType from './MoveType'
+import ElementTile from '../types/ElementTile'
+import MoveType from '../types/MoveType'
 
 type RefillPaths = { type: typeof MoveType.RefillPaths }
 
 export default RefillPaths
 
-export type RefillPathsView = RefillPaths & { horizontalPath : ElementTile[], verticalPath : ElementTile[] }
+export type RefillPathsView = RefillPaths & { horizontalPath : (ElementTile | null)[] , verticalPath : (ElementTile | null)[] }
 
 export function refillPaths(): RefillPaths {
   return {type: MoveType.RefillPaths}

@@ -1,7 +1,7 @@
 import { css } from "@emotion/core";
 import { FC } from "react";
 import Game from "../types/Game";
-import ElementTile from "./ElementTile";
+import MountainPile from "./MountainPile";
 
 const MountainPanel : FC<{game : Game}> = ({game}) => {
 
@@ -9,33 +9,17 @@ const MountainPanel : FC<{game : Game}> = ({game}) => {
 
         <div css = {mountainPanelStyle}>
 
-            {game.mountainBoard.map((arrayH, index) =>
-
-                <div key = {index} css = {verticalPositionning(index)}> 
+            {game.mountainBoard.map((row, x) =>
             
-                    {arrayH.map((arrayV, index) =>
+                    row.map((pile, y) =>
 
-                        <div key = {index} css = {horizontalPositionning(index)}> 
-                        
-                            {arrayV.map((tile, index) =>
-                                
-                                <div css={positionningTile(index)} key = {index}> 
+                        <MountainPile key = {x+"_"+y} 
+                        css = {areaPosition(x, y)} 
+                        pile = {pile} 
+                        x = {x}
+                        y = {y}/>
 
-                                    <ElementTile 
-                                                image = {tile.image}
-                                                element = {tile.element}
-                                                position = {index}
-                                    />
-                    
-                                </div>
-
-                            )}
-
-                        </div>
-
-                    )}
-
-                </div> 
+                    )
 
             )}
 
@@ -45,33 +29,16 @@ const MountainPanel : FC<{game : Game}> = ({game}) => {
 
 }
 
-const verticalPositionning = (position:number) => css`
+const areaPosition= (x:number, y:number) => css`
 position:absolute;
-left:0%;
-top:${position*20}%;
+left:${x*20}%;
+top:${y*20}%;
 
-width:100%;
+width:20%;
 height:20%;
 `
 
-const horizontalPositionning = (position:number) => css`
-position:absolute;
-left:${position*20}%;
-top:0%;
 
-width:20%;
-height:100%;
-`
-
-const positionningTile = (position : number) => css`
-position:absolute;
-bottom:${0+6*position}%;
-left:${0+6*position}%;
-width:70%;
-height:70%;
-
-z-index:${1+position};
-`
 const mountainPanelStyle = css`
 position : absolute;
 top : 17.5%;

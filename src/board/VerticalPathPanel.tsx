@@ -9,7 +9,7 @@ const VerticalPathPanel : FC<{game : Game}> = ({game}) => {
 
         <div css = {verticalPathPanel}>
 
-            {game.verticalPath.map((tile, index) => 
+            {game.verticalPath.map((tile, index) => tile ?
             
             <div css={positionningTile(index)} key = {index}> 
 
@@ -21,13 +21,13 @@ const VerticalPathPanel : FC<{game : Game}> = ({game}) => {
 
             </div>
 
-
+                :null
         
         )}
 
         </div>
 
-
+        
     )
 
 }

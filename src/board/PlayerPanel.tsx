@@ -5,8 +5,9 @@ import ElementWind from "../images/ElementWind.png";
 import ElementFire from "../images/ElementFire.png";
 import ElementWater from "../images/ElementWater.png";
 import ElementEarth from "../images/ElementEarth.png";
+import CoinHeads from "../images/CoinHeads.png";
 
-const PlayerPanel : FC<{color:string, understanding:any, position:number, score:number}> = ({color, position, understanding, score}) => {
+const PlayerPanel : FC<{color:string, understanding:any, position:number, score:number, first:boolean}> = ({color, position, understanding, score, first}) => {
 
     return(
 
@@ -28,11 +29,24 @@ const PlayerPanel : FC<{color:string, understanding:any, position:number, score:
 
             </div>
 
+            <div>
+
+                {first && <img alt="Coin" src={CoinHeads} css={coinStyle}/>}
+
+            </div>
+
         </div>
 
     )
 
 }
+
+const coinStyle = css`
+width:15%;
+position:absolute;
+bottom:10%;
+right:7.5%;
+`
 
 const smallImagesStyle = css`
 width:5%;
