@@ -102,6 +102,7 @@ const GorintoRules: GameType = {
       case MoveType.RefillPaths : {
         
         if (isGame(game)){
+          console.log ("dans le RefillPath : ")
           game.horizontalPath = game.elementTilesDeck.splice(0,5);
           game.verticalPath = game.elementTilesDeck.splice(0,5);
         } else if (isRefillPathsView(move)) {

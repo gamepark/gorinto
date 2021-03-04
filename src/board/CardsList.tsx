@@ -22,9 +22,9 @@ const CardsList : FC<{game:Game}> = ({game}) => {
 
             {game.twoGoals.map((goalNumber, index) =>
             
-                <GoalCard goal = {Goals[goalNumber]}
-                          key = {index}
-                          position = {index}
+                <GoalCard   key = {index}
+                            goal = {Goals[goalNumber]}
+                            position = {index}
                 />
             
             )}

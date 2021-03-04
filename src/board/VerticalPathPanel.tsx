@@ -17,6 +17,7 @@ const VerticalPathPanel : FC<{game : Game}> = ({game}) => {
                              image = {tile.image}
                              element = {tile.element}
                              position = {index}
+                             draggableItem = {{type:"Element", path: "vertical", position : index}}
                 />
 
             </div>
