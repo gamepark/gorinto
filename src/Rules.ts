@@ -2,7 +2,6 @@ import {GameWithIncompleteInformation, SequentialGame, shuffle, WithAutomaticMov
 import { elementDeck } from './cards/Elements'
 import { Goals } from './cards/Goals'
 import { Keys } from './cards/KeyElement'
-// import Element from './types/Element'
 import ElementTile from './types/ElementTile'
 import Game from './types/Game'
 import GameView, { isGame } from './types/GameView'
@@ -13,6 +12,9 @@ import Player from './types/Player'
 import PlayerColor from './types/PlayerColor'
 import { isRefillPathsView, refillPaths } from './moves/RefillPaths'
 import MoveTile from './moves/MoveTile'
+import TakeTile from './moves/TakeTile'
+import Element from './types/Element'
+
 
 type GameType = SequentialGame<Game, Move, PlayerColor>
   & WithAutomaticMoves<Game, Move>
@@ -33,7 +35,6 @@ const GorintoRules: GameType = {
       mountainBoard : []
     }
 
-    game.activePlayer = setupFirstActivePlayer(game);
     game.players = setupIsFirstPlayer(game);
     game.mountainBoard = setupMountain(game);
 
@@ -74,9 +75,9 @@ const GorintoRules: GameType = {
 
   getLegalMoves(game: Game): Move[] {
     console.log(game)
-    const moves : MoveTile[] = [];
-    
 
+    if(game.tilesToTake === undefined){
+      const moves : MoveTile[] = [];
       for(let x = 0;x<5;x++){
         for (let y = 0 ; y<5;y++){
           if (game.horizontalPath[x]){
@@ -87,10 +88,15 @@ const GorintoRules: GameType = {
           }
         }
       }
-  
+      return moves;
+    } else {
 
+      const takes : TakeTile[] = [];      
 
-    return moves;
+      return takes
+      
+    }
+    
   },
 
   play(move: Move | MoveView, game: Game | GameView, playerId: PlayerColor): void {
@@ -117,7 +123,6 @@ const GorintoRules: GameType = {
       case MoveType.MoveTile : {
 
         const element = move.path === "horizontal" ? game.horizontalPath[move.x] : game.verticalPath[move.y];
-        
 
           game.mountainBoard[move.x][move.y].push(element!);
 
@@ -127,10 +132,54 @@ const GorintoRules: GameType = {
             game.verticalPath[move.y] = null;
           }
 
+          // game.tilesToTakes
+
+          let activePlayer : Player = game.players.find(player => player.color === game.activePlayer)!;
+
+          const elem : Element | undefined = element?.element;
+
+          switch(elem){
+            case 'void' : {
+              game.tilesToTake = {quantity : activePlayer.understanding.void,
+                   coordinates : [{x:move.x+1,y:move.y+1}, {x:move.x+1,y:move.y-1}, {x:move.x-1,y:move.y+1}, {x:move.x-1,y:move.y-1}],
+                   element : elem}
+
+              game.tilesToTake.coordinates = game.tilesToTake.coordinates.filter(coord => ((coord.x>-1 && coord.x<5) && (coord.y>-1 && coord.y<5)));
+
+              break
+            }
+            case 'wind' : {
+              game.tilesToTake = {quantity : activePlayer.understanding.wind,
+                   coordinates : [{x:move.x+1,y:move.y}, {x:move.x-1,y:move.y}, {x:move.x,y:move.y+1}, {x:move.x,y:move.y-1}],
+                   element : elem}
+
+              game.tilesToTake.coordinates = game.tilesToTake.coordinates.filter(coord => ((coord.x>-1 && coord.x<5) && (coord.y>-1 && coord.y<5)));
+
+              break
+            }
+            case 'fire' : {
+              game.tilesToTake = {quantity : activePlayer.understanding.fire,
+                coordinates : [{x:0,y:move.y},{x:1,y:move.y},{x:2,y:move.y},{x:3,y:move.y},{x:4,y:move.y}].splice(move.x,1),
+                element : elem}
+                break
+            }
+            case 'water' : {
+              game.tilesToTake = {quantity : activePlayer.understanding.water,
+                coordinates : [{x:move.x,y:0},{x:move.x,y:1},{x:move.x,y:2},{x:move.x,y:3},{x:move.x,y:4}].splice(move.y,1),
+                element : elem}
+                break
+            }
+            case 'earth' : {
+              game.tilesToTake = {quantity : activePlayer.understanding.earth,
+                coordinates : [{x:move.x,y:move.y}],
+                element : elem}
+                break
+            }
+          }
+
+          console.log(game.tilesToTake);
+
       }
-
-      
-
 
     }
 
@@ -165,16 +214,6 @@ function setupPlayers():Player[] {
     {color:PlayerColor.white, understanding:{void:0,wind:0,fire:0,water:0,earth:0}, score:0, isFirst:false} 
   ] 
     
-}
-
-function setupFirstActivePlayer(game:Game):PlayerColor {      // Maybe a way to shorten the code here
-  const number : PlayerColor[] = [];
-  for (let i = 0 ; i < game.players.length ; i++){
-    number.push(game.players[i].color);
-  }
-
-  return shuffle(number)[0];
-
 }
 
 function setupIsFirstPlayer(game:Game):Player[] {
