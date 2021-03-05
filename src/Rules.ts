@@ -91,8 +91,18 @@ const GorintoRules: GameType = {
       return moves;
     } else {
 
-      const takes : TakeTile[] = [];      
-
+      const takes : TakeTile[] = [];
+      for (let i = 0 ; i < game.tilesToTake.coordinates.length ; i++){
+        takes.push({type:MoveType.TakeTile, coordinates:{x:game.tilesToTake.coordinates[i].x,y:game.tilesToTake.coordinates[i].y}})
+        if (game.tilesToTake.element === Element.Earth){
+          for (let z = 0 ; z < game.mountainBoard[game.tilesToTake.coordinates[i].x][game.tilesToTake.coordinates[i].y].length;i++){
+            takes[i].coordinates.z = z ;
+          }
+        }
+      
+      }
+      
+      console.log(takes);
       return takes
       
     }
@@ -176,8 +186,6 @@ const GorintoRules: GameType = {
                 break
             }
           }
-
-          console.log(game.tilesToTake);
 
       }
 
