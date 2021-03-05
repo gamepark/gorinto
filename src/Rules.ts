@@ -93,12 +93,15 @@ const GorintoRules: GameType = {
 
       const takes : TakeTile[] = [];
       for (let i = 0 ; i < game.tilesToTake.coordinates.length ; i++){
-        takes.push({type:MoveType.TakeTile, coordinates:{x:game.tilesToTake.coordinates[i].x,y:game.tilesToTake.coordinates[i].y}})
-        if (game.tilesToTake.element === Element.Earth){          // In case of an earth Element, we have to precise the z
+
+        if (game.tilesToTake.element !== Element.Earth){
+          takes.push({type:MoveType.TakeTile, coordinates:{x:game.tilesToTake.coordinates[i].x,y:game.tilesToTake.coordinates[i].y}});
+        } else {
           for (let z = 0 ; z < game.mountainBoard[game.tilesToTake.coordinates[i].x][game.tilesToTake.coordinates[i].y].length -1;z++){
-            takes[i].coordinates.z = z ;
+            takes.push({type:MoveType.TakeTile, coordinates:{x:game.tilesToTake.coordinates[i].x,y:game.tilesToTake.coordinates[i].y,z}});
           }
-        }
+
+        }        
       
       }
       
