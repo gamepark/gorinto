@@ -94,8 +94,8 @@ const GorintoRules: GameType = {
       const takes : TakeTile[] = [];
       for (let i = 0 ; i < game.tilesToTake.coordinates.length ; i++){
         takes.push({type:MoveType.TakeTile, coordinates:{x:game.tilesToTake.coordinates[i].x,y:game.tilesToTake.coordinates[i].y}})
-        if (game.tilesToTake.element === Element.Earth){
-          for (let z = 0 ; z < game.mountainBoard[game.tilesToTake.coordinates[i].x][game.tilesToTake.coordinates[i].y].length;i++){
+        if (game.tilesToTake.element === Element.Earth){          // In case of an earth Element, we have to precise the z
+          for (let z = 0 ; z < game.mountainBoard[game.tilesToTake.coordinates[i].x][game.tilesToTake.coordinates[i].y].length -1;z++){
             takes[i].coordinates.z = z ;
           }
         }
@@ -148,22 +148,22 @@ const GorintoRules: GameType = {
 
           const elem : Element | undefined = element?.element;
 
-          switch(elem){
+          switch(elem){       // One Pattern is required for each element
             case 'void' : {
               game.tilesToTake = {quantity : activePlayer.understanding.void,
-                   coordinates : [{x:move.x+1,y:move.y+1}, {x:move.x+1,y:move.y-1}, {x:move.x-1,y:move.y+1}, {x:move.x-1,y:move.y-1}],
+                   coordinates : [{x:move.x+1,y:move.y+1}, {x:move.x+1,y:move.y-1}, {x:move.x-1,y:move.y+1}, {x:move.x-1,y:move.y-1}],    // Void Pattern
                    element : elem}
 
-              game.tilesToTake.coordinates = game.tilesToTake.coordinates.filter(coord => ((coord.x>-1 && coord.x<5) && (coord.y>-1 && coord.y<5)));
+              game.tilesToTake.coordinates = game.tilesToTake.coordinates.filter(coord => ((coord.x>-1 && coord.x<5) && (coord.y>-1 && coord.y<5)));    // Filtering tiles out of the board  
 
               break
             }
             case 'wind' : {
               game.tilesToTake = {quantity : activePlayer.understanding.wind,
-                   coordinates : [{x:move.x+1,y:move.y}, {x:move.x-1,y:move.y}, {x:move.x,y:move.y+1}, {x:move.x,y:move.y-1}],
+                   coordinates : [{x:move.x+1,y:move.y}, {x:move.x-1,y:move.y}, {x:move.x,y:move.y+1}, {x:move.x,y:move.y-1}],      // Wind Pattern
                    element : elem}
 
-              game.tilesToTake.coordinates = game.tilesToTake.coordinates.filter(coord => ((coord.x>-1 && coord.x<5) && (coord.y>-1 && coord.y<5)));
+              game.tilesToTake.coordinates = game.tilesToTake.coordinates.filter(coord => ((coord.x>-1 && coord.x<5) && (coord.y>-1 && coord.y<5)));    // Filtering tiles out of the board
 
               break
             }
