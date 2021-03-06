@@ -3,13 +3,14 @@ import { Draggable } from "@gamepark/workshop";
 import { FC } from "react";
 import Element from "../types/Element";
 import ElementInPath from "../types/ElementInPath";
+import ElementInPile from "../types/ElementInPile";
 
 type Props = {
 
     image:string, 
     element:Element, 
     position:number, 
-    draggableItem?: ElementInPath
+    draggableItem?: ElementInPath | ElementInPile
 
 }
 

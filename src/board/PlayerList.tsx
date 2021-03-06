@@ -17,6 +17,8 @@ const PlayerList : FC<{game:Game}> = ({game}) => {
                          position = {index}
                          color = {player.color}
                          first = {player.isFirst}
+
+                         game = {game}
             />
            
             )}

@@ -153,7 +153,7 @@ const GorintoRules: GameType = {
 
           switch(elem){       // One Pattern is required for each element
             case 'void' : {
-              game.tilesToTake = {quantity : activePlayer.understanding.void,
+              game.tilesToTake = {quantity : activePlayer.understanding.void +1,
                    coordinates : [{x:move.x+1,y:move.y+1}, {x:move.x+1,y:move.y-1}, {x:move.x-1,y:move.y+1}, {x:move.x-1,y:move.y-1}],    // Void Pattern
                    element : elem}
 
@@ -162,7 +162,7 @@ const GorintoRules: GameType = {
               break
             }
             case 'wind' : {
-              game.tilesToTake = {quantity : activePlayer.understanding.wind,
+              game.tilesToTake = {quantity : activePlayer.understanding.wind +1,
                    coordinates : [{x:move.x+1,y:move.y}, {x:move.x-1,y:move.y}, {x:move.x,y:move.y+1}, {x:move.x,y:move.y-1}],      // Wind Pattern
                    element : elem}
 
@@ -171,24 +171,65 @@ const GorintoRules: GameType = {
               break
             }
             case 'fire' : {
-              game.tilesToTake = {quantity : activePlayer.understanding.fire,
+              game.tilesToTake = {quantity : activePlayer.understanding.fire +1,
                 coordinates : [{x:0,y:move.y},{x:1,y:move.y},{x:2,y:move.y},{x:3,y:move.y},{x:4,y:move.y}].splice(move.x,1),
                 element : elem}
                 break
             }
             case 'water' : {
-              game.tilesToTake = {quantity : activePlayer.understanding.water,
+              game.tilesToTake = {quantity : activePlayer.understanding.water +1,
                 coordinates : [{x:move.x,y:0},{x:move.x,y:1},{x:move.x,y:2},{x:move.x,y:3},{x:move.x,y:4}].splice(move.y,1),
                 element : elem}
                 break
             }
             case 'earth' : {
-              game.tilesToTake = {quantity : activePlayer.understanding.earth,
+              game.tilesToTake = {quantity : activePlayer.understanding.earth +1,
                 coordinates : [{x:move.x,y:move.y}],
                 element : elem}
                 break
             }
           }
+
+          break
+
+      }
+
+      case MoveType.TakeTile : {
+
+        const elem : Element | undefined = (game.mountainBoard[move.coordinates.x][move.coordinates.y].pop())?.element;
+        let activePlayer : number = game.players.findIndex(player => player.color === game.activePlayer)!;
+
+        switch (elem){
+          case 'void' : {
+            game.players[activePlayer].understanding.void ++;
+            break;
+          }
+          case 'wind' : {
+            game.players[activePlayer].understanding.wind ++;
+            break;
+          }
+          case 'fire' : {
+            game.players[activePlayer].understanding.fire ++;
+            break;
+          }
+          case 'water' : {
+            game.players[activePlayer].understanding.water ++;
+            break;
+          }
+          case 'earth' : {
+            game.players[activePlayer].understanding.earth ++;
+            break;
+          }
+        }
+
+        game.tilesToTake!.quantity -- ;
+
+        if (game.tilesToTake!.quantity === 0){
+          game.tilesToTake = undefined ;
+          //game.activePlayer = game.players[activePlayer + 1].color ;
+
+        }
+
 
       }
 

@@ -6,12 +6,56 @@ import ElementFire from "../images/ElementFire.png";
 import ElementWater from "../images/ElementWater.png";
 import ElementEarth from "../images/ElementEarth.png";
 import CoinHeads from "../images/CoinHeads.png";
+import { usePlay } from "@gamepark/workshop";
+import TakeTile from "../moves/TakeTile";
+import { useDrop } from "react-dnd";
+import ElementInPile from "../types/ElementInPile";
+import MoveType from "../types/MoveType";
+import Game from "../types/Game";
 
-const PlayerPanel : FC<{color:string, understanding:any, position:number, score:number, first:boolean}> = ({color, position, understanding, score, first}) => {
+type Props = {
+    color:string, 
+    understanding:any, 
+    position:number, 
+    score:number, 
+    first:boolean,
+    game:Game
+} & React.HTMLAttributes<HTMLDivElement>
+
+const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, game, ...props}) => {
+
+    const play = usePlay <TakeTile> ()
+
+    const [{canDrop, isOver}, dropRef] = useDrop({
+        accept: ["Element"],
+        canDrop: (item: ElementInPile) => {
+            if (game.tilesToTake !== undefined){
+               
+                return(
+                    game.tilesToTake.coordinates.find(coord => (coord.x === item.x) && (coord.y === item.y)) !== undefined
+                )
+
+            } else {
+                return false
+            }
+
+
+
+        },
+        collect: monitor => ({
+          canDrop: monitor.canDrop(),
+          isOver: monitor.isOver()
+        }),
+        drop: (item: ElementInPile) => {
+
+            play({type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y} });
+
+        }
+      })
 
     return(
 
-        <div css={playerPanelStyle(position)}>
+        <div {...props} ref={dropRef} css={[playerPanelStyle(position), canDrop && canDropStyle, isOver && isOverStyle]}>
 
             <div css={playerHeaderStyle}>
 
@@ -22,10 +66,10 @@ const PlayerPanel : FC<{color:string, understanding:any, position:number, score:
             <div css={playerElementStyle}>
 
                 <span> <img src ={ElementVoid} alt="void" css={smallImagesStyle}/> : {understanding.void} </span>
-                <span> <img src ={ElementWind} alt="void" css={smallImagesStyle}/> : {understanding.wind} </span>
-                <span> <img src ={ElementFire} alt="void" css={smallImagesStyle}/> : {understanding.fire} </span>
-                <span> <img src ={ElementWater} alt="void" css={smallImagesStyle}/> : {understanding.water} </span>
-                <span> <img src ={ElementEarth} alt="void" css={smallImagesStyle}/> : {understanding.earth} </span>
+                <span> <img src ={ElementWind} alt="wind" css={smallImagesStyle}/> : {understanding.wind} </span>
+                <span> <img src ={ElementFire} alt="fire" css={smallImagesStyle}/> : {understanding.fire} </span>
+                <span> <img src ={ElementWater} alt="water" css={smallImagesStyle}/> : {understanding.water} </span>
+                <span> <img src ={ElementEarth} alt="earth" css={smallImagesStyle}/> : {understanding.earth} </span>
 
             </div>
 
@@ -40,6 +84,16 @@ const PlayerPanel : FC<{color:string, understanding:any, position:number, score:
     )
 
 }
+
+const canDropStyle = css`
+opacity:0.4;
+background-color:red;
+`
+
+const isOverStyle = css`
+opacity:0.6;
+background-color:red;
+`
 
 const coinStyle = css`
 width:15%;

@@ -11,7 +11,7 @@ import MoveTile from "../moves/MoveTile";
 type Props = {
     pile:ElementTileOld[],
     x:number,
-    y:number
+    y:number,
 } & React.HTMLAttributes<HTMLDivElement>
 
 const MountainPile : FC<Props> = ({pile, x, y, ...props}) => {
@@ -50,6 +50,7 @@ const MountainPile : FC<Props> = ({pile, x, y, ...props}) => {
                                 image = {tile.image}
                                 element = {tile.element}
                                 position = {index}
+                                draggableItem = {{type:"Element", x, y}}
                     />
 
                 </div>
