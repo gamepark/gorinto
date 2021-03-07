@@ -97,15 +97,14 @@ const GorintoRules: GameType = {
         if (game.tilesToTake.element !== Element.Earth){
           takes.push({type:MoveType.TakeTile, coordinates:{x:game.tilesToTake.coordinates[i].x,y:game.tilesToTake.coordinates[i].y}});
         } else {
-          for (let z = 0 ; z < game.mountainBoard[game.tilesToTake.coordinates[i].x][game.tilesToTake.coordinates[i].y].length -1;z++){
+          for (let z = 0 ; z < game.mountainBoard[game.tilesToTake.coordinates[i].x][game.tilesToTake.coordinates[i].y].length-1;z++){
             takes.push({type:MoveType.TakeTile, coordinates:{x:game.tilesToTake.coordinates[i].x,y:game.tilesToTake.coordinates[i].y,z}});
           }
-
+          console.log(takes);
         }        
       
       }
       
-      console.log(takes);
       return takes
       
     }
@@ -200,8 +199,21 @@ const GorintoRules: GameType = {
 
       case MoveType.TakeTile : {
 
-        const elem : Element | undefined = (game.mountainBoard[move.coordinates.x][move.coordinates.y].pop())?.element;
+        let elem : Element | undefined = undefined
+
+        if (move.coordinates.z === undefined){
+          elem = game.mountainBoard[move.coordinates.x][move.coordinates.y][game.mountainBoard[move.coordinates.x][move.coordinates.y].length-1]?.element;
+        } else {
+          elem = game.mountainBoard[move.coordinates.x][move.coordinates.y][move.coordinates.z].element;
+        }
+
         let activePlayer : number = game.players.findIndex(player => player.color === game.activePlayer)!;
+
+        if (game.tilesToTake?.element !== Element.Earth){
+          game.mountainBoard[move.coordinates.x][move.coordinates.y].pop();
+        } else {
+          game.mountainBoard[move.coordinates.x][move.coordinates.y].splice(move.coordinates.z!,1);
+        }
 
         switch (elem){
           case 'void' : {
@@ -228,7 +240,7 @@ const GorintoRules: GameType = {
 
         game.tilesToTake!.quantity -- ;
 
-        if (elem !== 'earth'){
+        if (game.tilesToTake?.element !== 'earth'){
           game.tilesToTake?.coordinates.splice(game.tilesToTake.coordinates.findIndex(coord => (coord.x === move.coordinates.x) && (coord.y === move.coordinates.y)), 1);
         }
 

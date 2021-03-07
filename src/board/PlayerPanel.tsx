@@ -12,6 +12,7 @@ import { useDrop } from "react-dnd";
 import ElementInPile from "../types/ElementInPile";
 import MoveType from "../types/MoveType";
 import Game from "../types/Game";
+import Element from "../types/Element";
 
 type Props = {
     color:string, 
@@ -30,12 +31,23 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
         accept: ["Element"],
         canDrop: (item: ElementInPile) => {
             if (game.tilesToTake !== undefined){
-               
-                return(
+
+                if (game.tilesToTake.element !== Element.Earth){
+                    return(
+                        (game.tilesToTake.coordinates.find(coord => (coord.x === item.x) && (coord.y === item.y)) !== undefined)
+                        &&
+                        (item.z === game.mountainBoard[item.x][item.y].length - 1)
+                    )
+                }
+               else {
+                   return (
                     (game.tilesToTake.coordinates.find(coord => (coord.x === item.x) && (coord.y === item.y)) !== undefined)
                     &&
-                    (item.z === game.mountainBoard[item.x][item.y].length - 1)
-                )
+                    (item.z !== game.mountainBoard[item.x][item.y].length - 1)
+                       
+                   )
+               }
+
 
             } else {
                 return false
@@ -47,8 +59,13 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
           isOver: monitor.isOver()
         }),
         drop: (item: ElementInPile) => {
-
-            play({type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y} });
+            if (game.tilesToTake !== undefined){
+                if (game.tilesToTake.element !== Element.Earth){
+                    play({type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y} });
+                } else {
+                    play({type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y, z:item.z} });
+                }
+            }
 
         }
       })
