@@ -26,7 +26,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
     const play = usePlay <TakeTile> ()
 
-    const [{canDrop, isOver}, dropRef] = useDrop({
+    const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: ["Element"],
         canDrop: (item: ElementInPile) => {
             if (game.tilesToTake !== undefined){
@@ -40,8 +40,6 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
             } else {
                 return false
             }
-
-
 
         },
         collect: monitor => ({
@@ -57,7 +55,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
     return(
 
-        <div {...props} ref={dropRef} css={[playerPanelStyle(position), canDrop && canDropStyle, isOver && isOverStyle]}>
+        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position), canDrop && canDropStyle, isOver && isOverStyle]}>
 
             <div css={playerHeaderStyle}>
 
