@@ -244,7 +244,7 @@ const GorintoRules: GameType = {
           game.tilesToTake?.coordinates.splice(game.tilesToTake.coordinates.findIndex(coord => (coord.x === move.coordinates.x) && (coord.y === move.coordinates.y)), 1);
         }
 
-        if ((game.tilesToTake!.quantity === 0) || (game.tilesToTake?.coordinates.length === 0)){
+        if ((game.tilesToTake!.quantity === 0) || (game.tilesToTake?.coordinates.length === 0) || ((game.tilesToTake?.element === 'earth') && (game.mountainBoard[move.coordinates.x][move.coordinates.y].length === 1)) ){
           game.tilesToTake = undefined ;
           console.log("Fin du tour !");
           //game.activePlayer = game.players[activePlayer + 1].color ;
