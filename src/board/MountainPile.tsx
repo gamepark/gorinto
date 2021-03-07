@@ -50,7 +50,7 @@ const MountainPile : FC<Props> = ({pile, x, y, ...props}) => {
                                 image = {tile.image}
                                 element = {tile.element}
                                 position = {index}
-                                draggableItem = {{type:"Element", x, y}}
+                                draggableItem = {{type:"Element", x, y, z : index}}
                     />
 
                 </div>

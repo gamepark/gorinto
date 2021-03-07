@@ -171,14 +171,18 @@ const GorintoRules: GameType = {
               break
             }
             case 'fire' : {
+              const firePattern : {x:number, y:number}[] = [{x:move.x,y:0},{x:move.x,y:1},{x:move.x,y:2},{x:move.x,y:3},{x:move.x,y:4}];
+              firePattern.splice(move.y,1); 
               game.tilesToTake = {quantity : activePlayer.understanding.fire +1,
-                coordinates : [{x:0,y:move.y},{x:1,y:move.y},{x:2,y:move.y},{x:3,y:move.y},{x:4,y:move.y}].splice(move.x,1),
+                coordinates : firePattern,
                 element : elem}
                 break
             }
             case 'water' : {
+              const waterPattern : {x:number, y:number}[] = [{x:0,y:move.y},{x:1,y:move.y},{x:2,y:move.y},{x:3,y:move.y},{x:4,y:move.y}];
+              waterPattern.splice(move.x,1);
               game.tilesToTake = {quantity : activePlayer.understanding.water +1,
-                coordinates : [{x:move.x,y:0},{x:move.x,y:1},{x:move.x,y:2},{x:move.x,y:3},{x:move.x,y:4}].splice(move.y,1),
+                coordinates : waterPattern,
                 element : elem}
                 break
             }
@@ -223,6 +227,10 @@ const GorintoRules: GameType = {
         }
 
         game.tilesToTake!.quantity -- ;
+
+        if (elem !== 'earth'){
+          game.tilesToTake?.coordinates.splice(game.tilesToTake.coordinates.findIndex(coord => (coord.x === move.coordinates.x) && (coord.y === move.coordinates.y)), 1);
+        }
 
         if (game.tilesToTake!.quantity === 0){
           game.tilesToTake = undefined ;

@@ -32,7 +32,9 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
             if (game.tilesToTake !== undefined){
                
                 return(
-                    game.tilesToTake.coordinates.find(coord => (coord.x === item.x) && (coord.y === item.y)) !== undefined
+                    (game.tilesToTake.coordinates.find(coord => (coord.x === item.x) && (coord.y === item.y)) !== undefined)
+                    &&
+                    (item.z === game.mountainBoard[item.x][item.y].length - 1)
                 )
 
             } else {
