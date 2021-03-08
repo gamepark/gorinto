@@ -14,6 +14,9 @@ import { isRefillPathsView, refillPaths } from './moves/RefillPaths'
 import MoveTile from './moves/MoveTile'
 import TakeTile from './moves/TakeTile'
 import Element from './types/Element'
+import AutomaticMovePhase from './types/AutomaticMovePhase'
+import { moveSeasonMarker } from './moves/MoveSeasonMarker'
+import { countGoals } from './moves/CountGoals'
 
 
 type GameType = SequentialGame<Game, Move, PlayerColor>
@@ -32,7 +35,8 @@ const GorintoRules: GameType = {
       elementTilesDeck : setupElementTilesDeck(),
       horizontalPath : [],
       verticalPath : [],
-      mountainBoard : []
+      mountainBoard : [],
+      automaticMovePhase : undefined
     }
 
     game.players = setupIsFirstPlayer(game);
@@ -72,6 +76,10 @@ const GorintoRules: GameType = {
       || ((filledSpacesinPaths(game) === 1) && (game.players.length === 3) )
       || ((filledSpacesinPaths(game) === 2) && (game.players.length === 4) )) {
         return refillPaths() ;
+      } else if (game.automaticMovePhase === AutomaticMovePhase.movingSeasonMarker){
+        return moveSeasonMarker() ;
+      } else if (game.automaticMovePhase === AutomaticMovePhase.countingGoals){
+        return countGoals() ;
       }
 
     }
@@ -128,6 +136,9 @@ const GorintoRules: GameType = {
         
         if (isGame(game)){
           console.log ("dans le RefillPath : ")
+          if (game.horizontalPath.length !== 0){
+            game.automaticMovePhase = AutomaticMovePhase.movingSeasonMarker
+          }
           game.horizontalPath = game.elementTilesDeck.splice(0,5);
           game.verticalPath = game.elementTilesDeck.splice(0,5);
         } else if (isRefillPathsView(move)) {
@@ -139,6 +150,207 @@ const GorintoRules: GameType = {
         break
 
       }
+
+      case MoveType.MoveSeasonMarker : {
+
+        game.season ++ ;
+        game.automaticMovePhase = AutomaticMovePhase.countingGoals;
+
+        break
+
+      }
+
+      case MoveType.CountGoals : {
+
+        for (let i = 0; i<game.twoGoals.length;i++){
+          for (let j = 0 ; j<game.players.length;j++){
+            const understandings : number[] = [game.players[j].understanding.void, game.players[j].understanding.wind, game.players[j].understanding.fire, game.players[j].understanding.water, game.players[j].understanding.earth];
+
+            switch (game.twoGoals[i]){
+              case 1 : {
+
+                for (let k = 0 ; k<5 ; k++){
+                  const understandingsComparative : number[] = Array.from(understandings);
+                  understandingsComparative.splice(k,1);
+                  if (understandings[k] === understandingsComparative[0] 
+                    || understandings[k] === understandingsComparative[1] 
+                    || understandings[k] === understandingsComparative[2]
+                    || understandings[k] === understandingsComparative[3]){
+                      game.players[j].score += understandings[k];
+                  }
+                }
+
+                break
+              }
+              case 2 : {
+
+                for (let k = 0 ; k<5 ; k++){
+                  const understandingsComparative : number[] = Array.from(understandings);
+                  understandingsComparative.splice(k,1);
+                  if (understandings[k] !== understandingsComparative[0] 
+                    || understandings[k] !== understandingsComparative[1] 
+                    || understandings[k] !== understandingsComparative[2]
+                    || understandings[k] !== understandingsComparative[3]){
+                      game.players[j].score += understandings[k];
+                  }
+                }
+  
+                break
+              }
+              case 3 : {
+
+                for (let k = 0 ; k<5 ; k++){
+                  if (understandings[k] % 2 === 1){
+                      game.players[j].score += understandings[k];
+                  }
+                }
+  
+                break
+              }
+              case 4 : {
+
+                for (let k = 0 ; k<5 ; k++){
+                  if (understandings[k] % 2 === 0){
+                      game.players[j].score += understandings[k];
+                  }
+                }
+  
+                break
+              }
+              case 5 : {
+
+                const maxsUnderstandings : number[] = [0,0,0,0,0]
+                for (let k = 0 ; k < game.players.length;k++){
+                  if (maxsUnderstandings[0] < game.players[k].understanding.void){
+                    maxsUnderstandings[0] = game.players[k].understanding.void;
+                  }
+                  if (maxsUnderstandings[1] < game.players[k].understanding.wind){
+                    maxsUnderstandings[1] = game.players[k].understanding.wind;
+                  }
+                  if (maxsUnderstandings[2] < game.players[k].understanding.fire){
+                    maxsUnderstandings[2] = game.players[k].understanding.fire;
+                  }
+                  if (maxsUnderstandings[3] < game.players[k].understanding.water){
+                    maxsUnderstandings[3] = game.players[k].understanding.water;
+                  }
+                  if (maxsUnderstandings[4] < game.players[k].understanding.earth){
+                    maxsUnderstandings[4] = game.players[k].understanding.earth;
+                  }
+                }
+
+                for (let k = 0 ; k<5 ; k++){
+                  if (understandings[k] === maxsUnderstandings[k]){
+                      game.players[j].score += 3;
+                  }
+                }
+  
+                break
+              }
+              case 6 : {
+
+                const minsUnderstandings : number[] = [game.players[0].understanding.void, game.players[0].understanding.wind, game.players[0].understanding.fire, game.players[0].understanding.water, game.players[0].understanding.earth]
+                for (let k = 1 ; k < game.players.length;k++){
+                  if ((minsUnderstandings[0] > game.players[k].understanding.void) && (game.players[k].understanding.void !== 0) ){
+                    minsUnderstandings[0] = game.players[k].understanding.void;
+                  }
+                  if ((minsUnderstandings[1] > game.players[k].understanding.wind) && (game.players[k].understanding.wind !== 0) ){
+                    minsUnderstandings[1] = game.players[k].understanding.wind;
+                  }
+                  if ((minsUnderstandings[2] > game.players[k].understanding.fire) && (game.players[k].understanding.fire !== 0) ){
+                    minsUnderstandings[2] = game.players[k].understanding.fire;
+                  }
+                  if ((minsUnderstandings[3] > game.players[k].understanding.water) && (game.players[k].understanding.water !== 0) ){
+                    minsUnderstandings[3] = game.players[k].understanding.water;
+                  }
+                  if ((minsUnderstandings[4] > game.players[k].understanding.earth) && (game.players[k].understanding.earth !== 0) ){
+                    minsUnderstandings[4] = game.players[k].understanding.earth;
+                  }
+                }
+
+                for (let k = 0 ; k<5 ; k++){
+                  if (understandings[k] === minsUnderstandings[k]){
+                      game.players[j].score += 3;
+                  }
+                }
+  
+                break
+              }
+              case 7 : {
+
+                const sortedUnderstandings : number[] = (Array.from(understandings)).sort();
+                for (let k = 0 ; k < 5 ; k++){
+                  if (understandings[k] !== sortedUnderstandings[2]){
+                    game.players[j].score += understandings[k];
+                  }
+                }
+  
+                break
+              }
+              case 8 : {
+
+                const sortedUnderstandings : number[] = (Array.from(understandings)).sort();
+                game.players[j].score += (sortedUnderstandings[2]*3);
+  
+                break
+              }
+              case 9 : {
+
+                const sortedUnderstandings : number[] = (Array.from(understandings)).sort();
+                const max : number = sortedUnderstandings[4];
+                const min : number = sortedUnderstandings[0];
+
+                for (let k = 0 ; k < 5 ; k++){
+                  if (understandings[k] === min || understandings[k] === max){
+                    game.players[j].score += understandings[k];
+                  }
+                }
+
+  
+                break
+              }
+              case 10 : {
+
+                const sortedUnderstandings : number[] = (Array.from(understandings)).sort();
+                const max : number = sortedUnderstandings[4];
+                let min : number = sortedUnderstandings[0];
+                for (let k = 1 ; k < 5 ; k++){
+                  if (sortedUnderstandings[k] > 0){
+                    min = sortedUnderstandings[k]
+                  }
+                  game.players[j].score += (max + 2*min);
+                }
+                
+  
+                break
+              }
+              case 11 : {
+
+                const sortedUnderstandings : number[] = (Array.from(understandings)).sort();
+                const difference : number = sortedUnderstandings[4] - sortedUnderstandings[0];
+                game.players[j].score += (difference*2);
+  
+                break
+              }
+              case 12 : {
+
+                const shortestStack : number = (Array.from(understandings)).sort()[0];
+                if (shortestStack !== 0){
+                  game.players[j].score += (shortestStack*7);
+                }
+  
+                break
+              }
+            }
+  
+          }
+
+          }
+          
+        game.automaticMovePhase = undefined;
+
+        break
+      }
+
       case MoveType.MoveTile : {
 
         const element = move.path === "horizontal" ? game.horizontalPath[move.x] : game.verticalPath[move.y];

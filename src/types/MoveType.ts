@@ -2,7 +2,8 @@ enum MoveType{
     RefillPaths = 'REFILL_PATHS',
     MoveTile = 'MOVE_TILE',
     TakeTile = 'TAKE_TILE',
-    Validate = "VALIDATE",
+    MoveSeasonMarker = "MOVE_SEASON_MARKER",
+    CountGoals = "COUNT_GOALS"
 
 }
 

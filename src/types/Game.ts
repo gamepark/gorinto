@@ -1,3 +1,4 @@
+import AutomaticMovePhase from "./AutomaticMovePhase"
 import Element from "./Element"
 import ElementTile from "./ElementTile"
 import Player from "./Player"
@@ -14,6 +15,7 @@ type Game = {
     verticalPath : (ElementTile | null)[];           // Make a number Array
     mountainBoard : ElementTile[][][];      // Make a number Array
     tilesToTake? : {quantity : number, coordinates:{x:number,y:number}[], element?:Element};
+    automaticMovePhase : AutomaticMovePhase | undefined;
 }
 
 export default Game
