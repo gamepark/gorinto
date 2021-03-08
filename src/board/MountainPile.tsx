@@ -4,9 +4,7 @@ import ElementTileOld from "../types/ElementTile";
 import { css } from "@emotion/core";
 import { useDrop } from "react-dnd";
 import ElementInPath from "../types/ElementInPath";
-import { usePlay } from "@gamepark/workshop";
 import MoveType from "../types/MoveType";
-import MoveTile from "../moves/MoveTile";
 
 type Props = {
     pile:ElementTileOld[],
@@ -15,8 +13,6 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 const MountainPile : FC<Props> = ({pile, x, y, ...props}) => {
-
-    const play = usePlay <MoveTile> ()
 
     const [{canDrop, isOver}, dropRef] = useDrop({
         accept: ["Element"],
@@ -33,7 +29,7 @@ const MountainPile : FC<Props> = ({pile, x, y, ...props}) => {
         }),
         drop: (item: ElementInPath) => {
 
-            play({type : MoveType.MoveTile, path : item.path, x, y});
+            return {type : MoveType.MoveTile, path : item.path, x, y}
 
         }
       })

@@ -1,6 +1,7 @@
 import { css } from "@emotion/core";
-import { Draggable } from "@gamepark/workshop";
+import { Draggable, usePlay } from "@gamepark/workshop";
 import { FC } from "react";
+import MoveTile from "../moves/MoveTile";
 import Element from "../types/Element";
 import ElementInPath from "../types/ElementInPath";
 import ElementInPile from "../types/ElementInPile";
@@ -16,11 +17,13 @@ type Props = {
 
 const ElementTile : FC<Props> = ({image, element, draggableItem}) => {
 
+    const play = usePlay <MoveTile> ()
+
     if (draggableItem){
 
         return(
 
-            <Draggable item={draggableItem} css={elementTileStyle(image)}>
+            <Draggable item={draggableItem} css={elementTileStyle(image)} onDrop = {(move:MoveTile) => play(move)}  >
     
                     <span>{element}</span>
     

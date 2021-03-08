@@ -6,8 +6,6 @@ import ElementFire from "../images/ElementFire.png";
 import ElementWater from "../images/ElementWater.png";
 import ElementEarth from "../images/ElementEarth.png";
 import CoinHeads from "../images/CoinHeads.png";
-import { usePlay } from "@gamepark/workshop";
-import TakeTile from "../moves/TakeTile";
 import { useDrop } from "react-dnd";
 import ElementInPile from "../types/ElementInPile";
 import MoveType from "../types/MoveType";
@@ -24,8 +22,6 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, game, ...props}) => {
-
-    const play = usePlay <TakeTile> ()
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: ["Element"],
@@ -59,13 +55,13 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
           isOver: monitor.isOver()
         }),
         drop: (item: ElementInPile) => {
-            if (game.tilesToTake !== undefined){
-                if (game.tilesToTake.element !== Element.Earth){
-                    play({type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y} });
+            
+                if (game.tilesToTake!.element !== Element.Earth){
+                    return {type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y} };
                 } else {
-                    play({type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y, z:item.z} });
+                    return {type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y, z:item.z} };
                 }
-            }
+    
 
         }
       })

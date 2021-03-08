@@ -64,9 +64,16 @@ const GorintoRules: GameType = {
   getAutomaticMove(game : Game){
     
     // (game start and we have to setup the paths) | (there's not enough tiles on the paths to make a whole game turn)
-    if ((game.horizontalPath.length === 0 && game.verticalPath.length === 0) || (filledSpacesinPaths(game) < game.players.length)) {
-      return refillPaths() ;
-      
+    
+    if (isGame(game) && (game.tilesToTake === undefined)){
+
+      if ((game.horizontalPath.length === 0 && game.verticalPath.length === 0) 
+      || ((filledSpacesinPaths(game) === 0) && (game.players.length === 2) )
+      || ((filledSpacesinPaths(game) === 1) && (game.players.length === 3) )
+      || ((filledSpacesinPaths(game) === 2) && (game.players.length === 4) )) {
+        return refillPaths() ;
+      }
+
     }
 
     return
@@ -193,6 +200,20 @@ const GorintoRules: GameType = {
             }
           }
 
+          game.tilesToTake?.coordinates.forEach(coord => 
+            {
+              if (game.mountainBoard[coord.x][coord.y].length === 0){
+                game.tilesToTake?.coordinates.splice(game.tilesToTake.coordinates.indexOf(coord),1);
+              }
+            }
+          )
+
+          if (game.tilesToTake?.element === Element.Earth){
+            if (game.mountainBoard[game.tilesToTake.coordinates[0].x][game.tilesToTake.coordinates[0].y].length === 1){
+              game.tilesToTake.coordinates.splice(0,1)
+            }
+          }
+
           break
 
       }
@@ -247,7 +268,9 @@ const GorintoRules: GameType = {
         if ((game.tilesToTake!.quantity === 0) || (game.tilesToTake?.coordinates.length === 0) || ((game.tilesToTake?.element === 'earth') && (game.mountainBoard[move.coordinates.x][move.coordinates.y].length === 1)) ){
           game.tilesToTake = undefined ;
           console.log("Fin du tour !");
-          //game.activePlayer = game.players[activePlayer + 1].color ;
+
+          const nextPlayerIndex = (activePlayer + 1) % game.players.length
+          game.activePlayer = game.players[nextPlayerIndex].color
 
         }
 
