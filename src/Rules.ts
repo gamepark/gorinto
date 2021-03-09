@@ -163,11 +163,13 @@ const GorintoRules: GameType = {
       case MoveType.CountGoals : {
 
         for (let i = 0; i<game.twoGoals.length;i++){
+          console.log("Goal en cours : n°"+game.twoGoals[i]);
           for (let j = 0 ; j<game.players.length;j++){
             const understandings : number[] = [game.players[j].understanding.void, game.players[j].understanding.wind, game.players[j].understanding.fire, game.players[j].understanding.water, game.players[j].understanding.earth];
-
+            
             switch (game.twoGoals[i]){
-              case 1 : {
+              
+              case 0 : {
 
                 for (let k = 0 ; k<5 ; k++){
                   const understandingsComparative : number[] = Array.from(understandings);
@@ -176,13 +178,13 @@ const GorintoRules: GameType = {
                     || understandings[k] === understandingsComparative[1] 
                     || understandings[k] === understandingsComparative[2]
                     || understandings[k] === understandingsComparative[3]){
-                      game.players[j].score += understandings[k];
+                      game.players[j].score = game.players[j].score + understandings[k];
                   }
                 }
 
                 break
               }
-              case 2 : {
+              case 1 : {
 
                 for (let k = 0 ; k<5 ; k++){
                   const understandingsComparative : number[] = Array.from(understandings);
@@ -191,7 +193,17 @@ const GorintoRules: GameType = {
                     || understandings[k] !== understandingsComparative[1] 
                     || understandings[k] !== understandingsComparative[2]
                     || understandings[k] !== understandingsComparative[3]){
-                      game.players[j].score += understandings[k];
+                      game.players[j].score  = game.players[j].score + understandings[k];
+                  }
+                }
+  
+                break
+              }
+              case 2 : {
+
+                for (let k = 0 ; k<5 ; k++){
+                  if (understandings[k] % 2 === 1){
+                      game.players[j].score = game.players[j].score + understandings[k];
                   }
                 }
   
@@ -200,24 +212,14 @@ const GorintoRules: GameType = {
               case 3 : {
 
                 for (let k = 0 ; k<5 ; k++){
-                  if (understandings[k] % 2 === 1){
-                      game.players[j].score += understandings[k];
+                  if (understandings[k] % 2 === 0){
+                      game.players[j].score = game.players[j].score + understandings[k];
                   }
                 }
   
                 break
               }
               case 4 : {
-
-                for (let k = 0 ; k<5 ; k++){
-                  if (understandings[k] % 2 === 0){
-                      game.players[j].score += understandings[k];
-                  }
-                }
-  
-                break
-              }
-              case 5 : {
 
                 const maxsUnderstandings : number[] = [0,0,0,0,0]
                 for (let k = 0 ; k < game.players.length;k++){
@@ -240,13 +242,13 @@ const GorintoRules: GameType = {
 
                 for (let k = 0 ; k<5 ; k++){
                   if (understandings[k] === maxsUnderstandings[k]){
-                      game.players[j].score += 3;
+                      game.players[j].score = game.players[j].score + 3;
                   }
                 }
   
                 break
               }
-              case 6 : {
+              case 5 : {
 
                 const minsUnderstandings : number[] = [game.players[0].understanding.void, game.players[0].understanding.wind, game.players[0].understanding.fire, game.players[0].understanding.water, game.players[0].understanding.earth]
                 for (let k = 1 ; k < game.players.length;k++){
@@ -269,7 +271,18 @@ const GorintoRules: GameType = {
 
                 for (let k = 0 ; k<5 ; k++){
                   if (understandings[k] === minsUnderstandings[k]){
-                      game.players[j].score += 3;
+                      game.players[j].score = game.players[j].score + 3;
+                  }
+                }
+  
+                break
+              }
+              case 6 : {
+
+                const sortedUnderstandings : number[] = (Array.from(understandings)).sort((a,b) => a-b);
+                for (let k = 0 ; k < 5 ; k++){
+                  if (understandings[k] !== sortedUnderstandings[2]){
+                    game.players[j].score = game.players[j].score + understandings[k];
                   }
                 }
   
@@ -277,70 +290,61 @@ const GorintoRules: GameType = {
               }
               case 7 : {
 
-                const sortedUnderstandings : number[] = (Array.from(understandings)).sort();
-                for (let k = 0 ; k < 5 ; k++){
-                  if (understandings[k] !== sortedUnderstandings[2]){
-                    game.players[j].score += understandings[k];
-                  }
-                }
+                const sortedUnderstandings : number[] = (Array.from(understandings)).sort((a,b) => a-b);
+                game.players[j].score = game.players[j].score + (sortedUnderstandings[2]*3);
   
                 break
               }
               case 8 : {
 
-                const sortedUnderstandings : number[] = (Array.from(understandings)).sort();
-                game.players[j].score += (sortedUnderstandings[2]*3);
-  
-                break
-              }
-              case 9 : {
-
-                const sortedUnderstandings : number[] = (Array.from(understandings)).sort();
+                const sortedUnderstandings : number[] = (Array.from(understandings)).sort((a,b) => a-b);
                 const max : number = sortedUnderstandings[4];
                 const min : number = sortedUnderstandings[0];
 
                 for (let k = 0 ; k < 5 ; k++){
                   if (understandings[k] === min || understandings[k] === max){
-                    game.players[j].score += understandings[k];
+                    game.players[j].score = game.players[j].score + understandings[k];
                   }
                 }
 
   
                 break
               }
-              case 10 : {
+              case 9 : {
 
-                const sortedUnderstandings : number[] = (Array.from(understandings)).sort();
+                const sortedUnderstandings : number[] = (Array.from(understandings)).sort((a,b) => a-b);
                 const max : number = sortedUnderstandings[4];
                 let min : number = sortedUnderstandings[0];
                 for (let k = 1 ; k < 5 ; k++){
                   if (sortedUnderstandings[k] > 0){
                     min = sortedUnderstandings[k]
                   }
-                  game.players[j].score += (max + 2*min);
+                  game.players[j].score = game.players[j].score + (max + 2*min);
                 }
                 
   
                 break
               }
-              case 11 : {
+              case 10 : {
 
-                const sortedUnderstandings : number[] = (Array.from(understandings)).sort();
+                const sortedUnderstandings : number[] = (Array.from(understandings)).sort((a,b) => a-b);
                 const difference : number = sortedUnderstandings[4] - sortedUnderstandings[0];
-                game.players[j].score += (difference*2);
+                game.players[j].score = game.players[j].score + (difference*2);
   
                 break
               }
-              case 12 : {
+              case 11 : {
 
-                const shortestStack : number = (Array.from(understandings)).sort()[0];
+                const shortestStack : number = (Array.from(understandings)).sort((a,b) => a-b)[0];
                 if (shortestStack !== 0){
-                  game.players[j].score += (shortestStack*7);
+                  game.players[j].score = game.players[j].score + (shortestStack*7);
                 }
   
                 break
               }
             }
+
+            console.log("score du joueur "+j+" : "+game.players[j].score);
   
           }
 
