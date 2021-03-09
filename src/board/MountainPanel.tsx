@@ -17,7 +17,8 @@ const MountainPanel : FC<{game : Game}> = ({game}) => {
                         css = {areaPosition(x, y)} 
                         pile = {pile} 
                         x = {x}
-                        y = {y}/>
+                        y = {y}
+                        game = {game}/>
 
                     )
 

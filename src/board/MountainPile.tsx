@@ -1,52 +1,35 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import ElementTile from "./ElementTile";
 import ElementTileOld from "../types/ElementTile";
 import { css } from "@emotion/core";
-import { useDrop } from "react-dnd";
-import ElementInPath from "../types/ElementInPath";
-import MoveType from "../types/MoveType";
+import MountainDropZone from "./MountainDropZone";
+import Game from "../types/Game";
+import Element from "../types/Element";
 
 type Props = {
     pile:ElementTileOld[],
     x:number,
     y:number,
+    game:Game,
 } & React.HTMLAttributes<HTMLDivElement>
 
-const MountainPile : FC<Props> = ({pile, x, y, ...props}) => {
-
-    const [{canDrop, isOver}, dropRef] = useDrop({
-        accept: ["Element"],
-        canDrop: (item: ElementInPath) => {
-            if (item.path === "horizontal"){
-                return(item.position === x)
-            } else {
-                return(item.position === y)
-            }
-        },
-        collect: monitor => ({
-          canDrop: monitor.canDrop(),
-          isOver: monitor.isOver()
-        }),
-        drop: (item: ElementInPath) => {
-
-            return {type : MoveType.MoveTile, path : item.path, x, y}
-
-        }
-      })
+const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
 
     return(
 
-        <div {...props} ref={dropRef} css = {[canDrop && canDropStyle, isOver && isOverStyle]}> 
+        <Fragment>
+
+        <div {...props} css = {[!game.tilesToTake && noPointerEvents]} > 
                         
             {pile.map((tile, index) =>
                 
-                <div css={positionningTile(index)} key = {index}> 
+                <div css={positionningTile(index) } key = {index}> 
 
                     <ElementTile 
                                 image = {tile.image}
                                 element = {tile.element}
                                 position = {index}
-                                draggableItem = {{type:"Element", x, y, z : index}}
+                                draggableItem = {canDrag(game,x,y,index) ? {type:"Element", x, y, z : index} : undefined}
                     />
 
                 </div>
@@ -55,19 +38,43 @@ const MountainPile : FC<Props> = ({pile, x, y, ...props}) => {
 
         </div>
 
+        <MountainDropZone 
+            x = {x}
+            y = {y}
+            {...props}
+        
+        />
+
+        </Fragment>
+
     )
 
 }
 
-const canDropStyle = css`
-opacity:0.4;
-background-color:red;
-`
+function canDrag(game:Game,x:number,y:number,z:number):boolean{
 
+    if (game.tilesToTake === undefined){
+        return false;
+    } else if (game.tilesToTake.element !== Element.Earth){
+        return(
+            (game.tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
+            &&
+            (z === game.mountainBoard[x][y].length - 1)
+        )
+    } else {
+   
+       return (
+        (game.tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
+        &&
+        (z !== game.mountainBoard[x][y].length - 1)
+           
+       )
+   }
 
-const isOverStyle = css`
-opacity:0.6;
-background-color:red;
+}
+
+const noPointerEvents = css`
+pointer-events:none;
 `
 
 const positionningTile = (position : number) => css`

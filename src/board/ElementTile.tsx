@@ -23,7 +23,7 @@ const ElementTile : FC<Props> = ({image, element, draggableItem}) => {
 
         return(
 
-            <Draggable item={draggableItem} css={elementTileStyle(image)} onDrop = {(move:MoveTile) => play(move)}  >
+            <Draggable item={draggableItem} css={[elementTileStyle(image), canBeDragged]} onDrop = {(move:MoveTile) => play(move)}  >
     
                     <span>{element}</span>
     
@@ -46,6 +46,11 @@ const ElementTile : FC<Props> = ({image, element, draggableItem}) => {
     }
 
 }
+
+const canBeDragged = css`
+border : gold 3px solid;
+border-radius:20%;
+`
 
 const elementTileStyle = (image : string) => css`
 position : absolute;
