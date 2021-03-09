@@ -17,6 +17,8 @@ import Element from './types/Element'
 import AutomaticMovePhase from './types/AutomaticMovePhase'
 import { moveSeasonMarker } from './moves/MoveSeasonMarker'
 import { countGoals } from './moves/CountGoals'
+import { switchFirstPlayer } from './moves/SwitchFirstPlayer'
+import { cantPickAnyTile } from './moves/CantPickAnyTile'
 
 
 type GameType = SequentialGame<Game, Move, PlayerColor>
@@ -80,8 +82,15 @@ const GorintoRules: GameType = {
         return moveSeasonMarker() ;
       } else if (game.automaticMovePhase === AutomaticMovePhase.countingGoals){
         return countGoals() ;
+      } else if (game.automaticMovePhase === AutomaticMovePhase.switchingFirstPlayer){
+        return switchFirstPlayer() ;
       }
 
+    }
+
+    if (game.tilesToTake !== undefined && game.tilesToTake.coordinates.length === 0){
+      console.log("on CantPickTile");
+      return cantPickAnyTile();
     }
 
     return
@@ -132,6 +141,22 @@ const GorintoRules: GameType = {
     console.log(playerId)
 
     switch (move.type){
+
+      case MoveType.CantPickAnyTile : {
+
+        console.log("Il n'y a pas de coup jouable. La main passe au joueur suivant.");
+
+        const activePlayer : number = game.players.findIndex(player => player.color === game.activePlayer)!;
+        const nextPlayerIndex :number = (activePlayer + 1) % game.players.length;
+        game.activePlayer = game.players[nextPlayerIndex].color;
+
+        game.tilesToTake = undefined ;
+        console.log("Fin du tour !");
+
+        break
+
+      }
+
       case MoveType.RefillPaths : {
         
         if (isGame(game)){
@@ -347,9 +372,43 @@ const GorintoRules: GameType = {
 
           }
           
+        game.automaticMovePhase = AutomaticMovePhase.switchingFirstPlayer;
+
+        break
+      }
+
+      case MoveType.SwitchFirstPlayer : {
+
+        let firstPlayerNumber:number = 0;
+        let smallestScore:number = 101;
+        
+
+        for (let i = 0 ; i<game.players.length ; i++){
+          if (game.players[i].isFirst){
+            firstPlayerNumber = i;
+            game.players[i].isFirst = false;
+            break
+          }
+        }
+
+        for (let i = firstPlayerNumber ; i < firstPlayerNumber + game.players.length ; i++){
+          if (game.players[i%game.players.length].score < smallestScore){
+            smallestScore = game.players[i%game.players.length].score;
+          }
+        }
+
+        for (let i = firstPlayerNumber ; i < firstPlayerNumber + game.players.length ; i++){
+          if (game.players[i%game.players.length].score === smallestScore){
+           game.players[i%game.players.length].isFirst = true;
+           game.activePlayer = game.players[i%game.players.length].color;
+           break;
+          }
+        }  
+
         game.automaticMovePhase = undefined;
 
         break
+
       }
 
       case MoveType.MoveTile : {
