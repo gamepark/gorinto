@@ -19,6 +19,8 @@ import { moveSeasonMarker } from './moves/MoveSeasonMarker'
 import { countGoals } from './moves/CountGoals'
 import { switchFirstPlayer } from './moves/SwitchFirstPlayer'
 import { cantPickAnyTile } from './moves/CantPickAnyTile'
+import { determineWinner } from './moves/DetermineWinner'
+import { countKeys } from './moves/CountKeys'
 
 
 type GameType = SequentialGame<Game, Move, PlayerColor>
@@ -29,7 +31,7 @@ type GameType = SequentialGame<Game, Move, PlayerColor>
 const GorintoRules: GameType = {
   setup(): Game {
     const game:Game = {
-      season:1,
+      season:3,
       players:setupPlayers(),
       activePlayer:PlayerColor.black,                 // The real setup is below, this is a fake
       twoKeyElementCards : setupTwoKeyElementCards(),
@@ -73,17 +75,23 @@ const GorintoRules: GameType = {
     
     if (isGame(game) && (game.tilesToTake === undefined)){
 
-      if ((game.horizontalPath.length === 0 && game.verticalPath.length === 0) 
-      || ((filledSpacesinPaths(game) === 0) && (game.players.length === 2) )
-      || ((filledSpacesinPaths(game) === 1) && (game.players.length === 3) )
-      || ((filledSpacesinPaths(game) === 2) && (game.players.length === 4) )) {
+      if (((game.horizontalPath.length === 0 && game.verticalPath.length === 0) 
+      || ((filledSpacesinPaths(game) === 0) && (game.players.length === 2))
+      || ((filledSpacesinPaths(game) === 1) && (game.players.length === 3))
+      || ((filledSpacesinPaths(game) === 2) && (game.players.length === 4)))
+      && (game.automaticMovePhase === undefined) && (game.activePlayer)) {
         return refillPaths() ;
-      } else if (game.automaticMovePhase === AutomaticMovePhase.movingSeasonMarker){
+      } 
+      if (game.automaticMovePhase === AutomaticMovePhase.movingSeasonMarker){
         return moveSeasonMarker() ;
       } else if (game.automaticMovePhase === AutomaticMovePhase.countingGoals){
         return countGoals() ;
       } else if (game.automaticMovePhase === AutomaticMovePhase.switchingFirstPlayer){
         return switchFirstPlayer() ;
+      } else if (game.automaticMovePhase === AutomaticMovePhase.countingKeys){
+        return countKeys();
+      } else if (game.automaticMovePhase === AutomaticMovePhase.determiningWinner){
+        return determineWinner();
       }
 
     }
@@ -158,27 +166,37 @@ const GorintoRules: GameType = {
       }
 
       case MoveType.RefillPaths : {
-        
-        if (isGame(game)){
-          console.log ("dans le RefillPath : ")
-          if (game.horizontalPath.length !== 0){
-            game.automaticMovePhase = AutomaticMovePhase.movingSeasonMarker
+
+        if (game.season === 4){
+          game.automaticMovePhase = AutomaticMovePhase.movingSeasonMarker;
+        } else {
+          if (isGame(game)){
+
+            if (game.horizontalPath.length !== 0){
+              game.automaticMovePhase = AutomaticMovePhase.movingSeasonMarker
+            }
+            game.horizontalPath = game.elementTilesDeck.splice(0,5);
+            game.verticalPath = game.elementTilesDeck.splice(0,5);
+          } else if (isRefillPathsView(move)) {
+  
+            game.horizontalPath = move.horizontalPath
+            game.verticalPath = move.verticalPath
+  
           }
-          game.horizontalPath = game.elementTilesDeck.splice(0,5);
-          game.verticalPath = game.elementTilesDeck.splice(0,5);
-        } else if (isRefillPathsView(move)) {
-
-          game.horizontalPath = move.horizontalPath
-          game.verticalPath = move.verticalPath
-
         }
+        
         break
 
       }
 
       case MoveType.MoveSeasonMarker : {
 
-        game.season ++ ;
+        if (game.season === 4){
+          game.activePlayer = undefined ;
+        } else {
+          game.season ++ ;
+        }
+
         game.automaticMovePhase = AutomaticMovePhase.countingGoals;
 
         break
@@ -371,8 +389,12 @@ const GorintoRules: GameType = {
           }
 
           }
-          
-        game.automaticMovePhase = AutomaticMovePhase.switchingFirstPlayer;
+
+        if (game.season === 4 && game.activePlayer === undefined){
+          game.automaticMovePhase = AutomaticMovePhase.countingKeys;
+        } else {
+          game.automaticMovePhase = AutomaticMovePhase.switchingFirstPlayer;
+        } 
 
         break
       }
@@ -404,6 +426,89 @@ const GorintoRules: GameType = {
            break;
           }
         }  
+
+        game.automaticMovePhase = undefined;
+
+        break
+
+      }
+
+      case MoveType.CountKeys : {
+
+        for (let i = 0; i<game.twoKeyElementCards.length;i++){
+          for (let j = 0 ; j<game.players.length;j++){
+            const understandings : number[] = [game.players[j].understanding.void, game.players[j].understanding.wind, game.players[j].understanding.fire, game.players[j].understanding.water, game.players[j].understanding.earth];
+            
+            switch (game.twoKeyElementCards[i]){
+              
+              case 0 : {
+                game.players[j].score = game.players[j].score + 2*understandings[0];
+                break
+              }
+              case 1 : {
+                game.players[j].score = game.players[j].score + 2*understandings[1];
+                break
+              }
+              case 2 : {
+                game.players[j].score = game.players[j].score + 2*understandings[2];
+                break
+              }
+              case 3 : {
+                game.players[j].score = game.players[j].score + 2*understandings[3];
+                break
+              }
+              case 4 : {
+                game.players[j].score = game.players[j].score + 2*understandings[4];
+                break
+              }
+              
+            }
+          }
+        }
+
+        game.automaticMovePhase = AutomaticMovePhase.determiningWinner;
+        
+        break
+
+      }
+
+      case MoveType.DetermineWinner : {
+
+        console.log("Fin de la partie !");
+
+        let maxScore : number = 0;
+        let minTiles : number = 101;
+        let winners : Player[] = [];
+
+        for (let i = 0 ; i < game.players.length ; i++){
+          if (game.players[i].score >= maxScore){
+            if (game.players[i].score > maxScore){
+              maxScore = game.players[i].score;
+              minTiles = tilesOwnedByAPlayer(game.players[i]);
+            } else {
+              if (tilesOwnedByAPlayer(game.players[i]) < minTiles){
+                minTiles = tilesOwnedByAPlayer(game.players[i]);
+              }
+            }
+          }
+        }
+
+        console.log("MaxScore : ",maxScore, ", minTiles : ",minTiles)
+
+        for (let i = 0 ; i < game.players.length ; i++){
+
+          if(game.players[i].score === maxScore && tilesOwnedByAPlayer(game.players[i]) === minTiles){
+            winners.push(game.players[i]);
+          }
+
+        }
+        console.log(winners)
+
+        if (winners.length === 1){
+          console.log(winners[0].color+" remporte la partie avec "+winners[0].score+" points de sagesse !");
+        } else {
+          console.log("Les joueurs partagent une victoire harmonieuse !");
+        }
 
         game.automaticMovePhase = undefined;
 
@@ -649,6 +754,12 @@ function filledSpacesinPaths(game:Game):number {
 
   return game.horizontalPath.reduce((sum, space) => space ? sum+1 : sum, 0) + 
          game.verticalPath.reduce((sum, space) => space ? sum+1 : sum, 0)
+}
+
+function tilesOwnedByAPlayer(player:Player):number{
+
+  return player.understanding.void + player.understanding.wind + player.understanding.fire + player.understanding.water + player.understanding.earth
+
 }
 
 export default GorintoRules

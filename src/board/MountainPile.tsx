@@ -5,6 +5,7 @@ import { css } from "@emotion/core";
 import MountainDropZone from "./MountainDropZone";
 import Game from "../types/Game";
 import Element from "../types/Element";
+import { usePlayerId } from "@gamepark/workshop";
 
 type Props = {
     pile:ElementTileOld[],
@@ -14,6 +15,8 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
+
+    const playerId = usePlayerId()
 
     return(
 
@@ -29,7 +32,7 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
                                 image = {tile.image}
                                 element = {tile.element}
                                 position = {index}
-                                draggableItem = {canDrag(game,x,y,index) ? {type:"Element", x, y, z : index} : undefined}
+                                draggableItem = { playerId === game.activePlayer && canDrag(game,x,y,index) ? {type:"Element", x, y, z : index} : undefined}
                     />
 
                 </div>

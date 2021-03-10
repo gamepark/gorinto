@@ -5,7 +5,9 @@ enum MoveType{
     MoveSeasonMarker = "MOVE_SEASON_MARKER",
     CountGoals = "COUNT_GOALS",
     SwitchFirstPlayer = "SWITCH_FIRST_PLAYER",
-    CantPickAnyTile = "CANT_PICK_ANY_TILE"
+    CantPickAnyTile = "CANT_PICK_ANY_TILE",
+    CountKeys = "COUNT_KEYS",
+    DetermineWinner = "DETERMINE_WINNER"
 
 }
 

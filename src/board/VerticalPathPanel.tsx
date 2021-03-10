@@ -1,9 +1,12 @@
 import { css } from "@emotion/core";
+import { usePlayerId } from "@gamepark/workshop";
 import { FC } from "react";
 import Game from "../types/Game";
 import ElementTile from "./ElementTile";
 
 const VerticalPathPanel : FC<{game : Game}> = ({game}) => {
+
+    const playerId = usePlayerId()
 
     return(
 
@@ -17,7 +20,7 @@ const VerticalPathPanel : FC<{game : Game}> = ({game}) => {
                              image = {tile.image}
                              element = {tile.element}
                              position = {index}
-                             draggableItem = {!game.tilesToTake ? {type:"Element", path: "vertical", position : index} : undefined}
+                             draggableItem = {playerId === game.activePlayer && !game.tilesToTake ? {type:"Element", path: "vertical", position : index} : undefined}
                 />
 
             </div>
