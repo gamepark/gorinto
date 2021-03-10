@@ -4,7 +4,6 @@ import ICU from 'i18next-icu'
 import {DndProvider} from 'react-dnd-multi-backend'
 import HTML5ToTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch'
 import { initReactI18next } from 'react-i18next'
-import './App.css'
 import GameDisplay from './GameDisplay'
 import translations from './translations.json'
 
