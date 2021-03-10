@@ -26,7 +26,7 @@ opacity:0.7;
 background-color:darkblue;
 z-index:2;
 
-font-size:1.8em;
+font-size:4.4em;
 text-align:center;
 color:white;
 `
