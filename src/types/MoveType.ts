@@ -1,5 +1,6 @@
 enum MoveType{
     RefillPaths = 'REFILL_PATHS',
+    RemoveTileOnPath = "REMOVE_TILE_ON_PATH",
     MoveTile = 'MOVE_TILE',
     TakeTile = 'TAKE_TILE',
     MoveSeasonMarker = "MOVE_SEASON_MARKER",

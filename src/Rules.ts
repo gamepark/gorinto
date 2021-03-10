@@ -21,6 +21,7 @@ import { switchFirstPlayer } from './moves/SwitchFirstPlayer'
 import { cantPickAnyTile } from './moves/CantPickAnyTile'
 import { determineWinner } from './moves/DetermineWinner'
 import { countKeys } from './moves/CountKeys'
+import { removeTileOnPath } from './moves/RemoveTileOnPath'
 
 
 type GameType = SequentialGame<Game, Move, PlayerColor>
@@ -31,9 +32,9 @@ type GameType = SequentialGame<Game, Move, PlayerColor>
 const GorintoRules: GameType = {
   setup(): Game {
     const game:Game = {
-      season:3,
+      season:1,                 // Don't start at 4, even for debug
       players:setupPlayers(),
-      activePlayer:PlayerColor.black,                 // The real setup is below, this is a fake
+      activePlayer:PlayerColor.black,
       twoKeyElementCards : setupTwoKeyElementCards(),
       twoGoals : setupTwoGoals(),
       elementTilesDeck : setupElementTilesDeck(),
@@ -81,7 +82,17 @@ const GorintoRules: GameType = {
       || ((filledSpacesinPaths(game) === 2) && (game.players.length === 4)))
       && (game.automaticMovePhase === undefined) && (game.activePlayer)) {
         return refillPaths() ;
-      } 
+      }
+      
+      if (game.players.length === 2 && [2,4,6,8].includes(filledSpacesinPaths(game))) {           // Adaptation for 2 players
+        let twoPaths : (ElementTile | null) [] = game.horizontalPath.concat(game.verticalPath)
+        let randomSpaceToRemove : number = getRandomInt(10);
+        while (twoPaths[randomSpaceToRemove] === null){
+          randomSpaceToRemove = getRandomInt(10);
+        }
+        return removeTileOnPath(randomSpaceToRemove) ;
+      }
+
       if (game.automaticMovePhase === AutomaticMovePhase.movingSeasonMarker){
         return moveSeasonMarker() ;
       } else if (game.automaticMovePhase === AutomaticMovePhase.countingGoals){
@@ -185,6 +196,20 @@ const GorintoRules: GameType = {
           }
         }
         
+        break
+
+      }
+
+      case MoveType.RemoveTileOnPath : {
+
+        console.log("Mode 2 joueurs : une tuile au hasard est retirée des chemins !");
+
+        if (move.index < 5){
+          game.horizontalPath[move.index] = null;
+        } else {
+          game.verticalPath[move.index-5] = null;
+        }
+
         break
 
       }
@@ -760,6 +785,10 @@ function tilesOwnedByAPlayer(player:Player):number{
 
   return player.understanding.void + player.understanding.wind + player.understanding.fire + player.understanding.water + player.understanding.earth
 
+}
+
+function getRandomInt(max:number):number{
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 export default GorintoRules
