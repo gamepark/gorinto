@@ -83,6 +83,7 @@ const positionningTile = (position : number) => css`
 position:absolute;
 bottom:${0+6*position}%;
 left:${0+6*position}%;
+
 width:70%;
 height:70%;
 

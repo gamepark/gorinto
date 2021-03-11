@@ -24,13 +24,16 @@ const Board : FC<{game:Game}> = ({game}) => {
 
 const boardStyle = css`
     position : absolute;
-    top : 5%;
+    top : 1%;
     left : 23%;
     width : 53.4375%;
     height :95%;
     background-image : url(${board});
     background-size:cover;
     background-position:center;
+
+    perspective-origin:bottom;
+    transform: perspective(200em) rotateX(15deg);
 
 `
 

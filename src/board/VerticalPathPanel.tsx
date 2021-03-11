@@ -41,6 +41,7 @@ top:${0.5+19.5*position}%;
 left:0%;
 width:100%;
 height:15%;
+
 `
 
 const verticalPathPanel = css`
@@ -51,6 +52,7 @@ width : 11%;
 height : 82%;
 margin-left:2%;
 margin-right:2%;
+
 `
 
 export default VerticalPathPanel

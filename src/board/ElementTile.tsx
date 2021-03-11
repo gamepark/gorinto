@@ -21,8 +21,11 @@ const ElementTile : FC<Props> = ({image, draggableItem}) => {
 
         return(
 
-            <Draggable item={draggableItem} css={[elementTileStyle(image), canBeDragged]} onDrop = {(move:MoveTile) => play(move)}  >
+            <Draggable item={draggableItem} css={[elementTileStyle, canBeDragged]} onDrop = {(move:MoveTile) => play(move)}>
     
+                <img src={image} alt="back" />
+                <img css={frontStyle} src={image} alt="front" />
+
             </Draggable>
     
         )
@@ -31,7 +34,10 @@ const ElementTile : FC<Props> = ({image, draggableItem}) => {
 
         return(
 
-            <div css={elementTileStyle(image)}>
+            <div css={elementTileStyle}>
+
+                <img src={image} alt="back" />
+                <img css={frontStyle} src={image} alt="front" />
 
             </div>
 
@@ -40,23 +46,38 @@ const ElementTile : FC<Props> = ({image, draggableItem}) => {
     }
 
 }
+const frontStyle = css`
+
+transform:translateZ(4em);
+transform-style: preserve-3d;
+
+
+`
 
 const canBeDragged = css`
 border : gold 3px solid;
 border-radius:20%;
 `
 
-const elementTileStyle = (image : string) => css`
+const elementTileStyle = css`
 position : absolute;
 left : 0%;
 top : 0%;
 width : 100%;
 height:100%;
+perspective:0px;
+transform-style: preserve-3d;
 
-background-image : url(${image});
-background-size : contain;
-background-repeat : no-repeat;
-background-position :center;
+
+
+img{
+
+    position:absolute;
+    width:100%;
+    height:100%;
+    
+
+}
 
 `
 
