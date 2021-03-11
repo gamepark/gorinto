@@ -41,12 +41,10 @@ const seasonIndicatorStyle = css`
     width: 20%;
     height:10%;
     top:5%;
-    background-color:lightgrey;
     background-image : url(${SeasonBoard});
     background-size: contain;
     background-repeat: no-repeat;
     background-position:center top;
-    border-right:1px black solid;
 `
 
 export default SeasonIndicator

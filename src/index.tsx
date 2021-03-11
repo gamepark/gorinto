@@ -7,6 +7,7 @@ import {Provider} from 'react-redux'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import GorintoRules from './Rules'
+import Background from './images/BG.jpg'
 
 const style = css`
   html {
@@ -36,9 +37,10 @@ const style = css`
     width: 100vw;
     user-select: none;
     overflow: hidden;
+    background-image:url(${Background});
     background-color: white;
     background-size: cover;
-    background-position: center;
+    background-position: bottom;
     color: #eee;
 
     &:before {

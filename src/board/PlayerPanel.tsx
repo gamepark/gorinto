@@ -12,6 +12,12 @@ import MoveType from "../types/MoveType";
 import Game from "../types/Game";
 import Element from "../types/Element";
 
+import YellowGor from "../images/GOR_TTS_score_yellow.png";
+import BlueGor from "../images/GOR_TTS_score_blue.png";
+import RedGor from "../images/GOR_TTS_score_red.png";
+import WhiteGor from "../images/GOR_TTS_score_white.png";
+import BlackGor from "../images/GOR_TTS_score_black.png";
+
 type Props = {
     color:string, 
     understanding:any, 
@@ -68,7 +74,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
     return(
 
-        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position), canDrop && canDropStyle, isOver && isOverStyle]}>
+        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color), canDrop && canDropStyle, isOver && isOverStyle]}>
 
             <div css={playerHeaderStyle}>
 
@@ -116,19 +122,24 @@ right:7.5%;
 `
 
 const smallImagesStyle = css`
-width:5%;
-height:5%;
+width:8%;
+height:8%;
 `
 
-const playerPanelStyle = (position:number) => css`
+const playerPanelStyle = (position:number, color:string) => css`
 position : absolute;
-top : ${position * 25}%;
+top : ${position * 20}%;
 right : 0%;
 width : 100%;
-height : 25%;
-background-color : grey;
-border-top:1px black solid;
-border-bottom:1px black solid;
+height : 20%;
+
+${color === "yellow" &&`background : rgba(7,7,7, 0.5) bottom left 5%/18% url(${YellowGor}) no-repeat`}
+${color === "blue" &&`background : rgba(7,7,7, 0.5) bottom left 5%/18% url(${BlueGor}) no-repeat`}
+${color === "red" &&`background : rgba(7,7,7, 0.5) bottom left 5%/18% url(${RedGor}) no-repeat`}
+${color === "white" &&`background : rgba(7,7,7, 0.5) bottom left 5%/18% url(${WhiteGor}) no-repeat`}
+${color === "black" &&`background : rgba(7,7,7, 0.5) bottom left 5%/18% url(${BlackGor}) no-repeat`}
+
+
 `
 
 const playerHeaderStyle = css`
@@ -137,13 +148,14 @@ top : 5%;
 right : 5%;
 width : 100%
 height : 20%;
-font-size:20px;
+font-size:2.8em;
 `
 
 const playerElementStyle = css`
 position : absolute;
-top : 25%;
+top : 30%;
 right : 5%;
+font-size:2.4em;
 
 `
 

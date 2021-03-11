@@ -30,7 +30,6 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
 
                     <ElementTile 
                                 image = {tile.image}
-                                element = {tile.element}
                                 position = {index}
                                 draggableItem = { playerId === game.activePlayer && canDrag(game,x,y,index) ? {type:"Element", x, y, z : index} : undefined}
                     />

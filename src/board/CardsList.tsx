@@ -41,8 +41,6 @@ top:15%;
 left:0;
 width:20%;
 height:85%;
-background-color:lightgrey;
-border-right:1px black solid;
 `
 
 export default CardsList
