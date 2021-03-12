@@ -24,7 +24,7 @@ const style = css`
 
   body {
     margin: 0;
-    font-family: 'Oswald', "Roboto Light", serif;
+    font-family: 'RocknRoll One', sans-serif;
     font-size: 1vh;
     @media (max-aspect-ratio: 16/9) {
       font-size: calc(9vw / 16);

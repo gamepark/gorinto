@@ -25,8 +25,7 @@ position:absolute;
 width:50%;
 top:15%;
 left:25%;
-
-font-family: Arial;         // Change later here
+font-family: 'Bubblegum Sans', cursive;
 
 `
 
@@ -35,8 +34,9 @@ const positionningElementText = (color:Element) => css`
 position:absolute;
 width:50%;
 left:25%;
-bottom:15%;
-font-family: Arial;         // Change later here
+bottom:14%;
+font-family: 'Bubblegum Sans', cursive;
+text-transform:uppercase;
 
 ${color === Element.Earth &&
     `
@@ -69,13 +69,12 @@ ${color === Element.Void &&
 const keyElementCardPanelStyle = (position:number, image:string) => css`
 position : absolute;
 top : ${position * 25}%;
-left : 0px;
+left : 0%;
 width : 100%;
 height : 25%;
-font-size:2.2em;
+font-size:2em;
 text-align:center;
 padding:2%;
-
 
 
 background-image : url(${image});;

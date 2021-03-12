@@ -148,14 +148,14 @@ top : 5%;
 right : 5%;
 width : 100%
 height : 20%;
-font-size:2.8em;
+font-size:2.1em;
 `
 
 const playerElementStyle = css`
 position : absolute;
 top : 30%;
 right : 5%;
-font-size:2.4em;
+font-size:1.8em;
 
 `
 

@@ -42,8 +42,8 @@ p{
     width:60%;
     position:absolute;
     right:20%;
-    font-family:arial;
-    font-style:italic;
+    font-family: 'Courgette', cursive;
+    letter-spacing: -0.05em;
 }
 
 ${isHint === false &&
@@ -73,9 +73,9 @@ span{
     bottom:9%;
     right:16%;
     font-size:1.5em;
-    font-family:arial;
-    color:black;
-    font-weight:bold;
+    font-family: 'Bubblegum Sans', cursive;
+    color:white;
+    text-shadow: 1px 1px 2px black;
 }
 
 `
