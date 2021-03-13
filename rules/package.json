@@ -1,0 +1,23 @@
+{
+  "name": "@gamepark/gorinto",
+  "version": "0.0.0",
+  "description": "The rules of \"Gorinto\", a board game created by Yaner Richard, adapted for Game Park",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "author": "Théo GRÉGORIO (https://game-park.com/)",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@gamepark/rules-api": "^3.1.0",
+    "@types/lodash.shuffle": "^4.2.6",
+    "lodash.shuffle": "^4.2.0"
+  }
+}
