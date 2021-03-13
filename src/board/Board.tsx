@@ -33,7 +33,7 @@ const boardStyle = css`
     background-position:center;
 
     perspective-origin:bottom;
-    transform: perspective(200em) rotateX(15deg);
+    transform: perspective(200em) rotateX(15deg) ;
 
 `
 

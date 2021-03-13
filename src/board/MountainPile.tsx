@@ -22,7 +22,7 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
 
         <Fragment>
 
-        <div {...props} css = {[!game.tilesToTake && noPointerEvents]} > 
+        <div {...props} css = {[!game.tilesToTake && noPointerEvents, renderingContext]} > 
                         
             {pile.map((tile, index) =>
                 
@@ -75,19 +75,29 @@ function canDrag(game:Game,x:number,y:number,z:number):boolean{
 
 }
 
+const renderingContext = css`
+transform-style: preserve-3d;
+perspective:0em;
+`
+
 const noPointerEvents = css`
 pointer-events:none;
 `
 
 const positionningTile = (position : number) => css`
 position:absolute;
-bottom:${0+6*position}%;
-left:${0+6*position}%;
-
+left:15%;
+top:15%;
 width:70%;
 height:70%;
 
+
 z-index:${1+position};
+transform:translateZ(${position*4}em);
+
+transform-style: preserve-3d;
+perspective:0em;
+
 `
 
 export default MountainPile

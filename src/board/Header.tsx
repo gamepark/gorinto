@@ -22,8 +22,7 @@ top:0%;
 right:0%;
 width:100%;
 height:5%;
-opacity:0.7;
-background-color:darkblue;
+background-color:rgba(0,0,139, 0.5);
 z-index:2;
 
 font-size:4em;

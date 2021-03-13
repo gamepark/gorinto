@@ -48,7 +48,7 @@ p{
 
 ${isHint === false &&
     `
-    p:nth-child(2n+1){
+    p:nth-of-type(2n+1){
         top:25%;
         color:black;
     }
@@ -57,11 +57,11 @@ ${isHint === false &&
 
 ${isHint === true &&
     `
-    p:nth-child(2n+1){
+    p:nth-of-type(2n+1){
         top:14%;
         color:#8c514b;
     }
-    p:nth-child(2n){
+    p:nth-of-type(2n){
         bottom:14%;
         color:black;
     }

@@ -46,6 +46,7 @@ top : 17.5%;
 left : 17.5%;
 width : 82%;
 height : 81.5%;
+
 `
 
 export default MountainPanel
