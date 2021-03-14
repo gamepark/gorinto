@@ -21,7 +21,8 @@ const VerticalPathPanel : FC<{game : Game}> = ({game}) => {
                              image = {tile.image}
                              position = {index}
                              draggableItem = {playerId === game.activePlayer && !game.tilesToTake ? {type:"Element", path: "vertical", position : index} : undefined}
-                />
+                             element = {tile.element}
+               />
 
             </div>
 

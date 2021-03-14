@@ -6,16 +6,18 @@ import {Draggable} from '@gamepark/react-components'
 import { FC } from "react";
 import ElementInPath from "@gamepark/gorinto/types/ElementInPath";
 import ElementInPile from "@gamepark/gorinto/types/ElementInPile";
+import Element from "@gamepark/gorinto/types/Element";
 
 type Props = {
 
     image:string,
     position:number,
-    draggableItem?: ElementInPath | ElementInPile
+    draggableItem?: ElementInPath | ElementInPile ,
+    element:Element
 
 }
 
-const ElementTile : FC<Props> = ({image, draggableItem}) => {
+const ElementTile : FC<Props> = ({image, draggableItem, element}) => {
 
     const play = usePlay <MoveTile> ()
 
@@ -25,12 +27,12 @@ const ElementTile : FC<Props> = ({image, draggableItem}) => {
 
             <Draggable item={draggableItem} css={[elementTileStyle, canBeDragged]} drop={play}>
 
-                <div css={rightStyle}></div>
-                <img css={backStyle} src={image} alt="back" />
+                <div css={[rightStyle, coloring(element)]}></div>
+                <img css={[backStyle]} src={image} alt="back" />
                 <img css={frontStyle} src={image} alt="front" />
-                <div css={leftStyle}></div>
-                <div css={topStyle}></div>
-                <div css={bottomStyle}></div>
+                <div css={[leftStyle, coloring(element)]}></div>
+                <div css={[topStyle, coloring(element)]}></div>
+                <div css={[bottomStyle, coloring(element)]}></div>
 
             </Draggable>
 
@@ -42,12 +44,12 @@ const ElementTile : FC<Props> = ({image, draggableItem}) => {
 
             <div css={elementTileStyle}>
 
-                <div css={rightStyle}></div>
+                <div css={[rightStyle, coloring(element)]}></div>
                 <img css={backStyle} src={image} alt="back" />
                 <img css={frontStyle} src={image} alt="front" />
-                <div css={leftStyle}></div>         
-                <div css={topStyle}></div>
-                <div css={bottomStyle}></div>
+                <div css={[leftStyle, coloring(element)]}></div>         
+                <div css={[topStyle, coloring(element)]}></div>
+                <div css={[bottomStyle, coloring(element)]}></div>
 
             </div>
 
@@ -57,13 +59,27 @@ const ElementTile : FC<Props> = ({image, draggableItem}) => {
 
 }
 
+const coloring = (color:Element) => css`
+
+${color === Element.Void && `background-color : #805474`};
+${color === Element.Wind && `background-color : #cee0d7`};
+${color === Element.Fire && `background-color : #fc671a`};
+${color === Element.Water && `background-color : #00bab3`};
+${color === Element.Earth && `background-color : #996c59`};
+
+border:1px black solid;
+
+`
+
+
+
 const rightStyle = css`
  transform: rotateY(90deg) translateZ(2em);
  position:absolute;
  right:0em;
  width:4em;
- height:100%;
- background-color:red;
+ top:10%;
+ height:80%;
 
 `
 const leftStyle = css`
@@ -71,25 +87,25 @@ position:absolute;
 transform: rotateY(-90deg) translateZ(2em);
 position:absolute;
 left:0em;
+top:10%;
 width:4em;
-height:100%;
-background-color:red;
+height:80%;
 `
 const topStyle = css`
 position:absolute;
 transform: rotateX(-89deg) translateZ(2em);
 bottom:0em;
+left:10%;
 height:4em;
-width:100%;
-background-color:red;
+width:80%;
 `
 const bottomStyle = css`
 position:absolute;
 transform: rotateX(89deg) translateZ(2em);
 top:0em;
+left:10%;
 height:4em;
-width:100%;
-background-color:red;
+width:80%;
 `
 
 const frontStyle = css`
@@ -103,8 +119,7 @@ transform: rotateY(180deg) translateZ(2em);
 filter: drop-shadow(0 0 0.75rem black);
 `
 const canBeDragged = css`
-border : gold 3px solid;
-
+border : gold 0.5em solid;
 `
 
 const elementTileStyle = css`
