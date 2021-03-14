@@ -2,7 +2,7 @@
 import {css} from '@emotion/react'
 import Element from '@gamepark/gorinto/types/Element'
 import ElementInPile from '@gamepark/gorinto/types/ElementInPile'
-import Game from '@gamepark/gorinto/types/Game'
+import ElementTile from '@gamepark/gorinto/types/ElementTile'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import {FC, HTMLAttributes} from 'react'
 import {useDrop} from 'react-dnd'
@@ -16,7 +16,6 @@ import BlackGor from '../images/GOR_TTS_score_black.png'
 import BlueGor from '../images/GOR_TTS_score_blue.png'
 import RedGor from '../images/GOR_TTS_score_red.png'
 import WhiteGor from '../images/GOR_TTS_score_white.png'
-
 import YellowGor from '../images/GOR_TTS_score_yellow.png'
 
 type Props = {
@@ -25,28 +24,29 @@ type Props = {
     position:number, 
     score:number, 
     first:boolean,
-    game:Game
+    tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
+    mountainBoard:ElementTile[][][],
 } & HTMLAttributes<HTMLDivElement>
 
-const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, game, ...props}) => {
+const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, tilesToTake, mountainBoard, ...props}) => {
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: ["Element"],
         canDrop: (item: ElementInPile) => {
-            if (game.tilesToTake !== undefined){
+            if (tilesToTake !== undefined){
 
-                if (game.tilesToTake.element !== Element.Earth){
+                if (tilesToTake.element !== Element.Earth){
                     return(
-                        (game.tilesToTake.coordinates.find(coord => (coord.x === item.x) && (coord.y === item.y)) !== undefined)
+                        (tilesToTake.coordinates.find(coord => (coord.x === item.x) && (coord.y === item.y)) !== undefined)
                         &&
-                        (item.z === game.mountainBoard[item.x][item.y].length - 1)
+                        (item.z === mountainBoard[item.x][item.y].length - 1)
                     )
                 }
                else {
                    return (
-                    (game.tilesToTake.coordinates.find(coord => (coord.x === item.x) && (coord.y === item.y)) !== undefined)
+                    (tilesToTake.coordinates.find(coord => (coord.x === item.x) && (coord.y === item.y)) !== undefined)
                     &&
-                    (item.z !== game.mountainBoard[item.x][item.y].length - 1)
+                    (item.z !== mountainBoard[item.x][item.y].length - 1)
                        
                    )
                }
@@ -63,7 +63,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
         }),
         drop: (item: ElementInPile) => {
             
-                if (game.tilesToTake!.element !== Element.Earth){
+                if (tilesToTake!.element !== Element.Earth){
                     return {type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y} };
                 } else {
                     return {type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y, z:item.z} };

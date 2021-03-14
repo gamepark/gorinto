@@ -1,16 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { FC } from "react";
-import Game from "@gamepark/gorinto/types/Game";
 import PlayerPanel from "./PlayerPanel";
+import Player from "@gamepark/gorinto/types/Player";
+import ElementTile from "@gamepark/gorinto/types/ElementTile";
+import Element from "@gamepark/gorinto/types/Element";
 
-const PlayerList : FC<{game:Game}> = ({game}) => {
+type Props = {
+    players:Player[], 
+    tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
+    mountainBoard:ElementTile[][][]
+}
+
+const PlayerList : FC<Props> = ({players, tilesToTake, mountainBoard}) => {
 
     return(
 
         <div css={playerPanelStyle}>
             
-            {game.players.map((player, index) => 
+            {players.map((player, index) => 
            
             <PlayerPanel key = {player.color}
                          understanding = {player.understanding}
@@ -18,8 +26,8 @@ const PlayerList : FC<{game:Game}> = ({game}) => {
                          position = {index}
                          color = {player.color}
                          first = {player.isFirst}
-
-                         game = {game}
+                         tilesToTake = {tilesToTake}
+                         mountainBoard = {mountainBoard}
             />
            
             )}

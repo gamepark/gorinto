@@ -2,10 +2,18 @@
 import { css } from "@emotion/react";
 import {usePlayerId} from '@gamepark/react-client'
 import { FC } from "react";
-import Game from "@gamepark/gorinto/types/Game";
 import ElementTile from "./ElementTile";
+import ElementTileOld from "@gamepark/gorinto/types/ElementTile";
+import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
+import Element from "@gamepark/gorinto/types/Element";
 
-const VerticalPathPanel : FC<{game : Game}> = ({game}) => {
+type Props = {
+    tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
+    verticalPath:(ElementTileOld | null)[]
+    activePlayer: PlayerColor | undefined;
+}
+
+const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer}) => {
 
     const playerId = usePlayerId()
 
@@ -13,14 +21,14 @@ const VerticalPathPanel : FC<{game : Game}> = ({game}) => {
 
         <div css = {verticalPathPanel}>
 
-            {game.verticalPath.map((tile, index) => tile ?
+            {verticalPath.map((tile, index) => tile ?
             
             <div css={positionningTile(index)} key = {index}> 
 
                 <ElementTile 
                              image = {tile.image}
                              position = {index}
-                             draggableItem = {playerId === game.activePlayer && !game.tilesToTake ? {type:"Element", path: "vertical", position : index} : undefined}
+                             draggableItem = {playerId === activePlayer && !tilesToTake ? {type:"Element", path: "vertical", position : index} : undefined}
                              element = {tile.element}
                />
 

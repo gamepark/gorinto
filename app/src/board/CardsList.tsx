@@ -2,18 +2,17 @@
 import { css } from "@emotion/react";
 import {Goals} from '@gamepark/gorinto/cards/Goals'
 import {Keys} from '@gamepark/gorinto/cards/KeyElement'
-import Game from '@gamepark/gorinto/types/Game'
 import { FC } from "react";
 import GoalCard from "./GoalCard";
 import KeyElementCardPanel from "./KeyElementCardPanel";
 
-const CardsList : FC<{game:Game}> = ({game}) => {
+const CardsList : FC<{keysArray:number[], goalsArray:number[]}> = ({keysArray, goalsArray}) => {
 
     return(
 
         <div css={cardsListStyle}>
 
-            {game.twoKeyElementCards.map((cardNumber, index) =>
+            {keysArray.map((cardNumber, index) =>
             
                 <KeyElementCardPanel key = {index}
                                      keyCard = {Keys[cardNumber]}
@@ -21,7 +20,7 @@ const CardsList : FC<{game:Game}> = ({game}) => {
                 />
             )}
 
-            {game.twoGoals.map((goalNumber, index) =>
+            {goalsArray.map((goalNumber, index) =>
             
                 <GoalCard   key = {index}
                             goal = {Goals[goalNumber]}
