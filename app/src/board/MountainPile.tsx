@@ -78,8 +78,7 @@ function canDrag(game:Game,x:number,y:number,z:number):boolean{
 }
 
 const renderingContext = css`
-transform-style: preserve-3d;
-perspective:0em;
+
 `
 
 const noPointerEvents = css`
@@ -95,7 +94,7 @@ height:70%;
 
 
 z-index:${1+position};
-transform:translateZ(${position*4}em);
+
 
 transform-style: preserve-3d;
 perspective:0em;

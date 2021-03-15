@@ -11,13 +11,13 @@ import Element from "@gamepark/gorinto/types/Element";
 type Props = {
 
     image:string,
-    position:number,
+    position?:number,
     draggableItem?: ElementInPath | ElementInPile ,
     element:Element
 
 }
 
-const ElementTile : FC<Props> = ({image, draggableItem, element}) => {
+const ElementTile : FC<Props> = ({image, draggableItem, element, position}) => {
 
     const play = usePlay <MoveTile> ()
 
@@ -25,14 +25,20 @@ const ElementTile : FC<Props> = ({image, draggableItem, element}) => {
 
         return(
 
-            <Draggable item={draggableItem} css={[elementTileStyle, canBeDragged]} drop={play}>
+            <Draggable item={draggableItem} css={[size, canBeDragged]} drop={play}>
 
-                <div css={[rightStyle, coloring(element)]}></div>
-                <img css={[backStyle]} src={image} alt="back" />
-                <img css={frontStyle} src={image} alt="front" />
-                <div css={[leftStyle, coloring(element)]}></div>
-                <div css={[topStyle, coloring(element)]}></div>
-                <div css={[bottomStyle, coloring(element)]}></div>
+                <div css={elementTileStyle(position)}>
+
+                    <div css={[rightStyle, coloring(element)]}></div>
+                    <img css={[backStyle]} src={image} alt="back" />
+                    <img css={frontStyle} src={image} alt="front" />
+                    <div css={[leftStyle, coloring(element)]}></div>
+                    <div css={[topStyle, coloring(element)]}></div>
+                    <div css={[bottomStyle, coloring(element)]}></div>
+
+                </div>
+
+
 
             </Draggable>
 
@@ -42,7 +48,7 @@ const ElementTile : FC<Props> = ({image, draggableItem, element}) => {
 
         return(
 
-            <div css={elementTileStyle}>
+            <div css={elementTileStyle(position)}>
 
                 <div css={[rightStyle, coloring(element)]}></div>
                 <img css={backStyle} src={image} alt="back" />
@@ -58,6 +64,20 @@ const ElementTile : FC<Props> = ({image, draggableItem, element}) => {
     }
 
 }
+
+const size = css`
+
+position : absolute;
+left : 0%;
+top : 0%;
+width : 100%;
+height:100%;
+
+perspective:0em;
+transform-style: preserve-3d;
+border-radius:20%;
+
+`
 
 const coloring = (color:Element) => css`
 
@@ -122,7 +142,7 @@ const canBeDragged = css`
 border : gold 0.5em solid;
 `
 
-const elementTileStyle = css`
+const elementTileStyle = (position:number | undefined) => css`
 position : absolute;
 left : 0%;
 top : 0%;
@@ -130,8 +150,9 @@ width : 100%;
 height:100%;
 perspective:0em;
 transform-style: preserve-3d;
-transform:translateZ(2em);
 
+${position === undefined && `transform:translateZ(2em)`};
+${position !== undefined && `transform:translateZ(${2+position!*4}em)`};
 
 /*box-shadow: 0px 0px 0.75em black;*/
 

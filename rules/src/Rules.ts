@@ -177,6 +177,8 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
 
       case MoveType.RefillPaths : {
 
+        console.log("dans le RefillPath")
+
         if (this.state.season === 4) {
           this.state.automaticMovePhase = AutomaticMovePhase.movingSeasonMarker
         } else {
