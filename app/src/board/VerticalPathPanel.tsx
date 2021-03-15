@@ -27,7 +27,8 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer}
 
                 <ElementTile 
                              image = {tile.image}
-                             draggableItem = {playerId === activePlayer && !tilesToTake ? {type:"Element", path: "vertical", position : index} : undefined}
+                             draggable = {playerId === activePlayer && !tilesToTake}
+                             draggableItem = {{type:"Element", path: "vertical", position : index}}
                              element = {tile.element}
                />
 
@@ -51,9 +52,6 @@ left:0%;
 width:100%;
 height:15%;
 
-transform-style: preserve-3d;
-perspective:0em;
-
 `
 
 const verticalPathPanel = css`
@@ -64,8 +62,6 @@ width : 11%;
 height : 82%;
 margin-left:2%;
 margin-right:2%;
-
-transform-style: preserve-3d;
 
 `
 

@@ -12,58 +12,31 @@ type Props = {
 
     image:string,
     position?:number,
-    draggableItem?: ElementInPath | ElementInPile ,
+    draggable?:boolean,
+    draggableItem: ElementInPath | ElementInPile ,
     element:Element
 
 }
 
-const ElementTile : FC<Props> = ({image, draggableItem, element, position}) => {
+const ElementTile : FC<Props> = ({image, draggable=false, draggableItem, element, position}) => {
 
     const play = usePlay <MoveTile> ()
 
-    if (draggableItem){
-
         return(
 
-            <Draggable item={draggableItem} css={[size, canBeDragged]} drop={play}>
+            <Draggable canDrag={draggable} item={draggableItem} css={[size, canBeDragged(draggable)]} drop={play}>
 
-                <div css={elementTileStyle(position)}>
-
-                    <div css={[rightStyle, coloring(element)]}></div>
-                    <img css={[backStyle]} src={image} alt="back" />
-                    <img css={frontStyle} src={image} alt="front" />
-                    <div css={[leftStyle, coloring(element)]}></div>
-                    <div css={[topStyle, coloring(element)]}></div>
-                    <div css={[bottomStyle, coloring(element)]}></div>
-
-                </div>
-
-
+      
+                    <div css={[topStyle]}></div>
+                    <div css={[backStyle, coloring(element)]}></div>
 
             </Draggable>
 
         )
 
-    } else {
-
-        return(
-
-            <div css={elementTileStyle(position)}>
-
-                <div css={[rightStyle, coloring(element)]}></div>
-                <img css={backStyle} src={image} alt="back" />
-                <img css={frontStyle} src={image} alt="front" />
-                <div css={[leftStyle, coloring(element)]}></div>         
-                <div css={[topStyle, coloring(element)]}></div>
-                <div css={[bottomStyle, coloring(element)]}></div>
-
-            </div>
-
-        )
-
-    }
-
 }
+
+const thickness = 4;            //em unit
 
 const size = css`
 
@@ -73,10 +46,8 @@ top : 0%;
 width : 100%;
 height:100%;
 
-perspective:0em;
 transform-style: preserve-3d;
-border-radius:20%;
-
+perspective:0em;
 `
 
 const coloring = (color:Element) => css`
@@ -87,59 +58,72 @@ ${color === Element.Fire && `background-color : #fc671a`};
 ${color === Element.Water && `background-color : #00bab3`};
 ${color === Element.Earth && `background-color : #996c59`};
 
-border:1px black solid;
-
+border:0.2em black solid;
 `
 
 
 
 const rightStyle = css`
- transform: rotateY(90deg) translateZ(2em);
+ transform: rotateY(90deg) ;
  position:absolute;
- right:0em;
+ right:-1em;
  width:4em;
  top:10%;
  height:80%;
-
 `
 const leftStyle = css`
 position:absolute;
-transform: rotateY(-90deg) translateZ(2em);
-position:absolute;
-left:0em;
+transform: rotateY(-90deg);
+left:-1em;
 top:10%;
 width:4em;
 height:80%;
 `
 const topStyle = css`
 position:absolute;
-transform: rotateX(-89deg) translateZ(2em);
+
+transform-style:preserve-3d;
+transform : rotateX(89deg);
 bottom:0em;
 left:10%;
-height:4em;
+height:${thickness}em;
 width:80%;
+backface-visibility: visible;
+
+background-color:red;
 `
 const bottomStyle = css`
 position:absolute;
-transform: rotateX(89deg) translateZ(2em);
-top:0em;
+transform: rotateX(1deg);
+top:-1em;
 left:10%;
 height:4em;
 width:80%;
 `
 
-const frontStyle = css`
+const frontStyle = (image:string) => css`
 position:absolute;
-transform: rotateY(0deg) translateZ(2em);
+transform: translateZ(4em);
+width:100%;
+height:100%;
+background-image:url(${image});
+background-repeat:no-repeat;
+background-size:cover;
+background-position:center;
+backface-visibility: visible;
 
 `
 const backStyle = css`
 position:absolute;
-transform: rotateY(180deg) translateZ(2em);
 filter: drop-shadow(0 0 0.75rem black);
+height:100%;
+width:100%;
+border-radius:20%;
+backface-visibility: visible;
 `
-const canBeDragged = css`
-border : gold 0.5em solid;
+const canBeDragged = (isDraggable:boolean) => css`
+${isDraggable === true && `border : gold 0.5em solid`}
+
 `
 
 const elementTileStyle = (position:number | undefined) => css`
@@ -148,11 +132,10 @@ left : 0%;
 top : 0%;
 width : 100%;
 height:100%;
-perspective:0em;
+
 transform-style: preserve-3d;
 
-${position === undefined && `transform:translateZ(2em)`};
-${position !== undefined && `transform:translateZ(${2+position!*4}em)`};
+${position !== undefined && `transform:translateZ(${position*4}em)`};
 
 /*box-shadow: 0px 0px 0.75em black;*/
 

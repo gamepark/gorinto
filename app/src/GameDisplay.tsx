@@ -17,7 +17,7 @@ const GameDisplay: FC<{game:Game}> = ({game}) => {
       <Header game = {game} />
       <SeasonIndicator season = {game.season} />
       <CardsList keysArray = {game.twoKeyElementCards} goalsArray = {game.twoGoals} />
-      <Board game = {game} />
+      <Board game = {game}/>
       <PlayerList players = {game.players} mountainBoard = {game.mountainBoard} tilesToTake = {game.tilesToTake} />
       
 

@@ -23,16 +23,17 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
 
         <>
 
-        <div {...props} css = {[!game.tilesToTake && noPointerEvents, renderingContext]} > 
+        <div {...props} css = {[!game.tilesToTake && noPointerEvents]} > 
                         
             {pile.map((tile, index) =>
                 
-                <div css={positionningTile(index) } key = {index}> 
+                <div css={positionningTile} key = {index}> 
 
                     <ElementTile 
                                 image = {tile.image}
                                 position = {index}
-                                draggableItem = { playerId === game.activePlayer && canDrag(game,x,y,index) ? {type:"Element", x, y, z : index} : undefined}
+                                draggable = {playerId === game.activePlayer && canDrag(game,x,y,index)}
+                                draggableItem = {{type:"Element", x, y, z : index}}
                                 element = {tile.element}
                     />
 
@@ -77,27 +78,16 @@ function canDrag(game:Game,x:number,y:number,z:number):boolean{
 
 }
 
-const renderingContext = css`
-
-`
-
 const noPointerEvents = css`
 pointer-events:none;
 `
 
-const positionningTile = (position : number) => css`
+const positionningTile = css`
 position:absolute;
 left:15%;
 top:15%;
 width:70%;
 height:70%;
-
-
-z-index:${1+position};
-
-
-transform-style: preserve-3d;
-perspective:0em;
 
 `
 

@@ -27,7 +27,8 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
 
                 <ElementTile 
                              image = {tile.image}
-                             draggableItem = {playerId === activePlayer && !tilesToTake ? {type:"Element", path: "horizontal", position: index} : undefined}
+                             draggable = {playerId === activePlayer && !tilesToTake}
+                             draggableItem = {{type:"Element", path: "horizontal", position: index}}
                              element = {tile.element}
                />
 
@@ -51,8 +52,6 @@ left:${3.2+19.5*position}%;
 width:15%;
 height:100%;
 
-transform-style: preserve-3d;
-perspective:0em;
 `
 
 const horizontalPathPanel = css`
@@ -62,7 +61,6 @@ left : 18%;
 width : 81.5%;
 height : 11%;
 
-transform-style: preserve-3d;
 `
 
 export default HorizontalPathPanel
