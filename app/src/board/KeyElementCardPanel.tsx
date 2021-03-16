@@ -77,7 +77,6 @@ font-size:2em;
 text-align:center;
 padding:2%;
 
-
 background-image : url(${image});;
 background-size : contain;
 background-repeat : no-repeat;

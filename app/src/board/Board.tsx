@@ -25,7 +25,7 @@ const Board : FC<{game:Game}> = ({game}) => {
 
 const boardStyle = css`
     position : absolute;
-    top : 1%;
+    top : 0%;
     left : 23%;
     width : 53.4375%;
     height :95%;
@@ -33,9 +33,11 @@ const boardStyle = css`
     background-size:cover;
     background-position:center;
 
+    border: 0.2em black solid;
+    box-shadow: 0em 0em 3em 1.5em black;
+
+
     transform-style: preserve-3d;
-    transform: perspective(200em) rotateX(10deg) translateZ(10em) ;
-    transform-origin:center 125% ;
 
 `
 

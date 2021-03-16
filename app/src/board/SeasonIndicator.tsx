@@ -41,7 +41,8 @@ const seasonIndicatorStyle = css`
     position:absolute;
     width: 20%;
     height:10%;
-    top:5%;
+    left:2%;
+    top:0%;
     background-image : url(${SeasonBoard});
     background-size: contain;
     background-repeat: no-repeat;

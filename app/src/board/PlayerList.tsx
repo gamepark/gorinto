@@ -40,8 +40,8 @@ const PlayerList : FC<Props> = ({players, tilesToTake, mountainBoard}) => {
 
 const playerPanelStyle = css`
 position:absolute;
-right:0%;
-top:5%;
+left:77.4375%;
+top:0%;
 text-align:right;
 width:20%;
 height:95%;

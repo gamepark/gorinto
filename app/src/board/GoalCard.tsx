@@ -27,7 +27,7 @@ const goalCardPanelStyle = (position:number, isHint:boolean) => css`
 
 position : absolute;
 top : ${(position+2) * 25}%;
-left : 0px;
+left : 0%;
 width:100%;
 height:25%;
 
@@ -72,7 +72,7 @@ ${isHint === true &&
 span{
     position:absolute;
     bottom:9%;
-    right:16%;
+    right:10%;
     font-size:1.5em;
     font-family: 'Bubblegum Sans', cursive;
     color:white;

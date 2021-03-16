@@ -37,10 +37,12 @@ const CardsList : FC<{keysArray:number[], goalsArray:number[]}> = ({keysArray, g
 
 const cardsListStyle = css`
 position:absolute;
-top:15%;
-left:0;
-width:20%;
+top:10%;
+left:5%;
+width:17%;
 height:85%;
+
+box-shadow: 0em 0em 1.5em 0.8em black;
 `
 
 export default CardsList

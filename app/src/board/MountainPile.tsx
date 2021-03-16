@@ -23,11 +23,11 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
 
         <>
 
-        <div {...props} css = {[!game.tilesToTake && noPointerEvents]} > 
+        <div {...props} css = {[!game.tilesToTake && noPointerEvents, renderContext]} > 
                         
             {pile.map((tile, index) =>
                 
-                <div css={positionningTile(index)} key = {index}> 
+                <div css={positionningTile(index, game.tilesToTake?.element, x, y, game.tilesToTake?.coordinates[0].x, game.tilesToTake?.coordinates[0].y)} key = {index}> 
 
                     <ElementTile 
                                 image = {tile.image}
@@ -78,12 +78,16 @@ function canDrag(game:Game,x:number,y:number,z:number):boolean{
 
 }
 
-const noPointerEvents = css`
-pointer-events:none;
+const renderContext = css`
 transform-style:preserve-3d;
 `
 
-const positionningTile = (position:number) => css`
+const noPointerEvents = css`
+pointer-events:none;
+`
+
+const positionningTile = (position:number, isEarth:Element|undefined, x:number, y:number, xRef:number|undefined, yRef:number|undefined) => css`
+
 position:absolute;
 left:15%;
 top:15%;
@@ -91,7 +95,9 @@ width:70%;
 height:70%;
 
 transform-style: preserve-3d;
-transform:translateZ(${position*4}em);
+${(isEarth !== Element.Earth) && `transform:translateZ(${position*4}em)`};
+${(isEarth === Element.Earth && (x !== xRef || y !== yRef)) && `transform:translateZ(${position*4}em)`};
+${(isEarth === Element.Earth && x === xRef && y === yRef) && `transform:translateZ(${position*4*2}em)`};
 
 `
 
