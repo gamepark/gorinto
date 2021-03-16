@@ -61,7 +61,7 @@ position : absolute;
 top : 2.25%;
 left : 18%;
 width : 81.5%;
-height : 11%;
+height : 12%;
 
 transform-style:preserve-3d;
 

@@ -59,10 +59,8 @@ const verticalPathPanel = css`
 position : absolute;
 top : 19.5%;
 left : 1%;
-width : 11%;
+width : 12%;
 height : 82%;
-margin-left:2%;
-margin-right:2%;
 transform-style:preserve-3d;
 
 `

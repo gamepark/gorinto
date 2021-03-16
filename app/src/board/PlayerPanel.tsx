@@ -79,7 +79,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
             <div css={playerHeaderStyle}>
 
-                <span>Couleur : {color} - </span> <span>Score : {score}</span>
+                <span>Color : {color} - </span> <span>Score : {score}</span>
 
             </div>
 
@@ -120,6 +120,8 @@ width:15%;
 position:absolute;
 bottom:10%;
 right:7.5%;
+
+filter: drop-shadow(0 0 1em black);
 `
 
 const smallImagesStyle = css`

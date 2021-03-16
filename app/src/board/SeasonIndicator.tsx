@@ -35,6 +35,8 @@ position:absolute;
 height:65%;
 left:15%;
 top:15%;
+
+filter: drop-shadow(0 0 0.2em black);
 `
 
 const seasonIndicatorStyle = css`

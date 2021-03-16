@@ -33,7 +33,7 @@ const MountainPanel : FC<{game : Game}> = ({game}) => {
 
 const areaPosition= (x:number, y:number) => css`
 position:absolute;
-left:${x*20}%;
+left:${1+(-0.5*x)+x*20}%;
 top:${y*20}%;
 
 width:20%;
