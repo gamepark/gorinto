@@ -40,9 +40,9 @@ p{
     color:black;
     font-size:1.6em;
     text-align:center;
-    width:60%;
+    width:70%;
     position:absolute;
-    right:20%;
+    right:15%;
     font-family: 'Courgette', cursive;
     letter-spacing: -0.05em;
 }
@@ -50,7 +50,7 @@ p{
 ${isHint === false &&
     `
     p:nth-of-type(2n+1){
-        top:25%;
+        top:28%;
         color:black;
     }
     `
@@ -59,11 +59,11 @@ ${isHint === false &&
 ${isHint === true &&
     `
     p:nth-of-type(2n+1){
-        top:14%;
+        top:18%;
         color:#8c514b;
     }
     p:nth-of-type(2n){
-        bottom:14%;
+        bottom:18%;
         color:black;
     }
     `
