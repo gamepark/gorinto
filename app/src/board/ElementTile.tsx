@@ -26,11 +26,11 @@ const ElementTile : FC<Props> = ({image, draggable=false, draggableItem, element
 
         return(
 
-            <Draggable canDrag={draggable} item={draggableItem} css={[size(position), canBeDragged(draggable)]} drop={play} {...props} >
+            <Draggable canDrag={draggable} item={draggableItem} css={[size]} drop={play} {...props} >
 
                     <div css={frontStyle(image)}></div>
                     <div css={[topStyle, coloring(element)]}></div>
-                    <div css={[backStyle, coloring(element)]}></div>
+                    <div css={[backStyle, coloring(element), shadow(position), canBeDragged(draggable)]}></div>
                     <div css={[rightStyle, coloring(element)]}></div>
                     <div css={[leftStyle, coloring(element)]}></div>
                     <div css={[bottomStyle, coloring(element)]}></div>
@@ -44,7 +44,7 @@ const ElementTile : FC<Props> = ({image, draggable=false, draggableItem, element
 
 const thickness = 4;            //em unit
 
-const size = (position:number|undefined) => css`
+const size = css`
 
 position : absolute;
 left : 0%;
@@ -57,7 +57,6 @@ perspective:0em;
 `
 
 const coloring = (color:Element) => css`
-
 ${color === Element.Void && `background-color : #805474`};
 ${color === Element.Wind && `background-color : #cee0d7`};
 ${color === Element.Fire && `background-color : #fc671a`};
@@ -65,6 +64,10 @@ ${color === Element.Water && `background-color : #00bab3`};
 ${color === Element.Earth && `background-color : #996c59`};
 
 border:0.1em black solid;
+`
+
+const shadow = (position:number|undefined) => css`
+;
 `
 
 
@@ -123,43 +126,15 @@ background-position:center;
 `
 const backStyle = css`
 position:absolute;
-/*filter: drop-shadow(0 0 0.75rem black);*/
-box-shadow: 0px 0px 1.5em black;
 height:100%;
 width:100%;
 border-radius:20%;
+
+box-shadow: 0px 0px 1.5em 1em black;
 `
 const canBeDragged = (isDraggable:boolean) => css`
-${isDraggable === true && `border : gold 0.5em solid`}              // Shrink the elements - must find an other way
-
-`
-
-const elementTileStyle = (position:number | undefined) => css`
-position : absolute;
-left : 0%;
-top : 0%;
-width : 100%;
-height:100%;
-
-transform-style: preserve-3d;
-
-
-
-/*box-shadow: 0px 0px 0.75em black;*/
-
+${isDraggable === true && `box-shadow: 0px 0px 1.5em 1em gold`};
 border-radius:20%;
-
-
-
-
-img{
-
-    position:absolute;
-    width:100%;
-    height:100%;
-
-}
-
 `
 
 export default ElementTile

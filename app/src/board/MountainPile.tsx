@@ -80,6 +80,7 @@ function canDrag(game:Game,x:number,y:number,z:number):boolean{
 
 const noPointerEvents = css`
 pointer-events:none;
+transform-style:preserve-3d;
 `
 
 const positionningTile = (position:number) => css`

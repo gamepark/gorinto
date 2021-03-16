@@ -34,7 +34,7 @@ const boardStyle = css`
     background-position:center;
 
     transform-style: preserve-3d;
-    transform: perspective(200em) rotateX(10deg) translateZ(10em);
+    transform: perspective(200em) rotateX(10deg) translateZ(10em) ;
     transform-origin:center 125% ;
 
 `

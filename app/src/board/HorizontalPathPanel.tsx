@@ -52,6 +52,7 @@ top:0%;
 left:${3.2+19.5*position}%;
 width:15%;
 height:100%;
+transform-style:preserve-3d;
 
 `
 
@@ -61,6 +62,8 @@ top : 2.25%;
 left : 18%;
 width : 81.5%;
 height : 11%;
+
+transform-style:preserve-3d;
 
 `
 
