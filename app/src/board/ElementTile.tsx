@@ -66,7 +66,15 @@ const coloring = (color:Element) => css`
 `
 
 const canBeDragged = (isDraggable:boolean) => css`
-    ${isDraggable === true && `box-shadow: 0px 0px 1.5em 1em gold`};
+
+    @keyframes glowing {
+        0% { box-shadow: 0px 0px 1em 0.2em gold; }
+        45% { box-shadow: 0px 0px 1.5em 1em gold; }
+        55% { box-shadow: 0px 0px 1.5em 1em gold; }
+        100% { box-shadow: 0px 0px 1em 0.2em gold; }
+    }
+
+    ${isDraggable === true && `animation: glowing 3000ms infinite;`};
     border-radius:20%;
 `
 
