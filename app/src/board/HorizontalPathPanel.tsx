@@ -30,6 +30,7 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
                              draggable = {playerId === activePlayer && !tilesToTake}
                              draggableItem = {{type:"Element", path: "horizontal", position: index}}
                              element = {tile.element}
+                             
                />
 
             </div>

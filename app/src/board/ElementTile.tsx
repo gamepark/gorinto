@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import MoveTile from '@gamepark/gorinto/moves/MoveTile'
 import {usePlay} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
-import { FC } from "react";
+import { FC, HTMLAttributes } from "react";
 import ElementInPath from "@gamepark/gorinto/types/ElementInPath";
 import ElementInPile from "@gamepark/gorinto/types/ElementInPile";
 import Element from "@gamepark/gorinto/types/Element";
@@ -16,19 +16,25 @@ type Props = {
     draggableItem: ElementInPath | ElementInPile ,
     element:Element
 
-}
+} & HTMLAttributes<HTMLDivElement>
 
-const ElementTile : FC<Props> = ({image, draggable=false, draggableItem, element, position}) => {
+
+
+const ElementTile : FC<Props> = ({image, draggable=false, draggableItem, element, position, ...props}) => {
 
     const play = usePlay <MoveTile> ()
 
         return(
 
-            <Draggable canDrag={draggable} item={draggableItem} css={[size, canBeDragged(draggable)]} drop={play}>
+            <Draggable canDrag={draggable} item={draggableItem} css={[size(position), canBeDragged(draggable)]} drop={play} {...props} >
 
-      
-                    <div css={[topStyle]}></div>
+                    <div css={frontStyle(image)}></div>
+                    <div css={[topStyle, coloring(element)]}></div>
                     <div css={[backStyle, coloring(element)]}></div>
+                    <div css={[rightStyle, coloring(element)]}></div>
+                    <div css={[leftStyle, coloring(element)]}></div>
+                    <div css={[bottomStyle, coloring(element)]}></div>
+                    
 
             </Draggable>
 
@@ -38,7 +44,7 @@ const ElementTile : FC<Props> = ({image, draggable=false, draggableItem, element
 
 const thickness = 4;            //em unit
 
-const size = css`
+const size = (position:number|undefined) => css`
 
 position : absolute;
 left : 0%;
@@ -58,46 +64,49 @@ ${color === Element.Fire && `background-color : #fc671a`};
 ${color === Element.Water && `background-color : #00bab3`};
 ${color === Element.Earth && `background-color : #996c59`};
 
-border:0.2em black solid;
+border:0.1em black solid;
 `
 
 
 
 const rightStyle = css`
+ transform-style:preserve-3d;
+ transform-origin:right;
  transform: rotateY(90deg) ;
  position:absolute;
- right:-1em;
- width:4em;
+ right:0em;
+ width:${thickness}em;
  top:10%;
  height:80%;
 `
 const leftStyle = css`
 position:absolute;
+transform-style:preserve-3d;
+transform-origin:left;
 transform: rotateY(-90deg);
-left:-1em;
+left:0em;
 top:10%;
-width:4em;
+width:${thickness}em;
 height:80%;
 `
 const topStyle = css`
 position:absolute;
-
 transform-style:preserve-3d;
-transform : rotateX(89deg);
+transform-origin:bottom;
+transform : rotateX(-90deg);
 bottom:0em;
 left:10%;
 height:${thickness}em;
 width:80%;
-backface-visibility: visible;
-
-background-color:red;
 `
 const bottomStyle = css`
 position:absolute;
-transform: rotateX(1deg);
-top:-1em;
+transform-style:preserve-3d;
+transform-origin:top;
+transform: rotateX(90deg);
+top:0em;
 left:10%;
-height:4em;
+height:${thickness}em;
 width:80%;
 `
 
@@ -108,21 +117,20 @@ width:100%;
 height:100%;
 background-image:url(${image});
 background-repeat:no-repeat;
-background-size:cover;
+background-size:100% 100%;
 background-position:center;
-backface-visibility: visible;
 
 `
 const backStyle = css`
 position:absolute;
-filter: drop-shadow(0 0 0.75rem black);
+/*filter: drop-shadow(0 0 0.75rem black);*/
+box-shadow: 0px 0px 1.5em black;
 height:100%;
 width:100%;
 border-radius:20%;
-backface-visibility: visible;
 `
 const canBeDragged = (isDraggable:boolean) => css`
-${isDraggable === true && `border : gold 0.5em solid`}
+${isDraggable === true && `border : gold 0.5em solid`}              // Shrink the elements - must find an other way
 
 `
 
@@ -135,7 +143,7 @@ height:100%;
 
 transform-style: preserve-3d;
 
-${position !== undefined && `transform:translateZ(${position*4}em)`};
+
 
 /*box-shadow: 0px 0px 0.75em black;*/
 

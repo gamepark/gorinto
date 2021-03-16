@@ -27,7 +27,7 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
                         
             {pile.map((tile, index) =>
                 
-                <div css={positionningTile} key = {index}> 
+                <div css={positionningTile(index)} key = {index}> 
 
                     <ElementTile 
                                 image = {tile.image}
@@ -82,12 +82,15 @@ const noPointerEvents = css`
 pointer-events:none;
 `
 
-const positionningTile = css`
+const positionningTile = (position:number) => css`
 position:absolute;
 left:15%;
 top:15%;
 width:70%;
 height:70%;
+
+transform-style: preserve-3d;
+transform:translateZ(${position*4}em);
 
 `
 

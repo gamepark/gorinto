@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import Background from './images/BG.jpg'
+import Background from './images/BG2.jpg'
 
 const style = css`
   html {
@@ -52,7 +52,7 @@ const style = css`
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
+      background-color: rgba(0, 0, 0, 0.6);
     }
   }
 `
