@@ -32,7 +32,7 @@ type Props = {
 const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, tilesToTake, mountainBoard, ...props}) => {
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
-        accept: ["Element"],
+        accept: "ElementInPile",
         canDrop: (item: ElementInPile) => {
             if (tilesToTake !== undefined){
 

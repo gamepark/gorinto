@@ -28,7 +28,7 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer}
                 <ElementTile 
                              image = {ElementBag[tile].image}
                              draggable = {playerId === activePlayer && !tilesToTake}
-                             draggableItem = {{type:"Element", path: "vertical", position : index}}
+                             draggableItem = {{type:"ElementInPath", path: "vertical", position : index}}
                              element = {ElementBag[tile].element}
                />
 

@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import MoveTile from '@gamepark/gorinto/moves/MoveTile'
 import {usePlay} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
-import { FC, HTMLAttributes } from "react";
+import { FC, HTMLAttributes, useState } from "react";
 import ElementInPath from "@gamepark/gorinto/types/ElementInPath";
 import ElementInPile from "@gamepark/gorinto/types/ElementInPile";
 import Element from "@gamepark/gorinto/types/Element";
@@ -13,18 +13,20 @@ type Props = {
     image:string,
     position?:number,
     draggable?:boolean,
-    draggableItem: ElementInPath | ElementInPile ,
+    draggableItem: Omit<ElementInPath ,"hoverPile" > | Omit<ElementInPile, "hoverPile">,
     element:Element
 
 } & HTMLAttributes<HTMLDivElement>
 
-const ElementTile : FC<Props> = ({image, draggable=false, draggableItem, element, position, ...props}) => {
+const ElementTile : FC<Props> = ({image, draggable=false, draggableItem,  element, position=0, ...props}) => {
 
     const play = usePlay <MoveTile> ()
+    const [displayHeight, setDisplayHeight] = useState(position)
+    const item = {...draggableItem, hoverPile:setDisplayHeight}
 
         return(
 
-            <Draggable canDrag={draggable} item={draggableItem} css={elementTileStyle} drop={play} {...props} >
+            <Draggable canDrag={draggable} item={item} css={elementTileStyle} drop={play} {...props} preTransform= {`translateZ(${displayHeight*4.01+0.01}em)`} end = {() => setDisplayHeight(position)}>
 
                     <div css={topStyle(image)}></div>
                     <div css={[frontStyle, coloring(element)]}></div>

@@ -6,6 +6,7 @@ import Game from '@gamepark/gorinto/types/Game'
 import {usePlayerId} from '@gamepark/react-client'
 import {FC, HTMLAttributes} from 'react'
 import ElementTile from './ElementTile'
+import ElementTileForPlayers from './ElementTileForPlayers'
 import MountainDropZone from './MountainDropZone'
 
 type Props = {
@@ -18,6 +19,7 @@ type Props = {
 const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
 
     const playerId = usePlayerId()
+    const canTakeAny = game.tilesToTake?.element === Element.Earth && game.tilesToTake.coordinates[0].x === x && game.tilesToTake.coordinates[0].y === y
 
     return(
 
@@ -31,9 +33,9 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
 
                     <ElementTile 
                                 image = {ElementBag[tile].image}
-                                position = {index}
+                                position = {canTakeAny ? 3*index : index}
                                 draggable = {playerId === game.activePlayer && canDrag(game,x,y,index)}
-                                draggableItem = {{type:"Element", x, y, z : index}}
+                                draggableItem = {{type:"ElementInPile", x, y, z : index}}
                                 element = {ElementBag[tile].element}
                     />
 
@@ -46,6 +48,7 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
         <MountainDropZone 
             x = {x}
             y = {y}
+            height = {game.mountainBoard[x][y].length}
             {...props}
         
         />
@@ -95,10 +98,6 @@ width:70%;
 height:70%;
 
 transform-style: preserve-3d;
-${(isEarth !== Element.Earth) && `transform:translateZ(${position*4}em)`};
-${(isEarth === Element.Earth && (x !== xRef || y !== yRef)) && `transform:translateZ(${position*4}em)`};
-${(isEarth === Element.Earth && x === xRef && y === yRef) && `transform:translateZ(${position*4*2}em)`};
-
 `
 
 export default MountainPile

@@ -9,12 +9,13 @@ import { css } from "@emotion/react";
 type Props = {
     x:number,
     y:number,
+    height:number,
 } & React.HTMLAttributes<HTMLDivElement>
 
-const MountainDropZone : FC<Props> = ({x, y, ...props}) => {
+const MountainDropZone : FC<Props> = ({x, y, height, ...props}) => {
 
     const [{canDrop, isOver}, dropRef] = useDrop({
-        accept: ["Element"],
+        accept: "ElementInPath",
         canDrop: (item: ElementInPath) => {
             if (item.path === "horizontal"){
                 return(item.position === x)
@@ -26,6 +27,13 @@ const MountainDropZone : FC<Props> = ({x, y, ...props}) => {
           canDrop: monitor.canDrop(),
           isOver: monitor.isOver()
         }),
+
+        hover: (item:ElementInPath) => {
+            item.hoverPile(height)
+        }
+        
+        ,
+
         drop: (item: ElementInPath) => {
 
             return {type : MoveType.MoveTile, path : item.path, x, y}
