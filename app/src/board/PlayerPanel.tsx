@@ -211,8 +211,8 @@ background-color:red;
 const coinStyle = css`
 width:12%;
 position:absolute;
-top:8%;
-left:4%;
+bottom:8%;
+right:5%;
 
 filter: drop-shadow(0 0 1em black);
 `

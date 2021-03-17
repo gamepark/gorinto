@@ -2,7 +2,7 @@
 import { css } from '@emotion/react'
 import { FC } from "react"
 import SeasonBoard from '../images/SeasonBoard.jpg'
-import SeasonMarker from '../images/seasonMarkerTemporary.png'
+import SeasonMarker from '../images/SeasonMarker.png'
 
 const SeasonIndicator : FC<{season:number}> = ({season}) => {
 
@@ -12,7 +12,8 @@ const SeasonIndicator : FC<{season:number}> = ({season}) => {
         
             <div css={seasonMarker(season)}> 
 
-                <img src={SeasonMarker} alt="marker" css={seasonMarkerSize} />
+                <div css={[seasonMarkerSize, face1]}></div>
+                <div css={[seasonMarkerSize, face2]}></div>
                 
             </div>
             
@@ -22,21 +23,43 @@ const SeasonIndicator : FC<{season:number}> = ({season}) => {
 
 }
 
+const face1 = css`
+background-image:url(${SeasonMarker});
+background-repeat:no-repeat;
+background-size: contain;
+
+transform-style:preserve-3d;
+transform-origin:bottom;
+transform: rotateX(-90deg) rotateY(45deg);
+`
+
+const face2 = css`
+background-image:url(${SeasonMarker});
+background-repeat:no-repeat;
+background-size: contain;
+
+transform-style:preserve-3d;
+transform-origin:bottom;
+transform: rotateX(-90deg) rotateY(135deg);
+`
+
 const seasonMarker = (position:number) => css`
 position:absolute;
 height:88%;
 width:24%;
 left:${(position-1)*25}%;
 top:0%;
+background:radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(255,255,255,0.02) 62%, rgba(255,255,255,0) 63%);
+transform-style:preserve-3d;
 `
 
 const seasonMarkerSize = css`
 position:absolute;
-height:65%;
+height:100%;
+width:70%;
+bottom:40%;
 left:15%;
-top:15%;
 
-filter: drop-shadow(0 0 0.2em black);
 `
 
 const seasonIndicatorStyle = css`
@@ -49,6 +72,8 @@ const seasonIndicatorStyle = css`
     background-size: contain;
     background-repeat: no-repeat;
     background-position:center top;
+
+    transform-style:preserve-3d;
 `
 
 export default SeasonIndicator
