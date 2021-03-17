@@ -3,13 +3,12 @@ import { css } from "@emotion/react";
 import { FC } from "react";
 import PlayerPanel from "./PlayerPanel";
 import Player from "@gamepark/gorinto/types/Player";
-import ElementTile from "@gamepark/gorinto/types/ElementTile";
 import Element from "@gamepark/gorinto/types/Element";
 
 type Props = {
     players:Player[], 
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
-    mountainBoard:ElementTile[][][]
+    mountainBoard:number[][][]
 }
 
 const PlayerList : FC<Props> = ({players, tilesToTake, mountainBoard}) => {

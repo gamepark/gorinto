@@ -3,13 +3,13 @@ import { css } from "@emotion/react";
 import {usePlayerId} from '@gamepark/react-client'
 import { FC } from "react";
 import ElementTile from "./ElementTile";
-import ElementTileOld from "@gamepark/gorinto/types/ElementTile";
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
 import Element from "@gamepark/gorinto/types/Element";
+import { ElementBag } from "@gamepark/gorinto/cards/Elements";
 
 type Props = {
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
-    verticalPath:(ElementTileOld | null)[]
+    verticalPath:(number | null)[]
     activePlayer: PlayerColor | undefined;
 }
 
@@ -26,10 +26,10 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer}
             <div css={positionningTile(index)} key = {index}> 
 
                 <ElementTile 
-                             image = {tile.image}
+                             image = {ElementBag[tile].image}
                              draggable = {playerId === activePlayer && !tilesToTake}
                              draggableItem = {{type:"Element", path: "vertical", position : index}}
-                             element = {tile.element}
+                             element = {ElementBag[tile].element}
                />
 
             </div>

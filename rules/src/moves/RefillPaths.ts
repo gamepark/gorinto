@@ -5,7 +5,7 @@ type RefillPaths = { type: typeof MoveType.RefillPaths }
 
 export default RefillPaths
 
-export type RefillPathsView = RefillPaths & { horizontalPath : (ElementTile | null)[] , verticalPath : (ElementTile | null)[] }
+export type RefillPathsView = RefillPaths & { horizontalPath : (number | null)[] , verticalPath : (number | null)[] }
 
 export function refillPaths(): RefillPaths {
   return {type: MoveType.RefillPaths}

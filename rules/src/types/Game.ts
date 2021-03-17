@@ -10,10 +10,10 @@ type Game = {
     players : Player[];
     twoKeyElementCards : number[];
     twoGoals : number[];
-    elementTilesDeck : ElementTile[];       // Make a number Array
-    horizontalPath : (ElementTile | null)[];         // Make a number Array
-    verticalPath : (ElementTile | null)[];           // Make a number Array
-    mountainBoard : ElementTile[][][];      // Make a number Array
+    elementTilesBag : number[];       
+    horizontalPath : (number | null)[];         
+    verticalPath : (number | null)[];          
+    mountainBoard : number[][][];      
     tilesToTake? : {quantity : number, coordinates:{x:number,y:number}[], element?:Element};
     automaticMovePhase : AutomaticMovePhase | undefined;
 }

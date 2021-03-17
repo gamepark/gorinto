@@ -33,7 +33,7 @@ export const ElementEarth : ElementTile = {
     image : ImgEarth
 }
 
-export const elementDeck : ElementTile[] = [
+export const ElementBag : ElementTile[] = [
     ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, ElementVoid, 
     ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, ElementWind, 
     ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, ElementFire, 

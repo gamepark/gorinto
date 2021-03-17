@@ -2,7 +2,6 @@
 import {css} from '@emotion/react'
 import Element from '@gamepark/gorinto/types/Element'
 import ElementInPile from '@gamepark/gorinto/types/ElementInPile'
-import ElementTile from '@gamepark/gorinto/types/ElementTile'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import {FC, HTMLAttributes} from 'react'
 import {useDrop} from 'react-dnd'
@@ -25,7 +24,7 @@ type Props = {
     score:number, 
     first:boolean,
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
-    mountainBoard:ElementTile[][][],
+    mountainBoard:number[][][],
 } & HTMLAttributes<HTMLDivElement>
 
 const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, tilesToTake, mountainBoard, ...props}) => {

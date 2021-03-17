@@ -1,6 +1,6 @@
 import {IncompleteInformation, SequentialGame} from '@gamepark/rules-api'
 import shuffle from 'lodash.shuffle'
-import {elementDeck} from './cards/Elements'
+import {ElementBag} from './cards/Elements'
 import {Goals} from './cards/Goals'
 import {Keys} from './cards/KeyElement'
 import {cantPickAnyTile} from './moves/CantPickAnyTile'
@@ -38,7 +38,7 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
         activePlayer: PlayerColor.black,
         twoKeyElementCards: setupTwoKeyElementCards(),
         twoGoals: setupTwoGoals(),
-        elementTilesDeck: setupElementTilesDeck(),
+        elementTilesBag: setupElementTilesBag(),
         horizontalPath: [],
         verticalPath: [],
         mountainBoard: [],
@@ -86,7 +86,7 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
       }
 
       if (this.state.players.length === 2 && [2, 4, 6, 8].includes(filledSpacesinPaths(this.state))) {           // Adaptation for 2 players
-        let twoPaths: (ElementTile | null) [] = this.state.horizontalPath.concat(this.state.verticalPath)
+        let twoPaths: (number | null) [] = this.state.horizontalPath.concat(this.state.verticalPath)
         let randomSpaceToRemove: number = getRandomInt(10)
         while (twoPaths[randomSpaceToRemove] === null) {
           randomSpaceToRemove = getRandomInt(10)
@@ -187,8 +187,8 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
             if (this.state.horizontalPath.length !== 0) {
               this.state.automaticMovePhase = AutomaticMovePhase.movingSeasonMarker
             }
-            this.state.horizontalPath = this.state.elementTilesDeck.splice(0, 5)
-            this.state.verticalPath = this.state.elementTilesDeck.splice(0, 5)
+            this.state.horizontalPath = this.state.elementTilesBag.splice(0, 5)
+            this.state.verticalPath = this.state.elementTilesBag.splice(0, 5)
           } else if (isRefillPathsView(move)) {
 
             this.state.horizontalPath = move.horizontalPath
@@ -557,11 +557,10 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
         // game.tilesToTakes
 
         let activePlayer: Player = this.state.players.find(player => player.color === this.state.activePlayer)!
-
-        const elem: Element | undefined = element?.element
+        const elem: Element | undefined = ElementBag[element!].element
 
         switch (elem) {       // One Pattern is required for each element
-          case 'void' : {
+          case Element.Void : {
             this.state.tilesToTake = {
               quantity: activePlayer.understanding.void + 1,
               coordinates: [{x: move.x + 1, y: move.y + 1}, {x: move.x + 1, y: move.y - 1}, {x: move.x - 1, y: move.y + 1}, {x: move.x - 1, y: move.y - 1}],    // Void Pattern
@@ -572,7 +571,7 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
 
             break
           }
-          case 'wind' : {
+          case Element.Wind : {
             this.state.tilesToTake = {
               quantity: activePlayer.understanding.wind + 1,
               coordinates: [{x: move.x + 1, y: move.y}, {x: move.x - 1, y: move.y}, {x: move.x, y: move.y + 1}, {x: move.x, y: move.y - 1}],      // Wind Pattern
@@ -583,7 +582,7 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
 
             break
           }
-          case 'fire' : {
+          case Element.Fire : {
             const firePattern: { x: number, y: number }[] = [{x: move.x, y: 0}, {x: move.x, y: 1}, {x: move.x, y: 2}, {x: move.x, y: 3}, {x: move.x, y: 4}]
             firePattern.splice(move.y, 1)
             this.state.tilesToTake = {
@@ -593,7 +592,7 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
             }
             break
           }
-          case 'water' : {
+          case Element.Water : {
             const waterPattern: { x: number, y: number }[] = [{x: 0, y: move.y}, {x: 1, y: move.y}, {x: 2, y: move.y}, {x: 3, y: move.y}, {x: 4, y: move.y}]
             waterPattern.splice(move.x, 1)
             this.state.tilesToTake = {
@@ -603,7 +602,7 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
             }
             break
           }
-          case 'earth' : {
+          case Element.Earth : {
             this.state.tilesToTake = {
               quantity: activePlayer.understanding.earth + 1,
               coordinates: [{x: move.x, y: move.y}],
@@ -635,9 +634,9 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
         let elem: Element | undefined = undefined
 
         if (move.coordinates.z === undefined) {
-          elem = this.state.mountainBoard[move.coordinates.x][move.coordinates.y][this.state.mountainBoard[move.coordinates.x][move.coordinates.y].length - 1]?.element
+          elem = ElementBag[this.state.mountainBoard[move.coordinates.x][move.coordinates.y][this.state.mountainBoard[move.coordinates.x][move.coordinates.y].length - 1]]?.element
         } else {
-          elem = this.state.mountainBoard[move.coordinates.x][move.coordinates.y][move.coordinates.z].element
+          elem = ElementBag[this.state.mountainBoard[move.coordinates.x][move.coordinates.y][move.coordinates.z]].element
         }
 
         let activePlayer: number = this.state.players.findIndex(player => player.color === this.state.activePlayer)!
@@ -649,23 +648,23 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
         }
 
         switch (elem) {
-          case 'void' : {
+          case Element.Void : {
             this.state.players[activePlayer].understanding.void++
             break
           }
-          case 'wind' : {
+          case Element.Wind : {
             this.state.players[activePlayer].understanding.wind++
             break
           }
-          case 'fire' : {
+          case Element.Fire : {
             this.state.players[activePlayer].understanding.fire++
             break
           }
-          case 'water' : {
+          case Element.Water : {
             this.state.players[activePlayer].understanding.water++
             break
           }
-          case 'earth' : {
+          case Element.Earth : {
             this.state.players[activePlayer].understanding.earth++
             break
           }
@@ -673,7 +672,7 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
 
         this.state.tilesToTake!.quantity--
 
-        if (this.state.tilesToTake?.element !== 'earth') {
+        if (this.state.tilesToTake?.element !== Element.Earth) {
           this.state.tilesToTake?.coordinates.splice(this.state.tilesToTake.coordinates.findIndex(coord => (coord.x === move.coordinates.x) && (coord.y === move.coordinates.y)), 1)
         }
 
@@ -693,7 +692,7 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
   }
 
   getView(playerId?: PlayerColor): GameView {
-    const {elementTilesDeck, ...view} = this.state as Game
+    const {elementTilesBag, ...view} = this.state as Game
     return view
   }
 
@@ -751,35 +750,35 @@ function setupTwoGoals(): number[] {
 
 }
 
-function setupElementTilesDeck(): ElementTile[] {
-  const result = shuffle(Array.from(elementDeck))           // Modifier ici avec .keys()
+function setupElementTilesBag(): number[] {
+  const result = shuffle(Array.from(ElementBag.keys()))
   return result
 }
 
-function setupMountain(game: Game): ElementTile[][][] {
+function setupMountain(game: Game): number[][][] {
   let i, j: number = 0
-  let result: ElementTile[][][] = []
+  let result: number[][][] = []
   for (i = 0; i < 5; i++) {
     result[i] = []
     for (j = 0; j < 5; j++) {
       result[i][j] = []
-      result[i][j][0] = game.elementTilesDeck.pop() !    // Escaped the "pop undefined" issue
-      result[i][j][1] = game.elementTilesDeck.pop() !    // Same
+      result[i][j][0] = game.elementTilesBag.pop() !    // Escaped the "pop undefined" issue
+      result[i][j][1] = game.elementTilesBag.pop() !    // Same
     }
   }
   for (i = 1; i < 4; i++) {
     for (j = 1; j < 4; j++) {
-      result[i][j][2] = game.elementTilesDeck.pop() !      // Same
+      result[i][j][2] = game.elementTilesBag.pop() !      // Same
     }
   }
-  result[2][2][3] = game.elementTilesDeck.pop() !         // Same
+  result[2][2][3] = game.elementTilesBag.pop() !         // Same
   return result
 }
 
-function filledSpacesinPaths(game: Game): number {
+function filledSpacesinPaths(game: Game): number{
 
-  return game.horizontalPath.reduce((sum, space) => space ? sum + 1 : sum, 0) +
-    game.verticalPath.reduce((sum, space) => space ? sum + 1 : sum, 0)
+  return game.horizontalPath.reduce((sum, space) => space ? sum! + 1 : sum, 0)! +
+    game.verticalPath.reduce((sum, space) => space ? sum! + 1 : sum, 0)!
 }
 
 function tilesOwnedByAPlayer(player: Player): number {

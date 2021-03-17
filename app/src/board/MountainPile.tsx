@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
+import { ElementBag } from '@gamepark/gorinto/cards/Elements'
 import Element from '@gamepark/gorinto/types/Element'
-import ElementTileOld from '@gamepark/gorinto/types/ElementTile'
 import Game from '@gamepark/gorinto/types/Game'
 import {usePlayerId} from '@gamepark/react-client'
 import {FC, HTMLAttributes} from 'react'
@@ -9,7 +9,7 @@ import ElementTile from './ElementTile'
 import MountainDropZone from './MountainDropZone'
 
 type Props = {
-    pile:ElementTileOld[],
+    pile:number[],
     x:number,
     y:number,
     game:Game,
@@ -30,11 +30,11 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
                 <div css={positionningTile(index, game.tilesToTake?.element, x, y, game.tilesToTake?.coordinates[0].x, game.tilesToTake?.coordinates[0].y)} key = {index}> 
 
                     <ElementTile 
-                                image = {tile.image}
+                                image = {ElementBag[tile].image}
                                 position = {index}
                                 draggable = {playerId === game.activePlayer && canDrag(game,x,y,index)}
                                 draggableItem = {{type:"Element", x, y, z : index}}
-                                element = {tile.element}
+                                element = {ElementBag[tile].element}
                     />
 
                 </div>
