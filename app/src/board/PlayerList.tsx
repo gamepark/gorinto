@@ -44,6 +44,7 @@ top:0%;
 text-align:right;
 width:20%;
 height:95%;
+transform-style: preserve-3d;
 `
 
 

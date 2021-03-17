@@ -1,46 +1,35 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import MoveTile from '@gamepark/gorinto/moves/MoveTile'
-import {usePlay} from '@gamepark/react-client'
-import {Draggable} from '@gamepark/react-components'
 import { FC, HTMLAttributes } from "react";
-import ElementInPath from "@gamepark/gorinto/types/ElementInPath";
-import ElementInPile from "@gamepark/gorinto/types/ElementInPile";
 import Element from "@gamepark/gorinto/types/Element";
 
 type Props = {
 
     image:string,
-    position?:number,
-    draggable?:boolean,
-    draggableItem: ElementInPath | ElementInPile ,
     element:Element
 
 } & HTMLAttributes<HTMLDivElement>
 
-const ElementTile : FC<Props> = ({image, draggable=false, draggableItem, element, position, ...props}) => {
-
-    const play = usePlay <MoveTile> ()
+const ElementTileForPlayers : FC<Props> = ({image, element, ...props}) => {
 
         return(
 
-            <Draggable canDrag={draggable} item={draggableItem} css={elementTileStyle} drop={play} {...props} >
+            <div css={elementTileStyle} {...props} >
 
                     <div css={topStyle(image)}></div>
                     <div css={[frontStyle, coloring(element)]}></div>
-                    <div css={[bottomStyle, coloring(element), canBeDragged(draggable)]}></div>
+                    <div css={[bottomStyle, coloring(element)]}></div>
                     <div css={[rightStyle, coloring(element)]}></div>
                     <div css={[leftStyle, coloring(element)]}></div>
                     <div css={[backStyle, coloring(element)]}></div>
                     
-
-            </Draggable>
+            </div>
 
         )
 
 }
 
-const thickness = 4;            //em unit
+const thickness = 0.75;            //em unit
 
 const elementTileStyle = css`
     position : absolute;
@@ -61,19 +50,6 @@ const coloring = (color:Element) => css`
     ${color === Element.Earth && `background-color : #996c59`};
 
     border:0.1em black solid;
-`
-
-const canBeDragged = (isDraggable:boolean) => css`
-
-    @keyframes glowing {
-        0% { box-shadow: 0px 0px 1em 0.2em gold; }
-        45% { box-shadow: 0px 0px 1.5em 1em gold; }
-        55% { box-shadow: 0px 0px 1.5em 1em gold; }
-        100% { box-shadow: 0px 0px 1em 0.2em gold; }
-    }
-
-    ${isDraggable === true && `animation: glowing 3000ms infinite;`};
-    border-radius:20%;
 `
 
 const rightStyle = css`
@@ -140,7 +116,7 @@ const bottomStyle = css`
     width:100%;
     border-radius:20%;
 
-    box-shadow: 0px 0px 1.5em 0.5em black;
+    box-shadow: 0px 0px 0.5em 0.1em black;
 `
 
-export default ElementTile
+export default ElementTileForPlayers
