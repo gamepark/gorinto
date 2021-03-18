@@ -12,17 +12,17 @@ import ElementFire from '../images/ElementFire.png'
 import ElementVoid from '../images/ElementVoid.png'
 import ElementWater from '../images/ElementWater.png'
 import ElementWind from '../images/ElementWind.png'
-import BlackGor from '../images/GOR_TTS_score_black.png'
-import BlueGor from '../images/GOR_TTS_score_blue.png'
-import RedGor from '../images/GOR_TTS_score_red.png'
-import WhiteGor from '../images/GOR_TTS_score_white.png'
-import YellowGor from '../images/GOR_TTS_score_yellow.png'
+import BlackGor from '../images/GOR_TTS_playermat_black.png'
+import BlueGor from '../images/GOR_TTS_playermat_blue.png'
+import RedGor from '../images/GOR_TTS_playermat_red.png'
+import WhiteGor from '../images/GOR_TTS_playermat_white.png'
+import YellowGor from '../images/GOR_TTS_playermat_yellow.png'
 import ElementTileForPlayers from './ElementTileForPlayers'
 
 type Props = {
     color:string, 
     understanding:any, 
-    position:number, 
+    position:number[], 
     score:number, 
     first:boolean,
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
@@ -80,9 +80,17 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
             <div css={playerHeaderStyle}>
 
-                <span>Color : {color} - </span> <span>Score : {score}</span>
+                <div css={nameStyle}>{color}</div>
+                <div css={scoreStyle}>Score : {score}</div>
+                <div css={gPStyle}>+XX GP</div>
 
             </div>
+
+            <div css={chronoStyle}>XX : XX</div>
+
+            <div css={avatarStyle}></div>
+
+
 
             <div css={playerElementStyle}>
 
@@ -158,45 +166,46 @@ transform-style: preserve-3d;
 
 const playerCounterStyle = css`
 position:absolute;
-top:50%;
-right:8%;
-width:90%;
-height:10%;
+bottom : 6%;
+left : 25%;
+width:15%;
+height:92%;
 text-align:center;
 transform-style: preserve-3d;
+transform:translateZ(4.05em);
 
 div{
+    position:absolute;
+    left:5%;
     border-radius:100%;
     background-color : rgba(7,7,7, 0.5);
     color:white;
-    position:absolute;
-    width:15%;
-    padding-top:0.5em;
-    padding-bottom:0.5em;
-    font-size:2em;
+    width:70%;
+    padding-top:0.2em;
+    padding-bottom:0.2em;
+    font-size:2.5em;
     transform-style: preserve-3d;
-    transform:translateZ(3em);
+
 }
 
 `
-const countVoid = css`right:80%;`
-const countWind = css`right:60%;`
-const countFire = css`right:40%;`
-const countWater = css`right:20%;`
-const countEarth = css`right:0%;`
+const countVoid = css`bottom:80%;`
+const countWind = css`bottom:60%;`
+const countFire = css`bottom:40%;`
+const countWater = css`bottom:20%;`
+const countEarth = css`bottom:0%;`
 
 const elementSize = css`
 position:absolute;
-top:0%;
-width:15%;
-height:90%;
+width:85%;
+height:15%;
 `
 
-const voidStyle = css`right:80% ; background:center/contain url(${ElementVoid}) no-repeat;`
-const windStyle = css`right:60% ; background:center/contain url(${ElementWind}) no-repeat;`
-const fireStyle = css`right:40% ; background:center/contain url(${ElementFire}) no-repeat;`
-const waterStyle = css`right:20% ; background:center/contain url(${ElementWater}) no-repeat;`
-const earthStyle = css`right:0% ; background:center/contain url(${ElementEarth}) no-repeat;`
+const voidStyle = css`bottom:81% ;`
+const windStyle = css`bottom:61% ;`
+const fireStyle = css`bottom:41% ;`
+const waterStyle = css`bottom:21% ;`
+const earthStyle = css`bottom:1% ;`
 
 const canDropStyle = css`
 opacity:0.4;
@@ -209,48 +218,86 @@ background-color:red;
 `
 
 const coinStyle = css`
-width:12%;
+width:15%;
 position:absolute;
-bottom:8%;
+bottom:5%;
 right:5%;
 
 filter: drop-shadow(0 0 1em black);
 `
 
 
-const playerPanelStyle = (position:number, color:string) => css`
+const playerPanelStyle = (position:number[], color:string) => css`
 position : absolute;
 transform-style: preserve-3d;
-top : ${position * 20}%;
-right : 0%;
-width : 100%;
-height : 20%;
+bottom : ${position[1] * 37.5}%;
+left : ${position[0] * 79}%;
+width : 20%;
+height : 37.5%;
+text-align:right;
 
-${color === "yellow" &&`background : rgba(7,7,7, 0.5) bottom left 5%/18% url(${YellowGor}) no-repeat`};
-${color === "blue" &&`background : rgba(7,7,7, 0.5) bottom left 5%/18% url(${BlueGor}) no-repeat`};
-${color === "red" &&`background : rgba(7,7,7, 0.5) bottom left 5%/18% url(${RedGor}) no-repeat`};
-${color === "white" &&`background : rgba(7,7,7, 0.5) bottom left 5%/18% url(${WhiteGor}) no-repeat`};
-${color === "black" &&`background : rgba(7,7,7, 0.5) bottom left 5%/18% url(${BlackGor}) no-repeat`};
+${color === "yellow" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${YellowGor}) no-repeat`};
+${color === "blue" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${BlueGor}) no-repeat`};
+${color === "red" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${RedGor}) no-repeat`};
+${color === "white" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${WhiteGor}) no-repeat`};
+${color === "black" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${BlackGor}) no-repeat`};
 
 box-shadow: 0em 0em 1em 0.5em black;
 `
 
 const playerHeaderStyle = css`
 position : absolute;
-top : 5%;
+top : 3%;
 right : 5%;
-width : 100%;
-height : 20%;
-font-size:2.1em;
+width : 50%;
+height : 90%;
+`
+
+const nameStyle = css`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size:2.6em;
+`
+
+const scoreStyle = css`
+    padding-top:0.5em;
+    padding-bottom:0.5em;
+    font-size:2.5em;
+`
+
+const gPStyle = css`
+font-size:2.5em;
+`
+
+const chronoStyle = css`
+position:absolute;
+bottom:25%;
+right:5%;
+
+font-size:2.5em;
+`
+
+const avatarStyle = css`
+border:0.5em solid black;
+border-radius:100%;
+background-color:white;
+
+height:15%;
+width:15%;
+
+position:absolute;
+bottom:5%;
+right:25%;
 `
 
 const playerElementStyle = css`
 position : absolute;
-top : 40%;
-right : 5%;
+bottom : 3%;
+left : 24%;
 font-size:1.8em;
-width:90%;
-height:30%;
+width:18%;
+height:92%;
 
 transform-style: preserve-3d;
 

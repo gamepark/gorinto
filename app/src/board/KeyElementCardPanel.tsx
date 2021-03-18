@@ -24,7 +24,7 @@ const positionningX2 =  css`
 
 position:absolute;
 width:50%;
-top:15%;
+top:10%;
 left:25%;
 font-family: 'Bubblegum Sans', cursive;
 
@@ -35,7 +35,7 @@ const positionningElementText = (color:Element) => css`
 position:absolute;
 width:50%;
 left:25%;
-bottom:14%;
+bottom:24%;
 font-family: 'Bubblegum Sans', cursive;
 text-transform:uppercase;
 
@@ -69,18 +69,17 @@ ${color === Element.Void &&
 
 const keyElementCardPanelStyle = (position:number, image:string) => css`
 position : absolute;
-top : ${position * 25}%;
-left : 0%;
-width : 100%;
-height : 25%;
-font-size:2em;
+top : 10%;
+left : ${position*10}%;
+width : 10%;
+height : 15%;
+font-size:1.7em;
 text-align:center;
-padding:2%;
 
 background-image : url(${image});;
 background-size : contain;
 background-repeat : no-repeat;
-background-position : center;
+background-position : top;
 `
 
 export default KeyElementCardPanel

@@ -9,7 +9,7 @@ const Header : FC<{game:Game}> = ({game}) => {
 
         <div css={headerStyle}> 
         
-            Message Header : {game.season}
+            <span>Message Header : {game.season}</span>
         
         </div>
 
@@ -22,13 +22,16 @@ position:absolute;
 top:0%;
 right:0%;
 width:100%;
-height:5%;
+height:7em;
 background-color:rgba(0,0,139, 0.5);
 z-index:2;
 
-font-size:4em;
 text-align:center;
 color:white;
+
+span{
+    font-size:4.5em;
+}
 `
 
 export default Header

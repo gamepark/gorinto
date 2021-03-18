@@ -26,19 +26,19 @@ const GoalCard : FC<{goal:Goal, position:number}> = ({goal, position}) => {
 const goalCardPanelStyle = (position:number, isHint:boolean) => css`
 
 position : absolute;
-top : ${(position+2) * 25}%;
-left : 0%;
-width:100%;
-height:25%;
+top : 10%;
+left : ${79+position*10}%;
+width:10%;
+height:15%;
 
 background-image:url(${BackGroundGoal});
 background-size: contain;
 background-repeat: no-repeat;
-background-position:center;
+background-position:top;
 
 p{
     color:black;
-    font-size:1.6em;
+    font-size:1em;
     text-align:center;
     width:70%;
     position:absolute;
@@ -59,11 +59,11 @@ ${isHint === false &&
 ${isHint === true &&
     `
     p:nth-of-type(2n+1){
-        top:18%;
+        top:17%;
         color:#8c514b;
     }
     p:nth-of-type(2n){
-        bottom:18%;
+        bottom:25%;
         color:black;
     }
     `
@@ -71,9 +71,9 @@ ${isHint === true &&
 
 span{
     position:absolute;
-    bottom:9%;
-    right:10%;
-    font-size:1.5em;
+    bottom:18%;
+    right:7%;
+    font-size:1.3em;
     font-family: 'Bubblegum Sans', cursive;
     color:white;
     text-shadow: 1px 1px 2px black;

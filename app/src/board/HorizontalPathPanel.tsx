@@ -49,7 +49,7 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
 const positionningTile = (position : number) => css`
 position:absolute;
 top:0%;
-left:${3.2+19.5*position}%;
+left:${3.5+19.5*position}%;
 width:15%;
 height:100%;
 transform-style:preserve-3d;

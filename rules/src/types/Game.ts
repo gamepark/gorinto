@@ -1,6 +1,5 @@
 import AutomaticMovePhase from "./AutomaticMovePhase"
 import Element from "./Element"
-import ElementTile from "./ElementTile"
 import Player from "./Player"
 import PlayerColor from "./PlayerColor"
 

@@ -58,7 +58,7 @@ transform-style:preserve-3d;
 const verticalPathPanel = css`
 position : absolute;
 top : 19.5%;
-left : 1%;
+left : 2%;
 width : 12%;
 height : 82%;
 transform-style:preserve-3d;
