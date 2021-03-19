@@ -4,14 +4,10 @@ import { ElementBag } from '@gamepark/gorinto/cards/Elements'
 import Element from '@gamepark/gorinto/types/Element'
 import ElementInPile from '@gamepark/gorinto/types/ElementInPile'
 import MoveType from '@gamepark/gorinto/types/MoveType'
+import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {FC, HTMLAttributes} from 'react'
 import {useDrop} from 'react-dnd'
 import CoinHeads from '../images/CoinHeads.png'
-import ElementEarth from '../images/ElementEarth.png'
-import ElementFire from '../images/ElementFire.png'
-import ElementVoid from '../images/ElementVoid.png'
-import ElementWater from '../images/ElementWater.png'
-import ElementWind from '../images/ElementWind.png'
 import BlackGor from '../images/GOR_TTS_playermat_black.png'
 import BlueGor from '../images/GOR_TTS_playermat_blue.png'
 import RedGor from '../images/GOR_TTS_playermat_red.png'
@@ -27,9 +23,10 @@ type Props = {
     first:boolean,
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
     mountainBoard:number[][][],
+    activePlayer:PlayerColor | undefined,
 } & HTMLAttributes<HTMLDivElement>
 
-const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, tilesToTake, mountainBoard, ...props}) => {
+const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, tilesToTake, mountainBoard, activePlayer, ...props}) => {
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",
@@ -62,6 +59,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
           canDrop: monitor.canDrop(),
           isOver: monitor.isOver()
         }),
+
         drop: (item: ElementInPile) => {
             
                 if (tilesToTake!.element !== Element.Earth){
@@ -76,7 +74,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
     return(
 
-        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color), canDrop && canDropStyle, isOver && isOverStyle]}>
+        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer), canDrop && canDropStyle, isOver && isOverStyle]}>
 
             <div css={playerHeaderStyle}>
 
@@ -93,13 +91,6 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
                 <div css={scoreStyle}>{score} pts</div>
 
             </div>
-
-
-            
-
-            
-
-
 
             <div css={playerElementStyle}>
 
@@ -220,7 +211,7 @@ opacity:0.6;
 background-color:red;
 `
 
-const playerPanelStyle = (position:number[], color:string) => css`
+const playerPanelStyle = (position:number[], color:string, activePlayer:PlayerColor | undefined) => css`
 position : absolute;
 transform-style: preserve-3d;
 bottom : ${position[1] * 37.5}%;
@@ -235,6 +226,14 @@ ${color === "red" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${RedG
 ${color === "white" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${WhiteGor}) no-repeat`};
 ${color === "black" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${BlackGor}) no-repeat`};
 
+@keyframes glowing {
+    0% { box-shadow: 0px 0px 0.5em 0.1em gold; }
+    45% { box-shadow: 0px 0px 1.5em 1em gold; }
+    55% { box-shadow: 0px 0px 1.5em 1em gold; }
+    100% { box-shadow: 0px 0px 0.5em 0.1em gold; }
+}
+
+${activePlayer === color && `animation: glowing 3000ms infinite;`};
 box-shadow: 0em 0em 1em 0.5em black;
 `
 

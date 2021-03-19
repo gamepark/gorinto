@@ -6,7 +6,6 @@ import Game from '@gamepark/gorinto/types/Game'
 import {usePlayerId} from '@gamepark/react-client'
 import {FC, HTMLAttributes} from 'react'
 import ElementTile from './ElementTile'
-import ElementTileForPlayers from './ElementTileForPlayers'
 import MountainDropZone from './MountainDropZone'
 
 type Props = {

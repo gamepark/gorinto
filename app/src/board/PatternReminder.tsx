@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import { FC } from "react"
 import Pattern from '../images/GOR_TTS_pattern.png'
 
-const PatternReminder : FC<{}> = ({}) => {
+const PatternReminder : FC<{}> = () => {
 
     return (
 

@@ -745,6 +745,7 @@ function setupTwoGoals(): number[] {
     if (goal.conflictLetter === '') {
       result.push(element)
     } else if (conflictLetters.includes(goal.conflictLetter) === false) {
+      conflictLetters.push(goal.conflictLetter);
       result.push(element)
     }
   })

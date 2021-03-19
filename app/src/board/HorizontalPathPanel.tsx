@@ -1,21 +1,26 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import {usePlayerId} from '@gamepark/react-client'
+import { css, keyframes } from "@emotion/react";
+import {useAnimation, usePlayerId} from '@gamepark/react-client'
 import { FC } from "react";
 import ElementTile from "./ElementTile";
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
 import Element from "@gamepark/gorinto/types/Element";
 import { ElementBag } from "@gamepark/gorinto/cards/Elements";
+import MoveTile, {isMoveTile} from "@gamepark/gorinto/moves/MoveTile"
 
 type Props = {
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
-    horizontalPath:(number | null)[]
-    activePlayer: PlayerColor | undefined;
+    horizontalPath:(number | null)[],
+    activePlayer: PlayerColor | undefined,
+    mountain:number[][][]
 }
 
-const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePlayer}) => {
+const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePlayer, mountain }) => {
 
     const playerId = usePlayerId()
+    const animation = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === "horizontal")
+
+    console.log(animation);
 
     return(
 
@@ -25,7 +30,7 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
             
             <div css={positionningTile(index)} key = {index}> 
 
-                <ElementTile 
+                <ElementTile css = {[animation && animation.move.x === index && moveTileAnimation(animation.move.y,mountain[animation.move.x][animation.move.y].length,animation.duration)]}
                              image = {ElementBag[tile].image}
                              draggable = {playerId === activePlayer && !tilesToTake}
                              draggableItem = {{type:"ElementInPath", path: "horizontal", position: index}}
@@ -45,6 +50,20 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
     )
 
 }
+
+const moveTileAnimation = (y:number, z:number, duration:number) => css`
+animation:${moveTileKeyFrames(y,z)} ${duration}s ;
+`
+
+const moveTileKeyFrames = (y:number,z:number) => keyframes`
+from{}
+50%{
+    transform:translate3d(0,${(y+1)*68}%,${z*4.02*1.5}em);
+}
+to{
+    transform:translate3d(0,${(y+1)*136}%,${z*4.02}em);
+}
+`
 
 const positionningTile = (position : number) => css`
 position:absolute;

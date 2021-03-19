@@ -48,6 +48,7 @@ const GameDisplay: FC<{game:Game}> = ({game}) => {
                       tilesToTake = {game.tilesToTake}
                       mountainBoard = {game.mountainBoard}
                       position={[Math.trunc(index/2),index%2]}
+                      activePlayer = {game.activePlayer}
         />
            
       )}

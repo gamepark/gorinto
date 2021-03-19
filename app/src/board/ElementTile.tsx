@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import MoveTile from '@gamepark/gorinto/moves/MoveTile'
 import {usePlay} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
-import { FC, HTMLAttributes, useState } from "react";
+import { FC, HTMLAttributes, useEffect, useState } from "react";
 import ElementInPath from "@gamepark/gorinto/types/ElementInPath";
 import ElementInPile from "@gamepark/gorinto/types/ElementInPile";
 import Element from "@gamepark/gorinto/types/Element";
@@ -22,11 +22,12 @@ const ElementTile : FC<Props> = ({image, draggable=false, draggableItem,  elemen
 
     const play = usePlay <MoveTile> ()
     const [displayHeight, setDisplayHeight] = useState(position)
+    useEffect( () => setDisplayHeight(position) , [position])
     const item = {...draggableItem, hoverPile:setDisplayHeight}
 
         return(
 
-            <Draggable canDrag={draggable} item={item} css={elementTileStyle} drop={play} {...props} preTransform= {`translateZ(${displayHeight*4.01+0.01}em)`} end = {() => setDisplayHeight(position)}>
+            <Draggable canDrag={draggable} item={item} css={elementTileStyle} drop={play} {...props} preTransform= {`translateZ(${displayHeight*4.01+0.01}em)`}  end = {() => setDisplayHeight(position)}>
 
                     <div css={topStyle(image)}></div>
                     <div css={[frontStyle, coloring(element)]}></div>
@@ -52,7 +53,6 @@ const elementTileStyle = css`
     height:100%;
 
     transform-style: preserve-3d;
-    perspective:0em;
 `
 
 const coloring = (color:Element) => css`

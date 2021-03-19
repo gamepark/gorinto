@@ -9,6 +9,7 @@ import {Provider} from 'react-redux'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import Background from './images/BG2.jpg'
+import gorintoAnimations from './GorintoAnimations'
 
 const style = css`
   html {
@@ -59,7 +60,7 @@ const style = css`
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={createGameStore('gorinto', Gorinto)}>
+    <Provider store={createGameStore('gorinto', Gorinto, {animations:gorintoAnimations})}>
       <App/>
     </Provider>
     <Global styles={[normalize, style]}/>

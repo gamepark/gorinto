@@ -4,6 +4,7 @@ import MoveType from '@gamepark/gorinto/types/MoveType'
 import { FC } from "react";
 import { useDrop } from "react-dnd";
 import { css } from "@emotion/react";
+import ElementInPile from '@gamepark/gorinto/types/ElementInPile';
 
 
 type Props = {
@@ -15,7 +16,7 @@ type Props = {
 const MountainDropZone : FC<Props> = ({x, y, height, ...props}) => {
 
     const [{canDrop, isOver}, dropRef] = useDrop({
-        accept: "ElementInPath",
+        accept: ["ElementInPath","ElementInPile"],
         canDrop: (item: ElementInPath) => {
             if (item.path === "horizontal"){
                 return(item.position === x)
@@ -28,10 +29,9 @@ const MountainDropZone : FC<Props> = ({x, y, height, ...props}) => {
           isOver: monitor.isOver()
         }),
 
-        hover: (item:ElementInPath) => {
+        hover: (item:(ElementInPath|ElementInPile)) => {
             item.hoverPile(height)
         }
-        
         ,
 
         drop: (item: ElementInPath) => {
