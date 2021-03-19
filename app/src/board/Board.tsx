@@ -14,7 +14,7 @@ const Board : FC<{game:Game}> = ({game}) => {
         <div css={boardStyle}>
 
             <HorizontalPathPanel activePlayer = {game.activePlayer} horizontalPath = {game.horizontalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
-            <VerticalPathPanel activePlayer = {game.activePlayer} verticalPath = {game.verticalPath} tilesToTake = {game.tilesToTake} />
+            <VerticalPathPanel activePlayer = {game.activePlayer} verticalPath = {game.verticalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
             <MountainPanel game = {game} />
         
         </div>

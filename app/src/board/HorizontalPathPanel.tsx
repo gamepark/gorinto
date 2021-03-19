@@ -51,6 +51,8 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
 
 }
 
+const widthPath = 15 ;            // in percent
+
 const moveTileAnimation = (y:number, z:number, duration:number) => css`
 animation:${moveTileKeyFrames(y,z)} ${duration}s ;
 `
@@ -58,10 +60,10 @@ animation:${moveTileKeyFrames(y,z)} ${duration}s ;
 const moveTileKeyFrames = (y:number,z:number) => keyframes`
 from{}
 50%{
-    transform:translate3d(0,${(y+1)*68}%,${z*4.02*1.5}em);
+    transform:translate3d(0,${(y+1)*(widthPath*4.5334)}%,${z*4.02*1.8}em);
 }
 to{
-    transform:translate3d(0,${(y+1)*136}%,${z*4.02}em);
+    transform:translate3d(0,${(y+1)*(widthPath*9.0667)}%,${z*4.02}em);
 }
 `
 
@@ -69,7 +71,7 @@ const positionningTile = (position : number) => css`
 position:absolute;
 top:0%;
 left:${3.5+19.5*position}%;
-width:15%;
+width:${widthPath}%;
 height:100%;
 transform-style:preserve-3d;
 

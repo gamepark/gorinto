@@ -1,7 +1,7 @@
 type ElementInPath = {
     type:"ElementInPath", 
     path: "horizontal" | "vertical", 
-    position: number
+    position: number,
     hoverPile: (pileHeight:number) => void
 }
 
