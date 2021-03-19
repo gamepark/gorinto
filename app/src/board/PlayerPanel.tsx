@@ -81,14 +81,23 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
             <div css={playerHeaderStyle}>
 
                 <div css={nameStyle}>{color}</div>
-                <div css={scoreStyle}>Score : {score}</div>
+                <div css={avatarStyle}></div>
                 <div css={gPStyle}>+XX GP</div>
+                <div css={chronoStyle}>XX : XX</div>
 
             </div>
 
-            <div css={chronoStyle}>XX : XX</div>
+            <div css={playerFooterStyle}>
 
-            <div css={avatarStyle}></div>
+                <div css={coinPosition}>{first && <img alt="Coin" src={CoinHeads} css={coinStyle}/>}</div>
+                <div css={scoreStyle}>{score} pts</div>
+
+            </div>
+
+
+            
+
+            
 
 
 
@@ -133,12 +142,6 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
                 {understanding.fire > 3 && <div css={countFire}> {understanding.fire} </div>}
                 {understanding.water > 3 && <div css={countWater}> {understanding.water} </div>}
                 {understanding.earth > 3 && <div css={countEarth}> {understanding.earth} </div>}
-
-            </div>
-
-            <div>
-
-                {first && <img alt="Coin" src={CoinHeads} css={coinStyle}/>}
 
             </div>
 
@@ -217,16 +220,6 @@ opacity:0.6;
 background-color:red;
 `
 
-const coinStyle = css`
-width:15%;
-position:absolute;
-bottom:5%;
-right:5%;
-
-filter: drop-shadow(0 0 1em black);
-`
-
-
 const playerPanelStyle = (position:number[], color:string) => css`
 position : absolute;
 transform-style: preserve-3d;
@@ -248,34 +241,32 @@ box-shadow: 0em 0em 1em 0.5em black;
 const playerHeaderStyle = css`
 position : absolute;
 top : 3%;
-right : 5%;
-width : 50%;
-height : 90%;
+right : 3%;
+width : 45%;
+height : 50%;
 `
 
 const nameStyle = css`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size:2.6em;
-`
-
-const scoreStyle = css`
-    padding-top:0.5em;
-    padding-bottom:0.5em;
-    font-size:2.5em;
+  font-size:2.9em;
+  text-align:center;
+  padding-bottom:0.5em;
 `
 
 const gPStyle = css`
 font-size:2.5em;
+text-align:center;
+padding-top:0.5em;
+display:none;                       // Need switch with chrono
 `
 
 const chronoStyle = css`
-position:absolute;
-bottom:25%;
-right:5%;
-
 font-size:2.5em;
+text-align:center;
+padding-top:0.5em;
+//display:none;                     // Need switch with gp
 `
 
 const avatarStyle = css`
@@ -283,12 +274,11 @@ border:0.5em solid black;
 border-radius:100%;
 background-color:white;
 
-height:15%;
-width:15%;
+margin-right: auto;
+margin-left: auto;
 
-position:absolute;
-bottom:5%;
-right:25%;
+height:7em;
+width:7em;
 `
 
 const playerElementStyle = css`
@@ -300,6 +290,32 @@ width:18%;
 height:92%;
 
 transform-style: preserve-3d;
+`
+
+const playerFooterStyle = css`
+
+position:absolute;
+bottom:2%;
+right:3%;
+width: 37%;
+`
+
+const coinStyle = css`
+width:100%;
+filter: drop-shadow(0 0 1em black);
+`
+
+const coinPosition = css`
+margin-right:auto;
+margin-left:auto;
+width:50%;
+`
+
+const scoreStyle = css`
+    padding-top:0.5em;
+    padding-bottom:0.5em;
+    font-size:2.9em;
+    text-align: center;
 
 `
 

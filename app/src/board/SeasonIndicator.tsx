@@ -48,7 +48,7 @@ position:absolute;
 height:88%;
 width:24%;
 left:${(position-1)*25}%;
-top:0%;
+top:10%;
 background:radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(255,255,255,0.02) 62%, rgba(255,255,255,0) 63%);
 transform-style:preserve-3d;
 `
