@@ -34,7 +34,9 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
                 <div css={positionningTile(index, game.tilesToTake?.element, x, y, game.tilesToTake?.coordinates[0].x, game.tilesToTake?.coordinates[0].y)} key = {index}> 
 
                     <ElementTile 
-                                css = {[animation && game.mountainBoard[x][y].length === index+1 && takeTileAnimation(animation.duration, index+1)]}
+                                css = {[animation && game.mountainBoard[x][y].length === index+1 && game.tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index+1),
+                                        animation && game.tilesToTake?.element === Element.Earth && game.mountainBoard[x][y][index] === game.mountainBoard[animation.move.coordinates.x][animation.move.coordinates.y][animation.move.coordinates.z!] && takeTileEarthAnimation(animation.duration, index+1)
+                                      ]}
                                 image = {ElementBag[tile].image}
                                 position = {canTakeAny ? 3*index : index}
                                 draggable = {playerId === game.activePlayer && canDrag(game,x,y,index)}
@@ -106,18 +108,35 @@ transform-style: preserve-3d;
 const takeTileKeyFrames = (z:number) => keyframes`
 from{}
 25%{
-    transform:translateZ(${z*4+4.02}em);
+    transform:translate3d(0,0,${z*4+4.02}em);
 }
 75%{
-    transform:translateZ(${z*4+4.02}em);
+    transform:translate3d(0,0,${z*4+4.02}em);
 }
 to{
-    transform:translateZ(150em);
+    transform:translate3d(0,0,150em);
+}
+`
+
+const takeTileEarthKeyFrames = (z:number) => keyframes`
+from{}
+25%{
+    transform:translate3d(-150%,0,${z*2*4+4.02}em);
+}
+75%{
+    transform:translate3d(-150%,0,${z*2*4+4.02}em);
+}
+to{
+    transform:translate3d(-150%,0,150em);
 }
 `
 
 const takeTileAnimation = (duration:number, z:number) => css`
 animation:${takeTileKeyFrames(z)} ${duration}s ease-in-out;
+`
+
+const takeTileEarthAnimation = (duration:number, z:number) => css`
+animation:${takeTileEarthKeyFrames(z)} ${duration}s ease-in-out;
 `
 
 export default MountainPile
