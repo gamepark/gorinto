@@ -10,6 +10,8 @@ const gorintoAnimations : Animations<GameView, MoveView, PlayerColor> = {
 
         if(move.type === MoveType.MoveTile){
             return action.playerId === playerId ? 0 : 1            // In seconds
+        } else if (move.type === MoveType.TakeTile){
+            return action.playerId === playerId ? 0 : 2
         }
 
         return 0              

@@ -59,7 +59,7 @@ animation:${moveTileKeyFrames(x,z)} ${duration}s ;
 const moveTileKeyFrames = (x:number,z:number) => keyframes`
 from{}
 50%{
-    transform:translate3d(${(x+1)*(heightPath*4.8)}%,0,${z*4.02*1.8}em);
+    transform:translate3d(${(x+1)*(heightPath*4.8)}%,0,12em);
 }
 to{
     transform:translate3d(0${(x+1)*(heightPath*9.6)}%,0,${z*4.02}em);

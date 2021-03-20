@@ -20,8 +20,6 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
     const playerId = usePlayerId()
     const animation = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === "horizontal")
 
-    console.log(animation);
-
     return(
 
         <div css = {horizontalPathPanel}>
@@ -60,7 +58,7 @@ animation:${moveTileKeyFrames(y,z)} ${duration}s ;
 const moveTileKeyFrames = (y:number,z:number) => keyframes`
 from{}
 50%{
-    transform:translate3d(0,${(y+1)*(widthPath*4.5334)}%,${z*4.02*1.8}em);
+    transform:translate3d(0,${(y+1)*(widthPath*4.5334)}%,12em);
 }
 to{
     transform:translate3d(0,${(y+1)*(widthPath*9.0667)}%,${z*4.02}em);
