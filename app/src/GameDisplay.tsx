@@ -16,8 +16,6 @@ import PatternReminder from './board/PatternReminder'
 
 const GameDisplay: FC<{game:Game}> = ({game}) => {
   
-  console.log(game.season);
-
   return (
 
     <Fragment>

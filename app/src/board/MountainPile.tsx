@@ -8,7 +8,6 @@ import {FC, HTMLAttributes} from 'react'
 import ElementTile from './ElementTile'
 import MountainDropZone from './MountainDropZone'
 import TakeTile, {isTakeTile} from "@gamepark/gorinto/moves/TakeTile"
-import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 
 type Props = {
     pile:number[],
@@ -110,7 +109,7 @@ from{}
 25%{
     transform:translate3d(0,0,${z*4+4.02}em);
 }
-75%{
+55%{
     transform:translate3d(0,0,${z*4+4.02}em);
 }
 to{
@@ -123,7 +122,7 @@ from{}
 25%{
     transform:translate3d(-150%,0,${z*2*4+4.02}em);
 }
-75%{
+55%{
     transform:translate3d(-150%,0,${z*2*4+4.02}em);
 }
 to{

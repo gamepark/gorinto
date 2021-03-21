@@ -1,16 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
+import { css, keyframes } from '@emotion/react'
+import MoveSeasonMarker, { isMoveSeasonMarker } from '@gamepark/gorinto/moves/MoveSeasonMarker'
+import { useAnimation } from '@gamepark/react-client'
 import { FC } from "react"
 import SeasonBoard from '../images/SeasonBoard.jpg'
 import SeasonMarker from '../images/SeasonMarker.png'
 
 const SeasonIndicator : FC<{season:number}> = ({season}) => {
 
+    const animation = useAnimation<MoveSeasonMarker>(animation => isMoveSeasonMarker(animation.move))
+
     return (
 
         <div css={seasonIndicatorStyle}> 
         
-            <div css={seasonMarker(season)}> 
+            <div css={[seasonMarker(season), animation && season !== 4 && moveSeasonMarkerAnimation(animation.duration)]}> 
 
                 <div css={[seasonMarkerSize, face1]}></div>
                 <div css={[seasonMarkerSize, face2]}></div>
@@ -22,6 +26,15 @@ const SeasonIndicator : FC<{season:number}> = ({season}) => {
     )
 
 }
+
+const moveSeasonMarkerAnimation = (duration:number) => css`
+animation : ${moveSeasonMarkerKeyFrames} ${duration}s ease-in-out ;
+`
+
+const moveSeasonMarkerKeyFrames = keyframes`
+from{}
+to{transform:translate3d(100%,0,0);}
+`
 
 const face1 = css`
 background-image:url(${SeasonMarker});
