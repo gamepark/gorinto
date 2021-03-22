@@ -7,6 +7,7 @@ import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
 import Element from "@gamepark/gorinto/types/Element";
 import { ElementBag } from "@gamepark/gorinto/cards/Elements";
 import MoveTile, { isMoveTile } from "@gamepark/gorinto/moves/MoveTile";
+import RemoveTileOnPath, { isRemoveTileOnPath } from "@gamepark/gorinto/moves/RemoveTileOnPath";
 
 type Props = {
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
@@ -18,7 +19,8 @@ type Props = {
 const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer, mountain}) => {
 
     const playerId = usePlayerId()
-    const animation = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === "vertical")
+    const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === "vertical")
+    const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move) && animation.move.index >= 5)
 
 
     return(
@@ -30,7 +32,9 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
             <div css={positionningTile(index)} key = {index}> 
 
                 <ElementTile 
-                             css = {[animation && animation.move.y === index && moveTileAnimation(animation.move.x, mountain[animation.move.x][animation.move.y].length, animation.duration)]}
+                             css = {[animationMoveTile && animationMoveTile.move.y === index && moveTileAnimation(animationMoveTile.move.x, mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, animationMoveTile.duration),
+                                     animationRemoveTile && animationRemoveTile.move.index -5 === index && removeTileAnimation(animationRemoveTile.duration)
+                            ]}
                              image = {ElementBag[tile].image}
                              draggable = {playerId === activePlayer && !tilesToTake}
                              draggableItem = {{type:"ElementInPath", path: "vertical", position : index}}
@@ -49,6 +53,29 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
     )
 
 }
+
+const removeTileAnimation = (duration:number) => css`
+animation : ${removeTileKeyFrames} ${duration}s ;
+`
+
+const removeTileKeyFrames = keyframes`
+from{}
+25%{
+    transform:translate3d(0,0,${4.02}em);
+    box-shadow: 0px 0px 1.5em 1em red;
+    border-radius:20%;
+}
+65%{
+    transform:translate3d(0,0,${4.02}em);
+    box-shadow: 0px 0px 2em 1.5em red;
+    border-radius:20%;
+}
+to{
+    transform:translate3d(0,0,150em);
+    box-shadow:none;
+    border-radius:20%;
+}
+`
 
 const heightPath = 15           // In percent
 

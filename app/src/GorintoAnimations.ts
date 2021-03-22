@@ -14,6 +14,8 @@ const gorintoAnimations : Animations<GameView, MoveView, PlayerColor> = {
             return action.playerId === playerId ? 0 : 2
         } else if (move.type === MoveType.MoveSeasonMarker){
             return 1
+        } else if (move.type === MoveType.RemoveTileOnPath){
+            return 2
         }
 
         return 0              

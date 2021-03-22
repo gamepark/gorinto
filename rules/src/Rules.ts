@@ -710,9 +710,7 @@ export default class Gorinto extends SequentialGame<Game | GameView, Move, Playe
 function setupPlayers(): Player[] {
   return [
     {color: PlayerColor.black, understanding: {void: 0, wind: 0, fire: 0, water: 0, earth: 0}, score: 0, isFirst: true},
-    {color: PlayerColor.white, understanding: {void: 0, wind: 0, fire: 0, water: 0, earth: 0}, score: 0, isFirst: false},
-    {color: PlayerColor.yellow, understanding: {void: 0, wind: 0, fire: 0, water: 0, earth: 0}, score: 0, isFirst: false},
-    {color: PlayerColor.red, understanding: {void: 0, wind: 0, fire: 0, water: 0, earth: 0}, score: 0, isFirst: false}
+    {color: PlayerColor.white, understanding: {void: 0, wind: 0, fire: 0, water: 0, earth: 0}, score: 0, isFirst: false}
 
   ]
 
