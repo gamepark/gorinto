@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import { Goals } from '@gamepark/gorinto/cards/Goals';
 import { Keys } from '@gamepark/gorinto/cards/KeyElement';
 import Game from '@gamepark/gorinto/types/Game'
@@ -13,8 +13,14 @@ import KeyElementCardPanel from './board/KeyElementCardPanel';
 import PlayerPanel from './board/PlayerPanel';
 import SeasonIndicator from './board/SeasonIndicator';
 import PatternReminder from './board/PatternReminder'
+import { useAnimation } from '@gamepark/react-client';
+import RemoveTileOnPath, { isRemoveTileOnPath } from '@gamepark/gorinto/moves/RemoveTileOnPath';
+import BurrowTile from './board/BurrowTile';
 
 const GameDisplay: FC<{game:Game}> = ({game}) => {
+
+  const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move))
+
   
   return (
 
@@ -64,6 +70,10 @@ const GameDisplay: FC<{game:Game}> = ({game}) => {
         
       )}
       
+      {animationRemoveTile?.move && 
+        <BurrowTile css = {[animationRemoveTile && burrowTileAnimation(animationRemoveTile.duration)]}
+                    index={animationRemoveTile?.move.index} />}
+      
       </div>
 
     </Letterbox>
@@ -73,7 +83,14 @@ const GameDisplay: FC<{game:Game}> = ({game}) => {
   )
 }
 
+const burrowTileAnimation = (duration:number) => css`
+animation : ${burrowTileKeyFrames} ${duration}s ;
+`
 
+const burrowTileKeyFrames = keyframes`
+from{}
+to{transform:translate3d(0,0,100em);}
+`
 
 const perspective = css`
 position:absolute;
