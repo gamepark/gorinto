@@ -31,7 +31,7 @@ const BurrowTile : FC<Props> = ({index, ...props}) => {
 
 const burrowStyle = (index:number) => css`
 position:absolute;
-right:1%;
+right:-20%;
 top:35%;
 width:20%;
 height:20%;

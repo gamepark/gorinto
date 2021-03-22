@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
+import {css, keyframes} from '@emotion/react'
 import { ElementBag } from '@gamepark/gorinto/cards/Elements'
+import SwitchFirstPlayer, {isSwitchFirstPlayer} from '@gamepark/gorinto/moves/SwitchFirstPlayer'
 import Element from '@gamepark/gorinto/types/Element'
 import ElementInPile from '@gamepark/gorinto/types/ElementInPile'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import {FC, HTMLAttributes} from 'react'
+import { useAnimation } from '@gamepark/react-client'
+import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import CoinHeads from '../images/CoinHeads.png'
 import BlackGor from '../images/GOR_TTS_playermat_black.png'
@@ -27,6 +29,8 @@ type Props = {
 } & HTMLAttributes<HTMLDivElement>
 
 const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, tilesToTake, mountainBoard, activePlayer, ...props}) => {
+
+    console.log("caractère first du joueur",color,first)
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",
@@ -72,6 +76,30 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
         }
       })
 
+      const animation = useAnimation<SwitchFirstPlayer>(animation => isSwitchFirstPlayer(animation.move))
+
+      const [displayedScore, setDisplayedScore] = useState(score)
+      const [scoreInterval, setScoreInterval] = useState<NodeJS.Timeout>()
+      useEffect(() => {
+          if (scoreInterval || displayedScore === score){
+              return
+          }
+        const interval = setInterval(() => {setDisplayedScore(currentScore => {
+            console.log("Dans le CurrentScore", currentScore, score);
+            if (currentScore === score){
+                console.log("Dans le CurrentScore+1");
+                clearInterval(interval);
+                setScoreInterval(undefined);
+                return currentScore
+            }
+            return currentScore +1
+        })}, 200)
+
+        setScoreInterval(interval)
+
+
+      }, [score])
+
     return(
 
         <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer), canDrop && canDropStyle, isOver && isOverStyle]}>
@@ -87,8 +115,8 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
             <div css={playerFooterStyle}>
 
-                <div css={coinPosition}>{first && <img alt="Coin" src={CoinHeads} css={coinStyle}/>}</div>
-                <div css={scoreStyle}>{score} pts</div>
+                <div css={[coinPosition]}><img alt="Coin" src={CoinHeads} css={coinStyle(first)}/></div>
+                <div css={scoreStyle}>{displayedScore} pts</div>
 
             </div>
 
@@ -152,6 +180,15 @@ function elementArray(understanding:number, element:number) : number[]{
     return result
 
 }
+
+const switchFirstPlayer = (duration:number) => css`
+animation : ${switchFirstPlayerKeyFrames} ${duration}s ease-in-out ;
+`
+
+const switchFirstPlayerKeyFrames = keyframes`
+from{}
+to{transform:translate3d(0,0,200em);}
+`
 
 const threeDStyle = (position:number) => css`
 transform:translateZ(${position*0.75}em);
@@ -297,17 +334,23 @@ position:absolute;
 bottom:2%;
 right:3%;
 width: 37%;
+
+transform-style: preserve-3d;
 `
 
-const coinStyle = css`
+const coinStyle = (isFirst:boolean) => css`
 width:100%;
 filter: drop-shadow(0 0 1em black);
+${isFirst === false && `transform:translate3d(0,0,200em);`};
+transform-style:preserve-3d;
+transition:transform 2s;
 `
 
 const coinPosition = css`
 margin-right:auto;
 margin-left:auto;
 width:50%;
+transform-style:preserve-3d;
 `
 
 const scoreStyle = css`

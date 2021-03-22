@@ -70,7 +70,7 @@ const GameDisplay: FC<{game:Game}> = ({game}) => {
         
       )}
       
-      {animationRemoveTile?.move && 
+      {animationRemoveTile && 
         <BurrowTile css = {[animationRemoveTile && burrowTileAnimation(animationRemoveTile.duration)]}
                     index={animationRemoveTile?.move.index} />}
       
@@ -88,8 +88,8 @@ animation : ${burrowTileKeyFrames} ${duration}s ;
 `
 
 const burrowTileKeyFrames = keyframes`
-from{}
-to{transform:translate3d(0,0,100em);}
+from, to{transform:none;}
+30%, 70%{transform:translate3d(-45%,0,0);}
 `
 
 const perspective = css`
