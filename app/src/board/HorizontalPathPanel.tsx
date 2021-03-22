@@ -26,7 +26,7 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
 
         <div css = {horizontalPathPanel}>
 
-            {horizontalPath.map((tile, index) => tile ? 
+            {horizontalPath.map((tile, index) => tile !== null ? 
             
             <div css={positionningTile(index)} key = {index}> 
 

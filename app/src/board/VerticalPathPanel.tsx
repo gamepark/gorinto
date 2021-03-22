@@ -27,7 +27,7 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
 
         <div css = {verticalPathPanel}>
 
-            {verticalPath.map((tile, index) => tile ?
+            {verticalPath.map((tile, index) => tile !== null ?
             
             <div css={positionningTile(index)} key = {index}> 
 
