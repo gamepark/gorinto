@@ -36,7 +36,7 @@ export function moveTile(state: GameState | GameView, move: MoveTile) {
   switch (elem) {       // One Pattern is required for each element
     case Element.Void : {
       state.tilesToTake = {
-        quantity: activePlayer.understanding.void + 1,
+        quantity: activePlayer.understanding[Element.Void] + 1,
         coordinates: [{x: move.x + 1, y: move.y + 1}, {x: move.x + 1, y: move.y - 1}, {x: move.x - 1, y: move.y + 1}, {x: move.x - 1, y: move.y - 1}],    // Void Pattern
         element: elem
       }
@@ -47,7 +47,7 @@ export function moveTile(state: GameState | GameView, move: MoveTile) {
     }
     case Element.Wind : {
       state.tilesToTake = {
-        quantity: activePlayer.understanding.wind + 1,
+        quantity: activePlayer.understanding[Element.Wind] + 1,
         coordinates: [{x: move.x + 1, y: move.y}, {x: move.x - 1, y: move.y}, {x: move.x, y: move.y + 1}, {x: move.x, y: move.y - 1}],      // Wind Pattern
         element: elem
       }
@@ -60,7 +60,7 @@ export function moveTile(state: GameState | GameView, move: MoveTile) {
       const firePattern: { x: number, y: number }[] = [{x: move.x, y: 0}, {x: move.x, y: 1}, {x: move.x, y: 2}, {x: move.x, y: 3}, {x: move.x, y: 4}]
       firePattern.splice(move.y, 1)
       state.tilesToTake = {
-        quantity: activePlayer.understanding.fire + 1,
+        quantity: activePlayer.understanding[Element.Fire] + 1,
         coordinates: firePattern,
         element: elem
       }
@@ -70,7 +70,7 @@ export function moveTile(state: GameState | GameView, move: MoveTile) {
       const waterPattern: { x: number, y: number }[] = [{x: 0, y: move.y}, {x: 1, y: move.y}, {x: 2, y: move.y}, {x: 3, y: move.y}, {x: 4, y: move.y}]
       waterPattern.splice(move.x, 1)
       state.tilesToTake = {
-        quantity: activePlayer.understanding.water + 1,
+        quantity: activePlayer.understanding[Element.Water] + 1,
         coordinates: waterPattern,
         element: elem
       }
@@ -78,7 +78,7 @@ export function moveTile(state: GameState | GameView, move: MoveTile) {
     }
     case Element.Earth : {
       state.tilesToTake = {
-        quantity: activePlayer.understanding.earth + 1,
+        quantity: activePlayer.understanding[Element.Earth] + 1,
         coordinates: [{x: move.x, y: move.y}],
         element: elem
       }

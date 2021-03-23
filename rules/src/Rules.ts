@@ -174,9 +174,8 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
 
 function setupPlayers(players: GorintoPlayerOptions[]): Player[] {
   return players.map((options, index) => ({
-      color: options.id, understanding: {void: 0, wind: 0, fire: 0, water: 0, earth: 0}, score: 0, isFirst: index === 0
-    }
-  ))
+    color: options.id, understanding: [0, 0, 0, 0, 0], score: 0, isFirst: index === 0
+  }))
 }
 
 function setupIsFirstPlayer(game: GameState): Player[] {

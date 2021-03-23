@@ -46,5 +46,5 @@ export function determineWinner(state: GameState | GameView) {
 }
 
 function tilesOwnedByAPlayer(player: Player): number {
-  return player.understanding.void + player.understanding.wind + player.understanding.fire + player.understanding.water + player.understanding.earth
+  return player.understanding.reduce((sum, element) => sum + element, 0)
 }

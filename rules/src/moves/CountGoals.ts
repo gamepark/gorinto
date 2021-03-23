@@ -1,4 +1,5 @@
 import AutomaticMovePhase from '../types/AutomaticMovePhase'
+import Element from '../types/Element'
 import GameState from '../types/GameState'
 import GameView from '../types/GameView'
 import MoveType from '../types/MoveType'
@@ -10,7 +11,7 @@ export default CountGoals
 export function countGoals(state: GameState | GameView) {
   for (let i = 0; i < state.twoGoals.length; i++) {
     for (let j = 0; j < state.players.length; j++) {
-      const understandings: number[] = [state.players[j].understanding.void, state.players[j].understanding.wind, state.players[j].understanding.fire, state.players[j].understanding.water, state.players[j].understanding.earth]
+      const understandings = state.players[j].understanding
 
       switch (state.twoGoals[i]) {
 
@@ -68,20 +69,20 @@ export function countGoals(state: GameState | GameView) {
 
           const maxsUnderstandings: number[] = [0, 0, 0, 0, 0]
           for (let k = 0; k < state.players.length; k++) {
-            if (maxsUnderstandings[0] < state.players[k].understanding.void) {
-              maxsUnderstandings[0] = state.players[k].understanding.void
+            if (maxsUnderstandings[0] < state.players[k].understanding[Element.Void]) {
+              maxsUnderstandings[0] = state.players[k].understanding[Element.Void]
             }
-            if (maxsUnderstandings[1] < state.players[k].understanding.wind) {
-              maxsUnderstandings[1] = state.players[k].understanding.wind
+            if (maxsUnderstandings[1] < state.players[k].understanding[Element.Wind]) {
+              maxsUnderstandings[1] = state.players[k].understanding[Element.Wind]
             }
-            if (maxsUnderstandings[2] < state.players[k].understanding.fire) {
-              maxsUnderstandings[2] = state.players[k].understanding.fire
+            if (maxsUnderstandings[2] < state.players[k].understanding[Element.Fire]) {
+              maxsUnderstandings[2] = state.players[k].understanding[Element.Fire]
             }
-            if (maxsUnderstandings[3] < state.players[k].understanding.water) {
-              maxsUnderstandings[3] = state.players[k].understanding.water
+            if (maxsUnderstandings[3] < state.players[k].understanding[Element.Water]) {
+              maxsUnderstandings[3] = state.players[k].understanding[Element.Water]
             }
-            if (maxsUnderstandings[4] < state.players[k].understanding.earth) {
-              maxsUnderstandings[4] = state.players[k].understanding.earth
+            if (maxsUnderstandings[4] < state.players[k].understanding[Element.Earth]) {
+              maxsUnderstandings[4] = state.players[k].understanding[Element.Earth]
             }
           }
 
@@ -97,20 +98,20 @@ export function countGoals(state: GameState | GameView) {
 
           const minsUnderstandings: number[] = [101, 101, 101, 101, 101]       //Maximum of tiles +1
           for (let k = 0; k < state.players.length; k++) {
-            if ((minsUnderstandings[0] > state.players[k].understanding.void) && (state.players[k].understanding.void !== 0)) {
-              minsUnderstandings[0] = state.players[k].understanding.void
+            if ((minsUnderstandings[0] > state.players[k].understanding[Element.Void]) && (state.players[k].understanding[Element.Void] !== 0)) {
+              minsUnderstandings[0] = state.players[k].understanding[Element.Void]
             }
-            if ((minsUnderstandings[1] > state.players[k].understanding.wind) && (state.players[k].understanding.wind !== 0)) {
-              minsUnderstandings[1] = state.players[k].understanding.wind
+            if ((minsUnderstandings[1] > state.players[k].understanding[Element.Wind]) && (state.players[k].understanding[Element.Wind] !== 0)) {
+              minsUnderstandings[1] = state.players[k].understanding[Element.Wind]
             }
-            if ((minsUnderstandings[2] > state.players[k].understanding.fire) && (state.players[k].understanding.fire !== 0)) {
-              minsUnderstandings[2] = state.players[k].understanding.fire
+            if ((minsUnderstandings[2] > state.players[k].understanding[Element.Fire]) && (state.players[k].understanding[Element.Fire] !== 0)) {
+              minsUnderstandings[2] = state.players[k].understanding[Element.Fire]
             }
-            if ((minsUnderstandings[3] > state.players[k].understanding.water) && (state.players[k].understanding.water !== 0)) {
-              minsUnderstandings[3] = state.players[k].understanding.water
+            if ((minsUnderstandings[3] > state.players[k].understanding[Element.Water]) && (state.players[k].understanding[Element.Water] !== 0)) {
+              minsUnderstandings[3] = state.players[k].understanding[Element.Water]
             }
-            if ((minsUnderstandings[4] > state.players[k].understanding.earth) && (state.players[k].understanding.earth !== 0)) {
-              minsUnderstandings[4] = state.players[k].understanding.earth
+            if ((minsUnderstandings[4] > state.players[k].understanding[Element.Earth]) && (state.players[k].understanding[Element.Earth] !== 0)) {
+              minsUnderstandings[4] = state.players[k].understanding[Element.Earth]
             }
           }
 

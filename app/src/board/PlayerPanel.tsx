@@ -16,10 +16,10 @@ import YellowGor from '../images/GOR_TTS_playermat_yellow.png'
 import ElementTileForPlayers from './ElementTileForPlayers'
 
 type Props = {
-    color:string, 
-    understanding:any, 
-    position:number[], 
-    score:number, 
+    color:string,
+    understanding:number[],
+    position:number[],
+    score:number,
     first:boolean,
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
     mountainBoard:number[][][],
@@ -47,7 +47,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
                     (tilesToTake.coordinates.find(coord => (coord.x === item.x) && (coord.y === item.y)) !== undefined)
                     &&
                     (item.z !== mountainBoard[item.x][item.y].length - 1)
-                       
+
                    )
                }
 
@@ -63,13 +63,13 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
         }),
 
         drop: (item: ElementInPile) => {
-            
+
                 if (tilesToTake!.element !== Element.Earth){
                     return {type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y} };
                 } else {
                     return {type : MoveType.TakeTile, coordinates:{x:item.x, y:item.y, z:item.z} };
                 }
-    
+
 
         }
       })
@@ -118,31 +118,31 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
             <div css={playerElementStyle}>
 
-                {elementArray(understanding.void,0).length !== 0 ? elementArray(understanding.void,0).map((tile, index) =>  
+                {elementArray(understanding[Element.Void],0).length !== 0 ? elementArray(understanding[Element.Void],0).map((tile, index) =>
                     <div css={[voidStyle, elementSize, threeDStyle(index)]} key={index}>
                         <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
                     </div>
                 ): <div css={[voidStyle, elementSize]}></div>}
 
-                {elementArray(understanding.wind,20).length !==0 ? elementArray(understanding.wind,20).map((tile, index) =>  
+                {elementArray(understanding[Element.Wind],20).length !==0 ? elementArray(understanding[Element.Wind],20).map((tile, index) =>
                     <div css={[windStyle, elementSize, threeDStyle(index)]} key={index}>
                         <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
                     </div>
                 ): <div css={[windStyle, elementSize]}></div>}
 
-                {elementArray(understanding.fire,40).length !==0 ? elementArray(understanding.fire,40).map((tile, index) =>  
+                {elementArray(understanding[Element.Fire],40).length !==0 ? elementArray(understanding[Element.Fire],40).map((tile, index) =>
                     <div css={[fireStyle, elementSize, threeDStyle(index)]} key={index}>
                         <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
                     </div>
                 ): <div css={[fireStyle, elementSize]}></div>}
 
-                {elementArray(understanding.water,60).length !==0 ? elementArray(understanding.water,60).map((tile, index) =>  
+                {elementArray(understanding[Element.Water],60).length !==0 ? elementArray(understanding[Element.Water],60).map((tile, index) =>
                     <div css={[waterStyle, elementSize, threeDStyle(index)]} key={index}>
                         <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
                     </div>
                 ): <div css={[waterStyle, elementSize]}></div>}
 
-                {elementArray(understanding.earth,80).length !==0 ? elementArray(understanding.earth,80).map((tile, index) =>  
+                {elementArray(understanding[Element.Earth],80).length !==0 ? elementArray(understanding[Element.Earth],80).map((tile, index) =>
                     <div css={[earthStyle, elementSize, threeDStyle(index)]} key={index}>
                         <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
                     </div>
@@ -152,11 +152,11 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
             <div css={playerCounterStyle}>
 
-                {understanding.void > 3 && <div css={countVoid}> {understanding.void} </div>}
-                {understanding.wind > 3 && <div css={countWind}> {understanding.wind} </div>}
-                {understanding.fire > 3 && <div css={countFire}> {understanding.fire} </div>}
-                {understanding.water > 3 && <div css={countWater}> {understanding.water} </div>}
-                {understanding.earth > 3 && <div css={countEarth}> {understanding.earth} </div>}
+                {understanding[Element.Void] > 3 && <div css={countVoid}> {understanding[Element.Void]} </div>}
+                {understanding[Element.Wind] > 3 && <div css={countWind}> {understanding[Element.Wind]} </div>}
+                {understanding[Element.Fire] > 3 && <div css={countFire}> {understanding[Element.Fire]} </div>}
+                {understanding[Element.Water] > 3 && <div css={countWater}> {understanding[Element.Water]} </div>}
+                {understanding[Element.Earth] > 3 && <div css={countEarth}> {understanding[Element.Earth]} </div>}
 
             </div>
 

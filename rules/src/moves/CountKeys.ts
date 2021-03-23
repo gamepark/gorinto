@@ -10,7 +10,7 @@ export default CountKeys
 export function countKeys(state: GameState | GameView) {
   for (let i = 0; i < state.twoKeyElementCards.length; i++) {
     for (let j = 0; j < state.players.length; j++) {
-      const understandings: number[] = [state.players[j].understanding.void, state.players[j].understanding.wind, state.players[j].understanding.fire, state.players[j].understanding.water, state.players[j].understanding.earth]
+      const understandings: number[] = state.players[j].understanding
 
       switch (state.twoKeyElementCards[i]) {
 

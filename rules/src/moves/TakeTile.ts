@@ -33,28 +33,7 @@ export function takeTile(state: GameState | GameView, move: TakeTile) {
     state.mountainBoard[move.coordinates.x][move.coordinates.y].splice(move.coordinates.z!, 1)
   }
 
-  switch (elem) {
-    case Element.Void : {
-      state.players[activePlayer].understanding.void++
-      break
-    }
-    case Element.Wind : {
-      state.players[activePlayer].understanding.wind++
-      break
-    }
-    case Element.Fire : {
-      state.players[activePlayer].understanding.fire++
-      break
-    }
-    case Element.Water : {
-      state.players[activePlayer].understanding.water++
-      break
-    }
-    case Element.Earth : {
-      state.players[activePlayer].understanding.earth++
-      break
-    }
-  }
+  state.players[activePlayer].understanding[elem]++
 
   tilesToTake.quantity--
 
