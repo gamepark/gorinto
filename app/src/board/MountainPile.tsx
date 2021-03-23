@@ -2,7 +2,7 @@
 import {css, keyframes} from '@emotion/react'
 import { ElementBag } from '@gamepark/gorinto/cards/Elements'
 import Element from '@gamepark/gorinto/types/Element'
-import Game from '@gamepark/gorinto/types/Game'
+import GameState from '@gamepark/gorinto/types/GameState'
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
 import {FC, HTMLAttributes} from 'react'
 import ElementTile from './ElementTile'
@@ -13,7 +13,7 @@ type Props = {
     pile:number[],
     x:number,
     y:number,
-    game:Game,
+    game:GameState,
 } & HTMLAttributes<HTMLDivElement>
 
 const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
@@ -64,7 +64,7 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
 
 }
 
-function canDrag(game:Game,x:number,y:number,z:number):boolean{
+function canDrag(game:GameState, x:number, y:number, z:number):boolean{
 
     if (game.tilesToTake === undefined){
         return false;

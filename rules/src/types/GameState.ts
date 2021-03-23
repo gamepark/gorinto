@@ -3,7 +3,7 @@ import Element from "./Element"
 import Player from "./Player"
 import PlayerColor from "./PlayerColor"
 
-type Game = {
+type GameState = {
     season: number;
     activePlayer? : PlayerColor;
     players : Player[];
@@ -17,4 +17,4 @@ type Game = {
     automaticMovePhase : AutomaticMovePhase | undefined;
 }
 
-export default Game
+export default GameState

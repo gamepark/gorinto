@@ -3,7 +3,7 @@
 import { css, keyframes } from '@emotion/react';
 import { Goals } from '@gamepark/gorinto/cards/Goals';
 import { Keys } from '@gamepark/gorinto/cards/KeyElement';
-import Game from '@gamepark/gorinto/types/Game'
+import GameState from '@gamepark/gorinto/types/GameState'
 import {Letterbox} from '@gamepark/react-components'
 import {FC, Fragment, useState} from 'react'
 import Board from './board/Board';
@@ -20,7 +20,7 @@ import WelcomePopUp from './board/WelcomePopUp';
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor';
 import {getPlayer} from '@gamepark/gorinto/Rules'
 
-const GameDisplay: FC<{game:Game}> = ({game}) => {
+const GameDisplay: FC<{game:GameState}> = ({game}) => {
 
   const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move))
   const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(false)

@@ -1,4 +1,4 @@
-import Game from '@gamepark/gorinto/types/Game'
+import GameState from '@gamepark/gorinto/types/GameState'
 import {useGame} from '@gamepark/react-client'
 import i18next from 'i18next'
 import ICU from 'i18next-icu'
@@ -23,7 +23,7 @@ i18next.init({
 })
 
 function App() {
-  const game = useGame<Game>()
+  const game = useGame<GameState>()
   return (
     <DndProvider options={HTML5ToTouch}>
       {game && <GameDisplay game={game}/>}

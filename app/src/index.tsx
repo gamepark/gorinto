@@ -1,15 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import {css, Global} from '@emotion/react'
+import {GorintoOptionsDescription} from '@gamepark/gorinto/GorintoOptions'
+import GorintoView from '@gamepark/gorinto/GorintoView'
 import Gorinto from '@gamepark/gorinto/Rules'
-import {createGameStore} from '@gamepark/react-client'
-import React from 'react'
+import {GameProvider} from '@gamepark/react-client'
 import normalize from 'emotion-normalize'
+import React, {StrictMode} from 'react'
 import ReactDOM from 'react-dom'
-import {Provider} from 'react-redux'
 import App from './App'
-import reportWebVitals from './reportWebVitals'
-import Background from './images/BG2.jpg'
 import gorintoAnimations from './GorintoAnimations'
+import Background from './images/BG2.jpg'
+import reportWebVitals from './reportWebVitals'
 
 const style = css`
   html {
@@ -39,7 +40,7 @@ const style = css`
     width: 100vw;
     user-select: none;
     overflow: hidden;
-    background-image:url(${Background});
+    background-image: url(${Background});
     background-color: white;
     background-size: cover;
     background-position: bottom;
@@ -59,12 +60,13 @@ const style = css`
 `
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={createGameStore('gorinto', Gorinto, {animations:gorintoAnimations})}>
+  <StrictMode>
+    <GameProvider game="gorinto" Rules={Gorinto} RulesView={GorintoView} optionsDescription={GorintoOptionsDescription}
+                  animations={gorintoAnimations}>
       <App/>
-    </Provider>
+    </GameProvider>
     <Global styles={[normalize, style]}/>
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById('root')
 )
 

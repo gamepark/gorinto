@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { FC } from "react";
-import Game from "@gamepark/gorinto/types/Game";
+import GameState from "@gamepark/gorinto/types/GameState";
 import MountainPile from "./MountainPile";
 
-const MountainPanel : FC<{game : Game}> = ({game}) => {
+const MountainPanel : FC<{game : GameState}> = ({game}) => {
 
     return(
 

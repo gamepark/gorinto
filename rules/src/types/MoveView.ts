@@ -1,4 +1,4 @@
-import Move from "./Move";
-import { RefillPathsView } from "../moves/RefillPaths";
+import RefillPaths, {RefillPathsView} from '../moves/RefillPaths'
+import Move from './Move'
 
-export type MoveView = Move | RefillPathsView
+export type MoveView = Exclude<Move, RefillPaths> | RefillPathsView

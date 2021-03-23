@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import Game from '@gamepark/gorinto/types/Game'
+import GameState from '@gamepark/gorinto/types/GameState'
 import { FC } from "react"
 import board from '../images/board.jpg'
 import HorizontalPathPanel from './HorizontalPathPanel'
 import VerticalPathPanel from './VerticalPathPanel'
 import MountainPanel from './MountainPanel'
 
-const Board : FC<{game:Game}> = ({game}) => {
+const Board : FC<{game:GameState}> = ({game}) => {
 
     return (
 

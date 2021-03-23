@@ -6,14 +6,14 @@ import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTimes} from '@fortawesome/free-solid-svg-icons'
-import Game from "@gamepark/gorinto/types/Game";
+import GameState from "@gamepark/gorinto/types/GameState";
 import { Goals } from "@gamepark/gorinto/cards/Goals";
 import GoalCardPopUp from './GoalCardPopUp';
 import { Keys } from "@gamepark/gorinto/cards/KeyElement";
 import { css } from "@emotion/react";
 import KeyElementCardPanelPopUp from "./KeyElementCardPanelPopUp";
 
-const WelcomePopUp : FC<{player:Player, game:Game, close: () => void}> = ({player, game, close}) => {
+const WelcomePopUp : FC<{player:Player, game:GameState, close: () => void}> = ({player, game, close}) => {
 
     const {t} = useTranslation()
     const playerInfo = usePlayer(player.color)
