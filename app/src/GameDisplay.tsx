@@ -5,7 +5,7 @@ import { Goals } from '@gamepark/gorinto/cards/Goals';
 import { Keys } from '@gamepark/gorinto/cards/KeyElement';
 import Game from '@gamepark/gorinto/types/Game'
 import {Letterbox} from '@gamepark/react-components'
-import {FC, Fragment} from 'react'
+import {FC, Fragment, useState} from 'react'
 import Board from './board/Board';
 import GoalCard from './board/GoalCard';
 import Header from './board/Header';
@@ -13,15 +13,22 @@ import KeyElementCardPanel from './board/KeyElementCardPanel';
 import PlayerPanel from './board/PlayerPanel';
 import SeasonIndicator from './board/SeasonIndicator';
 import PatternReminder from './board/PatternReminder'
-import { useAnimation } from '@gamepark/react-client';
+import { useAnimation, usePlayerId } from '@gamepark/react-client';
 import RemoveTileOnPath, { isRemoveTileOnPath } from '@gamepark/gorinto/moves/RemoveTileOnPath';
 import BurrowTile from './board/BurrowTile';
+import WelcomePopUp from './board/WelcomePopUp';
+import PlayerColor from '@gamepark/gorinto/types/PlayerColor';
+import {getPlayer} from '@gamepark/gorinto/Rules'
 
 const GameDisplay: FC<{game:Game}> = ({game}) => {
 
   const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move))
+  const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(false)
+  const playerId = usePlayerId<PlayerColor>()
 
+  const showWelcomePopup = game.season === 1 && !welcomePopUpClosed
   
+
   return (
 
     <Fragment>
@@ -74,6 +81,8 @@ const GameDisplay: FC<{game:Game}> = ({game}) => {
                     index={animationRemoveTile && animationRemoveTile.move.index} />
       
       </div>
+
+      {showWelcomePopup && playerId && <WelcomePopUp player={getPlayer(game, playerId)} game={game} close={() => setWelcomePopUpClosed(true)} />}
 
     </Letterbox>
 

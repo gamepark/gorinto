@@ -792,3 +792,7 @@ function tilesOwnedByAPlayer(player: Player): number {
 function getRandomInt(max: number): number {
   return Math.floor(Math.random() * Math.floor(max))
 }
+
+export function getPlayer(game:Game, color:PlayerColor):Player{
+  return game.players.find(player => player.color === color)!
+}

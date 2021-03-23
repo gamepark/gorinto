@@ -1,14 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { FC } from "react";
+import { FC, HTMLAttributes } from "react";
 import Element from "@gamepark/gorinto/types/Element";
 import KeyElementCard from "@gamepark/gorinto/types/KeyElementCard";
 
-const KeyElementCardPanel : FC<{keyCard : KeyElementCard, position:number}> = ({keyCard, position}) => {
+type Props ={
+  keyCard : KeyElementCard,
+  position? : number
+} & HTMLAttributes<HTMLDivElement>
+
+const KeyElementCardPanel : FC<Props> = ({keyCard, position}) => {
 
     return(
 
-        <div css={keyElementCardPanelStyle(position, keyCard.image)}>
+        <div css={[keyElementCardPanelStyle(keyCard.image), position !== undefined && keyElementCardPanelPositionStyle(position)]}>
 
             <div css={positionningX2}><span>x2</span></div>
 
@@ -19,6 +24,12 @@ const KeyElementCardPanel : FC<{keyCard : KeyElementCard, position:number}> = ({
     )
 
 }
+
+const keyElementCardPanelPositionStyle = (position:number) => css`
+position : absolute;
+top : 10%;
+left : ${position*10}%;
+`
 
 const positionningX2 =  css`
 
@@ -67,10 +78,8 @@ ${color === Element.Void &&
 
 `
 
-const keyElementCardPanelStyle = (position:number, image:string) => css`
-position : absolute;
-top : 10%;
-left : ${position*10}%;
+const keyElementCardPanelStyle = (image:string) => css`
+
 width : 10%;
 height : 15%;
 font-size:1.7em;
