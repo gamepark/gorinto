@@ -24,7 +24,10 @@ export function takeTile(state: GameState | GameView, move: TakeTile) {
 
   let activePlayer: number = state.players.findIndex(player => player.color === state.activePlayer)!
 
-  if (state.tilesToTake?.element !== Element.Earth) {
+  const tilesToTake = state.tilesToTake
+  if (!tilesToTake) return console.error('Cannot takeTile when tilesToTake is undefined!')
+
+  if (tilesToTake.element !== Element.Earth) {
     state.mountainBoard[move.coordinates.x][move.coordinates.y].pop()
   } else {
     state.mountainBoard[move.coordinates.x][move.coordinates.y].splice(move.coordinates.z!, 1)
@@ -53,19 +56,12 @@ export function takeTile(state: GameState | GameView, move: TakeTile) {
     }
   }
 
-  state.tilesToTake!.quantity--
+  tilesToTake.quantity--
 
-  if (state.tilesToTake?.element !== Element.Earth) {
-    state.tilesToTake?.coordinates.splice(state.tilesToTake.coordinates.findIndex(coord => (coord.x === move.coordinates.x) && (coord.y === move.coordinates.y)), 1)
-  }
-
-  if ((state.tilesToTake!.quantity === 0) || (state.tilesToTake?.coordinates.length === 0) || ((state.tilesToTake?.element === 'earth') && (state.mountainBoard[move.coordinates.x][move.coordinates.y].length === 1))) {
-    state.tilesToTake = undefined
-    console.log('Fin du tour !')
-
-    const nextPlayerIndex = (activePlayer + 1) % state.players.length
-    state.activePlayer = state.players[nextPlayerIndex].color
-
+  if (tilesToTake.element !== Element.Earth) {
+    tilesToTake.coordinates.splice(tilesToTake.coordinates.findIndex(coord => (coord.x === move.coordinates.x) && (coord.y === move.coordinates.y)), 1)
+  } else if (state.mountainBoard[move.coordinates.x][move.coordinates.y].length === 1) {
+    tilesToTake.coordinates = []
   }
 }
 

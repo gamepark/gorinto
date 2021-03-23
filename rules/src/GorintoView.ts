@@ -1,5 +1,5 @@
 import {Game} from '@gamepark/rules-api'
-import {cantPickAnyTile} from './moves/CantPickAnyTile'
+import {changeActivePlayer} from './moves/ChangeActivePlayer'
 import {countGoals} from './moves/CountGoals'
 import {countKeys} from './moves/CountKeys'
 import {determineWinner} from './moves/DetermineWinner'
@@ -9,6 +9,7 @@ import {refillPathInView} from './moves/RefillPaths'
 import {removeTileOnPath} from './moves/RemoveTileOnPath'
 import {switchFirstPlayer} from './moves/SwitchFirstPlayer'
 import {takeTile} from './moves/TakeTile'
+import {getPredictableAutomaticMoves} from './Rules'
 import GameView from './types/GameView'
 import MoveType from './types/MoveType'
 import {MoveView} from './types/MoveView'
@@ -21,16 +22,13 @@ export default class GorintoView implements Game<GameView, MoveView> {
   }
 
   getAutomaticMove(): MoveView | void {
-    if (this.state.tilesToTake !== undefined && this.state.tilesToTake.coordinates.length === 0) {
-      console.log('on CantPickTile')
-      return {type: MoveType.CantPickAnyTile}
-    }
+    return getPredictableAutomaticMoves(this.state)
   }
 
   play(move: MoveView): void {
     switch (move.type) {
-      case MoveType.CantPickAnyTile:
-        return cantPickAnyTile(this.state)
+      case MoveType.ChangeActivePlayer:
+        return changeActivePlayer(this.state)
       case MoveType.RefillPaths:
         return refillPathInView(this.state, move)
       case MoveType.RemoveTileOnPath:

@@ -4,7 +4,7 @@ import {ElementBag} from './cards/Elements'
 import {Goals} from './cards/Goals'
 import {Keys} from './cards/KeyElement'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
-import {cantPickAnyTile} from './moves/CantPickAnyTile'
+import {changeActivePlayer} from './moves/ChangeActivePlayer'
 import {countGoals} from './moves/CountGoals'
 import {countKeys} from './moves/CountKeys'
 import {determineWinner} from './moves/DetermineWinner'
@@ -23,6 +23,7 @@ import MoveType from './types/MoveType'
 import {MoveView} from './types/MoveView'
 import Player from './types/Player'
 import PlayerColor from './types/PlayerColor'
+import TilesToTake from './types/TilesToTake'
 
 export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor>
   implements IncompleteInformation<GameState, GameView, Move, MoveView, PlayerColor> {
@@ -91,10 +92,7 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
 
     }
 
-    if (this.state.tilesToTake !== undefined && this.state.tilesToTake.coordinates.length === 0) {
-      console.log('on CantPickTile')
-      return {type: MoveType.CantPickAnyTile}
-    }
+    return getPredictableAutomaticMoves(this.state)
   }
 
   getLegalMoves(): Move[] {
@@ -136,8 +134,8 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
 
   play(move: Move): void {
     switch (move.type) {
-      case MoveType.CantPickAnyTile:
-        return cantPickAnyTile(this.state)
+      case MoveType.ChangeActivePlayer:
+        return changeActivePlayer(this.state)
       case MoveType.RefillPaths:
         return refillPath(this.state)
       case MoveType.RemoveTileOnPath:
@@ -235,6 +233,16 @@ function setupMountain(game: GameState): number[][][] {
   }
   result[2][2][3] = game.elementTilesBag.pop() !         // Same
   return result
+}
+
+export function getPredictableAutomaticMoves(state: GameState | GameView): Move & MoveView | void {
+  if (state.tilesToTake !== undefined && cantPickAnyTile(state.tilesToTake)) {
+    return {type: MoveType.ChangeActivePlayer}
+  }
+}
+
+function cantPickAnyTile(tilesToTake: TilesToTake): boolean {
+  return tilesToTake.coordinates.length === 0 || tilesToTake.quantity === 0
 }
 
 function filledSpacesinPaths(game: GameState): number {
