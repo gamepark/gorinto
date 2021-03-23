@@ -14,7 +14,7 @@ import BurrowTileI from "../images/GOR_tts_Kitsune_burrowtileI.png"
 import BurrowTileJ from "../images/GOR_tts_Kitsune_burrowtileJ.png"
 
 type Props = {
-    index:number,
+    index:number | undefined,
 } & HTMLAttributes<HTMLDivElement>
 
 const BurrowTile : FC<Props> = ({index, ...props}) => {
@@ -29,14 +29,14 @@ const BurrowTile : FC<Props> = ({index, ...props}) => {
 
 }
 
-const burrowStyle = (index:number) => css`
+const burrowStyle = (index:number | undefined) => css`
 position:absolute;
 right:-20%;
 top:35%;
 width:20%;
 height:20%;
 
-transform-style:preserve3d;
+transform-style:preserve-3d;
 
 ${index === 0 && `background-image:url(${BurrowTileF})`};
 ${index === 1 && `background-image:url(${BurrowTileG})`};

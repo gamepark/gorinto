@@ -15,7 +15,7 @@ const gorintoAnimations : Animations<GameView, MoveView, PlayerColor> = {
         } else if (move.type === MoveType.MoveSeasonMarker){
             return 1
         } else if (move.type === MoveType.RemoveTileOnPath){
-            return 2
+            return 8
         } else if (move.type === MoveType.SwitchFirstPlayer){
             return 1
         }

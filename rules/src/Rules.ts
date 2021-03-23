@@ -779,8 +779,8 @@ function setupMountain(game: Game): number[][][] {
 
 function filledSpacesinPaths(game: Game): number{
 
-  return game.horizontalPath.reduce((sum, space) => space ? sum! + 1 : sum, 0)! +
-    game.verticalPath.reduce((sum, space) => space ? sum! + 1 : sum, 0)!
+  return game.horizontalPath.reduce((sum, space) => space !== null ? sum! + 1 : sum, 0)! +
+    game.verticalPath.reduce((sum, space) => space !== null ? sum! + 1 : sum, 0)!
 }
 
 function tilesOwnedByAPlayer(player: Player): number {
