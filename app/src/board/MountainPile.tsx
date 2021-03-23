@@ -34,7 +34,8 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
 
                     <ElementTile 
                                 css = {[animation && game.mountainBoard[x][y].length === index+1 && game.tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index+1),
-                                        animation && game.tilesToTake?.element === Element.Earth && game.mountainBoard[x][y][index] === game.mountainBoard[animation.move.coordinates.x][animation.move.coordinates.y][animation.move.coordinates.z!] && takeTileEarthAnimation(animation.duration, index+1)
+                                        animation && game.tilesToTake?.element === Element.Earth && game.mountainBoard[x][y][index] === game.mountainBoard[animation.move.coordinates.x][animation.move.coordinates.y][animation.move.coordinates.z!] && takeTileEarthAnimation(animation.duration, index+1),
+                                        canTakeAny && shadowStyle
                                       ]}
                                 image = {ElementBag[tile].image}
                                 position = {canTakeAny ? 3*index : index}
@@ -85,6 +86,11 @@ function canDrag(game:Game,x:number,y:number,z:number):boolean{
 
 }
 
+const shadowStyle = css`
+box-shadow: 0px 0px 1.5em 0.5em black; 
+border-radius:20%;
+`
+
 const renderContext = css`
 transform-style:preserve-3d;
 `
@@ -120,10 +126,10 @@ to{
 const takeTileEarthKeyFrames = (z:number) => keyframes`
 from{}
 25%{
-    transform:translate3d(-150%,0,${z*2*4+4.02}em);
+    transform:translate3d(-150%,0,${z*3*4+4.02}em);
 }
 55%{
-    transform:translate3d(-150%,0,${z*2*4+4.02}em);
+    transform:translate3d(-150%,0,${z*3*4+4.02}em);
 }
 to{
     transform:translate3d(-150%,0,150em);

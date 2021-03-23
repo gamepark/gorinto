@@ -31,7 +31,7 @@ const ElementTile : FC<Props> = ({image, draggable=false, draggableItem,  elemen
 
                     <div css={topStyle(image)}></div>
                     <div css={[frontStyle, coloring(element)]}></div>
-                    <div css={[bottomStyle, coloring(element), canBeDragged(draggable)]}></div>
+                    <div css={[bottomStyle(position), coloring(element), canBeDragged(draggable)]}></div>
                     <div css={[rightStyle, coloring(element)]}></div>
                     <div css={[leftStyle, coloring(element)]}></div>
                     <div css={[backStyle, coloring(element)]}></div>
@@ -136,13 +136,13 @@ const topStyle = (image:string) => css`
     background-repeat:no-repeat;
     background-size:100% 100%;
 `
-const bottomStyle = css`
+const bottomStyle = (position:number) => css`
     position:absolute;
     height:100%;
     width:100%;
     border-radius:20%;
 
-    box-shadow: 0px 0px 1.5em 0.5em black;
+    ${position === 0 && `box-shadow: 0px 0px 1.5em 0.5em black;`} 
 `
 
 export default ElementTile

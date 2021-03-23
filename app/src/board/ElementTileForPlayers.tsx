@@ -7,10 +7,11 @@ type Props = {
 
     image:string,
     element:Element
+    position:number
 
 } & HTMLAttributes<HTMLDivElement>
 
-const ElementTileForPlayers : FC<Props> = ({image, element, ...props}) => {
+const ElementTileForPlayers : FC<Props> = ({image, element, position, ...props}) => {
 
         return(
 
@@ -18,7 +19,7 @@ const ElementTileForPlayers : FC<Props> = ({image, element, ...props}) => {
 
                     <div css={topStyle(image)}></div>
                     <div css={[frontStyle, coloring(element)]}></div>
-                    <div css={[bottomStyle, coloring(element)]}></div>
+                    <div css={[bottomStyle(position), coloring(element)]}></div>
                     <div css={[rightStyle, coloring(element)]}></div>
                     <div css={[leftStyle, coloring(element)]}></div>
                     <div css={[backStyle, coloring(element)]}></div>
@@ -110,13 +111,13 @@ const topStyle = (image:string) => css`
     background-repeat:no-repeat;
     background-size:100% 100%;
 `
-const bottomStyle = css`
+const bottomStyle = (position:number) => css`
     position:absolute;
     height:100%;
     width:100%;
     border-radius:20%;
 
-    box-shadow: 0px 0px 0.5em 0.1em black;
+    ${position === 0 && `box-shadow: 0px 0px 0.5em 0.1em black;`}
 `
 
 export default ElementTileForPlayers

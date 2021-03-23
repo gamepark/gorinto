@@ -32,9 +32,11 @@ const BurrowTile : FC<Props> = ({index, ...props}) => {
 const burrowStyle = (index:number | undefined) => css`
 position:absolute;
 right:-20%;
+${index !== undefined && `transform:translate3d(-150%,0,0);`}
 top:35%;
-width:20%;
+width:15%;
 height:20%;
+transition:transform 1s;
 
 transform-style:preserve-3d;
 

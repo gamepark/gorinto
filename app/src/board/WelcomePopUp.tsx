@@ -97,7 +97,7 @@ const popupStyle = css`
   outline: none;
   box-shadow: 1em 2em 2.5em -1.5em hsla(0, 0%, 0%, 0.2);
   border:1em black solid;
-  background-color:rgba(40,44,109,1);
+  background-color:rgba(0,6,89,0.8);
   border-radius: 40em 3em 40em 3em/3em 40em 3em 40em;
   
   &:hover{

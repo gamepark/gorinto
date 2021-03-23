@@ -58,7 +58,7 @@ p{
 ${isHint === false &&
     `
     p:nth-of-type(2n+1){
-        top:28%;
+        top:18%;
         color:black;
     }
     `

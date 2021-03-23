@@ -79,8 +79,7 @@ const GameDisplay: FC<{game:Game}> = ({game}) => {
         
       )}
       
-      <BurrowTile css = {[animationRemoveTile && burrowTileAnimation(animationRemoveTile.duration)]}
-                    index={animationRemoveTile && animationRemoveTile.move.index} />
+      <BurrowTile index={animationRemoveTile && animationRemoveTile.move.index} />
       
       </div>
 

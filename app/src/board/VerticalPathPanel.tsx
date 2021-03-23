@@ -36,7 +36,7 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
                                      animationRemoveTile && animationRemoveTile.move.index -5 === index && removeTileAnimation(animationRemoveTile.duration)
                             ]}
                              image = {ElementBag[tile].image}
-                             draggable = {playerId === activePlayer && !tilesToTake}
+                             draggable = {playerId === activePlayer && !tilesToTake  && !animationRemoveTile}
                              draggableItem = {{type:"ElementInPath", path: "vertical", position : index}}
                              element = {ElementBag[tile].element}
                />
@@ -85,8 +85,11 @@ animation:${moveTileKeyFrames(x,z)} ${duration}s ;
 
 const moveTileKeyFrames = (x:number,z:number) => keyframes`
 from{}
-50%{
-    transform:translate3d(${(x+1)*(heightPath*4.8)}%,0,12em);
+15%{
+    transform:translate3d(0,0,16.03em);
+}
+85%{
+    transform:translate3d(${(x+1)*(heightPath*9.6)}%,0,16.03em);
 }
 to{
     transform:translate3d(0${(x+1)*(heightPath*9.6)}%,0,${z*4.02}em);

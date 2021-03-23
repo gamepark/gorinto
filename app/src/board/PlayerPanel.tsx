@@ -1,12 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import {css, keyframes} from '@emotion/react'
+import {css} from '@emotion/react'
 import { ElementBag } from '@gamepark/gorinto/cards/Elements'
-import SwitchFirstPlayer, {isSwitchFirstPlayer} from '@gamepark/gorinto/moves/SwitchFirstPlayer'
 import Element from '@gamepark/gorinto/types/Element'
 import ElementInPile from '@gamepark/gorinto/types/ElementInPile'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import { useAnimation } from '@gamepark/react-client'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import CoinHeads from '../images/CoinHeads.png'
@@ -76,8 +74,6 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
         }
       })
 
-      const animation = useAnimation<SwitchFirstPlayer>(animation => isSwitchFirstPlayer(animation.move))
-
       const [displayedScore, setDisplayedScore] = useState(score)
       const [scoreInterval, setScoreInterval] = useState<NodeJS.Timeout>()
       useEffect(() => {
@@ -124,31 +120,31 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
                 {elementArray(understanding.void,0).length !== 0 ? elementArray(understanding.void,0).map((tile, index) =>  
                     <div css={[voidStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} />
+                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
                     </div>
                 ): <div css={[voidStyle, elementSize]}></div>}
 
                 {elementArray(understanding.wind,20).length !==0 ? elementArray(understanding.wind,20).map((tile, index) =>  
                     <div css={[windStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} />
+                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
                     </div>
                 ): <div css={[windStyle, elementSize]}></div>}
 
                 {elementArray(understanding.fire,40).length !==0 ? elementArray(understanding.fire,40).map((tile, index) =>  
                     <div css={[fireStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} />
+                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
                     </div>
                 ): <div css={[fireStyle, elementSize]}></div>}
 
                 {elementArray(understanding.water,60).length !==0 ? elementArray(understanding.water,60).map((tile, index) =>  
                     <div css={[waterStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} />
+                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
                     </div>
                 ): <div css={[waterStyle, elementSize]}></div>}
 
                 {elementArray(understanding.earth,80).length !==0 ? elementArray(understanding.earth,80).map((tile, index) =>  
                     <div css={[earthStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} />
+                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
                     </div>
                 ): <div css={[earthStyle, elementSize]}></div>}
 
@@ -180,15 +176,6 @@ function elementArray(understanding:number, element:number) : number[]{
     return result
 
 }
-
-const switchFirstPlayer = (duration:number) => css`
-animation : ${switchFirstPlayerKeyFrames} ${duration}s ease-in-out ;
-`
-
-const switchFirstPlayerKeyFrames = keyframes`
-from{}
-to{transform:translate3d(0,0,200em);}
-`
 
 const threeDStyle = (position:number) => css`
 transform:translateZ(${position*0.75}em);

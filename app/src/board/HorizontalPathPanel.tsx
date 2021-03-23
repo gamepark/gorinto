@@ -34,7 +34,7 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
                                      animationRemoveTile && animationRemoveTile.move.index === index && removeTileAnimation(animationRemoveTile.duration)
             ]}
                              image = {ElementBag[tile].image}
-                             draggable = {playerId === activePlayer && !tilesToTake}
+                             draggable = {playerId === activePlayer && !tilesToTake && !animationRemoveTile}
                              draggableItem = {{type:"ElementInPath", path: "horizontal", position: index}}
                              element = {ElementBag[tile].element}
                              
@@ -86,8 +86,11 @@ animation:${moveTileKeyFrames(y,z)} ${duration}s ;
 
 const moveTileKeyFrames = (y:number,z:number) => keyframes`
 from{}
-50%{
-    transform:translate3d(0,${(y+1)*(widthPath*4.5334)}%,12em);
+15%{
+    transform:translate3d(0,0,16.03em);
+}
+85%{
+    transform:translate3d(0,${(y+1)*(widthPath*9.0667)}%,16.03em);
 }
 to{
     transform:translate3d(0,${(y+1)*(widthPath*9.0667)}%,${z*4.02}em);
