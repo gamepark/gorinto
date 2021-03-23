@@ -8,10 +8,10 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTimes} from '@fortawesome/free-solid-svg-icons'
 import Game from "@gamepark/gorinto/types/Game";
 import { Goals } from "@gamepark/gorinto/cards/Goals";
-import GoalCard from './GoalCard';
-import KeyElementCardPanel from "./KeyElementCardPanel";
+import GoalCardPopUp from './GoalCardPopUp';
 import { Keys } from "@gamepark/gorinto/cards/KeyElement";
 import { css } from "@emotion/react";
+import KeyElementCardPanelPopUp from "./KeyElementCardPanelPopUp";
 
 const WelcomePopUp : FC<{player:Player, game:Game, close: () => void}> = ({player, game, close}) => {
 
@@ -27,20 +27,26 @@ const WelcomePopUp : FC<{player:Player, game:Game, close: () => void}> = ({playe
                 <div css = {closePopupStyle} onClick={close}> <FontAwesomeIcon icon={faTimes} /> </div>
                 <h2>{t("Welcome, {playerName}",{playerName:playerInfo?.name})}</h2>
 
-                {game.twoGoals.map((goalNumber, index) =>
-            
-                    <GoalCard key = {index}
-                            goal = {Goals[goalNumber]}
-                    />
-        
-                )}
+                <div css={cardsStyle}>
 
-                {game.twoKeyElementCards.map((cardNumber, index) =>
+                    {game.twoGoals.map((goalNumber, index) =>
+                
+                        <GoalCardPopUp key = {index}
+                                  goal = {Goals[goalNumber]}
+                                  position = {index}
+                        />
             
-                    <KeyElementCardPanel key = {index}
-                                         keyCard = {Keys[cardNumber]}
-                    />
-                )}
+                    )}
+
+                    {game.twoKeyElementCards.map((cardNumber, index) =>
+                
+                        <KeyElementCardPanelPopUp key = {index}
+                                                  keyCard = {Keys[cardNumber]}
+                                                  position = {index}
+                        />
+                    )}
+
+                </div>
 
                 <p> {t("You play with these two Goals and with these two Key Elements. Good luck, and have fun !")} </p>
 
@@ -55,7 +61,14 @@ const WelcomePopUp : FC<{player:Player, game:Game, close: () => void}> = ({playe
 
 }
 
-export const popupOverlayStyle = css`
+const cardsStyle = css`
+position:absolute;
+
+width:95%;
+height:70%;
+`
+
+const popupOverlayStyle = css`
   position: absolute;
   right: 0;
   bottom: 0;
@@ -63,17 +76,18 @@ export const popupOverlayStyle = css`
   z-index: 99;
   transition: all .5s ease;
 `
-export const showPopupOverlayStyle = css`
+const showPopupOverlayStyle = css`
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
 `
 
-export const popupStyle = css`
+const popupStyle = css`
   position: absolute;
   text-align: center;
-  max-height: 70%;
+  height: 80%;
+  width:70%;
   z-index : 102;
   border-radius: 1em;
   box-sizing: border-box;
@@ -82,6 +96,8 @@ export const popupStyle = css`
   margin: 0 2%;
   outline: none;
   box-shadow: 1em 2em 2.5em -1.5em hsla(0, 0%, 0%, 0.2);
+  border:1em black solid;
+  background-color:rgba(40,44,109,1);
   border-radius: 40em 3em 40em 3em/3em 40em 3em 40em;
   
   &:hover{
@@ -93,14 +109,18 @@ export const popupStyle = css`
   }
   & > p {
     font-size: 4em;
-    margin: 2% 0;
+
+    position:absolute;
+    bottom:0%;
+    right:5%;
+    width:90%;
   }
   & > button {
     font-size: 4em;
   }
 `
 
-export const popupPosition = css`
+const popupPosition = css`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -110,7 +130,7 @@ const style = css`
   background-color: transparent;
 `
 
-export const closePopupStyle = css`
+const closePopupStyle = css`
   position: relative;
   float: right;
   text-align: center;
@@ -119,10 +139,8 @@ export const closePopupStyle = css`
   font-size: 4em;
   &:hover{
     cursor: pointer;
-    color: #26d9d9;
+    color: black;
   }
 `
-
-
 
 export default WelcomePopUp

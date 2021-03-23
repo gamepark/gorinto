@@ -7,20 +7,19 @@ import BackGroundGoal from "../images/goal_background.jpg"
 
 type Props = {
     goal:Goal,
-    position:number,
-    open:() => void
+    position:number
 } & HTMLAttributes<HTMLDivElement>
 
-const GoalCard : FC<Props> = ({goal, position, open, ...props}) => {
+const GoalCardPopUp : FC<Props> = ({goal, position, ...props}) => {
 
     const {t} = useTranslation()
 
     return(
 
-        <div css={[goalCardPanelStyle(goal.hint !== undefined), goalCardPanelPosition(position)]} onClick={open}>
+        <div css={[goalCardPanelStyle(goal.hint !== undefined), goalCardPanelPosition(position)]}>
         
-            {goal.hint && <p>Hint : {goal.hint(t)} </p>}
-            <p>Goal : {goal.text(t)} </p>
+            {goal.hint && <p>{goal.hint(t)} </p>}
+            <p>{goal.text(t)} </p>
             <span>{goal.conflictLetter}</span>
         
         </div>
@@ -31,11 +30,11 @@ const GoalCard : FC<Props> = ({goal, position, open, ...props}) => {
 
 const goalCardPanelPosition = (position:number) => css`
 position : absolute;
-top : 10%;
-left : ${79+position*10}%;
+top : 5%;
+left : ${12+position*38}%;
 
-width:10%;
-height:15%;
+width:38%;
+height:60%;
 `
 
 const goalCardPanelStyle = (isHint:boolean) => css`
@@ -47,13 +46,13 @@ background-position:top;
 
 p{
     color:black;
-    font-size:1em;
+    font-size:3em;
     text-align:center;
     width:70%;
     position:absolute;
     right:15%;
     font-family: 'Courgette', cursive;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.07em;
 }
 
 ${isHint === false &&
@@ -68,11 +67,11 @@ ${isHint === false &&
 ${isHint === true &&
     `
     p:nth-of-type(2n+1){
-        top:17%;
+        top:10%;
         color:#8c514b;
     }
     p:nth-of-type(2n){
-        bottom:25%;
+        bottom:8%;
         color:black;
     }
     `
@@ -80,9 +79,9 @@ ${isHint === true &&
 
 span{
     position:absolute;
-    bottom:18%;
-    right:7%;
-    font-size:1.3em;
+    bottom:6%;
+    right:8%;
+    font-size:3em;
     font-family: 'Bubblegum Sans', cursive;
     color:white;
     text-shadow: 1px 1px 2px black;
@@ -91,4 +90,4 @@ span{
 `
 
 
-export default GoalCard
+export default GoalCardPopUp

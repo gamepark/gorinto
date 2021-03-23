@@ -26,7 +26,7 @@ const GameDisplay: FC<{game:Game}> = ({game}) => {
   const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(false)
   const playerId = usePlayerId<PlayerColor>()
 
-  const showWelcomePopup = game.season === 1 && !welcomePopUpClosed
+  const showWelcomePopup = !welcomePopUpClosed
   
 
   return (
@@ -46,6 +46,7 @@ const GameDisplay: FC<{game:Game}> = ({game}) => {
         <KeyElementCardPanel  key = {index}
                               keyCard = {Keys[cardNumber]}
                               position = {index}
+                              open={() => setWelcomePopUpClosed(false)}
         />
       )}
             
@@ -73,6 +74,7 @@ const GameDisplay: FC<{game:Game}> = ({game}) => {
             <GoalCard   key = {index}
                         goal = {Goals[goalNumber]}
                         position = {index}
+                        open={() => setWelcomePopUpClosed(false)}
             />
         
       )}
