@@ -94,16 +94,14 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
   }
 
   getLegalMoves(): Move[] {
-    console.log(this.state)
-
     if (this.state.tilesToTake === undefined) {
       const moves: MoveTile[] = []
       for (let x = 0; x < 5; x++) {
         for (let y = 0; y < 5; y++) {
-          if (this.state.horizontalPath[x] !== undefined) {
+          if (this.state.horizontalPath[x] !== null) {
             moves.push({type: MoveType.MoveTile, path: 'horizontal', x, y})
           }
-          if (this.state.verticalPath[y] !== undefined) {
+          if (this.state.verticalPath[y] !== null) {
             moves.push({type: MoveType.MoveTile, path: 'vertical', x, y})
           }
         }
@@ -120,7 +118,6 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
           for (let z = 0; z < this.state.mountainBoard[this.state.tilesToTake.coordinates[i].x][this.state.tilesToTake.coordinates[i].y].length - 1; z++) {
             takes.push({type: MoveType.TakeTile, coordinates: {x: this.state.tilesToTake.coordinates[i].x, y: this.state.tilesToTake.coordinates[i].y, z}})
           }
-          console.log(takes)
         }
 
       }
@@ -171,7 +168,7 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
 }
 
 function setupPlayers(players: GorintoPlayerOptions[]): Player[] {
-  return players.map((options, index) => ({
+  return players.map((options) => ({
     color: options.id, understanding: [0, 0, 0, 0, 0], score: 0
   }))
 }
