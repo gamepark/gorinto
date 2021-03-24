@@ -1,5 +1,5 @@
 enum Element {
-  Void, Wind, Fire, Water, Earth
+  Void=1, Wind, Fire, Water, Earth
 }
 
 export default Element
