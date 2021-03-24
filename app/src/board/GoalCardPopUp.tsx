@@ -20,7 +20,7 @@ const GoalCardPopUp : FC<Props> = ({goal, position, ...props}) => {
         
             {goal.hint && <p>{goal.hint(t)} </p>}
             <p>{goal.text(t)} </p>
-            <span>{goal.conflictLetter}</span>
+            {goal.conflictLetter && <span>{goal.conflictLetter}</span>}
         
         </div>
 

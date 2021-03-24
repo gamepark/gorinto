@@ -196,7 +196,7 @@ function setupTwoGoals(): number[] {
   arrayGoalCards.forEach(element => {
     const goal = Goals[element]
 
-    if (goal.conflictLetter === '') {
+    if (!goal.conflictLetter) {
       result.push(element)
     } else if (!conflictLetters.includes(goal.conflictLetter)) {
       conflictLetters.push(goal.conflictLetter)

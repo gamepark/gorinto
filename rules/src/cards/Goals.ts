@@ -45,23 +45,19 @@ export const Goal8 : Goal = {
 
 export const Goal9 : Goal = {
     text : t => t("Score your tallest stack and also any stack tied with it. Score your shortest stack and also any stack tied with it."),
-    conflictLetter : ""
 }
 
 export const Goal10 : Goal = {
     text : t => t("Score your tallest stack. Score your shortest stack (of at least one tile) twice."),
-    conflictLetter : ""
 }
 
 export const Goal11 : Goal = {
     hint : t => t("A stack of zero may be counted as your shorted stack."),
     text : t => t("Score twice the difference between your tallest stack and your shortest stack."),
-    conflictLetter : ""
 }
 
 export const Goal12 : Goal = {
     text : t => t("If you have any empty stacks, score zero. Otherwise, score your shortest stack seven times."),
-    conflictLetter : ""
 }
 
 export const Goals : Goal[] = [
