@@ -100,10 +100,10 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
       const moves: MoveTile[] = []
       for (let x = 0; x < 5; x++) {
         for (let y = 0; y < 5; y++) {
-          if (this.state.horizontalPath[x]) {
+          if (this.state.horizontalPath[x] !== undefined) {
             moves.push({type: MoveType.MoveTile, path: 'horizontal', x, y})
           }
-          if (this.state.verticalPath[y]) {
+          if (this.state.verticalPath[y] !== undefined) {
             moves.push({type: MoveType.MoveTile, path: 'vertical', x, y})
           }
         }
