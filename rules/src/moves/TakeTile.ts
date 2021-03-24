@@ -1,4 +1,3 @@
-import {ElementBag} from '../cards/Elements'
 import Element from '../types/Element'
 import GameState from '../types/GameState'
 import GameView from '../types/GameView'
@@ -17,9 +16,9 @@ export function takeTile(state: GameState | GameView, move: TakeTile) {
   let elem: Element | undefined
 
   if (move.coordinates.z === undefined) {
-    elem = ElementBag[state.mountainBoard[move.coordinates.x][move.coordinates.y][state.mountainBoard[move.coordinates.x][move.coordinates.y].length - 1]]?.element
+    elem = state.mountainBoard[move.coordinates.x][move.coordinates.y][state.mountainBoard[move.coordinates.x][move.coordinates.y].length - 1]
   } else {
-    elem = ElementBag[state.mountainBoard[move.coordinates.x][move.coordinates.y][move.coordinates.z]].element
+    elem = state.mountainBoard[move.coordinates.x][move.coordinates.y][move.coordinates.z]
   }
 
   let activePlayer: number = state.players.findIndex(player => player.color === state.activePlayer)!

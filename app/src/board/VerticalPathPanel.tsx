@@ -2,10 +2,9 @@
 import { css, keyframes } from "@emotion/react";
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
 import { FC } from "react";
-import ElementTile from "./ElementTile";
+import ElementTile, {getElementImage} from './ElementTile'
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
 import Element from "@gamepark/gorinto/types/Element";
-import { ElementBag } from "@gamepark/gorinto/cards/Elements";
 import MoveTile, { isMoveTile } from "@gamepark/gorinto/moves/MoveTile";
 import RemoveTileOnPath, { isRemoveTileOnPath } from "@gamepark/gorinto/moves/RemoveTileOnPath";
 
@@ -35,10 +34,10 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
                              css = {[animationMoveTile && animationMoveTile.move.y === index && moveTileAnimation(animationMoveTile.move.x, mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, animationMoveTile.duration),
                                      animationRemoveTile && animationRemoveTile.move.index -5 === index && removeTileAnimation(animationRemoveTile.duration)
                             ]}
-                             image = {ElementBag[tile].image}
+                             image = {getElementImage(tile)}
                              draggable = {playerId === activePlayer && !tilesToTake  && !animationRemoveTile}
                              draggableItem = {{type:"ElementInPath", path: "vertical", position : index}}
-                             element = {ElementBag[tile].element}
+                             element = {tile}
                />
 
             </div>

@@ -1,8 +1,6 @@
 import {IncompleteInformation, SequentialGame} from '@gamepark/rules-api'
 import shuffle from 'lodash.shuffle'
-import {ElementBag} from './cards/Elements'
 import {Goals} from './cards/Goals'
-import {Keys} from './cards/KeyElement'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
 import {changeActivePlayer} from './moves/ChangeActivePlayer'
 import {countGoals} from './moves/CountGoals'
@@ -15,7 +13,7 @@ import {removeTileOnPath} from './moves/RemoveTileOnPath'
 import {switchFirstPlayer} from './moves/SwitchFirstPlayer'
 import TakeTile, {takeTile} from './moves/TakeTile'
 import AutomaticMovePhase from './types/AutomaticMovePhase'
-import Element from './types/Element'
+import Element, {elements, numberOfEachElement} from './types/Element'
 import GameState from './types/GameState'
 import GameView from './types/GameView'
 import Move from './types/Move'
@@ -70,7 +68,7 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
       }
 
       if (this.state.players.length === 2 && [2, 4, 6, 8].includes(filledSpacesinPaths(this.state))) {           // Adaptation for 2 players
-        let twoPaths: (number | null) [] = this.state.horizontalPath.concat(this.state.verticalPath)
+        let twoPaths = this.state.horizontalPath.concat(this.state.verticalPath)
         let randomSpaceToRemove: number = getRandomInt(10)
         while (twoPaths[randomSpaceToRemove] === null) {
           randomSpaceToRemove = getRandomInt(10)
@@ -186,9 +184,9 @@ function setupIsFirstPlayer(game: GameState): Player[] {
   return result
 }
 
-function setupTwoKeyElementCards(): number[] {
-  const result: number[] = shuffle(Array.from(Keys.keys()))     // Take only the key, not all infos with heavy pictures
-  return [result[0], result[1]]
+function setupTwoKeyElementCards(): [Element, Element] {
+  const shuffled = shuffle(elements)
+  return [shuffled[0], shuffled[1]]
 }
 
 function setupTwoGoals(): number[] {
@@ -211,12 +209,12 @@ function setupTwoGoals(): number[] {
 }
 
 function setupElementTilesBag(): number[] {
-  return shuffle(Array.from(ElementBag.keys()))
+  return shuffle(elements.flatMap(element => new Array(numberOfEachElement).fill(element)))
 }
 
 function setupMountain(game: GameState): number[][][] {
   let i, j: number = 0
-  let result: number[][][] = []
+  let result: Element[][][] = []
   for (i = 0; i < 5; i++) {
     result[i] = []
     for (j = 0; j < 5; j++) {

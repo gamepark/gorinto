@@ -1,13 +1,17 @@
 import AutomaticMovePhase from '../types/AutomaticMovePhase'
+import Element from '../types/Element'
 import GameState from '../types/GameState'
-import GameView, {isGame} from '../types/GameView'
+import GameView from '../types/GameView'
 import MoveType from '../types/MoveType'
 
 type RefillPaths = { type: typeof MoveType.RefillPaths }
 
 export default RefillPaths
 
-export type RefillPathsView = RefillPaths & { horizontalPath : (number | null)[] , verticalPath : (number | null)[] }
+export type RefillPathsView = RefillPaths & {
+  horizontalPath: (Element | null)[]
+  verticalPath: (Element | null)[]
+}
 
 export function isRefillPathsView(move: RefillPaths | RefillPathsView): move is RefillPathsView {
   return (move as RefillPathsView).horizontalPath !== undefined

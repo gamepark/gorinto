@@ -1,4 +1,3 @@
-import {ElementBag} from '../cards/Elements'
 import Element from '../types/Element'
 import GameState from '../types/GameState'
 import GameView from '../types/GameView'
@@ -31,7 +30,7 @@ export function moveTile(state: GameState | GameView, move: MoveTile) {
   // game.tilesToTakes
 
   let activePlayer: Player = state.players.find(player => player.color === state.activePlayer)!
-  const elem: Element | undefined = ElementBag[element!].element
+  const elem: Element | undefined = element!
 
   switch (elem) {       // One Pattern is required for each element
     case Element.Void : {

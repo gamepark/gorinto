@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
-import { ElementBag } from '@gamepark/gorinto/cards/Elements'
 import Element from '@gamepark/gorinto/types/Element'
 import ElementInPile from '@gamepark/gorinto/types/ElementInPile'
 import MoveType from '@gamepark/gorinto/types/MoveType'
@@ -13,6 +12,7 @@ import BlueGor from '../images/GOR_TTS_playermat_blue.png'
 import RedGor from '../images/GOR_TTS_playermat_red.png'
 import WhiteGor from '../images/GOR_TTS_playermat_white.png'
 import YellowGor from '../images/GOR_TTS_playermat_yellow.png'
+import {getElementImage} from './ElementTile'
 import ElementTileForPlayers from './ElementTileForPlayers'
 
 type Props = {
@@ -120,31 +120,31 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
                 {elementArray(understanding[Element.Void],0).length !== 0 ? elementArray(understanding[Element.Void],0).map((tile, index) =>
                     <div css={[voidStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
+                        <ElementTileForPlayers image = {getElementImage(tile)} element = {tile} position={index} />
                     </div>
                 ): <div css={[voidStyle, elementSize]}></div>}
 
                 {elementArray(understanding[Element.Wind],20).length !==0 ? elementArray(understanding[Element.Wind],20).map((tile, index) =>
                     <div css={[windStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
+                        <ElementTileForPlayers image = {getElementImage(tile)} element = {tile} position={index} />
                     </div>
                 ): <div css={[windStyle, elementSize]}></div>}
 
                 {elementArray(understanding[Element.Fire],40).length !==0 ? elementArray(understanding[Element.Fire],40).map((tile, index) =>
                     <div css={[fireStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
+                        <ElementTileForPlayers image = {getElementImage(tile)} element = {tile} position={index} />
                     </div>
                 ): <div css={[fireStyle, elementSize]}></div>}
 
                 {elementArray(understanding[Element.Water],60).length !==0 ? elementArray(understanding[Element.Water],60).map((tile, index) =>
                     <div css={[waterStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
+                        <ElementTileForPlayers image = {getElementImage(tile)} element = {tile} position={index} />
                     </div>
                 ): <div css={[waterStyle, elementSize]}></div>}
 
                 {elementArray(understanding[Element.Earth],80).length !==0 ? elementArray(understanding[Element.Earth],80).map((tile, index) =>
                     <div css={[earthStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {ElementBag[tile].image} element = {ElementBag[tile].element} position={index} />
+                        <ElementTileForPlayers image = {getElementImage(tile)} element = {tile} position={index} />
                     </div>
                 ): <div css={[earthStyle, elementSize]}></div>}
 

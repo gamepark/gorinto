@@ -2,18 +2,17 @@
 import { css, keyframes } from "@emotion/react";
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
 import { FC } from "react";
-import ElementTile from "./ElementTile";
+import ElementTile, {getElementImage} from './ElementTile'
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
 import Element from "@gamepark/gorinto/types/Element";
-import { ElementBag } from "@gamepark/gorinto/cards/Elements";
 import MoveTile, {isMoveTile} from "@gamepark/gorinto/moves/MoveTile"
 import RemoveTileOnPath, { isRemoveTileOnPath } from "@gamepark/gorinto/moves/RemoveTileOnPath";
 
 type Props = {
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
-    horizontalPath:(number | null)[],
+    horizontalPath:(Element | null)[],
     activePlayer: PlayerColor | undefined,
-    mountain:number[][][]
+    mountain:Element[][][]
 }
 
 const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePlayer, mountain }) => {
@@ -33,10 +32,10 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
                 <ElementTile css = {[animationMoveTile && animationMoveTile.move.x === index && moveTileAnimation(animationMoveTile.move.y,mountain[animationMoveTile.move.x][animationMoveTile.move.y].length,animationMoveTile.duration),
                                      animationRemoveTile && animationRemoveTile.move.index === index && removeTileAnimation(animationRemoveTile.duration)
             ]}
-                             image = {ElementBag[tile].image}
+                             image = {getElementImage(tile)}
                              draggable = {playerId === activePlayer && !tilesToTake && !animationRemoveTile}
                              draggableItem = {{type:"ElementInPath", path: "horizontal", position: index}}
-                             element = {ElementBag[tile].element}
+                             element = {tile}
                              
                />
 

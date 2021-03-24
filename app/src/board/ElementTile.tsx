@@ -3,10 +3,16 @@ import { css } from "@emotion/react";
 import MoveTile from '@gamepark/gorinto/moves/MoveTile'
 import {usePlay} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
+import {TFunction} from 'i18next'
 import { FC, HTMLAttributes, useEffect, useState } from "react";
 import ElementInPath from "@gamepark/gorinto/types/ElementInPath";
 import ElementInPile from "@gamepark/gorinto/types/ElementInPile";
 import Element from "@gamepark/gorinto/types/Element";
+import Void from "../images/ElementVoid.png"
+import Wind from "../images/ElementWind.png"
+import Fire from "../images/ElementFire.png"
+import Water from "../images/ElementWater.png"
+import Earth from "../images/ElementEarth.png"
 
 type Props = {
 
@@ -144,5 +150,35 @@ const bottomStyle = (position:number) => css`
 
     ${position === 0 && `box-shadow: 0px 0px 1.5em 0.5em black;`} 
 `
+
+export function getElementImage(element: Element) {
+  switch (element) {
+    case Element.Void:
+      return Void
+    case Element.Wind:
+      return Wind
+    case Element.Fire:
+      return Fire
+    case Element.Water:
+      return Water
+    case Element.Earth:
+      return Earth
+  }
+}
+
+export function getElementName(element: Element, t: TFunction) {
+  switch (element) {
+    case Element.Void:
+      return t('Void')
+    case Element.Wind:
+      return t('Wind')
+    case Element.Fire:
+      return t('Fire')
+    case Element.Water:
+      return t('Water')
+    case Element.Earth:
+      return t('Earth')
+  }
+}
 
 export default ElementTile
