@@ -22,7 +22,7 @@ export const Goal2: Goal = {
   conflictLetter: 'A',
   score: (player: Player) => {
     return player.understanding.reduce((sum, understanding, index) => {
-      if (player.understanding.every((otherUnderstanding, otherIndex) => otherIndex !== index && otherUnderstanding !== understanding)) {
+      if (player.understanding.every((otherUnderstanding, otherIndex) => otherIndex === index || otherUnderstanding !== understanding)) {
         return sum + understanding
       } else {
         return sum
@@ -49,9 +49,9 @@ export const Goal5: Goal = {
   score: (player: Player, state: GameState | GameView) => player.understanding.reduce((sum, understanding, index) => {
     const otherPlayers = state.players.filter(({color}) => player.color !== color)
     if (understanding > 0 && otherPlayers.every(otherPlayer => otherPlayer.understanding[index] <= understanding)) {
-      return 3
+      return sum + 3
     } else {
-      return 0
+      return sum
     }
   }, 0)
 }
@@ -63,9 +63,9 @@ export const Goal6: Goal = {
   score: (player: Player, state: GameState | GameView) => player.understanding.reduce((sum, understanding, index) => {
     const otherPlayers = state.players.filter(({color, understanding}) => player.color !== color && understanding[index] > 0)
     if (understanding > 0 && otherPlayers.every(otherPlayer => otherPlayer.understanding[index] >= understanding)) {
-      return 3
+      return sum + 3
     } else {
-      return 0
+      return sum
     }
   }, 0)
 }
@@ -76,7 +76,8 @@ export const Goal7: Goal = {
   conflictLetter: 'D',
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
-    return sorted.reduce((sum, understanding) => understanding !== sorted[2] ? understanding : 0)
+    console.log(sorted)
+    return sorted.reduce((sum, understanding) => understanding !== sorted[2] ? sum + understanding : sum, 0)
   }
 }
 
@@ -94,7 +95,7 @@ export const Goal9: Goal = {
   text: t => t('Score your tallest stack and also any stack tied with it. Score your shortest stack and also any stack tied with it.'),
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
-    return sorted.reduce((sum, understanding) => understanding === sorted[0] || understanding === sorted[4] ? understanding : 0)
+    return sorted.reduce((sum, understanding) => understanding === sorted[0] || understanding === sorted[4] ? sum + understanding : sum, 0)
   }
 }
 
