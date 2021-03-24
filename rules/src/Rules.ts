@@ -189,23 +189,14 @@ function setupTwoKeyElementCards(): [Element, Element] {
   return [shuffled[0], shuffled[1]]
 }
 
-function setupTwoGoals(): number[] {
-  const arrayGoalCards: number[] = shuffle(Array.from(Goals.keys()))    // Take only the key, not all infos with heavy pictures
-  const result: number[] = []
-  const conflictLetters: string[] = []
-  arrayGoalCards.forEach(element => {
-    const goal = Goals[element]
-
-    if (!goal.conflictLetter) {
-      result.push(element)
-    } else if (!conflictLetters.includes(goal.conflictLetter)) {
-      conflictLetters.push(goal.conflictLetter)
-      result.push(element)
-    }
-  })
-
-  return [result[0], result[1]]
-
+function setupTwoGoals(): [number, number] {
+  const goalIds = shuffle(Array.from(Goals.keys()))
+  const firstGoal = Goals[goalIds[0]]
+  if (firstGoal.conflictLetter) {
+    return [goalIds[0], goalIds.find(goalId => Goals[goalId].conflictLetter !== firstGoal.conflictLetter)!]
+  } else {
+    return [goalIds[0], goalIds[1]]
+  }
 }
 
 function setupElementTilesBag(): number[] {

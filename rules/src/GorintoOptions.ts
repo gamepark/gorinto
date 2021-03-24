@@ -15,7 +15,7 @@ export const GorintoOptionsDescription: OptionsDescription<{}, GorintoPlayerOpti
   players: {
     id: {
       type: OptionType.LIST,
-      getLabel: (t: TFunction) => t('Empire'),
+      getLabel: (t: TFunction) => t('Player color'),
       values: Object.values(PlayerColor),
       getValueLabel: getPlayerName
     }
