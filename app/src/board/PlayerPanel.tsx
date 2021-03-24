@@ -7,11 +7,19 @@ import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import CoinHeads from '../images/CoinHeads.png'
+
 import BlackGor from '../images/GOR_TTS_playermat_black.png'
 import BlueGor from '../images/GOR_TTS_playermat_blue.png'
 import RedGor from '../images/GOR_TTS_playermat_red.png'
 import WhiteGor from '../images/GOR_TTS_playermat_white.png'
 import YellowGor from '../images/GOR_TTS_playermat_yellow.png'
+
+import WisdomMarkBlack from '../images/GOR_TTS_wisdom_black.png'
+import WisdomMarkBlue from '../images/GOR_TTS_wisdom_blue.png'
+import WisdomMarkRed from '../images/GOR_TTS_wisdom_red.png'
+import WisdomMarkWhite from '../images/GOR_TTS_wisdom_white.png'
+import WisdomMarkYellow from '../images/GOR_TTS_wisdom_yellow.png'
+
 import {getElementImage} from './ElementTile'
 import ElementTileForPlayers from './ElementTileForPlayers'
 
@@ -112,7 +120,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
             <div css={playerFooterStyle}>
 
                 <div css={[coinPosition]}><img alt="Coin" src={CoinHeads} css={coinStyle(first)}/></div>
-                <div css={scoreStyle}>{displayedScore} pts</div>
+                <div css={scoreStyle(color)}>{displayedScore}</div>
 
             </div>
 
@@ -318,7 +326,7 @@ transform-style: preserve-3d;
 const playerFooterStyle = css`
 
 position:absolute;
-bottom:2%;
+bottom:5%;
 right:3%;
 width: 37%;
 
@@ -336,15 +344,22 @@ transition:transform 2s;
 const coinPosition = css`
 margin-right:auto;
 margin-left:auto;
+padding-bottom:1em;
 width:50%;
 transform-style:preserve-3d;
 `
 
-const scoreStyle = css`
-    padding-top:0.5em;
-    padding-bottom:0.5em;
+const scoreStyle = (color:string) => css`
+    padding-top:1em;
+    padding-bottom:1em;
     font-size:2.9em;
     text-align: center;
+
+    ${color === "white" &&`background : center / 60% url(${WisdomMarkWhite}) no-repeat;color:black;`};
+    ${color === "black" &&`background : center / 60% url(${WisdomMarkBlack}) no-repeat;color:white;`};
+    ${color === "red" &&`background : center / 60% url(${WisdomMarkRed}) no-repeat;color:white;`};
+    ${color === "yellow" &&`background : center / 60% url(${WisdomMarkYellow}) no-repeat;color:black;`};
+    ${color === "blue" &&`background : center / 60% url(${WisdomMarkBlue}) no-repeat;color:black;`};
 
 `
 
