@@ -2,26 +2,30 @@
 import { css } from "@emotion/react";
 import { FC, HTMLAttributes } from "react";
 import Element from '@gamepark/gorinto/types/Element'
-import KeyElementCard from "@gamepark/gorinto/types/KeyElementCard";
 import {useTranslation} from 'react-i18next'
 import {getElementName} from './ElementTile'
+import KeyElementCardVoid from '../images/KeyElementCardVoid.jpg'
+import KeyElementCardWind from '../images/KeyElementCardWind.jpg'
+import KeyElementCardFire from '../images/KeyElementCardFire.jpg'
+import KeyElementCardWater from '../images/KeyElementCardWater.jpg'
+import KeyElementCardEarth from '../images/KeyElementCardEarth.jpg'
 
 type Props ={
-  keyCard : KeyElementCard,
+  element : Element,
   position : number,
   open: () => void
 } & HTMLAttributes<HTMLDivElement>
 
-const KeyElementCardPanel : FC<Props> = ({keyCard, position, open, ...props}) => {
+const KeyElementCardPanel : FC<Props> = ({element, position, open, ...props}) => {
   const {t} = useTranslation()
 
     return(
 
-        <div css={[keyElementCardPanelStyle(keyCard.image), keyElementCardPanelPositionStyle(position)]} onClick={open}>
+        <div css={[keyElementCardPanelStyle(getKeyElementCardImage(element)), keyElementCardPanelPositionStyle(position)]} onClick={open}>
 
             <div css={positionningX2}><span>x2</span></div>
 
-            <div css={positionningElementText(keyCard.element)}><span>{getElementName(keyCard.element, t)}</span></div>
+            <div css={positionningElementText(element)}><span>{getElementName(element, t)}</span></div>
 
         </div>
 
@@ -94,5 +98,20 @@ background-size : contain;
 background-repeat : no-repeat;
 background-position : top;
 `
+
+export function getKeyElementCardImage(element: Element) {
+  switch (element) {
+    case Element.Void:
+      return KeyElementCardVoid
+    case Element.Wind:
+      return KeyElementCardWind
+    case Element.Fire:
+      return KeyElementCardFire
+    case Element.Water:
+      return KeyElementCardWater
+    case Element.Earth:
+      return KeyElementCardEarth
+  }
+}
 
 export default KeyElementCardPanel

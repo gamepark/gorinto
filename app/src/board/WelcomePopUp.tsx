@@ -9,7 +9,6 @@ import {faTimes} from '@fortawesome/free-solid-svg-icons'
 import GameState from "@gamepark/gorinto/types/GameState";
 import { Goals } from "@gamepark/gorinto/cards/Goals";
 import GoalCardPopUp from './GoalCardPopUp';
-import { Keys } from "@gamepark/gorinto/cards/KeyElement";
 import { css } from "@emotion/react";
 import KeyElementCardPanelPopUp from "./KeyElementCardPanelPopUp";
 
@@ -38,10 +37,10 @@ const WelcomePopUp : FC<{player:Player, game:GameState, close: () => void}> = ({
             
                     )}
 
-                    {game.twoKeyElementCards.map((cardNumber, index) =>
+                    {game.twoKeyElementCards.map((element, index) =>
                 
                         <KeyElementCardPanelPopUp key = {index}
-                                                  keyCard = {Keys[cardNumber]}
+                                                  element = {element}
                                                   position = {index}
                         />
                     )}

@@ -1,7 +1,6 @@
 import Element from "./Element"
 
 type KeyElementCard = {
-    image : string;
     element : Element;
 }
 

@@ -2,7 +2,6 @@
 
 import { css, keyframes } from '@emotion/react';
 import { Goals } from '@gamepark/gorinto/cards/Goals';
-import { Keys } from '@gamepark/gorinto/cards/KeyElement';
 import GameState from '@gamepark/gorinto/types/GameState'
 import {Letterbox} from '@gamepark/react-components'
 import {FC, Fragment, useState} from 'react'
@@ -41,10 +40,10 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
 
       <SeasonIndicator season = {game.season} />
 
-      {game.twoKeyElementCards.map((cardNumber, index) =>
+      {game.twoKeyElementCards.map((element, index) =>
             
         <KeyElementCardPanel  key = {index}
-                              keyCard = {Keys[cardNumber]}
+                              element = {element}
                               position = {index}
                               open={() => setWelcomePopUpClosed(false)}
         />

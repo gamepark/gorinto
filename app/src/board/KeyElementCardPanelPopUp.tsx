@@ -2,25 +2,25 @@
 import { css } from "@emotion/react";
 import { FC, HTMLAttributes } from "react";
 import Element from '@gamepark/gorinto/types/Element'
-import KeyElementCard from "@gamepark/gorinto/types/KeyElementCard";
 import {useTranslation} from 'react-i18next'
 import {getElementName} from './ElementTile'
+import {getKeyElementCardImage} from './KeyElementCardPanel'
 
 type Props ={
-  keyCard : KeyElementCard,
+  element : Element,
   position : number
 } & HTMLAttributes<HTMLDivElement>
 
-const KeyElementCardPanelPopUp : FC<Props> = ({keyCard, position}) => {
+const KeyElementCardPanelPopUp : FC<Props> = ({element, position}) => {
   const {t} = useTranslation()
 
     return(
 
-        <div css={[keyElementCardPanelStyle(keyCard.image), keyElementCardPanelPositionStyle(position)]}>
+        <div css={[keyElementCardPanelStyle(getKeyElementCardImage(element)), keyElementCardPanelPositionStyle(position)]}>
 
             <div css={positionningX2}><span>x2</span></div>
 
-            <div css={positionningElementText(keyCard.element)}><span>{getElementName(keyCard.element, t)}</span></div>
+            <div css={positionningElementText(element)}><span>{getElementName(element, t)}</span></div>
 
         </div>
 
