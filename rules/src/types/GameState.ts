@@ -8,6 +8,7 @@ type GameState = {
   season: number;
   activePlayer?: PlayerColor;
   players: Player[];
+  firstPlayer: PlayerColor;
   twoKeyElementCards: [Element, Element];
   twoGoals: [number, number];
   elementTilesBag: Element[];

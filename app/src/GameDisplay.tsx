@@ -55,7 +55,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
                       understanding = {player.understanding}
                       score = {player.score}
                       color = {player.color}
-                      first = {player.isFirst}
+                      first = {game.firstPlayer === player.color}
                       tilesToTake = {game.tilesToTake}
                       mountainBoard = {game.mountainBoard}
                       position={[Math.trunc(index/2),index%2]}

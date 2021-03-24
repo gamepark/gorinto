@@ -34,6 +34,7 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
         season: 1,                 // Don't start at 4, even for debug
         players: setupPlayers(arg.players),
         activePlayer: arg.players[0].id,
+        firstPlayer: arg.players[0].id,
         twoKeyElementCards: setupTwoKeyElementCards(),
         twoGoals: setupTwoGoals(),
         elementTilesBag: setupElementTilesBag(),
@@ -43,7 +44,6 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
         automaticMovePhase: undefined
       }
 
-      game.players = setupIsFirstPlayer(game)
       game.mountainBoard = setupMountain(game)
 
       super(game)
@@ -172,16 +172,8 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
 
 function setupPlayers(players: GorintoPlayerOptions[]): Player[] {
   return players.map((options, index) => ({
-    color: options.id, understanding: [0, 0, 0, 0, 0], score: 0, isFirst: index === 0
+    color: options.id, understanding: [0, 0, 0, 0, 0], score: 0
   }))
-}
-
-function setupIsFirstPlayer(game: GameState): Player[] {
-  let result: Player[] = game.players
-  for (let i = 0; i < game.players.length; i++) {
-    result[i].isFirst = result[i].color === game.activePlayer
-  }
-  return result
 }
 
 function setupTwoKeyElementCards(): [Element, Element] {
