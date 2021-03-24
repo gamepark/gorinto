@@ -3,6 +3,13 @@ import { css } from "@emotion/react";
 import { FC, HTMLAttributes } from "react";
 import Element from "@gamepark/gorinto/types/Element";
 
+import Void from "../images/ElementVoid.png"
+import Wind from "../images/ElementWind.png"
+import Fire from "../images/ElementFire.png"
+import Water from "../images/ElementWater.png"
+import Earth from "../images/ElementEarth.png"
+import { TFunction } from "i18next";
+
 type Props = {
 
     image:string,
@@ -119,5 +126,35 @@ const bottomStyle = (position:number) => css`
 
     ${position === 0 && `box-shadow: 0px 0px 0.5em 0.1em black;`}
 `
+
+export function getElementImage(element: Element) {
+    switch (element) {
+      case Element.Void:
+        return Void
+      case Element.Wind:
+        return Wind
+      case Element.Fire:
+        return Fire
+      case Element.Water:
+        return Water
+      case Element.Earth:
+        return Earth
+    }
+  }
+  
+  export function getElementName(element: Element, t: TFunction) {
+    switch (element) {
+      case Element.Void:
+        return t('Void')
+      case Element.Wind:
+        return t('Wind')
+      case Element.Fire:
+        return t('Fire')
+      case Element.Water:
+        return t('Water')
+      case Element.Earth:
+        return t('Earth')
+    }
+  }
 
 export default ElementTileForPlayers
