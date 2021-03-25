@@ -1,5 +1,6 @@
-import AutomaticMovePhase from './AutomaticMovePhase'
 import Element from './Element'
+import EndOfSeasonStep from './EndOfSeasonStep'
+import Path from './Path'
 import Player from './Player'
 import PlayerColor from './PlayerColor'
 import TilesToTake from './TilesToTake'
@@ -12,11 +13,11 @@ type GameState = {
   keyElements: [Element, Element];
   goals: [number, number];
   elementTilesBag: Element[];
-  horizontalPath: (Element | null)[];
-  verticalPath: (Element | null)[];
+  horizontalPath: Path;
+  verticalPath: Path;
   mountainBoard: Element[][][];
   tilesToTake?: TilesToTake;
-  automaticMovePhase: AutomaticMovePhase | undefined;
+  endOfSeasonStep?: EndOfSeasonStep;
 }
 
 export default GameState

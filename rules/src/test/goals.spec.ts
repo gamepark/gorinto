@@ -123,25 +123,17 @@ const anyState: GameState = {
   players: [],
   elementTilesBag: [],
   keyElements: [0, 1],
-  horizontalPath: [],
-  verticalPath: [],
+  horizontalPath: [null, null, null, null, null],
+  verticalPath: [null, null, null, null, null],
   goals: [0, 1],
   mountainBoard: [],
-  automaticMovePhase: undefined
+  endOfSeasonStep: undefined
 }
 
 function createGameWithUnderstanding(...understandings: [number, number, number, number, number][]): GameState {
   const colors = Object.values(PlayerColor)
   return {
-    firstPlayer: PlayerColor.white,
-    season: 1,
-    players: understandings.map((understanding, index) => withUnderStanding(understanding, colors[index])),
-    elementTilesBag: [],
-    keyElements: [0, 1],
-    horizontalPath: [],
-    verticalPath: [],
-    goals: [0, 1],
-    mountainBoard: [],
-    automaticMovePhase: undefined
+    ...anyState,
+    players: understandings.map((understanding, index) => withUnderStanding(understanding, colors[index]))
   }
 }

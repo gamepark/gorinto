@@ -13,33 +13,21 @@ type TakeTile = {
 export default TakeTile
 
 export function takeTile(state: GameState | GameView, move: TakeTile) {
-  let elem: Element | undefined
+  if (!state.tilesToTake) return console.error('Cannot takeTile when tilesToTake is undefined!')
+  const player = state.players.find(player => player.color === state.activePlayer)
+  if (!player) return console.error('Cannot take tile when no player is active!')
+  const {y, x} = move.coordinates
+  const z = move.coordinates.z || state.mountainBoard[x][y].length - 1
+  const element = state.mountainBoard[x][y][z]
 
-  if (move.coordinates.z === undefined) {
-    elem = state.mountainBoard[move.coordinates.x][move.coordinates.y][state.mountainBoard[move.coordinates.x][move.coordinates.y].length - 1]
-  } else {
-    elem = state.mountainBoard[move.coordinates.x][move.coordinates.y][move.coordinates.z]
-  }
+  state.mountainBoard[x][y].splice(z, 1)
+  player.understanding[element]++
+  state.tilesToTake.quantity--
 
-  let activePlayer: number = state.players.findIndex(player => player.color === state.activePlayer)!
-
-  const tilesToTake = state.tilesToTake
-  if (!tilesToTake) return console.error('Cannot takeTile when tilesToTake is undefined!')
-
-  if (tilesToTake.element !== Element.Earth) {
-    state.mountainBoard[move.coordinates.x][move.coordinates.y].pop()
-  } else {
-    state.mountainBoard[move.coordinates.x][move.coordinates.y].splice(move.coordinates.z!, 1)
-  }
-
-  state.players[activePlayer].understanding[elem]++
-
-  tilesToTake.quantity--
-
-  if (tilesToTake.element !== Element.Earth) {
-    tilesToTake.coordinates.splice(tilesToTake.coordinates.findIndex(coord => (coord.x === move.coordinates.x) && (coord.y === move.coordinates.y)), 1)
-  } else if (state.mountainBoard[move.coordinates.x][move.coordinates.y].length === 1) {
-    tilesToTake.coordinates = []
+  if (state.tilesToTake.element !== Element.Earth) {
+    state.tilesToTake.coordinates.splice(state.tilesToTake.coordinates.findIndex(coordinates => (coordinates.x === x) && (coordinates.y === y)), 1)
+  } else if (state.mountainBoard[x][y].length === 1) {
+    state.tilesToTake.coordinates = []
   }
 }
 

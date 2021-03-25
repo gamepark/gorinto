@@ -11,6 +11,7 @@ type SwitchFirstPlayer = {
 export default SwitchFirstPlayer
 
 export function switchFirstPlayer(state: GameState | GameView) {
+  state.tilesToTake = undefined
   const lowestScore = Math.min(...state.players.map(player => player.score))
   let playerIndex = state.players.findIndex(player => player.color === state.firstPlayer)
   do {
@@ -18,7 +19,7 @@ export function switchFirstPlayer(state: GameState | GameView) {
   } while (state.players[playerIndex].score !== lowestScore)
   state.firstPlayer = state.players[playerIndex].color
   state.activePlayer = state.firstPlayer
-  state.automaticMovePhase = undefined
+  state.endOfSeasonStep = undefined
 }
 
 export function isSwitchFirstPlayer(move: Move | MoveView): move is SwitchFirstPlayer {

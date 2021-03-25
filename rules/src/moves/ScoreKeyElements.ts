@@ -37,4 +37,6 @@ export function scoreKeyElements(state: GameState | GameView) {
       }
     }
   }
+  state.tilesToTake = undefined
+  state.activePlayer = undefined
 }

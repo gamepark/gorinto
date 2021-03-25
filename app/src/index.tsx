@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import {css, Global} from '@emotion/react'
+import Gorinto from '@gamepark/gorinto/Gorinto'
 import {GorintoOptionsDescription} from '@gamepark/gorinto/GorintoOptions'
 import GorintoView from '@gamepark/gorinto/GorintoView'
-import Gorinto from '@gamepark/gorinto/Rules'
-import {GameProvider} from '@gamepark/react-client'
+import {GameProvider, setupTranslation} from '@gamepark/react-client'
 import normalize from 'emotion-normalize'
 import React, {StrictMode} from 'react'
 import ReactDOM from 'react-dom'
@@ -11,6 +11,9 @@ import App from './App'
 import gorintoAnimations from './GorintoAnimations'
 import Background from './images/BG2.jpg'
 import reportWebVitals from './reportWebVitals'
+import translations from './translations.json'
+
+setupTranslation(translations, {debug: false})
 
 const style = css`
   html {

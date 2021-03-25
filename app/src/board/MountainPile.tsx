@@ -19,21 +19,22 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
 
     const playerId = usePlayerId()
     const animation = useAnimation<TakeTile>(animation => isTakeTile(animation.move) && animation.move.coordinates.x === x && animation.move.coordinates.y === y)
-    const canTakeAny = game.tilesToTake?.element === Element.Earth && game.tilesToTake.coordinates[0].x === x && game.tilesToTake.coordinates[0].y === y
+    const tilesToTake = game.tilesToTake
+    const canTakeAny = tilesToTake?.element === Element.Earth && tilesToTake.coordinates.length && tilesToTake.coordinates[0].x === x && tilesToTake.coordinates[0].y === y
 
     return(
 
         <>
 
-        <div {...props} css = {[!game.tilesToTake && noPointerEvents, renderContext]} > 
+        <div {...props} css = {[!tilesToTake && noPointerEvents, renderContext]} >
                         
             {pile.map((tile, index) =>
                 
-                <div css={positionningTile(index, game.tilesToTake?.element, x, y, game.tilesToTake?.coordinates[0].x, game.tilesToTake?.coordinates[0].y)} key = {index}> 
+                <div css={positionTile} key = {index}>
 
                     <ElementTile 
-                                css = {[animation && game.mountainBoard[x][y].length === index+1 && game.tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index+1),
-                                        animation && game.tilesToTake?.element === Element.Earth && index === animation.move.coordinates.z && takeTileEarthAnimation(animation.duration, index+1),
+                                css = {[animation && game.mountainBoard[x][y].length === index+1 && tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index+1),
+                                        animation && tilesToTake?.element === Element.Earth && index === animation.move.coordinates.z && takeTileEarthAnimation(animation.duration, index+1),
                                         canTakeAny && shadowStyle
                                       ]}
                                 image = {getElementImage(tile)}
@@ -98,8 +99,7 @@ const noPointerEvents = css`
 pointer-events:none;
 `
 
-const positionningTile = (position:number, isEarth:Element|undefined, x:number, y:number, xRef:number|undefined, yRef:number|undefined) => css`
-
+const positionTile = css`
 position:absolute;
 left:15%;
 top:15%;

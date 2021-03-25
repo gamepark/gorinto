@@ -1,4 +1,4 @@
-import Gorinto from '../Rules'
+import Gorinto from '../Gorinto'
 import GameState from '../types/GameState'
 import Player from '../types/Player'
 import PlayerColor from '../types/PlayerColor'
@@ -47,9 +47,9 @@ const anyState: GameState = {
   players: [],
   elementTilesBag: [],
   keyElements: [0, 1],
-  horizontalPath: [],
-  verticalPath: [],
+  horizontalPath: [null, null, null, null, null],
+  verticalPath: [null, null, null, null, null],
   goals: [0, 1],
   mountainBoard: [],
-  automaticMovePhase: undefined
+  endOfSeasonStep: undefined
 }
