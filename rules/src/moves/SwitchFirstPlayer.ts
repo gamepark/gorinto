@@ -17,6 +17,7 @@ export function switchFirstPlayer(state: GameState | GameView) {
     playerIndex = (playerIndex + 1) % state.players.length
   } while (state.players[playerIndex].score !== lowestScore)
   state.firstPlayer = state.players[playerIndex].color
+  state.activePlayer = state.firstPlayer
   state.automaticMovePhase = undefined
 }
 
