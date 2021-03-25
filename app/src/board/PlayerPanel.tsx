@@ -246,7 +246,7 @@ background-color:red;
 const playerPanelStyle = (position:number[], color:string, activePlayer:PlayerColor | undefined) => css`
 position : absolute;
 transform-style: preserve-3d;
-bottom : ${position[1] * 37.5}%;
+bottom : ${Math.abs(position[0] - position[1]) * 37.5}%;
 left : ${position[0] * 79}%;
 width : 20%;
 height : 37.5%;
