@@ -7,8 +7,12 @@ type ChangeActivePlayer = { type: typeof MoveType.ChangeActivePlayer }
 export default ChangeActivePlayer
 
 export function changeActivePlayer(state: GameState | GameView) {
+  state.tilesToTake = undefined
+  state.activePlayer = getNextPlayer(state)
+}
+
+export function getNextPlayer(state: GameState | GameView) {
   const activePlayer = state.players.findIndex(player => player.color === state.activePlayer)!
   const nextPlayerIndex = (activePlayer + 1) % state.players.length
-  state.activePlayer = state.players[nextPlayerIndex].color
-  state.tilesToTake = undefined
+  return state.players[nextPlayerIndex].color
 }

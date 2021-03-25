@@ -1,28 +1,27 @@
 /** @jsxImportSource @emotion/react */
-
-import { css, keyframes } from '@emotion/react';
-import { Goals } from '@gamepark/gorinto/cards/Goals';
+import {css, keyframes} from '@emotion/react'
+import {Goals} from '@gamepark/gorinto/cards/Goals'
+import {getPlayer} from '@gamepark/gorinto/Gorinto'
+import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/RemoveTileOnPath'
 import GameState from '@gamepark/gorinto/types/GameState'
+import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
+import {useAnimation, usePlayerId} from '@gamepark/react-client'
 import {Letterbox} from '@gamepark/react-components'
 import {FC, Fragment, useMemo, useState} from 'react'
-import Board from './board/Board';
-import GoalCard from './board/GoalCard';
-import Header from './board/Header';
-import KeyElementCardPanel from './board/KeyElementCardPanel';
-import PlayerPanel from './board/PlayerPanel';
-import SeasonIndicator from './board/SeasonIndicator';
+import Board from './board/Board'
+import BurrowTile from './board/BurrowTile'
+import GoalCard from './board/GoalCard'
+import Header from './board/Header'
+import KeyElementCardPanel from './board/KeyElementCardPanel'
 import PatternReminder from './board/PatternReminder'
-import { useAnimation, usePlayerId } from '@gamepark/react-client';
-import RemoveTileOnPath, { isRemoveTileOnPath } from '@gamepark/gorinto/moves/RemoveTileOnPath';
-import BurrowTile from './board/BurrowTile';
-import WelcomePopUp from './board/WelcomePopUp';
-import PlayerColor from '@gamepark/gorinto/types/PlayerColor';
-import {getPlayer} from '@gamepark/gorinto/Rules'
+import PlayerPanel from './board/PlayerPanel'
+import SeasonIndicator from './board/SeasonIndicator'
+import WelcomePopUp from './board/WelcomePopUp'
 import GameView from '@gamepark/gorinto/types/GameView';
 
 const GameDisplay: FC<{game:GameState}> = ({game}) => {
 
-  const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move))
+  const burrowTileAnimation = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move) && game.endOfSeasonStep === undefined)
   const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(false)
   const playerId = usePlayerId<PlayerColor>()
   const players = useMemo(() => getPlayersStartingWith(game, playerId), [game, playerId])  
@@ -80,7 +79,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
         
       )}
       
-      <BurrowTile index={animationRemoveTile && animationRemoveTile.move.index} />
+      <BurrowTile index={burrowTileAnimation && burrowTileAnimation.move.index} />
       
       </div>
 

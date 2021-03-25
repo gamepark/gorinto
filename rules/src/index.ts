@@ -1,2 +1,2 @@
-export {default} from './Rules'
+export {default} from './Gorinto'
 export {GorintoOptionsDescription} from './GorintoOptions'

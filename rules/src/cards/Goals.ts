@@ -76,7 +76,6 @@ export const Goal7: Goal = {
   conflictLetter: 'D',
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
-    console.log(sorted)
     return sorted.reduce((sum, understanding) => understanding !== sorted[2] ? sum + understanding : sum, 0)
   }
 }

@@ -87,9 +87,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
               return
           }
         const interval = setInterval(() => {setDisplayedScore(currentScore => {
-            console.log("Dans le CurrentScore", currentScore, score);
             if (currentScore === score){
-                console.log("Dans le CurrentScore+1");
                 clearInterval(interval);
                 setScoreInterval(undefined);
                 return currentScore

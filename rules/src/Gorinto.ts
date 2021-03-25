@@ -2,25 +2,27 @@ import {Competitive, IncompleteInformation, SequentialGame} from '@gamepark/rule
 import shuffle from 'lodash.shuffle'
 import {Goals} from './cards/Goals'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
-import {changeActivePlayer} from './moves/ChangeActivePlayer'
-import {scoreGoals} from './moves/ScoreGoals'
+import {changeActivePlayer, getNextPlayer} from './moves/ChangeActivePlayer'
 import {moveSeasonMarker} from './moves/MoveSeasonMarker'
 import MoveTile, {moveTile} from './moves/MoveTile'
-import {refillPath} from './moves/RefillPaths'
+import {fillPaths, refillPaths} from './moves/RefillPaths'
 import {removeTileOnPath} from './moves/RemoveTileOnPath'
+import {scoreGoals} from './moves/ScoreGoals'
 import {scoreKeyElements} from './moves/ScoreKeyElements'
 import {switchFirstPlayer} from './moves/SwitchFirstPlayer'
 import TakeTile, {takeTile} from './moves/TakeTile'
-import AutomaticMovePhase from './types/AutomaticMovePhase'
 import Element, {elements, numberOfEachElement} from './types/Element'
 import GameState from './types/GameState'
 import GameView from './types/GameView'
 import Move from './types/Move'
 import MoveType from './types/MoveType'
 import {MoveView} from './types/MoveView'
+import Path from './types/Path'
 import Player from './types/Player'
 import PlayerColor from './types/PlayerColor'
 import TilesToTake from './types/TilesToTake'
+
+const numberOfSeasons = 4
 
 export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor>
   implements IncompleteInformation<GameState, GameView, Move, MoveView, PlayerColor>,
@@ -38,12 +40,12 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
         keyElements: getTwoRandomElements(),
         goals: getTwoRandomGoals(),
         elementTilesBag: setupElementTilesBag(),
-        horizontalPath: [],
-        verticalPath: [],
-        mountainBoard: [],
-        automaticMovePhase: undefined
+        horizontalPath: [null, null, null, null, null],
+        verticalPath: [null, null, null, null, null],
+        mountainBoard: []
       }
 
+      fillPaths(game)
       game.mountainBoard = setupMountain(game)
 
       super(game)
@@ -56,39 +58,20 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
     return this.state.activePlayer
   }
 
-  getAutomaticMove(): Move | void {    // (game start and we have to setup the paths) | (there's not enough tiles on the paths to make a whole game turn)
-    if (this.state.tilesToTake === undefined) {
-
-      if (((this.state.horizontalPath.length === 0 && this.state.verticalPath.length === 0)
-        || ((filledSpacesInPaths(this.state) === 0) && (this.state.players.length === 2))
-        || ((filledSpacesInPaths(this.state) === 1) && (this.state.players.length === 3))
-        || ((filledSpacesInPaths(this.state) === 2) && (this.state.players.length === 4)))
-        && (this.state.automaticMovePhase === undefined) && (this.state.activePlayer)) {
-        return {type: MoveType.RefillPaths}
-      }
-
-      if (this.state.players.length === 2 && [2, 4, 6, 8].includes(filledSpacesInPaths(this.state))) {           // Adaptation for 2 players
-        let twoPaths = this.state.horizontalPath.concat(this.state.verticalPath)
-        let randomSpaceToRemove: number = getRandomInt(10)
-        while (twoPaths[randomSpaceToRemove] === null) {
-          randomSpaceToRemove = getRandomInt(10)
-        }
-        return {type: MoveType.RemoveTileOnPath, index: randomSpaceToRemove}
-      }
-
-      if (this.state.automaticMovePhase === AutomaticMovePhase.movingSeasonMarker) {
-        return {type: MoveType.MoveSeasonMarker}
-      } else if (this.state.automaticMovePhase === AutomaticMovePhase.scoreGoals) {
-        return {type: MoveType.ScoreGoals}
-      } else if (this.state.automaticMovePhase === AutomaticMovePhase.switchingFirstPlayer) {
-        return {type: MoveType.SwitchFirstPlayer}
-      } else if (this.state.automaticMovePhase === AutomaticMovePhase.scoreKeyElements) {
-        return {type: MoveType.ScoreKeyElements}
-      }
-
+  getAutomaticMove(): Move | void {
+    if (this.state.endOfSeasonStep === MoveType.RefillPaths
+      && this.state.horizontalPath.every(slot => slot === null)
+      && this.state.verticalPath.every(slot => slot === null)) {
+      return {type: MoveType.RefillPaths}
+    } else if (this.state.tilesToTake && cantPickAnyTile(this.state.tilesToTake) && mustRemoveTileFromPaths(this.state)) {
+      // TODO: option for tactical method, in which case it won't be automatic but chosen
+      const paths = this.state.horizontalPath.concat(this.state.verticalPath)
+      const nonNullIndexes = paths.map((slot, index) => ({slot, index})).filter(item => item.slot !== null).map(item => item.index)
+      const index = nonNullIndexes[getRandomInt(nonNullIndexes.length)]
+      return {type: MoveType.RemoveTileOnPath, index}
+    } else {
+      return getPredictableAutomaticMoves(this.state)
     }
-
-    return getPredictableAutomaticMoves(this.state)
   }
 
   getLegalMoves(): Move[] {
@@ -127,22 +110,22 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
 
   play(move: Move): void {
     switch (move.type) {
-      case MoveType.ChangeActivePlayer:
-        return changeActivePlayer(this.state)
-      case MoveType.RefillPaths:
-        return refillPath(this.state)
-      case MoveType.RemoveTileOnPath:
-        return removeTileOnPath(this.state, move)
-      case MoveType.MoveSeasonMarker:
-        return moveSeasonMarker(this.state)
-      case MoveType.ScoreGoals:
-        return scoreGoals(this.state)
-      case MoveType.SwitchFirstPlayer:
-        return switchFirstPlayer(this.state)
       case MoveType.MoveTile:
         return moveTile(this.state, move)
       case MoveType.TakeTile:
         return takeTile(this.state, move)
+      case MoveType.ChangeActivePlayer:
+        return changeActivePlayer(this.state)
+      case MoveType.ScoreGoals:
+        return scoreGoals(this.state)
+      case MoveType.MoveSeasonMarker:
+        return moveSeasonMarker(this.state)
+      case MoveType.RemoveTileOnPath:
+        return removeTileOnPath(this.state, move)
+      case MoveType.RefillPaths:
+        return refillPaths(this.state)
+      case MoveType.SwitchFirstPlayer:
+        return switchFirstPlayer(this.state)
       case MoveType.ScoreKeyElements:
         return scoreKeyElements(this.state)
     }
@@ -225,8 +208,25 @@ function setupMountain(game: GameState): number[][][] {
 }
 
 export function getPredictableAutomaticMoves(state: GameState | GameView): Move & MoveView | void {
-  if (state.tilesToTake !== undefined && cantPickAnyTile(state.tilesToTake)) {
-    return {type: MoveType.ChangeActivePlayer}
+  if (state.endOfSeasonStep !== undefined) {
+    if (state.endOfSeasonStep === MoveType.MoveSeasonMarker && state.season === numberOfSeasons) {
+      if (state.activePlayer !== undefined) {
+        return {type: MoveType.ScoreKeyElements}
+      }
+    } else if (state.endOfSeasonStep === MoveType.RefillPaths) {
+      const tileToRemove = state.horizontalPath.concat(state.verticalPath).findIndex(slot => slot !== null)
+      if (tileToRemove !== -1) {
+        return {type: MoveType.RemoveTileOnPath, index: tileToRemove}
+      }
+    } else {
+      return {type: state.endOfSeasonStep}
+    }
+  } else if (state.tilesToTake && cantPickAnyTile(state.tilesToTake) && !mustRemoveTileFromPaths(state)) {
+    if (seasonShouldEnd(state)) {
+      return {type: MoveType.ScoreGoals}
+    } else {
+      return {type: MoveType.ChangeActivePlayer}
+    }
   }
 }
 
@@ -234,9 +234,18 @@ function cantPickAnyTile(tilesToTake: TilesToTake): boolean {
   return tilesToTake.coordinates.length === 0 || tilesToTake.quantity === 0
 }
 
-function filledSpacesInPaths(game: GameState): number {
-  return game.horizontalPath.reduce((sum, space) => space !== null ? sum + 1 : sum, 0)! +
-    game.verticalPath.reduce((sum, space) => space !== null ? sum + 1 : sum, 0)!
+function mustRemoveTileFromPaths(state: GameState | GameView): boolean {
+  if (state.players.length !== 2) return false
+  const remainingTiles = countElements(state.horizontalPath) + countElements(state.verticalPath)
+  return remainingTiles === 7 || remainingTiles === 5 || remainingTiles === 3
+}
+
+function seasonShouldEnd(state: GameState | GameView) {
+  return getNextPlayer(state) === state.firstPlayer && countElements(state.horizontalPath) + countElements(state.verticalPath) < state.players.length
+}
+
+function countElements(path: Path): number {
+  return path.reduce((sum, slot) => slot !== null ? sum + 1 : sum, 0)
 }
 
 function getRandomInt(max: number): number {

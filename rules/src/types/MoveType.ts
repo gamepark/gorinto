@@ -1,11 +1,11 @@
 enum MoveType {
-  RefillPaths,
   MoveTile,
   TakeTile,
   ChangeActivePlayer,
   ScoreGoals,
   MoveSeasonMarker,
   RemoveTileOnPath,
+  RefillPaths,
   SwitchFirstPlayer,
   ScoreKeyElements
 }
