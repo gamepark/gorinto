@@ -1,8 +1,8 @@
 enum AutomaticMovePhase {
   movingSeasonMarker = 'movingSeasonMarker',
-  countingGoals = 'countingGoals',
+  scoreGoals = 'scoreGoals',
   switchingFirstPlayer = 'switchingFirstPlayer',
-  countingKeys = 'countingKeys'
+  scoreKeyElements = 'scoreKeyElements'
 }
 
 export default AutomaticMovePhase

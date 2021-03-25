@@ -1,6 +1,6 @@
 import {Game} from '@gamepark/rules-api'
 import {changeActivePlayer} from './moves/ChangeActivePlayer'
-import {countGoals} from './moves/CountGoals'
+import {scoreGoals} from './moves/ScoreGoals'
 import {moveSeasonMarker} from './moves/MoveSeasonMarker'
 import {moveTile} from './moves/MoveTile'
 import {refillPathInView} from './moves/RefillPaths'
@@ -34,8 +34,8 @@ export default class GorintoView implements Game<GameView, MoveView> {
         return removeTileOnPath(this.state, move)
       case MoveType.MoveSeasonMarker:
         return moveSeasonMarker(this.state)
-      case MoveType.CountGoals:
-        return countGoals(this.state)
+      case MoveType.ScoreGoals:
+        return scoreGoals(this.state)
       case MoveType.SwitchFirstPlayer:
         return switchFirstPlayer(this.state)
       case MoveType.MoveTile:

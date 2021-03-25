@@ -16,7 +16,7 @@ export function moveSeasonMarker(state: GameState | GameView) {
     state.season++
   }
 
-  state.automaticMovePhase = AutomaticMovePhase.countingGoals
+  state.automaticMovePhase = AutomaticMovePhase.scoreGoals
 }
 
 export function isMoveSeasonMarker(move:Move|MoveView):move is MoveSeasonMarker{

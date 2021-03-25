@@ -3,7 +3,7 @@ import shuffle from 'lodash.shuffle'
 import {Goals} from './cards/Goals'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
 import {changeActivePlayer} from './moves/ChangeActivePlayer'
-import {countGoals} from './moves/CountGoals'
+import {scoreGoals} from './moves/ScoreGoals'
 import {moveSeasonMarker} from './moves/MoveSeasonMarker'
 import MoveTile, {moveTile} from './moves/MoveTile'
 import {refillPath} from './moves/RefillPaths'
@@ -78,11 +78,11 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
 
       if (this.state.automaticMovePhase === AutomaticMovePhase.movingSeasonMarker) {
         return {type: MoveType.MoveSeasonMarker}
-      } else if (this.state.automaticMovePhase === AutomaticMovePhase.countingGoals) {
-        return {type: MoveType.CountGoals}
+      } else if (this.state.automaticMovePhase === AutomaticMovePhase.scoreGoals) {
+        return {type: MoveType.ScoreGoals}
       } else if (this.state.automaticMovePhase === AutomaticMovePhase.switchingFirstPlayer) {
         return {type: MoveType.SwitchFirstPlayer}
-      } else if (this.state.automaticMovePhase === AutomaticMovePhase.countingKeys) {
+      } else if (this.state.automaticMovePhase === AutomaticMovePhase.scoreKeyElements) {
         return {type: MoveType.ScoreKeyElements}
       }
 
@@ -135,8 +135,8 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
         return removeTileOnPath(this.state, move)
       case MoveType.MoveSeasonMarker:
         return moveSeasonMarker(this.state)
-      case MoveType.CountGoals:
-        return countGoals(this.state)
+      case MoveType.ScoreGoals:
+        return scoreGoals(this.state)
       case MoveType.SwitchFirstPlayer:
         return switchFirstPlayer(this.state)
       case MoveType.MoveTile:
