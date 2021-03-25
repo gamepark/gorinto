@@ -1,4 +1,4 @@
-import PathType from './PathType'
+import PathType from '@gamepark/gorinto/types/PathType'
 
 type ElementInPath = {
   type: 'ElementInPath',

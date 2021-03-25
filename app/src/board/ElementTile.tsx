@@ -1,18 +1,18 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import {css} from '@emotion/react'
 import MoveTile from '@gamepark/gorinto/moves/MoveTile'
+import Element from '@gamepark/gorinto/types/Element'
+import ElementInPile from '@gamepark/gorinto/types/ElementInPile'
 import {usePlay} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
 import {TFunction} from 'i18next'
-import { FC, HTMLAttributes, useEffect, useState } from "react";
-import ElementInPath from "@gamepark/gorinto/types/ElementInPath";
-import ElementInPile from "@gamepark/gorinto/types/ElementInPile";
-import Element from "@gamepark/gorinto/types/Element";
-import Void from "../images/ElementVoid.png"
-import Wind from "../images/ElementWind.png"
-import Fire from "../images/ElementFire.png"
-import Water from "../images/ElementWater.png"
-import Earth from "../images/ElementEarth.png"
+import {FC, HTMLAttributes, useEffect, useState} from 'react'
+import Earth from '../images/ElementEarth.png'
+import Fire from '../images/ElementFire.png'
+import Void from '../images/ElementVoid.png'
+import Water from '../images/ElementWater.png'
+import Wind from '../images/ElementWind.png'
+import ElementInPath from './ElementInPath'
 
 type Props = {
 

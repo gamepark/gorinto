@@ -70,7 +70,7 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
       const tiles = this.state.horizontalPath.map((slot, index) => ({path: PathType.Horizontal, index, slot}))
         .concat(this.state.verticalPath.map((slot, index) => ({path: PathType.Vertical, index, slot})))
         .filter(option => option.slot !== null)
-      const randomTile = tiles[getRandomInt(tiles.length)]
+      const randomTile = tiles[Math.floor(Math.random() * Math.floor(tiles.length))]
       return {type: MoveType.RemoveTileOnPath, ...randomTile}
     } else {
       return getPredictableAutomaticMoves(this.state)
@@ -233,12 +233,4 @@ function seasonShouldEnd(state: GameState | GameView) {
 
 function countElements(path: Path): number {
   return path.reduce((sum, slot) => slot !== null ? sum + 1 : sum, 0)
-}
-
-function getRandomInt(max: number): number {
-  return Math.floor(Math.random() * Math.floor(max))
-}
-
-export function getPlayer(game: GameState, color: PlayerColor): Player {
-  return game.players.find(player => player.color === color)!
 }

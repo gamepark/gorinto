@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import {css, keyframes} from '@emotion/react'
 import {Goals} from '@gamepark/gorinto/cards/Goals'
-import {getPlayer} from '@gamepark/gorinto/Gorinto'
 import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/RemoveTileOnPath'
 import GameState from '@gamepark/gorinto/types/GameState'
+import GameView from '@gamepark/gorinto/types/GameView'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
 import {Letterbox} from '@gamepark/react-components'
@@ -17,7 +17,6 @@ import PatternReminder from './board/PatternReminder'
 import PlayerPanel from './board/PlayerPanel'
 import SeasonIndicator from './board/SeasonIndicator'
 import WelcomePopUp from './board/WelcomePopUp'
-import GameView from '@gamepark/gorinto/types/GameView';
 
 const GameDisplay: FC<{game:GameState}> = ({game}) => {
 
@@ -27,7 +26,8 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
   const players = useMemo(() => getPlayersStartingWith(game, playerId), [game, playerId])  
 
   const showWelcomePopup = !welcomePopUpClosed
-  
+
+  const player = game.players.find(player => player.color === playerId)
 
   return (
 
@@ -85,7 +85,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
       
       </div>
 
-      {showWelcomePopup && playerId && <WelcomePopUp player={getPlayer(game, playerId)} game={game} close={() => setWelcomePopUpClosed(true)} />}
+      {showWelcomePopup && player && <WelcomePopUp player={player} game={game} close={() => setWelcomePopUpClosed(true)} />}
 
     </Letterbox>
 

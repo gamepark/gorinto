@@ -8,7 +8,6 @@ import ScoreKeyElements from '../moves/ScoreKeyElements'
 import SwitchFirstPlayer from '../moves/SwitchFirstPlayer'
 import TakeTile from '../moves/TakeTile'
 
-
 type Move = RefillPaths | MoveTile | TakeTile | MoveSeasonMarker | ScoreGoals
 | SwitchFirstPlayer | ChangeActivePlayer | RemoveTileOnPath | ScoreKeyElements
 

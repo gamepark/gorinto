@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
-import ElementInPath from '@gamepark/gorinto/types/ElementInPath'
 import ElementInPile from '@gamepark/gorinto/types/ElementInPile'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import PathType from '@gamepark/gorinto/types/PathType'
 import {FC} from 'react'
 import {useDrop} from 'react-dnd'
+import ElementInPath from './ElementInPath'
 
 
 type Props = {
