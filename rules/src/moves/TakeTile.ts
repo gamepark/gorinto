@@ -18,7 +18,7 @@ export function takeTile(state: GameState | GameView, move: TakeTile) {
   const player = state.players.find(player => player.color === state.activePlayer)
   if (!player) return console.error('Cannot take tile when no player is active!')
   const {y, x} = move.coordinates
-  const z = move.coordinates.z || state.mountainBoard[x][y].length - 1
+  const z = move.coordinates.z ?? state.mountainBoard[x][y].length - 1
   const element = state.mountainBoard[x][y][z]
 
   state.mountainBoard[x][y].splice(z, 1)
