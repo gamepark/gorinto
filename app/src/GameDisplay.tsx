@@ -4,7 +4,7 @@ import { css, keyframes } from '@emotion/react';
 import { Goals } from '@gamepark/gorinto/cards/Goals';
 import GameState from '@gamepark/gorinto/types/GameState'
 import {Letterbox} from '@gamepark/react-components'
-import {FC, Fragment, useState} from 'react'
+import {FC, Fragment, useMemo, useState} from 'react'
 import Board from './board/Board';
 import GoalCard from './board/GoalCard';
 import Header from './board/Header';
@@ -18,12 +18,14 @@ import BurrowTile from './board/BurrowTile';
 import WelcomePopUp from './board/WelcomePopUp';
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor';
 import {getPlayer} from '@gamepark/gorinto/Rules'
+import GameView from '@gamepark/gorinto/types/GameView';
 
 const GameDisplay: FC<{game:GameState}> = ({game}) => {
 
   const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move))
   const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(false)
   const playerId = usePlayerId<PlayerColor>()
+  const players = useMemo(() => getPlayersStartingWith(game, playerId), [game, playerId])  
 
   const showWelcomePopup = !welcomePopUpClosed
   
@@ -49,7 +51,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
         />
       )}
             
-      {game.players.map((player, index) => 
+      {players.map((player, index) => 
            
         <PlayerPanel  key = {player.color}
                       understanding = {player.understanding}
@@ -89,6 +91,15 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
     </Fragment>
 
   )
+}
+
+export const getPlayersStartingWith = (game: GameView, playerId?: PlayerColor) => {
+  if (playerId) {
+    const playerIndex = game.players.findIndex(player => player.color === playerId)
+    return [...game.players.slice(playerIndex, game.players.length), ...game.players.slice(0, playerIndex)]
+  } else {
+    return game.players
+  }
 }
 
 const burrowTileAnimation = (duration:number) => css`
