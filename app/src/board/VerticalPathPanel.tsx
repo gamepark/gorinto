@@ -31,7 +31,7 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
             <div css={positionningTile(index)} key = {index}> 
 
                 <ElementTile 
-                             css = {[animationMoveTile && animationMoveTile.move.y === index && moveTileAnimation(animationMoveTile.move.x, mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, animationMoveTile.duration),
+                             css = {[animationMoveTile && animationMoveTile.move.y === index && moveTileAnimation(animationMoveTile.move.x, mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, maxPileHeightOnTheLine(index, mountain),animationMoveTile.duration),
                                      animationRemoveTile && animationRemoveTile.move.index -5 === index && removeTileAnimation(animationRemoveTile.duration)
                             ]}
                              image = {getElementImage(tile)}
@@ -51,6 +51,23 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
         
     )
 
+}
+
+function maxPileHeightOnTheLine (x:number, mountain:number[][][]) : number {
+
+    console.log("Dans le MaxPileHeightOnTheLine")
+
+    let zMax:number = 0;
+    for (let i = 0 ; i < 5 ; i++){
+        const height = mountain[x][i].length;
+        if (height>zMax){
+            zMax = height;
+        }
+    }
+
+    console.log("zMax = ",zMax);
+
+    return zMax
 }
 
 const removeTileAnimation = (duration:number) => css`
@@ -78,17 +95,17 @@ to{
 
 const heightPath = 15           // In percent
 
-const moveTileAnimation = (x:number, z:number, duration:number) => css`
-animation:${moveTileKeyFrames(x,z)} ${duration}s ;
+const moveTileAnimation = (x:number, z:number, zMax:number, duration:number) => css`
+animation:${moveTileKeyFrames(x,z, zMax)} ${duration}s ;
 `
 
-const moveTileKeyFrames = (x:number,z:number) => keyframes`
+const moveTileKeyFrames = (x:number,z:number, zMax:number) => keyframes`
 from{}
 15%{
-    transform:translate3d(0,0,16.03em);
+    transform:translate3d(0,0,${zMax*4+8.02}em);
 }
 85%{
-    transform:translate3d(${(x+1)*(heightPath*9.6)}%,0,16.03em);
+    transform:translate3d(${(x+1)*(heightPath*9.6)}%,0,${zMax*4+8.02}em);
 }
 to{
     transform:translate3d(0${(x+1)*(heightPath*9.6)}%,0,${z*4.02}em);

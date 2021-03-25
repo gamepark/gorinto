@@ -29,7 +29,7 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
             
             <div css={positionningTile(index)} key = {index}> 
 
-                <ElementTile css = {[animationMoveTile && animationMoveTile.move.x === index && moveTileAnimation(animationMoveTile.move.y,mountain[animationMoveTile.move.x][animationMoveTile.move.y].length,animationMoveTile.duration),
+                <ElementTile css = {[animationMoveTile && animationMoveTile.move.x === index && moveTileAnimation(animationMoveTile.move.y,mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, maxPileHeightOnTheColumn(index, mountain),animationMoveTile.duration),
                                      animationRemoveTile && animationRemoveTile.move.index === index && removeTileAnimation(animationRemoveTile.duration)
             ]}
                              image = {getElementImage(tile)}
@@ -52,7 +52,18 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
 
 }
 
+function maxPileHeightOnTheColumn (y:number, mountain:number[][][]) : number {
 
+    let zMax:number = 0;
+    for (let i = 0 ; i < 5 ; i++){
+        const height = mountain[i][y].length;
+        if (height>zMax){
+            zMax = height;
+        }
+    }
+
+    return zMax
+}
 
 const widthPath = 15 ;            // in percent
 
@@ -79,17 +90,17 @@ to{
 }
 `
 
-const moveTileAnimation = (y:number, z:number, duration:number) => css`
-animation:${moveTileKeyFrames(y,z)} ${duration}s ;
+const moveTileAnimation = (y:number, z:number, zMax:number, duration:number) => css`
+animation:${moveTileKeyFrames(y,z, zMax)} ${duration}s ;
 `
 
-const moveTileKeyFrames = (y:number,z:number) => keyframes`
+const moveTileKeyFrames = (y:number,z:number, zMax:number) => keyframes`
 from{}
 15%{
-    transform:translate3d(0,0,16.03em);
+    transform:translate3d(0,0,${zMax*4+8.02}em);
 }
 85%{
-    transform:translate3d(0,${(y+1)*(widthPath*9.0667)}%,16.03em);
+    transform:translate3d(0,${(y+1)*(widthPath*9.0667)}%,${zMax*4+8.02}em);
 }
 to{
     transform:translate3d(0,${(y+1)*(widthPath*9.0667)}%,${z*4.02}em);
