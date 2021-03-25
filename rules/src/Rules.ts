@@ -4,11 +4,11 @@ import {Goals} from './cards/Goals'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
 import {changeActivePlayer} from './moves/ChangeActivePlayer'
 import {countGoals} from './moves/CountGoals'
-import {countKeys} from './moves/CountKeys'
 import {moveSeasonMarker} from './moves/MoveSeasonMarker'
 import MoveTile, {moveTile} from './moves/MoveTile'
 import {refillPath} from './moves/RefillPaths'
 import {removeTileOnPath} from './moves/RemoveTileOnPath'
+import {scoreKeyElements} from './moves/ScoreKeyElements'
 import {switchFirstPlayer} from './moves/SwitchFirstPlayer'
 import TakeTile, {takeTile} from './moves/TakeTile'
 import AutomaticMovePhase from './types/AutomaticMovePhase'
@@ -83,7 +83,7 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
       } else if (this.state.automaticMovePhase === AutomaticMovePhase.switchingFirstPlayer) {
         return {type: MoveType.SwitchFirstPlayer}
       } else if (this.state.automaticMovePhase === AutomaticMovePhase.countingKeys) {
-        return {type: MoveType.CountKeys}
+        return {type: MoveType.ScoreKeyElements}
       }
 
     }
@@ -139,12 +139,12 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
         return countGoals(this.state)
       case MoveType.SwitchFirstPlayer:
         return switchFirstPlayer(this.state)
-      case MoveType.CountKeys:
-        return countKeys(this.state)
       case MoveType.MoveTile:
         return moveTile(this.state, move)
       case MoveType.TakeTile:
         return takeTile(this.state, move)
+      case MoveType.ScoreKeyElements:
+        return scoreKeyElements(this.state)
     }
   }
 

@@ -7,7 +7,7 @@ enum MoveType {
   CountGoals = 'COUNT_GOALS',
   SwitchFirstPlayer = 'SWITCH_FIRST_PLAYER',
   ChangeActivePlayer = 'CANT_PICK_ANY_TILE',
-  CountKeys = 'COUNT_KEYS'
+  ScoreKeyElements = 'COUNT_KEYS'
 }
 
 export default MoveType

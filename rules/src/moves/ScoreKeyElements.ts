@@ -2,11 +2,11 @@ import GameState from '../types/GameState'
 import GameView from '../types/GameView'
 import MoveType from '../types/MoveType'
 
-type CountKeys = { type: typeof MoveType.CountKeys }
+type ScoreKeyElements = { type: typeof MoveType.ScoreKeyElements }
 
-export default CountKeys
+export default ScoreKeyElements
 
-export function countKeys(state: GameState | GameView) {
+export function scoreKeyElements(state: GameState | GameView) {
   for (let i = 0; i < state.keyElements.length; i++) {
     for (let j = 0; j < state.players.length; j++) {
       const understandings: number[] = state.players[j].understanding
