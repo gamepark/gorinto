@@ -44,13 +44,16 @@ background-size: contain;
 background-repeat: no-repeat;
 background-position:top;
 
+display: flex ; flex-direction: column; align-items: center;
+
+
 p{
+    margin-top:0;
+    margin-bottom:0;
     color:black;
     font-size:3em;
     text-align:center;
     width:70%;
-    position:absolute;
-    right:15%;
     font-family: 'Courgette', cursive;
     letter-spacing: -0.07em;
 }
@@ -58,7 +61,9 @@ p{
 ${isHint === false &&
     `
     p:nth-of-type(2n+1){
-        top:18%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
         color:black;
     }
     `
@@ -67,11 +72,15 @@ ${isHint === false &&
 ${isHint === true &&
     `
     p:nth-of-type(2n+1){
-        top:10%;
+        position: absolute;
+        top: 25%;
+        transform: translateY(-25%);
         color:#8c514b;
     }
     p:nth-of-type(2n){
-        bottom:8%;
+        position: absolute;
+        top: 75%;
+        transform: translateY(-75%);
         color:black;
     }
     `
