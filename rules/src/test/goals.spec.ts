@@ -122,10 +122,10 @@ const anyState: GameState = {
   season: 1,
   players: [],
   elementTilesBag: [],
-  twoKeyElementCards: [0, 1],
+  keyElements: [0, 1],
   horizontalPath: [],
   verticalPath: [],
-  twoGoals: [0, 1],
+  goals: [0, 1],
   mountainBoard: [],
   automaticMovePhase: undefined
 }
@@ -137,10 +137,10 @@ function createGameWithUnderstanding(...understandings: [number, number, number,
     season: 1,
     players: understandings.map((understanding, index) => withUnderStanding(understanding, colors[index])),
     elementTilesBag: [],
-    twoKeyElementCards: [0, 1],
+    keyElements: [0, 1],
     horizontalPath: [],
     verticalPath: [],
-    twoGoals: [0, 1],
+    goals: [0, 1],
     mountainBoard: [],
     automaticMovePhase: undefined
   }

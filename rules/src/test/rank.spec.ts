@@ -46,10 +46,10 @@ const anyState: GameState = {
   season: 1,
   players: [],
   elementTilesBag: [],
-  twoKeyElementCards: [0, 1],
+  keyElements: [0, 1],
   horizontalPath: [],
   verticalPath: [],
-  twoGoals: [0, 1],
+  goals: [0, 1],
   mountainBoard: [],
   automaticMovePhase: undefined
 }

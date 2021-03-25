@@ -28,7 +28,7 @@ const WelcomePopUp : FC<{player:Player, game:GameState, close: () => void}> = ({
 
                 <div css={cardsStyle}>
 
-                    {game.twoGoals.map((goalNumber, index) =>
+                    {game.goals.map((goalNumber, index) =>
                 
                         <GoalCardPopUp key = {index}
                                   goal = {Goals[goalNumber]}
@@ -37,7 +37,7 @@ const WelcomePopUp : FC<{player:Player, game:GameState, close: () => void}> = ({
             
                     )}
 
-                    {game.twoKeyElementCards.map((element, index) =>
+                    {game.keyElements.map((element, index) =>
                 
                         <KeyElementCardPanelPopUp key = {index}
                                                   element = {element}

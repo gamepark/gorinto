@@ -40,7 +40,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
 
       <SeasonIndicator season = {game.season} />
 
-      {game.twoKeyElementCards.map((element, index) =>
+      {game.keyElements.map((element, index) =>
             
         <KeyElementCardPanel  key = {index}
                               element = {element}
@@ -68,7 +68,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
 
       <PatternReminder />
 
-      {game.twoGoals.map((goalNumber, index) =>
+      {game.goals.map((goalNumber, index) =>
             
             <GoalCard   key = {index}
                         goal = {Goals[goalNumber]}

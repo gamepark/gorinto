@@ -9,8 +9,8 @@ type GameState = {
   activePlayer?: PlayerColor;
   players: Player[];
   firstPlayer: PlayerColor;
-  twoKeyElementCards: [Element, Element];
-  twoGoals: [number, number];
+  keyElements: [Element, Element];
+  goals: [number, number];
   elementTilesBag: Element[];
   horizontalPath: (Element | null)[];
   verticalPath: (Element | null)[];

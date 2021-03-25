@@ -35,8 +35,8 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
         players: setupPlayers(arg.players),
         activePlayer: arg.players[0].id,
         firstPlayer: arg.players[0].id,
-        twoKeyElementCards: setupTwoKeyElementCards(),
-        twoGoals: setupTwoGoals(),
+        keyElements: getTwoRandomElements(),
+        goals: getTwoRandomGoals(),
         elementTilesBag: setupElementTilesBag(),
         horizontalPath: [],
         verticalPath: [],
@@ -185,12 +185,12 @@ function setupPlayers(players: GorintoPlayerOptions[]): Player[] {
   }))
 }
 
-function setupTwoKeyElementCards(): [Element, Element] {
+function getTwoRandomElements(): [Element, Element] {
   const shuffled = shuffle(elements)
   return [shuffled[0], shuffled[1]]
 }
 
-function setupTwoGoals(): [number, number] {
+function getTwoRandomGoals(): [number, number] {
   const goalIds = shuffle(Array.from(Goals.keys()))
   const firstGoal = Goals[goalIds[0]]
   if (firstGoal.conflictLetter) {

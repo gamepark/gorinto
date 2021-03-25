@@ -9,7 +9,7 @@ type CountGoals = { type: typeof MoveType.CountGoals }
 export default CountGoals
 
 export function countGoals(state: GameState | GameView) {
-  const goals = state.twoGoals.map(goalIndex => Goals[goalIndex])
+  const goals = state.goals.map(goalIndex => Goals[goalIndex])
   for (const player of state.players) {
     player.score += goals[0].score(player, state) + goals[1].score(player, state)
   }

@@ -7,11 +7,11 @@ type CountKeys = { type: typeof MoveType.CountKeys }
 export default CountKeys
 
 export function countKeys(state: GameState | GameView) {
-  for (let i = 0; i < state.twoKeyElementCards.length; i++) {
+  for (let i = 0; i < state.keyElements.length; i++) {
     for (let j = 0; j < state.players.length; j++) {
       const understandings: number[] = state.players[j].understanding
 
-      switch (state.twoKeyElementCards[i]) {
+      switch (state.keyElements[i]) {
 
         case 0 : {
           state.players[j].score = state.players[j].score + 2 * understandings[0]
