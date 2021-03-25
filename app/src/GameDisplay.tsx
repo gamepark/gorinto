@@ -62,6 +62,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
                       mountainBoard = {game.mountainBoard}
                       position={[Math.trunc(index/2),index%2]}
                       activePlayer = {game.activePlayer}
+                      playersNumber = {game.players.length}
         />
            
       )}
@@ -76,6 +77,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
                         goal = {Goals[goalNumber]}
                         position = {index}
                         open={() => setWelcomePopUpClosed(false)}
+                        players = {game.players}
             />
         
       )}

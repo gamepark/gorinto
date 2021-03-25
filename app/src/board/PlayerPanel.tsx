@@ -32,9 +32,10 @@ type Props = {
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
     mountainBoard:number[][][],
     activePlayer:PlayerColor | undefined,
+    playersNumber:number
 } & HTMLAttributes<HTMLDivElement>
 
-const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, tilesToTake, mountainBoard, activePlayer, ...props}) => {
+const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, tilesToTake, mountainBoard, activePlayer, playersNumber, ...props}) => {
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",
@@ -104,7 +105,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
     return(
 
-        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer), canDrop && canDropStyle(color,activePlayer!), isOver && isOverStyle]}>
+        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer, playersNumber), canDrop && canDropStyle(color,activePlayer!), isOver && isOverStyle]}>
 
             <div css={playerHeaderStyle}>
 
@@ -244,11 +245,21 @@ opacity:0.6;
 background-color:red;
 `
 
-const playerPanelStyle = (position:number[], color:string, activePlayer:PlayerColor | undefined) => css`
+const playerPanelStyle = (position:number[], color:string, activePlayer:PlayerColor | undefined, playersNumber:number) => css`
 position : absolute;
 transform-style: preserve-3d;
+
+${playersNumber !==3 && `
 bottom : ${Math.abs(position[0] - position[1]) * 37.5}%;
 left : ${position[0] * 79}%;
+`}
+${playersNumber === 3 && `
+bottom : ${position[1] * 37.5}%;
+left : ${position[0] * 79}%;
+`}
+
+
+
 width : 20%;
 height : 37.5%;
 text-align:right;

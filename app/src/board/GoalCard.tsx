@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
 import Goal from '@gamepark/gorinto/types/Goal'
+import Player from "@gamepark/gorinto/types/Player"
 import { FC, HTMLAttributes } from "react"
 import {useTranslation} from 'react-i18next'
 import BackGroundGoal from "../images/goal_background.jpg"
@@ -9,15 +10,16 @@ type Props = {
     goal:Goal,
     position:number,
     open:() => void
+    players:Player[]
 } & HTMLAttributes<HTMLDivElement>
 
-const GoalCard : FC<Props> = ({goal, position, open, ...props}) => {
+const GoalCard : FC<Props> = ({goal, position, open, players, ...props}) => {
 
     const {t} = useTranslation()
 
     return(
 
-        <div css={[goalCardPanelStyle(goal.hint !== undefined), goalCardPanelPosition(position)]} onClick={open}>
+        <div css={[goalCardPanelStyle(goal.hint !== undefined), goalCardPanelPosition(position, players.length)]} onClick={open}>
         
             {goal.hint && <p>Hint : {goal.hint(t)} </p>}
             <p>Goal : {goal.text(t)} </p>
@@ -29,13 +31,28 @@ const GoalCard : FC<Props> = ({goal, position, open, ...props}) => {
 
 }
 
-const goalCardPanelPosition = (position:number) => css`
+const goalCardPanelPosition = (position:number, players:number) => css`
+
+${players === 4 && `
 position : absolute;
 top : 10%;
 left : ${79+position*10}%;
 
 width:10%;
 height:15%;
+`}
+
+${players < 4 && `
+
+position : absolute;
+top : ${10+position*25}%;
+left : 79%;
+
+width:20%;
+height:25%;
+
+`}
+
 `
 
 const goalCardPanelStyle = (isHint:boolean) => css`
