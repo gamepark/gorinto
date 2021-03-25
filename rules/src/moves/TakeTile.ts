@@ -1,3 +1,4 @@
+import Coordinates from '../types/Coordinates'
 import Element from '../types/Element'
 import GameState from '../types/GameState'
 import GameView from '../types/GameView'
@@ -7,7 +8,7 @@ import {MoveView} from '../types/MoveView'
 
 type TakeTile = {
   type: typeof MoveType.TakeTile
-  coordinates: { x: number, y: number, z?: number }
+  coordinates: Coordinates & { z?: number }
 }
 
 export default TakeTile

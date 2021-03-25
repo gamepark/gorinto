@@ -1,8 +1,9 @@
+import Coordinates from './Coordinates'
 import Element from './Element'
 
 type TilesToTake = {
   quantity: number
-  coordinates: { x: number, y: number }[]
+  coordinates: Coordinates[]
   element?: Element
 }
 

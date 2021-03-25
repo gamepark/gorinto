@@ -18,6 +18,7 @@ import Move from './types/Move'
 import MoveType from './types/MoveType'
 import {MoveView} from './types/MoveView'
 import Path from './types/Path'
+import PathType from './types/PathType'
 import Player from './types/Player'
 import PlayerColor from './types/PlayerColor'
 import TilesToTake from './types/TilesToTake'
@@ -65,10 +66,11 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
       return {type: MoveType.RefillPaths}
     } else if (this.state.tilesToTake && cantPickAnyTile(this.state.tilesToTake) && mustRemoveTileFromPaths(this.state)) {
       // TODO: option for tactical method, in which case it won't be automatic but chosen
-      const paths = this.state.horizontalPath.concat(this.state.verticalPath)
-      const nonNullIndexes = paths.map((slot, index) => ({slot, index})).filter(item => item.slot !== null).map(item => item.index)
-      const index = nonNullIndexes[getRandomInt(nonNullIndexes.length)]
-      return {type: MoveType.RemoveTileOnPath, index}
+      const tiles = this.state.horizontalPath.map((slot, index) => ({path: PathType.Horizontal, index, slot}))
+        .concat(this.state.verticalPath.map((slot, index) => ({path: PathType.Vertical, index, slot})))
+        .filter(option => option.slot !== null)
+      const randomTile = tiles[getRandomInt(tiles.length)]
+      return {type: MoveType.RemoveTileOnPath, ...randomTile}
     } else {
       return getPredictableAutomaticMoves(this.state)
     }
@@ -80,31 +82,26 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
       for (let x = 0; x < 5; x++) {
         for (let y = 0; y < 5; y++) {
           if (this.state.horizontalPath[x] !== null) {
-            moves.push({type: MoveType.MoveTile, path: 'horizontal', x, y})
+            moves.push({type: MoveType.MoveTile, path: PathType.Horizontal, x, y})
           }
           if (this.state.verticalPath[y] !== null) {
-            moves.push({type: MoveType.MoveTile, path: 'vertical', x, y})
+            moves.push({type: MoveType.MoveTile, path: PathType.Vertical, x, y})
           }
         }
       }
       return moves
     } else {
-
       const takes: TakeTile[] = []
-      for (let i = 0; i < this.state.tilesToTake.coordinates.length; i++) {
-
-        if (this.state.tilesToTake.element !== Element.Earth) {
+      if (this.state.tilesToTake.element !== Element.Earth) {
+        for (let i = 0; i < this.state.tilesToTake.coordinates.length; i++) {
           takes.push({type: MoveType.TakeTile, coordinates: {x: this.state.tilesToTake.coordinates[i].x, y: this.state.tilesToTake.coordinates[i].y}})
-        } else {
-          for (let z = 0; z < this.state.mountainBoard[this.state.tilesToTake.coordinates[i].x][this.state.tilesToTake.coordinates[i].y].length - 1; z++) {
-            takes.push({type: MoveType.TakeTile, coordinates: {x: this.state.tilesToTake.coordinates[i].x, y: this.state.tilesToTake.coordinates[i].y, z}})
-          }
         }
-
+      } else if (this.state.tilesToTake.coordinates.length > 0) {
+        for (let z = 0; z < this.state.mountainBoard[this.state.tilesToTake.coordinates[0].x][this.state.tilesToTake.coordinates[0].y].length - 1; z++) {
+          takes.push({type: MoveType.TakeTile, coordinates: {x: this.state.tilesToTake.coordinates[0].x, y: this.state.tilesToTake.coordinates[0].y, z}})
+        }
       }
-
       return takes
-
     }
   }
 
@@ -214,9 +211,13 @@ export function getPredictableAutomaticMoves(state: GameState | GameView): Move 
         return {type: MoveType.ScoreKeyElements}
       }
     } else if (state.endOfSeasonStep === MoveType.RefillPaths) {
-      const tileToRemove = state.horizontalPath.concat(state.verticalPath).findIndex(slot => slot !== null)
-      if (tileToRemove !== -1) {
-        return {type: MoveType.RemoveTileOnPath, index: tileToRemove}
+      const horizontalPathTileIndex = state.horizontalPath.findIndex(slot => slot !== null)
+      if (horizontalPathTileIndex !== -1) {
+        return {type: MoveType.RemoveTileOnPath, path: PathType.Horizontal, index: horizontalPathTileIndex}
+      }
+      const verticalPathTileIndex = state.verticalPath.findIndex(slot => slot !== null)
+      if (verticalPathTileIndex !== -1) {
+        return {type: MoveType.RemoveTileOnPath, path: PathType.Vertical, index: verticalPathTileIndex}
       }
     } else {
       return {type: state.endOfSeasonStep}

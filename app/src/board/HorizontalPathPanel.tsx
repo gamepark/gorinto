@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import { css, keyframes } from "@emotion/react";
+import {css, keyframes} from '@emotion/react'
+import MoveTile, {isMoveTile} from '@gamepark/gorinto/moves/MoveTile'
+import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/RemoveTileOnPath'
+import Element from '@gamepark/gorinto/types/Element'
+import PathType from '@gamepark/gorinto/types/PathType'
+import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
-import { FC } from "react";
+import {FC} from 'react'
 import ElementTile, {getElementImage} from './ElementTile'
-import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
-import Element from "@gamepark/gorinto/types/Element";
-import MoveTile, {isMoveTile} from "@gamepark/gorinto/moves/MoveTile"
-import RemoveTileOnPath, { isRemoveTileOnPath } from "@gamepark/gorinto/moves/RemoveTileOnPath";
 
 type Props = {
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
@@ -18,7 +19,7 @@ type Props = {
 const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePlayer, mountain }) => {
 
     const playerId = usePlayerId()
-    const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === "horizontal")
+    const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === PathType.Horizontal)
     const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move) && animation.move.index <= 4)
 
     return(
@@ -34,7 +35,7 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
             ]}
                              image = {getElementImage(tile)}
                              draggable = {playerId === activePlayer && !tilesToTake && !animationRemoveTile}
-                             draggableItem = {{type:"ElementInPath", path: "horizontal", position: index}}
+                             draggableItem = {{type:"ElementInPath", path: PathType.Horizontal, position: index}}
                              element = {tile}
                              
                />
