@@ -36,8 +36,6 @@ type Props = {
 
 const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, tilesToTake, mountainBoard, activePlayer, ...props}) => {
 
-    console.log("caractère first du joueur",color,first)
-
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",
         canDrop: (item: ElementInPile) => {
@@ -106,7 +104,7 @@ const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, 
 
     return(
 
-        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer), canDrop && canDropStyle, isOver && isOverStyle]}>
+        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer), canDrop && canDropStyle(color,activePlayer!), isOver && isOverStyle]}>
 
             <div css={playerHeaderStyle}>
 
@@ -233,9 +231,12 @@ const fireStyle = css`bottom:41% ;`
 const waterStyle = css`bottom:21% ;`
 const earthStyle = css`bottom:1% ;`
 
-const canDropStyle = css`
-opacity:0.4;
-background-color:red;
+const canDropStyle = (color:string,activePlayer:PlayerColor) => css`
+
+${color === activePlayer && `opacity:0.4;
+background-color:red;`}
+
+
 `
 
 const isOverStyle = css`
