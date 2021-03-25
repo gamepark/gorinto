@@ -1,4 +1,3 @@
-import AutomaticMovePhase from '../types/AutomaticMovePhase'
 import GameState from '../types/GameState'
 import GameView from '../types/GameView'
 import MoveType from '../types/MoveType'
@@ -38,6 +37,4 @@ export function countKeys(state: GameState | GameView) {
       }
     }
   }
-
-  state.automaticMovePhase = AutomaticMovePhase.determiningWinner
 }

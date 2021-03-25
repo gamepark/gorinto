@@ -1,11 +1,10 @@
-import {IncompleteInformation, SequentialGame} from '@gamepark/rules-api'
+import {Competitive, IncompleteInformation, SequentialGame} from '@gamepark/rules-api'
 import shuffle from 'lodash.shuffle'
 import {Goals} from './cards/Goals'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
 import {changeActivePlayer} from './moves/ChangeActivePlayer'
 import {countGoals} from './moves/CountGoals'
 import {countKeys} from './moves/CountKeys'
-import {determineWinner} from './moves/DetermineWinner'
 import {moveSeasonMarker} from './moves/MoveSeasonMarker'
 import MoveTile, {moveTile} from './moves/MoveTile'
 import {refillPath} from './moves/RefillPaths'
@@ -24,7 +23,8 @@ import PlayerColor from './types/PlayerColor'
 import TilesToTake from './types/TilesToTake'
 
 export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor>
-  implements IncompleteInformation<GameState, GameView, Move, MoveView, PlayerColor> {
+  implements IncompleteInformation<GameState, GameView, Move, MoveView, PlayerColor>,
+    Competitive<GameState, Move, PlayerColor> {
 
   constructor(state: GameState)
   constructor(options: GorintoOptions)
@@ -60,14 +60,14 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
     if (this.state.tilesToTake === undefined) {
 
       if (((this.state.horizontalPath.length === 0 && this.state.verticalPath.length === 0)
-        || ((filledSpacesinPaths(this.state) === 0) && (this.state.players.length === 2))
-        || ((filledSpacesinPaths(this.state) === 1) && (this.state.players.length === 3))
-        || ((filledSpacesinPaths(this.state) === 2) && (this.state.players.length === 4)))
+        || ((filledSpacesInPaths(this.state) === 0) && (this.state.players.length === 2))
+        || ((filledSpacesInPaths(this.state) === 1) && (this.state.players.length === 3))
+        || ((filledSpacesInPaths(this.state) === 2) && (this.state.players.length === 4)))
         && (this.state.automaticMovePhase === undefined) && (this.state.activePlayer)) {
         return {type: MoveType.RefillPaths}
       }
 
-      if (this.state.players.length === 2 && [2, 4, 6, 8].includes(filledSpacesinPaths(this.state))) {           // Adaptation for 2 players
+      if (this.state.players.length === 2 && [2, 4, 6, 8].includes(filledSpacesInPaths(this.state))) {           // Adaptation for 2 players
         let twoPaths = this.state.horizontalPath.concat(this.state.verticalPath)
         let randomSpaceToRemove: number = getRandomInt(10)
         while (twoPaths[randomSpaceToRemove] === null) {
@@ -84,8 +84,6 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
         return {type: MoveType.SwitchFirstPlayer}
       } else if (this.state.automaticMovePhase === AutomaticMovePhase.countingKeys) {
         return {type: MoveType.CountKeys}
-      } else if (this.state.automaticMovePhase === AutomaticMovePhase.determiningWinner) {
-        return {type: MoveType.DetermineWinner}
       }
 
     }
@@ -143,8 +141,6 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
         return switchFirstPlayer(this.state)
       case MoveType.CountKeys:
         return countKeys(this.state)
-      case MoveType.DetermineWinner:
-        return determineWinner(this.state)
       case MoveType.MoveTile:
         return moveTile(this.state, move)
       case MoveType.TakeTile:
@@ -163,7 +159,23 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
     } else {
       return move
     }
+  }
 
+  rankPlayers(playerColorA: PlayerColor, playerColorB: PlayerColor): number {
+    const playerA = this.state.players.find(player => player.color === playerColorA)
+    const playerB = this.state.players.find(player => player.color === playerColorB)
+    if (!playerA || !playerB) throw new Error('Cannot rank players which did not play the game!')
+    if (playerA.score !== playerB.score) {
+      return playerB.score - playerA.score
+    } else {
+      return playerA.understanding.reduce((sum, tiles) => sum + tiles, 0) - playerB.understanding.reduce((sum, tiles) => sum + tiles, 0)
+    }
+  }
+
+  getScore(playerId: PlayerColor): number {
+    const player = this.state.players.find(player => player.color === playerId)
+    if (!player) throw new Error(`Cannot getScore of ${playerId} because he sis not play this game!`)
+    return player.score
   }
 }
 
@@ -222,10 +234,9 @@ function cantPickAnyTile(tilesToTake: TilesToTake): boolean {
   return tilesToTake.coordinates.length === 0 || tilesToTake.quantity === 0
 }
 
-function filledSpacesinPaths(game: GameState): number {
-
-  return game.horizontalPath.reduce((sum, space) => space !== null ? sum! + 1 : sum, 0)! +
-    game.verticalPath.reduce((sum, space) => space !== null ? sum! + 1 : sum, 0)!
+function filledSpacesInPaths(game: GameState): number {
+  return game.horizontalPath.reduce((sum, space) => space !== null ? sum + 1 : sum, 0)! +
+    game.verticalPath.reduce((sum, space) => space !== null ? sum + 1 : sum, 0)!
 }
 
 function getRandomInt(max: number): number {
