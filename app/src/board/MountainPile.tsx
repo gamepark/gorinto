@@ -33,7 +33,7 @@ const MountainPile : FC<Props> = ({pile, x, y, game, ...props}) => {
 
                     <ElementTile 
                                 css = {[animation && game.mountainBoard[x][y].length === index+1 && game.tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index+1),
-                                        animation && game.tilesToTake?.element === Element.Earth && game.mountainBoard[x][y][index] === game.mountainBoard[animation.move.coordinates.x][animation.move.coordinates.y][animation.move.coordinates.z!] && takeTileEarthAnimation(animation.duration, index+1),
+                                        animation && game.tilesToTake?.element === Element.Earth && index === animation.move.coordinates.z && takeTileEarthAnimation(animation.duration, index+1),
                                         canTakeAny && shadowStyle
                                       ]}
                                 image = {getElementImage(tile)}
