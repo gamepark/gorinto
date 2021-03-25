@@ -2,6 +2,7 @@ import {Competitive, IncompleteInformation, SequentialGame} from '@gamepark/rule
 import shuffle from 'lodash.shuffle'
 import {Goals} from './cards/Goals'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
+import Landscape, {getLandscapeDiagram} from './Landscape'
 import {changeActivePlayer, getNextPlayer} from './moves/ChangeActivePlayer'
 import {moveSeasonMarker} from './moves/MoveSeasonMarker'
 import MoveTile, {moveTile} from './moves/MoveTile'
@@ -47,7 +48,7 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
       }
 
       fillPaths(game)
-      game.mountainBoard = setupMountain(game)
+      game.mountainBoard = setupMountain(game, arg.landscape)
 
       super(game)
     } else {
@@ -93,12 +94,13 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
     } else {
       const takes: TakeTile[] = []
       if (this.state.tilesToTake.element !== Element.Earth) {
-        for (let i = 0; i < this.state.tilesToTake.coordinates.length; i++) {
-          takes.push({type: MoveType.TakeTile, coordinates: {x: this.state.tilesToTake.coordinates[i].x, y: this.state.tilesToTake.coordinates[i].y}})
+        for (let item of this.state.tilesToTake.coordinates) {
+          takes.push({type: MoveType.TakeTile, coordinates: item})
         }
       } else if (this.state.tilesToTake.coordinates.length > 0) {
-        for (let z = 0; z < this.state.mountainBoard[this.state.tilesToTake.coordinates[0].x][this.state.tilesToTake.coordinates[0].y].length - 1; z++) {
-          takes.push({type: MoveType.TakeTile, coordinates: {x: this.state.tilesToTake.coordinates[0].x, y: this.state.tilesToTake.coordinates[0].y, z}})
+        const {y, x} = this.state.tilesToTake.coordinates[0]
+        for (let z = 0; z < this.state.mountainBoard[x][y].length - 1; z++) {
+          takes.push({type: MoveType.TakeTile, coordinates: {x, y, z}})
         }
       }
       return takes
@@ -184,24 +186,8 @@ function setupElementTilesBag(): number[] {
   return shuffle(elements.flatMap(element => new Array(numberOfEachElement).fill(element)))
 }
 
-function setupMountain(game: GameState): number[][][] {
-  let i, j: number = 0
-  let result: Element[][][] = []
-  for (i = 0; i < 5; i++) {
-    result[i] = []
-    for (j = 0; j < 5; j++) {
-      result[i][j] = []
-      result[i][j][0] = game.elementTilesBag.pop() !    // Escaped the "pop undefined" issue
-      result[i][j][1] = game.elementTilesBag.pop() !    // Same
-    }
-  }
-  for (i = 1; i < 4; i++) {
-    for (j = 1; j < 4; j++) {
-      result[i][j][2] = game.elementTilesBag.pop() !      // Same
-    }
-  }
-  result[2][2][3] = game.elementTilesBag.pop() !         // Same
-  return result
+function setupMountain(game: GameState, landscape: Landscape = Landscape.Peak): number[][][] {
+  return getLandscapeDiagram(landscape).map(row => row.map(height => Array.from(Array(height)).map(() => game.elementTilesBag.pop()!)))
 }
 
 export function getPredictableAutomaticMoves(state: GameState | GameView): Move & MoveView | void {
