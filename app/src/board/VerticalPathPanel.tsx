@@ -55,8 +55,6 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
 
 function maxPileHeightOnTheLine (x:number, mountain:number[][][]) : number {
 
-    console.log("Dans le MaxPileHeightOnTheLine")
-
     let zMax:number = 0;
     for (let i = 0 ; i < 5 ; i++){
         const height = mountain[x][i].length;
@@ -64,8 +62,6 @@ function maxPileHeightOnTheLine (x:number, mountain:number[][][]) : number {
             zMax = height;
         }
     }
-
-    console.log("zMax = ",zMax);
 
     return zMax
 }
