@@ -1,6 +1,6 @@
 {
   "name": "@gamepark/gorinto-app",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "React application",
   "author": "Théo GRÉGORIO (https://game-park.com/)",
@@ -15,8 +15,8 @@
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.2",
     "@types/react-dnd-multi-backend": "^6.0.0",
+    "@types/react-dom": "^17.0.2",
     "@types/react-redux": "^7.1.16",
     "customize-cra": "^1.0.0",
     "emotion-normalize": "^11.0.1",

@@ -1,6 +1,6 @@
 {
   "name": "@gamepark/gorinto",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "The rules of \"Gorinto\", a board game created by Yaner Richard, adapted for Game Park",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
