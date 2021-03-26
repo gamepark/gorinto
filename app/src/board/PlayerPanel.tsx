@@ -107,9 +107,10 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
         <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer, playersNumber), canDrop && canDropStyle(color,activePlayer!), isOver && isOverStyle]}>
 
+            <div css={nameStyle}>{getPlayerName(color, t)}</div>
+
             <div css={playerHeaderStyle}>
 
-                <div css={nameStyle}>{getPlayerName(color, t)}</div>
                 <div css={avatarStyle}></div>
                 <div css={gPStyle}>+XX GP</div>
                 <div css={chronoStyle}>XX : XX</div>
@@ -295,16 +296,25 @@ function getPlayerMat(color: PlayerColor) {
 const playerHeaderStyle = css`
 position : absolute;
 top : 3%;
-right : 3%;
+right : 6%;
 width : 45%;
 height : 50%;
 `
 
 const nameStyle = css`
+  position:absolute;
+  right:1%;
+  top:3%;
+  height:96%;
+
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+
+
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size:2.9em;
+  font-size:2.8em;
   text-align:center;
   padding-bottom:0.5em;
 `
@@ -350,7 +360,7 @@ const playerFooterStyle = css`
 
 position:absolute;
 bottom:5%;
-right:3%;
+right:6%;
 width: 37%;
 
 transform-style: preserve-3d;
