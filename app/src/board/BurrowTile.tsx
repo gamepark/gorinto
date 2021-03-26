@@ -35,7 +35,7 @@ const burrowStyle = (index:number | undefined, path:PathType | undefined) => css
 position:absolute;
 right:-20%;
 ${index !== undefined && `transform:translate3d(-150%,0,0);`}
-top:55%;
+top:75%;
 width:15%;
 height:20%;
 transition:transform 1s;

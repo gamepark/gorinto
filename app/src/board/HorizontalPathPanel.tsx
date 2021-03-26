@@ -34,7 +34,7 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
                                      animationRemoveTile && animationRemoveTile.move.index === index && animationRemoveTile.move.path === PathType.Horizontal && removeTileAnimation(animationRemoveTile.duration)
             ]}
                              image = {getElementImage(tile)}
-                             draggable = {playerId === activePlayer && !tilesToTake && !animationRemoveTile}
+                             draggable = {playerId === activePlayer && !tilesToTake && activePlayer !== undefined && !animationRemoveTile}
                              draggableItem = {{type:"ElementInPath", path: PathType.Horizontal, position: index}}
                              element = {tile}
                              
