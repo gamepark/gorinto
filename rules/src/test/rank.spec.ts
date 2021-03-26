@@ -1,7 +1,7 @@
 import Gorinto from '../Gorinto'
 import GameState from '../types/GameState'
 import Player from '../types/Player'
-import PlayerColor from '../types/PlayerColor'
+import PlayerColor, {playerColors} from '../types/PlayerColor'
 
 describe('Test ranking in Gorinto.ts', () => {
   test('First player with highest score', () => {
@@ -37,8 +37,7 @@ describe('Test ranking in Gorinto.ts', () => {
 })
 
 function createPlayersWithScores(...scores: number[]): Player[] {
-  const colors = Object.values(PlayerColor)
-  return scores.map((score, index) => ({color: colors[index], understanding: [0, 0, 0, 0, 0], score}))
+  return scores.map((score, index) => ({color: playerColors[index], understanding: [0, 0, 0, 0, 0], score}))
 }
 
 const anyState: GameState = {

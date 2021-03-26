@@ -1,7 +1,7 @@
 import {Goal1, Goal10, Goal11, Goal12, Goal2, Goal3, Goal4, Goal5, Goal6, Goal7, Goal8, Goal9} from '../cards/Goals'
 import GameState from '../types/GameState'
 import Player from '../types/Player'
-import PlayerColor from '../types/PlayerColor'
+import PlayerColor, {playerColors} from '../types/PlayerColor'
 
 describe('Test Goals.ts', () => {
   test('Goal1', () => {
@@ -131,9 +131,8 @@ const anyState: GameState = {
 }
 
 function createGameWithUnderstanding(...understandings: [number, number, number, number, number][]): GameState {
-  const colors = Object.values(PlayerColor)
   return {
     ...anyState,
-    players: understandings.map((understanding, index) => withUnderStanding(understanding, colors[index]))
+    players: understandings.map((understanding, index) => withUnderStanding(understanding, playerColors[index]))
   }
 }
