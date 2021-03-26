@@ -18,8 +18,8 @@ describe('Test ranking in Gorinto.ts', () => {
   test('Tie breaker with lowest understanding', () => {
     const game = new Gorinto({
       ...anyState, players: [
-        {color: PlayerColor.white, score: 53, understanding: [5, 4, 6, 1, 2]},
-        {color: PlayerColor.black, score: 53, understanding: [2, 3, 6, 8, 0]}
+        {color: PlayerColor.White, score: 53, understanding: [5, 4, 6, 1, 2]},
+        {color: PlayerColor.Black, score: 53, understanding: [2, 3, 6, 8, 0]}
       ]
     })
     expect(game.rankPlayers(game.state.players[0].color, game.state.players[1].color)).toBeLessThan(0)
@@ -28,8 +28,8 @@ describe('Test ranking in Gorinto.ts', () => {
   test('Tied players', () => {
     const game = new Gorinto({
       ...anyState, players: [
-        {color: PlayerColor.white, score: 36, understanding: [5, 4, 6, 1, 2]},
-        {color: PlayerColor.black, score: 36, understanding: [2, 3, 6, 7, 0]}
+        {color: PlayerColor.White, score: 36, understanding: [5, 4, 6, 1, 2]},
+        {color: PlayerColor.Black, score: 36, understanding: [2, 3, 6, 7, 0]}
       ]
     })
     expect(game.rankPlayers(game.state.players[0].color, game.state.players[1].color)).toBe(0)
@@ -42,7 +42,7 @@ function createPlayersWithScores(...scores: number[]): Player[] {
 }
 
 const anyState: GameState = {
-  firstPlayer: PlayerColor.white,
+  firstPlayer: PlayerColor.White,
   season: 1,
   players: [],
   elementTilesBag: [],

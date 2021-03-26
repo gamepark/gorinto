@@ -2,7 +2,6 @@
 import {css} from '@emotion/react'
 import MoveTile from '@gamepark/gorinto/moves/MoveTile'
 import Element from '@gamepark/gorinto/types/Element'
-import ElementInPile from '@gamepark/gorinto/types/ElementInPile'
 import {usePlay} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
 import {TFunction} from 'i18next'
@@ -13,6 +12,7 @@ import Void from '../images/ElementVoid.png'
 import Water from '../images/ElementWater.png'
 import Wind from '../images/ElementWind.png'
 import ElementInPath from './ElementInPath'
+import ElementInPile from './ElementInPile'
 
 type Props = {
 

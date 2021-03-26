@@ -2,7 +2,7 @@ import {GameOptions, OptionsDescription, OptionType} from '@gamepark/rules-api'
 import {TFunction} from 'i18next'
 import Landscape, {landscapes} from './Landscape'
 import GameState from './types/GameState'
-import PlayerColor from './types/PlayerColor'
+import PlayerColor, {playerColors} from './types/PlayerColor'
 
 export type GorintoGameOptions = {
   landscape: Landscape
@@ -40,7 +40,7 @@ export const GorintoOptionsDescription: OptionsDescription<GorintoGameOptions, G
     id: {
       type: OptionType.LIST,
       getLabel: (t: TFunction) => t('Player color'),
-      values: Object.values(PlayerColor),
+      values: playerColors,
       getValueLabel: getPlayerName
     }
   }
@@ -48,13 +48,13 @@ export const GorintoOptionsDescription: OptionsDescription<GorintoGameOptions, G
 
 export function getPlayerName(playerId: PlayerColor, t: TFunction) {
   switch (playerId) {
-    case PlayerColor.white:
+    case PlayerColor.White:
       return t('White Player')
-    case PlayerColor.black:
+    case PlayerColor.Black:
       return t('Black Player')
-    case PlayerColor.red:
+    case PlayerColor.Red:
       return t('Red Player')
-    case PlayerColor.yellow:
+    case PlayerColor.Yellow:
       return t('Yellow Player')
   }
 }

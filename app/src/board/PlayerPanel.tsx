@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
 import Element from '@gamepark/gorinto/types/Element'
-import ElementInPile from '@gamepark/gorinto/types/ElementInPile'
 import MoveType from '@gamepark/gorinto/types/MoveType'
+import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
@@ -19,15 +19,13 @@ import WisdomMarkBlue from '../images/GOR_TTS_wisdom_blue.png'
 import WisdomMarkRed from '../images/GOR_TTS_wisdom_red.png'
 import WisdomMarkWhite from '../images/GOR_TTS_wisdom_white.png'
 import WisdomMarkYellow from '../images/GOR_TTS_wisdom_yellow.png'
+import ElementInPile from './ElementInPile'
 
-import {getElementImage} from './ElementTileForPlayers'
-import ElementTileForPlayers from './ElementTileForPlayers'
+import ElementTileForPlayers, {getElementImage} from './ElementTileForPlayers'
 
 type Props = {
-    color:string,
-    understanding:number[],
+    player: Player
     position:number[],
-    score:number,
     first:boolean,
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
     mountainBoard:number[][][],
@@ -35,7 +33,7 @@ type Props = {
     playersNumber:number
 } & HTMLAttributes<HTMLDivElement>
 
-const PlayerPanel : FC<Props> = ({color, position, understanding, score, first, tilesToTake, mountainBoard, activePlayer, playersNumber, ...props}) => {
+const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score}, first, tilesToTake, mountainBoard, activePlayer, playersNumber, ...props}) => {
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",
@@ -230,7 +228,7 @@ const fireStyle = css`bottom:41% ;`
 const waterStyle = css`bottom:21% ;`
 const earthStyle = css`bottom:1% ;`
 
-const canDropStyle = (color:string,activePlayer:PlayerColor) => css`
+const canDropStyle = (color:PlayerColor,activePlayer:PlayerColor) => css`
 
 ${color === activePlayer && `opacity:0.4;
 background-color:red;`}
@@ -243,7 +241,7 @@ opacity:0.6;
 background-color:red;
 `
 
-const playerPanelStyle = (position:number[], color:string, activePlayer:PlayerColor | undefined, playersNumber:number) => css`
+const playerPanelStyle = (position:number[], color:PlayerColor, activePlayer:PlayerColor | undefined, playersNumber:number) => css`
 position : absolute;
 transform-style: preserve-3d;
 
@@ -262,11 +260,7 @@ width : 20%;
 height : 37.5%;
 text-align:right;
 
-${color === "yellow" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${YellowGor}) no-repeat`};
-${color === "blue" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${BlueGor}) no-repeat`};
-${color === "red" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${RedGor}) no-repeat`};
-${color === "white" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${WhiteGor}) no-repeat`};
-${color === "black" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${BlackGor}) no-repeat`};
+background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${getPlayerMat(color)}) no-repeat;
 
 @keyframes glowing {
     0% { box-shadow: 0px 0px 0.5em 0.1em gold; }
@@ -278,6 +272,21 @@ ${color === "black" &&`background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${Bl
 ${activePlayer === color && `animation: glowing 3000ms infinite;`};
 box-shadow: 0em 0em 1em 0.5em black;
 `
+
+function getPlayerMat(color: PlayerColor) {
+  switch (color) {
+    case PlayerColor.White:
+      return WhiteGor
+    case PlayerColor.Black:
+      return BlackGor
+    case PlayerColor.Red:
+      return RedGor
+    case PlayerColor.Yellow:
+      return YellowGor
+    default:
+      return BlueGor
+  }
+}
 
 const playerHeaderStyle = css`
 position : absolute;
@@ -359,18 +368,29 @@ width:50%;
 transform-style:preserve-3d;
 `
 
-const scoreStyle = (color:string) => css`
+const scoreStyle = (color:PlayerColor) => css`
     padding-top:1em;
     padding-bottom:1em;
     font-size:2.9em;
     text-align: center;
 
-    ${color === "white" &&`background : center / 60% url(${WisdomMarkWhite}) no-repeat;color:black;`};
-    ${color === "black" &&`background : center / 60% url(${WisdomMarkBlack}) no-repeat;color:white;`};
-    ${color === "red" &&`background : center / 60% url(${WisdomMarkRed}) no-repeat;color:white;`};
-    ${color === "yellow" &&`background : center / 60% url(${WisdomMarkYellow}) no-repeat;color:black;`};
-    ${color === "blue" &&`background : center / 60% url(${WisdomMarkBlue}) no-repeat;color:black;`};
+    background : center / 60% url(${getWisdomMark(color)}) no-repeat;color:black;
 
 `
+
+function getWisdomMark(color: PlayerColor) {
+  switch (color) {
+    case PlayerColor.White:
+      return WisdomMarkWhite
+    case PlayerColor.Black:
+      return WisdomMarkBlack
+    case PlayerColor.Red:
+      return WisdomMarkRed
+    case PlayerColor.Yellow:
+      return WisdomMarkYellow
+    default:
+      return WisdomMarkBlue
+  }
+}
 
 export default PlayerPanel

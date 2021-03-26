@@ -113,12 +113,12 @@ describe('Test Goals.ts', () => {
   })
 })
 
-function withUnderStanding(understanding: [number, number, number, number, number], color: PlayerColor = PlayerColor.white): Player {
+function withUnderStanding(understanding: [number, number, number, number, number], color: PlayerColor = PlayerColor.White): Player {
   return {color, understanding, score: 0}
 }
 
 const anyState: GameState = {
-  firstPlayer: PlayerColor.white,
+  firstPlayer: PlayerColor.White,
   season: 1,
   players: [],
   elementTilesBag: [],

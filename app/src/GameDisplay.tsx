@@ -53,9 +53,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
       {players.map((player, index) => 
            
         <PlayerPanel  key = {player.color}
-                      understanding = {player.understanding}
-                      score = {player.score}
-                      color = {player.color}
+                      player = {player}
                       first = {game.firstPlayer === player.color}
                       tilesToTake = {game.tilesToTake}
                       mountainBoard = {game.mountainBoard}
