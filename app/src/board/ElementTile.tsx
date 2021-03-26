@@ -6,11 +6,11 @@ import {usePlay} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
 import {TFunction} from 'i18next'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
-import Earth from '../images/ElementEarth.png'
-import Fire from '../images/ElementFire.png'
-import Void from '../images/ElementVoid.png'
-import Water from '../images/ElementWater.png'
-import Wind from '../images/ElementWind.png'
+import Earth from '../images/ElementEarth.jpg'
+import Fire from '../images/ElementFire.jpg'
+import Void from '../images/ElementVoid.jpg'
+import Water from '../images/ElementWater.jpg'
+import Wind from '../images/ElementWind.jpg'
 import ElementInPath from './ElementInPath'
 import ElementInPile from './ElementInPile'
 
@@ -141,6 +141,7 @@ const topStyle = (image:string) => css`
     background-image:url(${image});
     background-repeat:no-repeat;
     background-size:100% 100%;
+    border-radius:15%;
 `
 const bottomStyle = (position:number) => css`
     position:absolute;

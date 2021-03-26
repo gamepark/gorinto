@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { FC } from "react"
-import Pattern from '../images/GOR_TTS_pattern.png'
+import Pattern from '../images/GOR_TTS_pattern.jpg'
 
 const PatternReminder : FC<{}> = () => {
 
@@ -19,6 +19,7 @@ right:1%;
 top:0%;
 height:10%;
 width:20%;
+border-radius: 30% 30% 0% 0%;
 
 background-image:url(${Pattern});
 background-repeat:no-repeat;

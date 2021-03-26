@@ -3,11 +3,11 @@ import { css } from "@emotion/react";
 import { FC, HTMLAttributes } from "react";
 import Element from "@gamepark/gorinto/types/Element";
 
-import Void from "../images/ElementVoid.png"
-import Wind from "../images/ElementWind.png"
-import Fire from "../images/ElementFire.png"
-import Water from "../images/ElementWater.png"
-import Earth from "../images/ElementEarth.png"
+import Void from "../images/ElementVoid.jpg"
+import Wind from "../images/ElementWind.jpg"
+import Fire from "../images/ElementFire.jpg"
+import Water from "../images/ElementWater.jpg"
+import Earth from "../images/ElementEarth.jpg"
 import { TFunction } from "i18next";
 
 type Props = {
@@ -117,6 +117,7 @@ const topStyle = (image:string) => css`
     background-image:url(${image});
     background-repeat:no-repeat;
     background-size:100% 100%;
+    border-radius:15%;
 `
 const bottomStyle = (position:number) => css`
     position:absolute;
