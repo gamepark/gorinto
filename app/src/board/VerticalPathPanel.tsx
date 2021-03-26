@@ -20,8 +20,7 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
 
     const playerId = usePlayerId()
     const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === PathType.Vertical)
-    const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move) && animation.move.index >= 5)
-
+    const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move))
 
     return(
 
@@ -33,7 +32,7 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
 
                 <ElementTile 
                              css = {[animationMoveTile && animationMoveTile.move.y === index && moveTileAnimation(animationMoveTile.move.x, mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, maxPileHeightOnTheLine(index, mountain),animationMoveTile.duration),
-                                     animationRemoveTile && animationRemoveTile.move.index -5 === index && removeTileAnimation(animationRemoveTile.duration)
+                                     animationRemoveTile && animationRemoveTile.move.index === index && animationRemoveTile.move.path === PathType.Vertical && removeTileAnimation(animationRemoveTile.duration)
                             ]}
                              image = {getElementImage(tile)}
                              draggable = {playerId === activePlayer && !tilesToTake  && !animationRemoveTile}
@@ -74,12 +73,12 @@ animation : ${removeTileKeyFrames} ${duration}s ;
 const removeTileKeyFrames = keyframes`
 from{}
 25%{
-    transform:translate3d(0,0,${4.02}em);
+    transform:translate3d(0,0,${8.02}em);
     box-shadow: 0px 0px 1.5em 1em red;
     border-radius:20%;
 }
 65%{
-    transform:translate3d(0,0,${4.02}em);
+    transform:translate3d(0,0,${8.02}em);
     box-shadow: 0px 0px 2em 1.5em red;
     border-radius:20%;
 }

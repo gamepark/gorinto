@@ -81,7 +81,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
         
       )}
       
-      <BurrowTile index={burrowTileAnimation && burrowTileAnimation.move.index} />
+      <BurrowTile index={burrowTileAnimation && burrowTileAnimation.move.index} path = {burrowTileAnimation && burrowTileAnimation.move.path}/>
       
       </div>
 
