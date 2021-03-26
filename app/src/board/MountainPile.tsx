@@ -68,6 +68,8 @@ function canDrag(game:GameState, x:number, y:number, z:number):boolean{
 
     if (game.tilesToTake === undefined){
         return false;
+    } else if (game.tilesToTake.quantity === 0){
+        return false
     } else if (game.tilesToTake.element !== Element.Earth){
         return(
             (game.tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
