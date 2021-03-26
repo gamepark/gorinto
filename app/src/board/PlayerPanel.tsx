@@ -303,19 +303,21 @@ height : 50%;
 
 const nameStyle = css`
   position:absolute;
-  right:1%;
+  right:2%;
   top:3%;
-  height:96%;
+  height:94%;
 
   writing-mode: vertical-rl;
   text-orientation: upright;
 
+  font-family: 'Prompt' , sans-serif;
+  letter-spacing: -0.6em;
 
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size:2.8em;
-  text-align:center;
+  font-size:2.9em;
+  text-align:left;
   padding-bottom:0.5em;
 `
 
