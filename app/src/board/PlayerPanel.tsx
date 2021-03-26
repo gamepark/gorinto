@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
+import {getPlayerName} from '@gamepark/gorinto/GorintoOptions'
 import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
+import {useTranslation} from 'react-i18next'
 import CoinHeads from '../images/CoinHeads.png'
 
 import BlackGor from '../images/GOR_TTS_playermat_black.png'
@@ -34,6 +36,8 @@ type Props = {
 } & HTMLAttributes<HTMLDivElement>
 
 const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score}, first, tilesToTake, mountainBoard, activePlayer, playersNumber, ...props}) => {
+
+    const {t} = useTranslation()
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",
@@ -105,7 +109,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
             <div css={playerHeaderStyle}>
 
-                <div css={nameStyle}>{color}</div>
+                <div css={nameStyle}>{getPlayerName(color, t)}</div>
                 <div css={avatarStyle}></div>
                 <div css={gPStyle}>+XX GP</div>
                 <div css={chronoStyle}>XX : XX</div>
