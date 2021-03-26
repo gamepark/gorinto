@@ -12,7 +12,7 @@ Then, run:
 ```
 rclone config
 > n (For "New remote)
-name> its-a-wonderful-world
+name> gorinto
 Storage> 4 (Amazon S3 Compliant Storage Provider)
 provider> Other
 env_auth> false
@@ -26,11 +26,11 @@ Edit advanced config> n
 ```
 
 This configuration is only required once.
-Now, to deploy a new version of It’s a Wonderful World, you have 2 command lines to run:
+Now, to deploy a new version of Gorinto, you have 2 command lines to run:
 
 ```
 yarn build
-rclone sync app/build its-a-wonderful-world:its-a-wonderful-world.game-park.com --progress --s3-acl=public-read
+rclone sync app/build gorinto:gorinto.game-park.com --progress --s3-acl=public-read
 ```
 
 More details about this deployment method here: https://www.clever-cloud.com/blog/engineering/2020/06/24/deploy-cellar-s3-static-site/
