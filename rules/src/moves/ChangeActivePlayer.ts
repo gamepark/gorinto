@@ -7,7 +7,7 @@ type ChangeActivePlayer = { type: typeof MoveType.ChangeActivePlayer }
 export default ChangeActivePlayer
 
 export function changeActivePlayer(state: GameState | GameView) {
-  state.tilesToTake = undefined
+  delete state.tilesToTake
   state.activePlayer = getNextPlayer(state)
 }
 
