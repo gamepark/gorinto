@@ -67,9 +67,9 @@ const WelcomePopUp : FC<{player:Player, game:GameState, close: () => void}> = ({
 const buttonPosition = css`
 position:absolute;
 right:8%;
-bottom:1%;
+bottom:4%;
 
-margin-bottom:1em;
+height:10%;
 `
 
 const cardsStyle = css`

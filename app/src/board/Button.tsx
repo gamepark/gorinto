@@ -52,7 +52,7 @@ const animateLeft = keyframes`
 `
 
 const style = css`
-  background: linear-gradient(-30deg, #0b3d3d 50%, #082b2b 50%);
+  background: linear-gradient(-30deg, #000559 50%, #121880 50%);
   padding: 0.2em 0.4em;
   margin: 0;
   display: inline-block;
@@ -96,10 +96,10 @@ const style = css`
     left: 0;
     width: 100%;
     height: 2px;
-    background: -webkit-gradient(linear, right top, left top, from(rgba(8, 43, 43, 0)), to(#26d9d9));
-    background: linear-gradient(to left, rgba(8, 43, 43, 0), #26d9d9);
-    -webkit-animation: 2s ${animateTop} linear infinite;
-            animation: 2s ${animateTop} linear infinite;
+    background: -webkit-gradient(linear, right top, left top, from(rgba(8, 43, 43, 0)), to(#4f58f0));
+    background: linear-gradient(to left, rgba(8, 43, 43, 0), #00c8ff);
+    -webkit-animation: 6s ${animateTop} linear infinite;
+            animation: 6s ${animateTop} linear infinite;
   }
 
   & > span:nth-of-type(2) {
@@ -107,10 +107,10 @@ const style = css`
     right: 0;
     height: 100%;
     width: 2px;
-    background: -webkit-gradient(linear, left bottom, left top, from(rgba(8, 43, 43, 0)), to(#26d9d9));
-    background: linear-gradient(to top, rgba(8, 43, 43, 0), #26d9d9);
-    -webkit-animation: 2s ${animateRight} linear -1s infinite;
-            animation: 2s ${animateRight} linear -1s infinite;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(8, 43, 43, 0)), to(#4f58f0));
+    background: linear-gradient(to top, rgba(8, 43, 43, 0), #00c8ff);
+    -webkit-animation: 6s ${animateRight} linear -3s infinite;
+            animation: 6s ${animateRight} linear -3s infinite;
   }
 
   & > span:nth-of-type(3) {
@@ -118,10 +118,10 @@ const style = css`
     left: 0;
     width: 100%;
     height: 2px;
-    background: -webkit-gradient(linear, left top, right top, from(rgba(8, 43, 43, 0)), to(#26d9d9));
-    background: linear-gradient(to right, rgba(8, 43, 43, 0), #26d9d9);
-    -webkit-animation: 2s ${animateBottom} linear infinite;
-    animation: 2s ${animateBottom} linear infinite;
+    background: -webkit-gradient(linear, left top, right top, from(rgba(8, 43, 43, 0)), to(#4f58f0));
+    background: linear-gradient(to right, rgba(8, 43, 43, 0), #00c8ff);
+    -webkit-animation: 6s ${animateBottom} linear infinite;
+    animation: 6s ${animateBottom} linear infinite;
   }
 
   & >  span:nth-of-type(4) {
@@ -129,10 +129,10 @@ const style = css`
     left: 0;
     height: 100%;
     width: 2px;
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(8, 43, 43, 0)), to(#26d9d9));
-    background: linear-gradient(to bottom, rgba(8, 43, 43, 0), #26d9d9);
-    -webkit-animation: 2s ${animateLeft} linear -1s infinite;
-    animation: 2s ${animateLeft} linear -1s infinite;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(8, 43, 43, 0)), to(#4f58f0));
+    background: linear-gradient(to bottom, rgba(8, 43, 43, 0), #00c8ff);
+    -webkit-animation: 6s ${animateLeft} linear -3s infinite;
+    animation: 6s ${animateLeft} linear -3s infinite;
   }
 
 `
