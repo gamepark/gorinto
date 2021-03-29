@@ -14,7 +14,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "prepublishOnly": "tsc"
   },
   "dependencies": {
     "@gamepark/rules-api": "^4.2.1",
