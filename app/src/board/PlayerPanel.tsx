@@ -5,6 +5,7 @@ import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
+import { usePlayer } from '@gamepark/react-client'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
@@ -38,6 +39,7 @@ type Props = {
 const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score}, first, tilesToTake, mountainBoard, activePlayer, playersNumber, ...props}) => {
 
     const {t} = useTranslation()
+    const playerInfo = usePlayer(color)
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",
@@ -107,7 +109,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
         <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer, playersNumber), canDrop && canDropStyle(color,activePlayer!), isOver && isOverStyle]}>
 
-            <div css={nameStyle}>{getPlayerName(color, t)}</div>
+            <div css={nameStyle}>{playerInfo?.name === undefined ?  getPlayerName(color, t) : playerInfo?.name}</div>
 
             <div css={playerHeaderStyle}>
 
@@ -390,7 +392,9 @@ const scoreStyle = (color:PlayerColor) => css`
     font-size:2.9em;
     text-align: center;
 
-    background : center / 60% url(${getWisdomMark(color)}) no-repeat;color:black;
+    background : center / 60% url(${getWisdomMark(color)}) no-repeat;
+    ${(color === PlayerColor.Black || color === PlayerColor.Red) && `color:white;`}
+    ${(color === PlayerColor.White || color === PlayerColor.Yellow) && `color:black;`}
 
 `
 

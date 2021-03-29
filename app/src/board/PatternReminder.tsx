@@ -15,7 +15,7 @@ const PatternReminder : FC<{}> = () => {
 
 const PatternReminderStyle = css`
 position:absolute;
-right:1%;
+left:0%;
 top:0%;
 height:10%;
 width:20%;

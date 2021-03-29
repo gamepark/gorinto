@@ -11,6 +11,7 @@ import { Goals } from "@gamepark/gorinto/cards/Goals";
 import GoalCardPopUp from './GoalCardPopUp';
 import { css } from "@emotion/react";
 import KeyElementCardPanelPopUp from "./KeyElementCardPanelPopUp";
+import { getPlayerName } from "@gamepark/gorinto/GorintoOptions";
 
 const WelcomePopUp : FC<{player:Player, game:GameState, close: () => void}> = ({player, game, close}) => {
 
@@ -24,7 +25,7 @@ const WelcomePopUp : FC<{player:Player, game:GameState, close: () => void}> = ({
             <div css={[popupStyle, popupPosition]} onClick={event => event.stopPropagation()}>
 
                 <div css = {closePopupStyle} onClick={close}> <FontAwesomeIcon icon={faTimes} /> </div>
-                <h2>{t("Welcome, {playerName}",{playerName:playerInfo?.name})}</h2>
+                <h2>{t("Welcome, {playerName}",{playerName: playerInfo?.name !== undefined ? playerInfo?.name : getPlayerName(player.color,t)})}</h2>
 
                 <div css={cardsStyle}>
 

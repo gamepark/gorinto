@@ -117,7 +117,7 @@ const topStyle = (image:string) => css`
     background-image:url(${image});
     background-repeat:no-repeat;
     background-size:100% 100%;
-    border-radius:15%;
+    border-radius:22%;
 `
 const bottomStyle = (position:number) => css`
     position:absolute;

@@ -43,7 +43,7 @@ background-size: contain;
 
 transform-style:preserve-3d;
 transform-origin:bottom;
-transform: rotateX(-90deg) rotateY(45deg);
+transform: rotateX(-90deg) rotateY(0deg);
 `
 
 const face2 = css`
@@ -53,7 +53,7 @@ background-size: contain;
 
 transform-style:preserve-3d;
 transform-origin:bottom;
-transform: rotateX(-90deg) rotateY(135deg);
+transform: rotateX(-90deg) rotateY(90deg);
 `
 
 const seasonMarker = (position:number) => css`
@@ -79,7 +79,7 @@ const seasonIndicatorStyle = css`
     position:absolute;
     width: 20%;
     height:10%;
-    left:0%;
+    right:1%;
     top:0%;
     background-image : url(${SeasonBoard});
     background-size: contain;
