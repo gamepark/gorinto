@@ -11,6 +11,8 @@ import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
 import CoinHeads from '../images/CoinHeads.png'
 
+import Avatar from 'avataaars'
+
 import BlackGor from '../images/GOR_TTS_playermat_black.png'
 import BlueGor from '../images/GOR_TTS_playermat_blue.png'
 import RedGor from '../images/GOR_TTS_playermat_red.png'
@@ -22,6 +24,13 @@ import WisdomMarkBlue from '../images/GOR_TTS_wisdom_blue.png'
 import WisdomMarkRed from '../images/GOR_TTS_wisdom_red.png'
 import WisdomMarkWhite from '../images/GOR_TTS_wisdom_white.png'
 import WisdomMarkYellow from '../images/GOR_TTS_wisdom_yellow.png'
+
+import KanjiBlack from '../images/kanji_black.jpg'
+import KanjiBlue from '../images/kanji_blue.jpg'
+import KanjiRed from '../images/kanji_red.jpg'
+import KanjiWhite from '../images/kanji_white.jpg'
+import KanjiYellow from '../images/kanji_yellow.jpg'
+
 import ElementInPile from './ElementInPile'
 
 import ElementTileForPlayers, {getElementImage} from './ElementTileForPlayers'
@@ -113,7 +122,15 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
             <div css={playerHeaderStyle}>
 
-                <div css={avatarStyle}></div>
+                <div css={avatarStyle}>
+
+                    {playerInfo?.avatar ? 
+                        <Avatar style={{width:'100%', height:'100%'}} avatarStyle="Circle" {...playerInfo.avatar}/> 
+                        : <img alt={t('Player avatar')} src={getKanji(color)} css={kanjiStyle}/>
+                    }
+
+
+                </div>
                 <div css={gPStyle}>+XX GP</div>
                 <div css={chronoStyle}>XX : XX</div>
 
@@ -318,7 +335,7 @@ const nameStyle = css`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size:2.9em;
+  font-size:2.8em;
   text-align:left;
   padding-bottom:0.5em;
 `
@@ -338,15 +355,19 @@ padding-top:0.5em;
 `
 
 const avatarStyle = css`
-border:0.5em solid black;
 border-radius:100%;
-background-color:white;
 
 margin-right: auto;
 margin-left: auto;
 
 height:7em;
 width:7em;
+`
+
+const kanjiStyle = css`
+width:100%;
+height:100%;
+border-radius:30%;
 `
 
 const playerElementStyle = css`
@@ -412,5 +433,20 @@ function getWisdomMark(color: PlayerColor) {
       return WisdomMarkBlue
   }
 }
+
+function getKanji(color: PlayerColor) {
+    switch (color) {
+      case PlayerColor.White:
+        return KanjiWhite
+      case PlayerColor.Black:
+        return KanjiBlack
+      case PlayerColor.Red:
+        return KanjiRed
+      case PlayerColor.Yellow:
+        return KanjiYellow
+      default:
+        return KanjiBlue
+    }
+  }
 
 export default PlayerPanel
