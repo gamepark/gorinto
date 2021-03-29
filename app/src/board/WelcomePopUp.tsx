@@ -12,6 +12,7 @@ import GoalCardPopUp from './GoalCardPopUp';
 import { css } from "@emotion/react";
 import KeyElementCardPanelPopUp from "./KeyElementCardPanelPopUp";
 import { getPlayerName } from "@gamepark/gorinto/GorintoOptions";
+import Button from "./Button";
 
 const WelcomePopUp : FC<{player:Player, game:GameState, close: () => void}> = ({player, game, close}) => {
 
@@ -50,6 +51,8 @@ const WelcomePopUp : FC<{player:Player, game:GameState, close: () => void}> = ({
 
                 <p> {t("You play with these two Goals and with these two Key Elements. Good luck, and have fun !")} </p>
 
+                <Button css={buttonPosition} onClick={close}>{t('Understood')}</Button>
+
             </div>
 
 
@@ -60,6 +63,14 @@ const WelcomePopUp : FC<{player:Player, game:GameState, close: () => void}> = ({
     )
 
 }
+
+const buttonPosition = css`
+position:absolute;
+right:8%;
+bottom:1%;
+
+margin-bottom:1em;
+`
 
 const cardsStyle = css`
 position:absolute;
@@ -87,7 +98,7 @@ const popupStyle = css`
   position: absolute;
   text-align: center;
   height: 80%;
-  width:70%;
+  width:80%;
   z-index : 102;
   border-radius: 1em;
   box-sizing: border-box;
@@ -108,15 +119,16 @@ const popupStyle = css`
     margin:0;
   }
   & > p {
-    font-size: 4em;
+    text-align: justify;
+    font-size: 3.5em;
 
     position:absolute;
     bottom:0%;
-    right:5%;
-    width:90%;
+    left:8%;
+    width:62%;
   }
   & > button {
-    font-size: 4em;
+    font-size: 3.5em;
   }
 `
 

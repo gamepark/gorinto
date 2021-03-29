@@ -31,9 +31,9 @@ const KeyElementCardPanelPopUp : FC<Props> = ({element, position}) => {
 const keyElementCardPanelPositionStyle = (position:number) => css`
 position : absolute;
 bottom : 5%;
-left : ${30+position*20}%;
+left : ${33+position*17}%;
 
-width : 20%;
+width : 17%;
 height : 30%;
 `
 

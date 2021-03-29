@@ -31,9 +31,9 @@ const GoalCardPopUp : FC<Props> = ({goal, position, ...props}) => {
 const goalCardPanelPosition = (position:number) => css`
 position : absolute;
 top : 5%;
-left : ${12+position*38}%;
+left : ${16.5+position*33.5}%;
 
-width:38%;
+width:33.5%;
 height:60%;
 `
 
