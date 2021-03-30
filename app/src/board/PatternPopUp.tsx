@@ -27,8 +27,8 @@ const PatternPopUp : FC<{close: () => void}> = ({close}) => {
 
                 <p css={[voidTake, explanation]}>{t("Diagonal Gathering")}</p>
                 <p css={[windTake, explanation]}>{t("Orthogonal Gathering")}</p>
-                <p css={[waterTake, explanation]}>{t("Column Gathering")}</p>
-                <p css={[fireTake, explanation]}>{t("Row Gathering")}</p>
+                <p css={[waterTake, explanation]}>{t("Row Gathering")}</p>
+                <p css={[fireTake, explanation]}>{t("Column Gathering")}</p>
                 <p css={[earthTake, explanation]}>{t("Stack Gathering")}</p>
 
                 <Button css={buttonPosition} onClick={close}>{t('Understood')}</Button>

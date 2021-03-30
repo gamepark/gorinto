@@ -47,7 +47,7 @@ const elementTileStyle = css`
     height:100%;
 
     transform-style: preserve-3d;
-    perspective:0em;
+
 `
 
 const coloring = (color:Element) => css`

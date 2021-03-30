@@ -36,11 +36,14 @@ const ElementTile : FC<Props> = ({image, draggable=false, draggableItem,  elemen
             <Draggable canDrag={draggable} item={item} css={elementTileStyle} drop={play} {...props} preTransform= {`translateZ(${displayHeight*4.01+0.01}em)`}  end = {() => setDisplayHeight(position)}>
 
                     <div css={topStyle(image)}></div>
-                    <div css={[frontStyle, coloring(element)]}></div>
-                    <div css={[bottomStyle(position), coloring(element), canBeDragged(draggable)]}></div>
-                    <div css={[rightStyle, coloring(element)]}></div>
-                    <div css={[leftStyle, coloring(element)]}></div>
-                    <div css={[backStyle, coloring(element)]}></div>
+                    <div css={[frontStyle, coloring(element), bordering]}></div>
+                    <div css={[bottomStyle(position), coloring(element), canBeDragged(draggable), bordering]}></div>
+                    <div css={[rightStyle, coloring(element), bordering]}></div>
+                    <div css={[leftStyle, coloring(element), bordering]}></div>
+                    <div css={[backStyle, coloring(element), bordering]}></div>
+
+                    <div css={[coloring(element), transFrontLeft]}></div>
+                    <div css={[coloring(element), transFrontRight]}></div>
                     
 
             </Draggable>
@@ -67,9 +70,10 @@ const coloring = (color:Element) => css`
     ${color === Element.Fire && `background-color : #fc671a`};
     ${color === Element.Water && `background-color : #00bab3`};
     ${color === Element.Earth && `background-color : #996c59`};
-
-    border:0.1em black solid;
+    
 `
+
+const bordering = css`border:0.1em black solid;`
 
 const canBeDragged = (isDraggable:boolean) => css`
 
@@ -84,17 +88,43 @@ const canBeDragged = (isDraggable:boolean) => css`
     border-radius:20%;
 `
 
+const transFrontLeft = css`
+  position:absolute;
+  transform-style:preserve-3d;
+
+  transform-origin:left;
+  transform: rotateY(-90deg) rotateX(-45deg);
+  left:6.25%;
+  bottom:0%;
+
+  width:${thickness}em;
+  height:17.67%;
+`
+
+const transFrontRight = css`
+  position:absolute;
+  transform-style:preserve-3d;
+
+  transform-origin:right;
+  transform: rotateY(90deg) rotateX(-45deg);
+  right:6.25%;
+  bottom:0%;
+
+  width:${thickness}em;
+  height:17.67%;
+`
+
 const rightStyle = css`
     position:absolute;
     transform-style:preserve-3d;
 
     transform-origin:right;
     transform: rotateY(90deg) ;
-    right:0em;
-    top:10%;
+    right:1px;
+    top:12.5%;
 
     width:${thickness}em;
-    height:80%;
+    height:75%;
 `
 const leftStyle = css`
     position:absolute;
@@ -102,11 +132,11 @@ const leftStyle = css`
 
     transform-origin:left;
     transform: rotateY(-90deg);
-    left:0em;
-    top:10%;
+    left:1px;
+    top:12.5%;
 
     width:${thickness}em;
-    height:80%;
+    height:75%;
 `
 const frontStyle = css`
     position:absolute;
@@ -114,11 +144,11 @@ const frontStyle = css`
 
     transform-origin:bottom;
     transform : rotateX(-90deg);
-    bottom:0em;
-    left:10%;
+    bottom:1px;
+    left:12.5%;
 
     height:${thickness}em;
-    width:80%;
+    width:75%;
 `
 const backStyle = css`
     position:absolute;
@@ -126,11 +156,11 @@ const backStyle = css`
 
     transform-origin:top;
     transform: rotateX(90deg);
-    top:0em;
-    left:10%;
+    top:1px;
+    left:12.5%;
 
     height:${thickness}em;
-    width:80%;
+    width:75%;
 `
 
 const topStyle = (image:string) => css`
@@ -147,7 +177,7 @@ const bottomStyle = (position:number) => css`
     position:absolute;
     height:100%;
     width:100%;
-    border-radius:20%;
+    border-radius:15%;
 
     ${position === 0 && `box-shadow: 0px 0px 1.5em 0.5em black;`} 
 `
