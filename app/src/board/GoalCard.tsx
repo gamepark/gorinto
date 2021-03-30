@@ -23,7 +23,7 @@ const GoalCard : FC<Props> = ({goal, position, open, players, ...props}) => {
         
             {goal.hint && <p>{goal.hint(t)}</p>}
             <p>{goal.text(t)}</p>
-            {goal.conflictLetter && <span>{goal.conflictLetter}</span>}
+            {goal.conflictLetter && <span className="notranslate" >{goal.conflictLetter}</span>}
         
         </div>
 
