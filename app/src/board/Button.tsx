@@ -2,53 +2,59 @@
 import {css, keyframes} from '@emotion/react'
 import {ButtonHTMLAttributes, FC} from 'react'
 
-const Button : FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({children, ... props}) => {
+const Button : FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({children, ...props}) => {
     return <button css={style} {...props}><span/><span/><span/><span/> {children}</button>
 
 }
 
-const animateTop = keyframes`
+const animateHKeyFrames = keyframes`
   0% {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%);
+  transform:scaleX(0);
+  transform-origin: left;
   }
-  100% {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+  50%
+  {
+    transform:scaleX(1);
+  transform-origin: left;
   }
+  50.1%
+  {
+    transform:scaleX(1);
+  transform-origin: right;
+    
+  }
+  
+  100%
+  {
+    transform:scaleX(0);
+  transform-origin: right;
+    
+  } 
 `
 
-const animateRight = keyframes`
+const animateVKeyFrames = keyframes`
   0% {
-    -webkit-transform: translateY(100%);
-            transform: translateY(100%);
+  transform:scaleY(0);
+  transform-origin: top;
   }
-  100% {
-    -webkit-transform: translateY(-100%);
-            transform: translateY(-100%);
+  50%
+  {
+    transform:scaleY(1);
+  transform-origin: top;
   }
-`
-
-const animateBottom = keyframes`
-  0% {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+  50.1%
+  {
+    transform:scaleY(1);
+  transform-origin: bottom;
+    
   }
-  100% {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%);
-  }
-`
-
-const animateLeft = keyframes`
-  0% {
-    -webkit-transform: translateY(-100%);
-            transform: translateY(-100%);
-  }
-  100% {
-    -webkit-transform: translateY(100%);
-            transform: translateY(100%);
-  }
+  
+  100%
+  {
+    transform:scaleY(0);
+  transform-origin: bottom;
+    
+  } 
 `
 
 const style = css`
@@ -91,26 +97,45 @@ const style = css`
     position: absolute;
   }
 
+  & > span:before
+  {
+    content: '';
+    background: #28afef;
+    
+  }
+
   & > span:nth-of-type(1) {
     top: 0;
     left: 0;
     width: 100%;
     height: 2px;
-    background: -webkit-gradient(linear, right top, left top, from(rgba(8, 43, 43, 0)), to(#4f58f0));
-    background: linear-gradient(to left, rgba(8, 43, 43, 0), #00c8ff);
-    -webkit-animation: 6s ${animateTop} linear infinite;
-            animation: 6s ${animateTop} linear infinite;
+    transform:rotate(0deg);
+  }
+
+  & > span:nth-of-type(1):before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 2px;
+    animation: ${animateHKeyFrames} 8s linear infinite;
   }
 
   & > span:nth-of-type(2) {
     top: 0;
     right: 0;
-    height: 100%;
     width: 2px;
-    background: -webkit-gradient(linear, left bottom, left top, from(rgba(8, 43, 43, 0)), to(#4f58f0));
-    background: linear-gradient(to top, rgba(8, 43, 43, 0), #00c8ff);
-    -webkit-animation: 6s ${animateRight} linear -3s infinite;
-            animation: 6s ${animateRight} linear -3s infinite;
+    height: 100%;
+    transform:rotate(0deg);
+  }
+
+  & > span:nth-of-type(2):before{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width:2px;
+    height: 100%;
+    animation: ${animateVKeyFrames} 8s linear infinite;
   }
 
   & > span:nth-of-type(3) {
@@ -118,24 +143,35 @@ const style = css`
     left: 0;
     width: 100%;
     height: 2px;
-    background: -webkit-gradient(linear, left top, right top, from(rgba(8, 43, 43, 0)), to(#4f58f0));
-    background: linear-gradient(to right, rgba(8, 43, 43, 0), #00c8ff);
-    -webkit-animation: 6s ${animateBottom} linear infinite;
-    animation: 6s ${animateBottom} linear infinite;
+    transform:rotate(180deg);
   }
 
-  & >  span:nth-of-type(4) {
-    top: 0;
+  & > span:nth-of-type(3):before{
+    position: absolute;
+    bottom: 0;
     left: 0;
-    height: 100%;
+    width:100%;
+    height: 2px;
+    animation: ${animateHKeyFrames} 8s linear infinite;
+  }
+
+  & > span:nth-of-type(4) {
+    top: 0%;
+    left: 0%;
     width: 2px;
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(8, 43, 43, 0)), to(#4f58f0));
-    background: linear-gradient(to bottom, rgba(8, 43, 43, 0), #00c8ff);
-    -webkit-animation: 6s ${animateLeft} linear -3s infinite;
-    animation: 6s ${animateLeft} linear -3s infinite;
+    height: 100%;
+    transform:rotate(180deg);
+  }
+
+  & > span:nth-of-type(4):before{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width:2px;
+    height: 100%;
+    animation: ${animateVKeyFrames} 8s linear infinite;
   }
 
 `
-
 
 export default Button

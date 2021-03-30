@@ -1,13 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { FC } from "react"
+import { FC, HTMLAttributes } from "react"
 import Pattern from '../images/GOR_TTS_pattern.jpg'
 
-const PatternReminder : FC<{}> = () => {
+type Props = {
+    open:() => void
+} & HTMLAttributes<HTMLDivElement>
+
+const PatternReminder : FC<Props> = ({open, ...props}) => {
 
     return (
 
-        <div css={PatternReminderStyle}>  </div>
+        <div css={PatternReminderStyle} onClick={open} >  </div>
 
     )
 

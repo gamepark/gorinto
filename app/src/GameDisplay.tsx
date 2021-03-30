@@ -13,6 +13,7 @@ import BurrowTile from './board/BurrowTile'
 import GoalCard from './board/GoalCard'
 import Header from './board/Header'
 import KeyElementCardPanel from './board/KeyElementCardPanel'
+import PatternPopUp from './board/PatternPopUp'
 import PatternReminder from './board/PatternReminder'
 import PlayerPanel from './board/PlayerPanel'
 import SeasonIndicator from './board/SeasonIndicator'
@@ -22,10 +23,12 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
 
   const burrowTileAnimation = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move) && game.endOfSeasonStep === undefined)
   const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(false)
+  const [patternPopUpClosed, setPatternPopUpClosed] = useState(true)
   const playerId = usePlayerId<PlayerColor>()
   const players = useMemo(() => getPlayersStartingWith(game, playerId), [game, playerId])  
 
   const showWelcomePopup = !welcomePopUpClosed
+  const showPatternPopup = !patternPopUpClosed
 
   const player = game.players.find(player => player.color === playerId)
 
@@ -66,7 +69,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
       
       <Board game = {game}/>
 
-      <PatternReminder />
+      <PatternReminder open={() => setPatternPopUpClosed(false)} />
 
       {game.goals.map((goalNumber, index) =>
             
@@ -84,6 +87,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
       </div>
 
       {showWelcomePopup && player && <WelcomePopUp player={player} game={game} close={() => setWelcomePopUpClosed(true)} />}
+      {showPatternPopup && <PatternPopUp close={() => setPatternPopUpClosed(true)} />}
 
     </Letterbox>
 
