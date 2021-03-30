@@ -286,14 +286,14 @@ text-align:right;
 
 background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${getPlayerMat(color)}) no-repeat;
 
-@keyframes glowing {
-    0% { box-shadow: 0px 0px 0.5em 0.1em gold; }
-    45% { box-shadow: 0px 0px 1.5em 1em gold; }
-    55% { box-shadow: 0px 0px 1.5em 1em gold; }
-    100% { box-shadow: 0px 0px 0.5em 0.1em gold; }
+@keyframes glowingPanelP {
+    0% { box-shadow: -0.1em 0px 0.5em -0.3em ${getHexaColor(color)}, 0em 0em 1em 0.5em black; }
+    45% { box-shadow: -2em 0px 1em -0.3em ${getHexaColor(color)}, 0em 0em 1em 0.5em black; }
+    55% { box-shadow: -2em 0px 1em -0.3em ${getHexaColor(color)}, 0em 0em 1em 0.5em black; }
+    100% { box-shadow: -0.1em 0px 0.5em -0.3em ${getHexaColor(color)}, 0em 0em 1em 0.5em black; }
 }
 
-${activePlayer === color && `animation: glowing 3000ms infinite;`};
+${activePlayer === color && `animation: glowingPanelP 3000ms infinite;`};
 box-shadow: 0em 0em 1em 0.5em black;
 `
 
@@ -446,6 +446,21 @@ function getKanji(color: PlayerColor) {
         return KanjiYellow
       default:
         return KanjiBlue
+    }
+  }
+
+  function getHexaColor(color:PlayerColor | undefined){
+    switch (color) {
+      case PlayerColor.White:
+        return "#FFFFFF"
+      case PlayerColor.Black:
+        return "#000080"
+      case PlayerColor.Red:
+        return "#d01f2f"
+      case PlayerColor.Yellow:
+        return 	"#ffc20e"
+      default:
+        return "#1E90FF"
     }
   }
 
