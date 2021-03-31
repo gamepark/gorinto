@@ -70,10 +70,10 @@ const elementTileStyle = css`
 const isFocused = (focus:boolean) => css`
 
 @keyframes glowingFocus {
-  0% { box-shadow: 0px 0px 1em 0.2em #e58f01; }
-  45% { box-shadow: 0px 0px 1.5em 1em #e58f01; }
-  55% { box-shadow: 0px 0px 1.5em 1em #e58f01; }
-  100% { box-shadow: 0px 0px 1em 0.2em #e58f01; }
+  0% { box-shadow: 0px 0px 1em 0.2em green; }
+  45% { box-shadow: 0px 0px 2em 1.5em green; }
+  55% { box-shadow: 0px 0px 2em 1.5em green; }
+  100% { box-shadow: 0px 0px 1em 0.2em green; }
 }
 
 ${focus === true && `animation: glowingFocus 3000ms infinite;`};
