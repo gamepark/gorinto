@@ -126,7 +126,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
                     {playerInfo?.avatar ? 
                         <Avatar style={{width:'100%', height:'100%'}} avatarStyle="Circle" {...playerInfo.avatar}/> 
-                        : <img alt={t('Player avatar')} src={getKanji(color)} css={kanjiStyle}/>
+                        : <img alt={t('Player avatar')} src={getKanji(color)} css={kanjiStyle} draggable={false}/>
                     }
 
 
@@ -138,7 +138,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
             <div css={playerFooterStyle}>
 
-                <div css={[coinPosition]}><img alt="Coin" src={CoinHeads} css={coinStyle(first)}/></div>
+                <div css={[coinPosition]}><img alt="Coin" src={CoinHeads} css={coinStyle(first)} draggable={false}/></div>
                 <div css={scoreStyle(color)}>{displayedScore}</div>
 
             </div>

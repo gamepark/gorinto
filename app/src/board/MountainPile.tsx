@@ -1,18 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import {css, keyframes} from '@emotion/react'
+import MoveTile from '@gamepark/gorinto/moves/MoveTile'
+import TakeTile, {isTakeTile} from '@gamepark/gorinto/moves/TakeTile'
 import Element from '@gamepark/gorinto/types/Element'
 import GameState from '@gamepark/gorinto/types/GameState'
-import {useAnimation, usePlay, usePlayerId} from '@gamepark/react-client'
-import {FC, HTMLAttributes, useState} from 'react'
-import ElementTile, {getElementImage} from './ElementTile'
-import MountainDropZone from './MountainDropZone'
-import TakeTile, {isTakeTile} from "@gamepark/gorinto/moves/TakeTile"
-import ElementInPath from './ElementInPath'
-import PathType from '@gamepark/gorinto/types/PathType'
-import MoveTile from '@gamepark/gorinto/moves/MoveTile'
 import MoveType from '@gamepark/gorinto/types/MoveType'
+import PathType from '@gamepark/gorinto/types/PathType'
 import TilesToTake from '@gamepark/gorinto/types/TilesToTake'
+import {useAnimation, usePlay, usePlayerId} from '@gamepark/react-client'
+import {FC, HTMLAttributes} from 'react'
+import ElementInPath from './ElementInPath'
 import ElementInPile from './ElementInPile'
+import ElementTile from './ElementTile'
+import MountainDropZone from './MountainDropZone'
 
 type Props = {
     pile:number[],
@@ -39,29 +39,29 @@ const MountainPile : FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelec
         <>
 
         <div {...props} css = {[!tilesToTake && noPointerEvents, renderContext]} >
-                        
+
             {pile.map((tile, index) =>
-                
+
                 <div css={positionTile} key = {index}>
 
-                    <ElementTile 
+                    <ElementTile
                                 css = {[animation && game.mountainBoard[x][y].length === index+1 && tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index+1),
                                         animation && tilesToTake?.element === Element.Earth && index === animation.move.coordinates.z && takeTileEarthAnimation(animation.duration, index+1),
                                         canTakeAny && shadowStyle
                                       ]}
-                                image = {getElementImage(tile)}
                                 position = {canTakeAny ? 3*index : index}
                                 draggable = {playerId === game.activePlayer && canDrag(game,x,y,index)}
-                                draggableItem = {{type:"ElementInPile", x, y, z : index}}
+                                type = 'ElementInPile'
+                                draggableItem = {{x, y, z : index}}
                                 element = {tile}
 
-                                onClick = {() => { canTakeTile(x, y, index, tilesToTake, game.mountainBoard) && isSelected(x,y,index, selectedTileInMountain) 
-                                    ? playTake(doTakeTile(x, y, index, tilesToTake!)) 
-                                    : canTakeTile(x, y, index, tilesToTake, game.mountainBoard) 
+                                onClick = {() => { canTakeTile(x, y, index, tilesToTake, game.mountainBoard) && isSelected(x,y,index, selectedTileInMountain)
+                                    ? playTake(doTakeTile(x, y, index, tilesToTake!))
+                                    : canTakeTile(x, y, index, tilesToTake, game.mountainBoard)
                                         ? onSelect(index)
                                         : console.log("Ne rien faire") }}
 
-                                isSelected = {selectedTileInMountain?.x === x && 
+                                isSelected = {selectedTileInMountain?.x === x &&
                                               selectedTileInMountain?.y === y &&
                                               selectedTileInMountain?.z === index &&
                                               tilesToTake !== undefined ? true : false
@@ -74,7 +74,7 @@ const MountainPile : FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelec
 
         </div>
 
-        <MountainDropZone 
+        <MountainDropZone
             x = {x}
             y = {y}
             height = {game.mountainBoard[x][y].length}
@@ -82,7 +82,7 @@ const MountainPile : FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelec
             onClick = {() => {canMoveTile(selectedTileInPath,x,y) ? playMove({type : MoveType.MoveTile, path : selectedTileInPath!.path, x, y}) : console.log("Ne rien faire")}}
 
             {...props}
-        
+
         />
 
         </>
@@ -158,12 +158,12 @@ function canDrag(game:GameState, x:number, y:number, z:number):boolean{
             (z === game.mountainBoard[x][y].length - 1)
         )
     } else {
-   
+
        return (
         (game.tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
         &&
         (z !== game.mountainBoard[x][y].length - 1)
-           
+
        )
    }
 

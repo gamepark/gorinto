@@ -8,7 +8,7 @@ import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
 import {FC} from 'react'
 import ElementInPath from './ElementInPath'
-import ElementTile, {getElementImage} from './ElementTile'
+import ElementTile from './ElementTile'
 
 type Props = {
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
@@ -29,16 +29,16 @@ const HorizontalPathPanel : FC<Props> = ({tilesToTake, horizontalPath, activePla
 
         <div css = {horizontalPathPanel}>
 
-            {horizontalPath.map((tile, index) => tile !== null ? 
+            {horizontalPath.map((tile, index) => tile !== null ?
             
             <div css={positionningTile(index)} key = {index}> 
 
                 <ElementTile css = {[animationMoveTile && animationMoveTile.move.x === index && moveTileAnimation(animationMoveTile.move.y,mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, maxPileHeightOnTheColumn(index, mountain),animationMoveTile.duration),
                                      animationRemoveTile && animationRemoveTile.move.index === index && animationRemoveTile.move.path === PathType.Horizontal && removeTileAnimation(animationRemoveTile.duration)
             ]}
-                             image = {getElementImage(tile)}
                              draggable = {playerId === activePlayer && !tilesToTake && activePlayer !== undefined && !animationRemoveTile}
-                             draggableItem = {{type:"ElementInPath", path: PathType.Horizontal, position: index}}
+                             type = 'ElementInPath'
+                             draggableItem = {{path: PathType.Horizontal, position: index}}
                              element = {tile}
 
                              onClick = {() => onSelect(index)}

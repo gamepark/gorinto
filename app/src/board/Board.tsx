@@ -18,8 +18,8 @@ const Board : FC<{game:GameState}> = ({game}) => {
 
         <div css={boardStyle}>
 
-            <HorizontalPathPanel onSelect = {position => setSelectedTileInPath({type:'ElementInPath', path:PathType.Horizontal, position})} selectedTile = {selectedTileInPath} activePlayer = {game.activePlayer} horizontalPath = {game.horizontalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
-            <VerticalPathPanel onSelect = {position => setSelectedTileInPath({type:'ElementInPath', path:PathType.Vertical, position})} selectedTile = {selectedTileInPath} activePlayer = {game.activePlayer} verticalPath = {game.verticalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
+            <HorizontalPathPanel onSelect = {position => setSelectedTileInPath({path:PathType.Horizontal, position})} selectedTile = {selectedTileInPath} activePlayer = {game.activePlayer} horizontalPath = {game.horizontalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
+            <VerticalPathPanel onSelect = {position => setSelectedTileInPath({path:PathType.Vertical, position})} selectedTile = {selectedTileInPath} activePlayer = {game.activePlayer} verticalPath = {game.verticalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
             <MountainPanel game = {game} selectedTileInPath = {selectedTileInPath} />
         
         </div>

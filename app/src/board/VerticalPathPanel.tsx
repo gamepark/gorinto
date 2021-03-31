@@ -8,7 +8,7 @@ import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
 import {FC} from 'react'
 import ElementInPath from './ElementInPath'
-import ElementTile, {getElementImage} from './ElementTile'
+import ElementTile from './ElementTile'
 
 type Props = {
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
@@ -37,9 +37,9 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
                              css = {[animationMoveTile && animationMoveTile.move.y === index && moveTileAnimation(animationMoveTile.move.x, mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, maxPileHeightOnTheLine(index, mountain),animationMoveTile.duration),
                                      animationRemoveTile && animationRemoveTile.move.index === index && animationRemoveTile.move.path === PathType.Vertical && removeTileAnimation(animationRemoveTile.duration)
                             ]}
-                             image = {getElementImage(tile)}
                              draggable = {playerId === activePlayer && !tilesToTake  && !animationRemoveTile}
-                             draggableItem = {{type:"ElementInPath", path: PathType.Vertical, position : index}}
+                             type = 'ElementInPath'
+                             draggableItem = {{path: PathType.Vertical, position : index}}
                              element = {tile}
 
                              onClick = {() => onSelect(index)}

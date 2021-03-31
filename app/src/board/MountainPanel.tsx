@@ -26,7 +26,7 @@ const MountainPanel : FC<{game : GameState, selectedTileInPath?:ElementInPath}> 
                         game = {game}
                         selectedTileInPath = {selectedTileInPath}
 
-                        onSelect = {(position: any) => setSelectedTileInMountain({type:'ElementInPile', x,y, z:position})}
+                        onSelect = {(position: any) => setSelectedTileInMountain({x,y, z:position})}
                         selectedTileInMountain = {selectedTileInMountain}
                         />
 

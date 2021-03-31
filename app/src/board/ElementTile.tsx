@@ -16,9 +16,9 @@ import ElementInPile from './ElementInPile'
 
 type Props = {
 
-    image:string,
     position?:number,
     draggable?:boolean,
+    type: 'ElementInPath' | 'ElementInPile',
     draggableItem: Omit<ElementInPath ,"hoverPile" > | Omit<ElementInPile, "hoverPile">,
     element:Element,
     isSelected:boolean
@@ -27,7 +27,7 @@ type Props = {
 
 
 
-const ElementTile : FC<Props> = ({image, draggable=false, draggableItem,  element, position=0, isSelected, ...props}) => {
+const ElementTile : FC<Props> = ({draggable=false, draggableItem,  element, position=0, isSelected, ...props}) => {
 
     const play = usePlay <MoveTile> ()
     const [displayHeight, setDisplayHeight] = useState(position)
@@ -38,7 +38,7 @@ const ElementTile : FC<Props> = ({image, draggable=false, draggableItem,  elemen
 
             <Draggable canDrag={draggable} item={item} css={elementTileStyle} drop={play} {...props} preTransform= {`translateZ(${displayHeight*4.01+0.01}em)`}  end = {() => setDisplayHeight(position)}>
 
-                    <div css={topStyle(image)}></div>
+                    <div css={[topStyle, backgroundImage(element)]}></div>
                     <div css={[frontStyle, coloring(element), bordering]}></div>
                     <div css={[bottomStyle(position), coloring(element), canBeDragged(draggable), bordering, isFocused(isSelected)]}></div>
                     <div css={[rightStyle, coloring(element), bordering]}></div>
@@ -47,7 +47,6 @@ const ElementTile : FC<Props> = ({image, draggable=false, draggableItem,  elemen
 
                     <div css={[coloring(element), transFrontLeft]}></div>
                     <div css={[coloring(element), transFrontRight]}></div>
-                    
 
             </Draggable>
 
@@ -179,16 +178,20 @@ const backStyle = css`
     width:75%;
 `
 
-const topStyle = (image:string) => css`
+const topStyle = css`
     position:absolute;
     transform: translateZ(${thickness}em);
     width:100%;
     height:100%;
-    background-image:url(${image});
     background-repeat:no-repeat;
     background-size:100% 100%;
     border-radius:15%;
 `
+
+const backgroundImage = (element: Element) => css`
+  background-image:url(${getElementImage(element)});
+`
+
 const bottomStyle = (position:number) => css`
     position:absolute;
     height:100%;

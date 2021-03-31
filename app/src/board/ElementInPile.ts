@@ -1,6 +1,5 @@
 type ElementInPile = {
 
-    type:"ElementInPile"
     x:number;
     y:number;
     z:number;
