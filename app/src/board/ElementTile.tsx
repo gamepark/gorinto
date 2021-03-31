@@ -20,11 +20,14 @@ type Props = {
     position?:number,
     draggable?:boolean,
     draggableItem: Omit<ElementInPath ,"hoverPile" > | Omit<ElementInPile, "hoverPile">,
-    element:Element
+    element:Element,
+    isSelected:boolean
 
 } & HTMLAttributes<HTMLDivElement>
 
-const ElementTile : FC<Props> = ({image, draggable=false, draggableItem,  element, position=0, ...props}) => {
+
+
+const ElementTile : FC<Props> = ({image, draggable=false, draggableItem,  element, position=0, isSelected, ...props}) => {
 
     const play = usePlay <MoveTile> ()
     const [displayHeight, setDisplayHeight] = useState(position)
@@ -37,7 +40,7 @@ const ElementTile : FC<Props> = ({image, draggable=false, draggableItem,  elemen
 
                     <div css={topStyle(image)}></div>
                     <div css={[frontStyle, coloring(element), bordering]}></div>
-                    <div css={[bottomStyle(position), coloring(element), canBeDragged(draggable), bordering]}></div>
+                    <div css={[bottomStyle(position), coloring(element), canBeDragged(draggable), bordering, isFocused(isSelected)]}></div>
                     <div css={[rightStyle, coloring(element), bordering]}></div>
                     <div css={[leftStyle, coloring(element), bordering]}></div>
                     <div css={[backStyle, coloring(element), bordering]}></div>
@@ -62,6 +65,19 @@ const elementTileStyle = css`
     height:100%;
 
     transform-style: preserve-3d;
+`
+
+const isFocused = (focus:boolean) => css`
+
+@keyframes glowingFocus {
+  0% { box-shadow: 0px 0px 1em 0.2em #e58f01; }
+  45% { box-shadow: 0px 0px 1.5em 1em #e58f01; }
+  55% { box-shadow: 0px 0px 1.5em 1em #e58f01; }
+  100% { box-shadow: 0px 0px 1em 0.2em #e58f01; }
+}
+
+${focus === true && `animation: glowingFocus 3000ms infinite;`};
+border-radius:20%;
 `
 
 const coloring = (color:Element) => css`

@@ -31,7 +31,7 @@ const MountainDropZone : FC<Props> = ({x, y, height, ...props}) => {
         }),
 
         hover: (item:(ElementInPath|ElementInPile)) => {
-            item.hoverPile(height)
+            item.hoverPile!(height)
         }
         ,
 

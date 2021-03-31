@@ -1,21 +1,26 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import GameState from '@gamepark/gorinto/types/GameState'
-import { FC } from "react"
+import { FC, useState } from "react"
 import board from '../images/board.jpg'
 import HorizontalPathPanel from './HorizontalPathPanel'
 import VerticalPathPanel from './VerticalPathPanel'
 import MountainPanel from './MountainPanel'
+import ElementInPath from './ElementInPath'
+import PathType from '@gamepark/gorinto/types/PathType'
 
 const Board : FC<{game:GameState}> = ({game}) => {
+
+    const [selectedTileInPath, setSelectedTileInPath] = useState<ElementInPath>()
+
 
     return (
 
         <div css={boardStyle}>
 
-            <HorizontalPathPanel activePlayer = {game.activePlayer} horizontalPath = {game.horizontalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
-            <VerticalPathPanel activePlayer = {game.activePlayer} verticalPath = {game.verticalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
-            <MountainPanel game = {game} />
+            <HorizontalPathPanel onSelect = {position => setSelectedTileInPath({type:'ElementInPath', path:PathType.Horizontal, position})} selectedTile = {selectedTileInPath} activePlayer = {game.activePlayer} horizontalPath = {game.horizontalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
+            <VerticalPathPanel onSelect = {position => setSelectedTileInPath({type:'ElementInPath', path:PathType.Vertical, position})} selectedTile = {selectedTileInPath} activePlayer = {game.activePlayer} verticalPath = {game.verticalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
+            <MountainPanel game = {game} selectedTileInPath = {selectedTileInPath} />
         
         </div>
 

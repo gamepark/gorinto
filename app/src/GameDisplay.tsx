@@ -10,6 +10,7 @@ import {Letterbox} from '@gamepark/react-components'
 import {FC, Fragment, useMemo, useState} from 'react'
 import Board from './board/Board'
 import BurrowTile from './board/BurrowTile'
+import ElementInPath from './board/ElementInPath'
 import GoalCard from './board/GoalCard'
 import Header from './board/Header'
 import KeyElementCardPanel from './board/KeyElementCardPanel'
@@ -31,6 +32,7 @@ const GameDisplay: FC<{game:GameState}> = ({game}) => {
   const showPatternPopup = !patternPopUpClosed
 
   const player = game.players.find(player => player.color === playerId)
+
 
   return (
 

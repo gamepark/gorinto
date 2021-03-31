@@ -7,16 +7,19 @@ import PathType from '@gamepark/gorinto/types/PathType'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
 import {FC} from 'react'
+import ElementInPath from './ElementInPath'
 import ElementTile, {getElementImage} from './ElementTile'
 
 type Props = {
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
     verticalPath:(number | null)[],
     activePlayer: PlayerColor | undefined,
-    mountain:number[][][]
+    mountain:number[][][],
+    onSelect:(position:number) => void,
+    selectedTile?:ElementInPath
 }
 
-const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer, mountain}) => {
+const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer, mountain, onSelect, selectedTile}) => {
 
     const playerId = usePlayerId()
     const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === PathType.Vertical)
@@ -38,7 +41,10 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
                              draggable = {playerId === activePlayer && !tilesToTake  && !animationRemoveTile}
                              draggableItem = {{type:"ElementInPath", path: PathType.Vertical, position : index}}
                              element = {tile}
-               />
+
+                             onClick = {() => onSelect(index)}
+                             isSelected = {selectedTile?.path === PathType.Vertical && selectedTile?.position === index && tilesToTake === undefined ? true : false}
+              />
 
             </div>
 
