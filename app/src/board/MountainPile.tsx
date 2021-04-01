@@ -21,7 +21,7 @@ type Props = {
     game: GameState,
     selectedTileInPath?: ElementInPath,
     onSelect: (position: number) => void,
-    selectedTilesInMountain?: ElementInPile[]
+    selectedTilesInMountain: ElementInPile[]
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>
 
 const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect, selectedTilesInMountain, ...props}) => {
