@@ -1,14 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import { FC, HTMLAttributes } from "react";
+import {css} from "@emotion/react";
+import {FC, HTMLAttributes} from "react";
 import Element from "@gamepark/gorinto/types/Element";
-
-import Void from "../images/ElementVoid.jpg"
-import Wind from "../images/ElementWind.jpg"
-import Fire from "../images/ElementFire.jpg"
-import Water from "../images/ElementWater.jpg"
-import Earth from "../images/ElementEarth.jpg"
-import { TFunction } from "i18next";
 
 type Props = {
 
@@ -30,7 +23,7 @@ const ElementTileForPlayers : FC<Props> = ({image, element, position, ...props})
                     <div css={[rightStyle, coloring(element)]}></div>
                     <div css={[leftStyle, coloring(element)]}></div>
                     <div css={[backStyle, coloring(element)]}></div>
-                    
+
             </div>
 
         )
@@ -127,35 +120,5 @@ const bottomStyle = (position:number) => css`
 
     ${position === 0 && `box-shadow: 0px 0px 0.5em 0.1em black;`}
 `
-
-export function getElementImage(element: Element) {
-    switch (element) {
-      case Element.Void:
-        return Void
-      case Element.Wind:
-        return Wind
-      case Element.Fire:
-        return Fire
-      case Element.Water:
-        return Water
-      case Element.Earth:
-        return Earth
-    }
-  }
-  
-  export function getElementName(element: Element, t: TFunction) {
-    switch (element) {
-      case Element.Void:
-        return t('Void')
-      case Element.Wind:
-        return t('Wind')
-      case Element.Fire:
-        return t('Fire')
-      case Element.Water:
-        return t('Water')
-      case Element.Earth:
-        return t('Earth')
-    }
-  }
 
 export default ElementTileForPlayers

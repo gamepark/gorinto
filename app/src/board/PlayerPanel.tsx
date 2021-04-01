@@ -33,7 +33,8 @@ import KanjiYellow from '../images/kanji_yellow.jpg'
 
 import ElementInPile from './ElementInPile'
 
-import ElementTileForPlayers, {getElementImage} from './ElementTileForPlayers'
+import ElementTileForPlayers from './ElementTileForPlayers'
+import {getElementImage} from "./ElementTile";
 
 type Props = {
     player: Player
