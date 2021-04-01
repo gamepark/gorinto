@@ -35,7 +35,7 @@ const ElementTile: FC<Props> = ({draggable = false, draggableItem, element, posi
 
     return (
         <Draggable canDrag={draggable} item={item} end={() => setDisplayHeight(position)} drop={play}
-                   css={[elementTileStyle, image(element), color(element), isSelected ? glowingGreen : draggable ? glowingGold : position === 0 && shadow]}
+                   css={[elementTileStyle, image(element), color(element), isSelected ? glowingGreen : draggable ? glowingGold : (position === 0 && shadow)]}
                    preTransform={`translateZ(${displayHeight * 4.01 + 0.01}em)`}
                    {...props}>
             <div css={[diagonal, diagonal1, color(element)]}/>
@@ -133,10 +133,10 @@ const glowingGold = css`
 
 const glowingGreenKeyframes = keyframes`
     0% {
-        box-shadow: 0 0 1em 0.2em gold;
+        box-shadow: 0 0 1em 0.2em green;
     }
     90%, 100% {
-        box-shadow: 0 0 1.5em 1em gold;
+        box-shadow: 0 0 1.5em 1em green;
     }
 `
 
