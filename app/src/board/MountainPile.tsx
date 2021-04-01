@@ -54,10 +54,10 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
                                 canTakeTile(x, y, index, tilesToTake, game.mountainBoard)
                                     ? onSelect(index)
                                     : console.log("Ne rien faire")
-                           }
-                                          }
+                                        }
+                                    }
 
-                            isSelected={selectedTilesInMountain?.some(element => element.x === x && element.y === y && element.z === index) && tilesToTake !== undefined}
+                            isSelected={(selectedTilesInMountain?.some((element => element.x === x && element.y === y && element.z === index)) && tilesToTake !== undefined)}
                         />
                     </div>
                 )}

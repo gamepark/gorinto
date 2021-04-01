@@ -16,7 +16,7 @@ const MountainPanel : FC<{game : GameView, selectedTileInPath?:ElementInPath}> =
         }
     }, [game, selectedTilesInMountain] )
     
-    console.log("contenu du hook", selectedTilesInMountain)
+    console.log("Dans MountainPanel", selectedTilesInMountain)
     
     return(
 
@@ -54,7 +54,6 @@ function removeFromTheHook(array:{x:number, y:number, z:number}[], object:{x:num
 
     const result = array
     result.splice(array.findIndex(elem => elem === object),1)
-    console.log("dans le Remove",result)
     return result
 
 }

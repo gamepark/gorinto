@@ -11,48 +11,60 @@ import ElementInPath from './ElementInPath'
 import ElementTile from './ElementTile'
 
 type Props = {
-    tilesToTake: { quantity: number, coordinates: { x: number, y: number }[], element?: Element } | undefined,
-    verticalPath: (number | null)[],
+    tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
+    verticalPath:(number | null)[],
     activePlayer: PlayerColor | undefined,
-    mountain: number[][][],
-    onSelect: (position: number) => void,
-    selectedTile?: ElementInPath
+    mountain:number[][][],
+    onSelect:(position:number) => void,
+    selectedTile?:ElementInPath
 }
 
-const VerticalPathPanel: FC<Props> = ({tilesToTake, verticalPath, activePlayer, mountain, onSelect, selectedTile}) => {
+const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer, mountain, onSelect, selectedTile}) => {
 
     const playerId = usePlayerId()
     const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === PathType.Vertical)
     const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move))
 
-    return (
-        <div css={verticalPathPanel}>
-            {verticalPath.map((tile, index) => tile === null ? null :
-                <div css={positionTile(index)} key={index}>
-                    <ElementTile
-                        css={[animationMoveTile && animationMoveTile.move.y === index && moveTileAnimation(animationMoveTile.move.x, mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, maxPileHeightOnTheLine(index, mountain), animationMoveTile.duration),
-                            animationRemoveTile && animationRemoveTile.move.index === index && animationRemoveTile.move.path === PathType.Vertical && removeTileAnimation(animationRemoveTile.duration)
-                        ]}
-                        draggable={playerId === activePlayer && !tilesToTake && !animationRemoveTile}
-                        type='ElementInPath'
-                        draggableItem={{path: PathType.Vertical, position: index}}
-                        element={tile}
+    return(
 
-                        onClick={() => onSelect(index)}
-                        isSelected={selectedTile?.path === PathType.Vertical && selectedTile?.position === index && tilesToTake === undefined}
-                    />
-                </div>
-            )}
+        <div css = {verticalPathPanel}>
+
+            {verticalPath.map((tile, index) => tile !== null ?
+            
+            <div css={positionningTile(index)} key = {index}> 
+
+                <ElementTile 
+                             css = {[animationMoveTile && animationMoveTile.move.y === index && moveTileAnimation(animationMoveTile.move.x, mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, maxPileHeightOnTheLine(index, mountain),animationMoveTile.duration),
+                                     animationRemoveTile && animationRemoveTile.move.index === index && animationRemoveTile.move.path === PathType.Vertical && removeTileAnimation(animationRemoveTile.duration)
+                            ]}
+                             draggable = {playerId === activePlayer && !tilesToTake  && !animationRemoveTile}
+                             type = 'ElementInPath'
+                             draggableItem = {{path: PathType.Vertical, position : index}}
+                             element = {tile}
+
+                             onClick = {() => onSelect(index)}
+                             isSelected = {selectedTile?.path === PathType.Vertical && selectedTile?.position === index && tilesToTake === undefined ? true : false}
+              />
+
+            </div>
+
+                :null
+        
+        )}
+
         </div>
+
+        
     )
+
 }
 
-function maxPileHeightOnTheLine(x: number, mountain: number[][][]): number {
+function maxPileHeightOnTheLine (x:number, mountain:number[][][]) : number {
 
-    let zMax: number = 0;
-    for (let i = 0; i < 5; i++) {
+    let zMax:number = 0;
+    for (let i = 0 ; i < 5 ; i++){
         const height = mountain[x][i].length;
-        if (height > zMax) {
+        if (height>zMax){
             zMax = height;
         }
     }
@@ -60,66 +72,66 @@ function maxPileHeightOnTheLine(x: number, mountain: number[][][]): number {
     return zMax
 }
 
-const removeTileAnimation = (duration: number) => css`
-    animation: ${removeTileKeyFrames} ${duration}s;
+const removeTileAnimation = (duration:number) => css`
+animation : ${removeTileKeyFrames} ${duration}s ;
 `
 
 const removeTileKeyFrames = keyframes`
-    from {
-    }
-    25% {
-        transform: translate3d(0, 0, ${8.02}em);
-        box-shadow: 0 0 1.5em 1em red;
-        border-radius: 20%;
-    }
-    65% {
-        transform: translate3d(0, 0, ${8.02}em);
-        box-shadow: 0 0 2em 1.5em red;
-        border-radius: 20%;
-    }
-    to {
-        transform: translate3d(0, 0, 150em);
-        box-shadow: none;
-        border-radius: 20%;
-    }
+from{}
+25%{
+    transform:translate3d(0,0,${8.02}em);
+    box-shadow: 0px 0px 1.5em 1em red;
+    border-radius:20%;
+}
+65%{
+    transform:translate3d(0,0,${8.02}em);
+    box-shadow: 0px 0px 2em 1.5em red;
+    border-radius:20%;
+}
+to{
+    transform:translate3d(0,0,150em);
+    box-shadow:none;
+    border-radius:20%;
+}
 `
 
-const heightPath = 15; // In percent
+const heightPath = 15           // In percent
 
-const moveTileAnimation = (x: number, z: number, zMax: number, duration: number) => css`
-    animation: ${moveTileKeyFrames(x, z, zMax)} ${duration}s;
+const moveTileAnimation = (x:number, z:number, zMax:number, duration:number) => css`
+animation:${moveTileKeyFrames(x,z, zMax)} ${duration}s ;
 `
 
-const moveTileKeyFrames = (x: number, z: number, zMax: number) => keyframes`
-    from {
-    }
-    15% {
-        transform: translate3d(0, 0, ${zMax * 4 + 8.02}em);
-    }
-    85% {
-        transform: translate3d(${(x + 1) * (heightPath * 9.6)}%, 0, ${zMax * 4 + 8.02}em);
-    }
-    to {
-        transform: translate3d(0 ${(x + 1) * (heightPath * 9.6)}%, 0, ${z * 4.02}em);
-    }
+const moveTileKeyFrames = (x:number,z:number, zMax:number) => keyframes`
+from{}
+15%{
+    transform:translate3d(0,0,${zMax*4+8.02}em);
+}
+85%{
+    transform:translate3d(${(x+1)*(heightPath*9.6)}%,0,${zMax*4+8.02}em);
+}
+to{
+    transform:translate3d(0${(x+1)*(heightPath*9.6)}%,0,${z*4.02}em);
+}
 `
 
-const positionTile = (position: number) => css`
-    position: absolute;
-    top: ${0.5 + 19.5 * position}%;
-    left: 0;
-    width: 100%;
-    height: 15%;
-    transform-style: preserve-3d;
+const positionningTile = (position : number) => css`
+position:absolute;
+top:${0.5+19.5*position}%;
+left:0%;
+width:100%;
+height:15%;
+transform-style:preserve-3d;
+
 `
 
 const verticalPathPanel = css`
-    position: absolute;
-    top: 19.5%;
-    left: 2%;
-    width: 12%;
-    height: 82%;
-    transform-style: preserve-3d;
+position : absolute;
+top : 19.5%;
+left : 2%;
+width : 12%;
+height : 82%;
+transform-style:preserve-3d;
+
 `
 
 export default VerticalPathPanel
