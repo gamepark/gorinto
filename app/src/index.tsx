@@ -45,8 +45,6 @@ const style = css`
     overflow: hidden;
     background-image: url(${Background});
     background-color: white;
-    background-size: cover;
-    background-position: bottom;
     color: #eee;
 
     &:before {
@@ -57,7 +55,7 @@ const style = css`
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(255, 255, 255, 0.5);
     }
   }
 `
