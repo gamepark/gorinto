@@ -1,20 +1,20 @@
 /** @jsxImportSource @emotion/react */
 
 import Player from "@gamepark/gorinto/types/Player";
-import { usePlayer } from "@gamepark/react-client";
-import { FC } from "react";
-import { useTranslation } from "react-i18next";
+import {usePlayer} from "@gamepark/react-client";
+import {FC} from "react";
+import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTimes} from '@fortawesome/free-solid-svg-icons'
-import GameState from "@gamepark/gorinto/types/GameState";
-import { Goals } from "@gamepark/gorinto/cards/Goals";
+import {Goals} from "@gamepark/gorinto/cards/Goals";
 import GoalCardPopUp from './GoalCardPopUp';
-import { css } from "@emotion/react";
+import {css} from "@emotion/react";
 import KeyElementCardPanelPopUp from "./KeyElementCardPanelPopUp";
-import { getPlayerName } from "@gamepark/gorinto/GorintoOptions";
+import {getPlayerName} from "@gamepark/gorinto/GorintoOptions";
 import Button from "./Button";
+import GameView from "@gamepark/gorinto/types/GameView";
 
-const WelcomePopUp : FC<{player:Player, game:GameState, close: () => void}> = ({player, game, close}) => {
+const WelcomePopUp : FC<{player:Player, game:GameView, close: () => void}> = ({player, game, close}) => {
 
     const {t} = useTranslation()
     const playerInfo = usePlayer(player.color)

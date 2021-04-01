@@ -3,7 +3,6 @@ import {css, keyframes} from '@emotion/react'
 import MoveTile from '@gamepark/gorinto/moves/MoveTile'
 import TakeTile, {isTakeTile} from '@gamepark/gorinto/moves/TakeTile'
 import Element from '@gamepark/gorinto/types/Element'
-import GameState from '@gamepark/gorinto/types/GameState'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import PathType from '@gamepark/gorinto/types/PathType'
 import TilesToTake from '@gamepark/gorinto/types/TilesToTake'
@@ -13,12 +12,13 @@ import ElementInPath from './ElementInPath'
 import ElementInPile from './ElementInPile'
 import ElementTile from './ElementTile'
 import MountainDropZone from './MountainDropZone'
+import GameView from "@gamepark/gorinto/types/GameView";
 
 type Props = {
     pile: number[],
     x: number,
     y: number,
-    game: GameState,
+    game: GameView,
     selectedTileInPath?: ElementInPath,
     onSelect: (position: number) => void,
     selectedTilesInMountain: ElementInPile[]
@@ -131,7 +131,7 @@ function canMoveTile(selectedTileInPath: ElementInPath | undefined, x: number, y
     }
 }
 
-function canDrag(game: GameState, x: number, y: number, z: number): boolean {
+function canDrag(game: GameView, x: number, y: number, z: number): boolean {
 
     if (game.tilesToTake === undefined) {
         return false;

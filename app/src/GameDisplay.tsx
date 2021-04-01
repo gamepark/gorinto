@@ -2,7 +2,6 @@
 import {css, keyframes} from '@emotion/react'
 import {Goals} from '@gamepark/gorinto/cards/Goals'
 import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/RemoveTileOnPath'
-import GameState from '@gamepark/gorinto/types/GameState'
 import GameView from '@gamepark/gorinto/types/GameView'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
@@ -10,7 +9,6 @@ import {Letterbox} from '@gamepark/react-components'
 import {FC, Fragment, useMemo, useState} from 'react'
 import Board from './board/Board'
 import BurrowTile from './board/BurrowTile'
-import ElementInPath from './board/ElementInPath'
 import GoalCard from './board/GoalCard'
 import Header from './board/Header'
 import KeyElementCardPanel from './board/KeyElementCardPanel'
@@ -20,7 +18,7 @@ import PlayerPanel from './board/PlayerPanel'
 import SeasonIndicator from './board/SeasonIndicator'
 import WelcomePopUp from './board/WelcomePopUp'
 
-const GameDisplay: FC<{game:GameState}> = ({game}) => {
+const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
   const burrowTileAnimation = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move) && game.endOfSeasonStep === undefined)
   const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(false)

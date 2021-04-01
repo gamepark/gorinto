@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import GameState from '@gamepark/gorinto/types/GameState'
-import { FC } from "react";
+import {css} from "@emotion/react";
+import {FC} from "react";
+import GameView from "@gamepark/gorinto/types/GameView";
 
-const Header : FC<{game:GameState}> = ({game}) => {
+const Header : FC<{game:GameView}> = ({game}) => {
 
     return(
 

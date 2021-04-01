@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
-import GameState from '@gamepark/gorinto/types/GameState'
-import { FC, useState } from "react"
+import {css} from '@emotion/react'
+import {FC, useState} from "react"
 import board from '../images/board.jpg'
 import HorizontalPathPanel from './HorizontalPathPanel'
 import VerticalPathPanel from './VerticalPathPanel'
 import MountainPanel from './MountainPanel'
 import ElementInPath from './ElementInPath'
 import PathType from '@gamepark/gorinto/types/PathType'
+import GameView from "@gamepark/gorinto/types/GameView";
 
-const Board : FC<{game:GameState}> = ({game}) => {
+const Board : FC<{game:GameView}> = ({game}) => {
 
     const [selectedTileInPath, setSelectedTileInPath] = useState<ElementInPath>()
 

@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import { FC, useEffect, useState } from "react";
-import GameState from "@gamepark/gorinto/types/GameState";
+import {css} from "@emotion/react";
+import {FC, useEffect, useState} from "react";
 import MountainPile from "./MountainPile";
 import ElementInPath from "./ElementInPath";
 import ElementInPile from "./ElementInPile";
+import GameView from "@gamepark/gorinto/types/GameView";
 
-const MountainPanel : FC<{game : GameState, selectedTileInPath?:ElementInPath}> = ({game, selectedTileInPath}) => {
+const MountainPanel : FC<{game : GameView, selectedTileInPath?:ElementInPath}> = ({game, selectedTileInPath}) => {
 
     const [selectedTilesInMountain, setSelectedTilesInMountain] = useState<ElementInPile[]>([])
 
