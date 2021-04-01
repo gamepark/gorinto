@@ -15,94 +15,86 @@ import ElementTile from './ElementTile'
 import MountainDropZone from './MountainDropZone'
 
 type Props = {
-    pile:number[],
-    x:number,
-    y:number,
-    game:GameState,
-    selectedTileInPath?:ElementInPath,
-    onSelect:(position:number) => void,
-    selectedTilesInMountain?:ElementInPile[]
+    pile: number[],
+    x: number,
+    y: number,
+    game: GameState,
+    selectedTileInPath?: ElementInPath,
+    onSelect: (position: number) => void,
+    selectedTilesInMountain?: ElementInPile[]
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>
 
-const MountainPile : FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect, selectedTilesInMountain, ...props}) => {
+const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect, selectedTilesInMountain, ...props}) => {
 
     const playerId = usePlayerId()
     const animation = useAnimation<TakeTile>(animation => isTakeTile(animation.move) && animation.move.coordinates.x === x && animation.move.coordinates.y === y)
     const tilesToTake = game.tilesToTake
     const canTakeAny = tilesToTake?.element === Element.Earth && tilesToTake.coordinates.length && tilesToTake.coordinates[0].x === x && tilesToTake.coordinates[0].y === y
 
-    const playMove = usePlay <MoveTile> ()
-    const playTake = usePlay <TakeTile> ()
+    const playMove = usePlay<MoveTile>()
+    const playTake = usePlay<TakeTile>()
 
-    return(
-
+    return (
         <>
+            <div {...props} css={[!tilesToTake && noPointerEvents, renderContext]}>
+                {pile.map((tile, index) =>
+                    <div css={positionTile} key={index}>
+                        <ElementTile
+                            css={[animation && game.mountainBoard[x][y].length === index + 1 && tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index + 1),
+                                animation && tilesToTake?.element === Element.Earth && index === animation.move.coordinates.z && takeTileEarthAnimation(animation.duration, index + 1),
+                                canTakeAny && shadowStyle
+                            ]}
+                            position={canTakeAny ? 3 * index : index}
+                            draggable={playerId === game.activePlayer && canDrag(game, x, y, index)}
+                            type='ElementInPile'
+                            draggableItem={{x, y, z: index}}
+                            element={tile}
 
-        <div {...props} css = {[!tilesToTake && noPointerEvents, renderContext]} >
-
-            {pile.map((tile, index) =>
-
-                <div css={positionTile} key = {index}>
-
-                    <ElementTile
-                                css = {[animation && game.mountainBoard[x][y].length === index+1 && tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index+1),
-                                        animation && tilesToTake?.element === Element.Earth && index === animation.move.coordinates.z && takeTileEarthAnimation(animation.duration, index+1),
-                                        canTakeAny && shadowStyle
-                                      ]}
-                                position = {canTakeAny ? 3*index : index}
-                                draggable = {playerId === game.activePlayer && canDrag(game,x,y,index)}
-                                type = 'ElementInPile'
-                                draggableItem = {{x, y, z : index}}
-                                element = {tile}
-
-                                onClick = {() => { canTakeTile(x,y,index, tilesToTake, game.mountainBoard) 
-                                                  ? onSelect(index)
-                                                  : console.log("Ne rien faire")
-                                                 }
+                            onClick={() => {
+                                canTakeTile(x, y, index, tilesToTake, game.mountainBoard)
+                                    ? onSelect(index)
+                                    : console.log("Ne rien faire")
+                           }
                                           }
 
-                                isSelected = {selectedTilesInMountain?.includes({x,y,z:index}) &&
-                                              tilesToTake !== undefined ? true : false
-                                            }
-                    />
+                            isSelected={selectedTilesInMountain?.includes({x,y,z:index}) && tilesToTake !== undefined}
+                        />
+                    </div>
+                )}
+            </div>
 
-                </div>
-
-            )}
-
-        </div>
-
-        <MountainDropZone
-            x = {x}
-            y = {y}
-            height = {game.mountainBoard[x][y].length}
-
-            onClick = {() => {canMoveTile(selectedTileInPath,x,y) ? playMove({type : MoveType.MoveTile, path : selectedTileInPath!.path, x, y}) : console.log("Ne rien faire")}}
-
-            {...props}
-
-        />
+            <MountainDropZone
+                x={x}
+                y={y}
+                height={game.mountainBoard[x][y].length}
+                onClick={() => {
+                    canMoveTile(selectedTileInPath, x, y) ? playMove({
+                        type: MoveType.MoveTile,
+                        path: selectedTileInPath!.path,
+                        x,
+                        y
+                    }) : console.log("Ne rien faire")
+                }}
+                {...props}/>
 
         </>
-
     )
-
 }
 
-function doTakeTile(x:number, y:number, z:number, tilesToTake:TilesToTake):TakeTile{
-    if (tilesToTake.element !== Element.Earth){
-        return {type : MoveType.TakeTile, coordinates:{x,y}}
+function doTakeTile(x: number, y: number, z: number, tilesToTake: TilesToTake): TakeTile {
+    if (tilesToTake.element !== Element.Earth) {
+        return {type: MoveType.TakeTile, coordinates: {x, y}}
     } else {
-        return {type : MoveType.TakeTile, coordinates:{x,y,z}}
+        return {type: MoveType.TakeTile, coordinates: {x, y, z}}
     }
 }
 
-function canTakeTile(x:number, y:number, z:number, tilesToTake:TilesToTake|undefined, mountainBoard:number[][][]):boolean{
+function canTakeTile(x: number, y: number, z: number, tilesToTake: TilesToTake | undefined, mountainBoard: number[][][]): boolean {
 
-    if (tilesToTake === undefined){
+    if (tilesToTake === undefined) {
         return false
     } else {
-        if (tilesToTake.element !== Element.Earth){
+        if (tilesToTake.element !== Element.Earth) {
             return (
                 (tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
                 &&
@@ -118,110 +110,105 @@ function canTakeTile(x:number, y:number, z:number, tilesToTake:TilesToTake|undef
     }
 }
 
-function isSelected(x:number, y:number, z:number, selectedTile:ElementInPile | undefined):boolean{
-    if (selectedTile === undefined){
+function isSelected(x: number, y: number, z: number, selectedTile: ElementInPile | undefined): boolean {
+    if (selectedTile === undefined) {
         return false
     } else {
-        if (selectedTile.x === x && selectedTile.y === y && selectedTile.z === z){
-            return true
-        } else {
-            return false
-        }
+        return selectedTile.x === x && selectedTile.y === y && selectedTile.z === z;
     }
 
 }
 
-function canMoveTile(selectedTileInPath:ElementInPath | undefined, x:number, y:number):boolean{
-    if (selectedTileInPath === undefined){
+function canMoveTile(selectedTileInPath: ElementInPath | undefined, x: number, y: number): boolean {
+    if (selectedTileInPath === undefined) {
         return false
-    } else if (selectedTileInPath.path === PathType.Horizontal){
+    } else if (selectedTileInPath.path === PathType.Horizontal) {
         return selectedTileInPath.position === x;
-    } else if (selectedTileInPath.path === PathType.Vertical){
+    } else if (selectedTileInPath.path === PathType.Vertical) {
         return selectedTileInPath.position === y
     } else {
         return false
     }
 }
 
-function canDrag(game:GameState, x:number, y:number, z:number):boolean{
+function canDrag(game: GameState, x: number, y: number, z: number): boolean {
 
-    if (game.tilesToTake === undefined){
+    if (game.tilesToTake === undefined) {
         return false;
-    } else if (game.tilesToTake.quantity === 0){
+    } else if (game.tilesToTake.quantity === 0) {
         return false
-    } else if (game.tilesToTake.element !== Element.Earth){
-        return(
+    } else if (game.tilesToTake.element !== Element.Earth) {
+        return (
             (game.tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
             &&
             (z === game.mountainBoard[x][y].length - 1)
         )
     } else {
-
-       return (
-        (game.tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
-        &&
-        (z !== game.mountainBoard[x][y].length - 1)
-
-       )
-   }
-
+        return (
+            (game.tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
+            &&
+            (z !== game.mountainBoard[x][y].length - 1)
+        )
+    }
 }
 
 const shadowStyle = css`
-box-shadow: 0px 0px 1.5em 0.5em black; 
-border-radius:20%;
+    box-shadow: 0 0 1.5em 0.5em black;
+    border-radius: 20%;
 `
 
 const renderContext = css`
-transform-style:preserve-3d;
+    transform-style: preserve-3d;
 `
 
 const noPointerEvents = css`
-pointer-events:none;
+    pointer-events: none;
 `
 
 const positionTile = css`
-position:absolute;
-left:15%;
-top:15%;
-width:70%;
-height:70%;
+    position: absolute;
+    left: 15%;
+    top: 15%;
+    width: 70%;
+    height: 70%;
 
-transform-style: preserve-3d;
+    transform-style: preserve-3d;
 `
 
-const takeTileKeyFrames = (z:number) => keyframes`
-from{}
-25%{
-    transform:translate3d(0,0,${z*4+4.02}em);
-}
-55%{
-    transform:translate3d(0,0,${z*4+4.02}em);
-}
-to{
-    transform:translate3d(0,0,150em);
-}
+const takeTileKeyFrames = (z: number) => keyframes`
+    from {
+    }
+    25% {
+        transform: translate3d(0, 0, ${z * 4 + 4.02}em);
+    }
+    55% {
+        transform: translate3d(0, 0, ${z * 4 + 4.02}em);
+    }
+    to {
+        transform: translate3d(0, 0, 150em);
+    }
 `
 
-const takeTileEarthKeyFrames = (z:number) => keyframes`
-from{}
-25%{
-    transform:translate3d(-150%,0,${z*3*4+4.02}em);
-}
-55%{
-    transform:translate3d(-150%,0,${z*3*4+4.02}em);
-}
-to{
-    transform:translate3d(-150%,0,150em);
-}
+const takeTileEarthKeyFrames = (z: number) => keyframes`
+    from {
+    }
+    25% {
+        transform: translate3d(-150%, 0, ${z * 3 * 4 + 4.02}em);
+    }
+    55% {
+        transform: translate3d(-150%, 0, ${z * 3 * 4 + 4.02}em);
+    }
+    to {
+        transform: translate3d(-150%, 0, 150em);
+    }
 `
 
-const takeTileAnimation = (duration:number, z:number) => css`
-animation:${takeTileKeyFrames(z)} ${duration}s ease-in-out;
+const takeTileAnimation = (duration: number, z: number) => css`
+    animation: ${takeTileKeyFrames(z)} ${duration}s ease-in-out;
 `
 
-const takeTileEarthAnimation = (duration:number, z:number) => css`
-animation:${takeTileEarthKeyFrames(z)} ${duration}s ease-in-out;
+const takeTileEarthAnimation = (duration: number, z: number) => css`
+    animation: ${takeTileEarthKeyFrames(z)} ${duration}s ease-in-out;
 `
 
 export default MountainPile
