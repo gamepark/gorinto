@@ -35,7 +35,7 @@ const MountainPanel : FC<{game : GameView, selectedTileInPath?:ElementInPath}> =
                         selectedTileInPath = {selectedTileInPath}
 
                         onSelect = {position => (selectedTilesInMountain.some(element => element.x === x && element.y === y && element.z === position)      // Déjà sélectionné ?
-                        ? setSelectedTilesInMountain(removeFromTheHook(selectedTilesInMountain, {x,y,z:position}))      // si oui, On le retire
+                        ? setSelectedTilesInMountain(selectedTilesInMountain.filter(item => item.x !== x || item.y !==y || item.z !== position ))      // si oui, On le retire
                         : setSelectedTilesInMountain(current => [...current, {x,y, z:position}])) }      // Si non, on l'ajoute.
                         selectedTilesInMountain = {selectedTilesInMountain}         
                         />
@@ -50,13 +50,7 @@ const MountainPanel : FC<{game : GameView, selectedTileInPath?:ElementInPath}> =
 
 }
 
-function removeFromTheHook(array:{x:number, y:number, z:number}[], object:{x:number, y:number, z:number}) : {x:number, y:number, z:number}[]{
 
-    const result = array
-    result.splice(array.findIndex(elem => elem === object),1)
-    return result
-
-}
 
 const areaPosition= (x:number, y:number) => css`
 position:absolute;

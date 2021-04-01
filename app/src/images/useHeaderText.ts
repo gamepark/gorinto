@@ -16,15 +16,15 @@ export default function useHeaderText() {
     }
     if (game.tilesToTake) {
         if (game.activePlayer === playerId) {
-            t('You must take tiles from the mountain')
+            return t('You must take tiles from the mountain')
         } else {
-            t('{player} must take tiles from the mountain', {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t)})
+            return t('{player} must take tiles from the mountain', {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t)})
         }
     } else {
         if (game.activePlayer === playerId) {
-            // TODO
+            return t("You have to move an element from one path to the mountain")
         } else {
-            // TODO
+           return t("{player} have to move an element from one path to the mountain", {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t)})
         }
     }
     return t('Connecting with the elements...')
