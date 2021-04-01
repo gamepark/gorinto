@@ -21,10 +21,10 @@ type Props = {
     game:GameState,
     selectedTileInPath?:ElementInPath,
     onSelect:(position:number) => void,
-    selectedTileInMountain?:ElementInPile
+    selectedTilesInMountain?:ElementInPile[]
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>
 
-const MountainPile : FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect, selectedTileInMountain, ...props}) => {
+const MountainPile : FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect, selectedTilesInMountain, ...props}) => {
 
     const playerId = usePlayerId()
     const animation = useAnimation<TakeTile>(animation => isTakeTile(animation.move) && animation.move.coordinates.x === x && animation.move.coordinates.y === y)
@@ -55,15 +55,13 @@ const MountainPile : FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelec
                                 draggableItem = {{x, y, z : index}}
                                 element = {tile}
 
-                                onClick = {() => { canTakeTile(x, y, index, tilesToTake, game.mountainBoard) && isSelected(x,y,index, selectedTileInMountain)
-                                    ? playTake(doTakeTile(x, y, index, tilesToTake!))
-                                    : canTakeTile(x, y, index, tilesToTake, game.mountainBoard)
-                                        ? onSelect(index)
-                                        : console.log("Ne rien faire") }}
+                                onClick = {() => { canTakeTile(x,y,index, tilesToTake, game.mountainBoard) 
+                                                  ? onSelect(index)
+                                                  : console.log("Ne rien faire")
+                                                 }
+                                          }
 
-                                isSelected = {selectedTileInMountain?.x === x &&
-                                              selectedTileInMountain?.y === y &&
-                                              selectedTileInMountain?.z === index &&
+                                isSelected = {selectedTilesInMountain?.includes({x,y,z:index}) &&
                                               tilesToTake !== undefined ? true : false
                                             }
                     />

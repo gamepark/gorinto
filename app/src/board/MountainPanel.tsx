@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import GameState from "@gamepark/gorinto/types/GameState";
 import MountainPile from "./MountainPile";
 import ElementInPath from "./ElementInPath";
@@ -8,8 +8,16 @@ import ElementInPile from "./ElementInPile";
 
 const MountainPanel : FC<{game : GameState, selectedTileInPath?:ElementInPath}> = ({game, selectedTileInPath}) => {
 
-    const [selectedTileInMountain, setSelectedTileInMountain] = useState<ElementInPile>()
+    const [selectedTilesInMountain, setSelectedTilesInMountain] = useState<ElementInPile[]>([])
 
+    useEffect( () => {
+        if (!game.tilesToTake && selectedTilesInMountain.length > 0){
+            setSelectedTilesInMountain([])
+        }
+    }, [game, selectedTilesInMountain] )
+    
+    console.log(selectedTilesInMountain)
+    
     return(
 
         <div css = {mountainPanelStyle}>
@@ -26,8 +34,10 @@ const MountainPanel : FC<{game : GameState, selectedTileInPath?:ElementInPath}> 
                         game = {game}
                         selectedTileInPath = {selectedTileInPath}
 
-                        onSelect = {position => setSelectedTileInMountain({x,y, z:position})}
-                        selectedTileInMountain = {selectedTileInMountain}
+                        onSelect = {position => (selectedTilesInMountain.includes({x,y,z:position})      // Déjà sélectionné ?
+                        ? setSelectedTilesInMountain(removeFromTheHook(selectedTilesInMountain, {x,y,z:position}))      // si oui, On le retire
+                        : setSelectedTilesInMountain(current => [...current, {x,y, z:position}])) }      // Si non, on l'ajoute.
+                        selectedTilesInMountain = {selectedTilesInMountain}         
                         />
 
                     )
@@ -37,6 +47,14 @@ const MountainPanel : FC<{game : GameState, selectedTileInPath?:ElementInPath}> 
         </div>
 
     )
+
+}
+
+function removeFromTheHook(array:{x:number, y:number, z:number}[], object:{x:number, y:number, z:number}) : {x:number, y:number, z:number}[]{
+
+    const result = array.splice(array.findIndex(elem => elem === object),1)
+    console.log("dans le Remove",result)
+    return result
 
 }
 
