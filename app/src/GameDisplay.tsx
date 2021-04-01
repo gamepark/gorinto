@@ -10,7 +10,6 @@ import {FC, Fragment, useMemo, useState} from 'react'
 import Board from './board/Board'
 import BurrowTile from './board/BurrowTile'
 import GoalCard from './board/GoalCard'
-import Header from './board/Header'
 import KeyElementCardPanel from './board/KeyElementCardPanel'
 import PatternPopUp from './board/PatternPopUp'
 import PatternReminder from './board/PatternReminder'
@@ -35,8 +34,6 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
   return (
 
     <Fragment>
-
-    <Header game = {game} />
 
     <Letterbox top={0}>
 
