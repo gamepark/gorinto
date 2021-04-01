@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
+import {css, keyframes} from '@emotion/react'
 import MoveTile from '@gamepark/gorinto/moves/MoveTile'
 import Element from '@gamepark/gorinto/types/Element'
 import {usePlay} from '@gamepark/react-client'
@@ -34,22 +34,13 @@ const ElementTile: FC<Props> = ({draggable = false, draggableItem, element, posi
     const item = {...draggableItem, hoverPile: setDisplayHeight}
 
     return (
-
-        <Draggable canDrag={draggable} item={item} css={elementTileStyle} drop={play} {...props}
-                   preTransform={`translateZ(${displayHeight * 4.01 + 0.01}em)`} end={() => setDisplayHeight(position)}>
-
-            <div css={[topStyle, backgroundImage(element)]}/>
-            <div css={[frontStyle, coloring(element), bordering]}/>
-            <div css={[bottomStyle(position), coloring(element), canBeDragged(draggable), bordering, isFocused(isSelected)]}/>
-            <div css={[rightStyle, coloring(element), bordering]}/>
-            <div css={[leftStyle, coloring(element), bordering]}/>
-            <div css={[backStyle, coloring(element), bordering]}/>
-
-            <div css={[coloring(element), transFrontLeft]}/>
-            <div css={[coloring(element), transFrontRight]}/>
-
+        <Draggable canDrag={draggable} item={item} end={() => setDisplayHeight(position)} drop={play}
+                   css={[elementTileStyle, image(element), color(element), isSelected ? glowingGreen : draggable ? glowingGold : position === 0 && shadow]}
+                   preTransform={`translateZ(${displayHeight * 4.01 + 0.01}em)`}
+                   {...props}>
+            <div css={[diagonal, diagonal1, color(element)]}/>
+            <div css={[diagonal, diagonal2, color(element)]}/>
         </Draggable>
-
     )
 
 }
@@ -62,159 +53,99 @@ const elementTileStyle = css`
     top: 0;
     width: 100%;
     height: 100%;
-
-    transform-style: preserve-3d;
-`
-
-const isFocused = (focus: boolean) => css`
-
-    @keyframes glowingFocus {
-        0% {
-            box-shadow: 0 0 1em 0.2em green;
-        }
-        45% {
-            box-shadow: 0 0 2em 1.5em green;
-        }
-        55% {
-            box-shadow: 0 0 2em 1.5em green;
-        }
-        100% {
-            box-shadow: 0 0 1em 0.2em green;
-        }
-    }
-
-    ${focus && `animation: glowingFocus 3000ms infinite;`};
-    border-radius: 20%;
-`
-
-const coloring = (color: Element) => css`
-    ${color === Element.Void && `background-color : #805474`};
-    ${color === Element.Wind && `background-color : #cee0d7`};
-    ${color === Element.Fire && `background-color : #fc671a`};
-    ${color === Element.Water && `background-color : #00bab3`};
-    ${color === Element.Earth && `background-color : #996c59`};
-
-`
-
-const bordering = css`border: 0.1em black solid;`
-
-const canBeDragged = (isDraggable: boolean) => css`
-
-    @keyframes glowing {
-        0% {
-            box-shadow: 0 0 1em 0.2em gold;
-        }
-        45% {
-            box-shadow: 0 0 1.5em 1em gold;
-        }
-        55% {
-            box-shadow: 0 0 1.5em 1em gold;
-        }
-        100% {
-            box-shadow: 0 0 1em 0.2em gold;
-        }
-    }
-
-    ${isDraggable && `animation: glowing 3000ms infinite;`};
-    border-radius: 20%;
-`
-
-const transFrontLeft = css`
-    position: absolute;
-    transform-style: preserve-3d;
-
-    transform-origin: left;
-    transform: rotateY(-90deg) rotateX(-45deg);
-    left: 6.25%;
-    bottom: 0;
-
-    width: ${thickness}em;
-    height: 17.67%;
-`
-
-const transFrontRight = css`
-    position: absolute;
-    transform-style: preserve-3d;
-
-    transform-origin: right;
-    transform: rotateY(90deg) rotateX(-45deg);
-    right: 6.25%;
-    bottom: 0;
-
-    width: ${thickness}em;
-    height: 17.67%;
-`
-
-const rightStyle = css`
-    position: absolute;
-    transform-style: preserve-3d;
-
-    transform-origin: right;
-    transform: rotateY(90deg);
-    right: 1px;
-    top: 12.5%;
-
-    width: ${thickness}em;
-    height: 75%;
-`
-const leftStyle = css`
-    position: absolute;
-    transform-style: preserve-3d;
-
-    transform-origin: left;
-    transform: rotateY(-90deg);
-    left: 1px;
-    top: 12.5%;
-
-    width: ${thickness}em;
-    height: 75%;
-`
-const frontStyle = css`
-    position: absolute;
-    transform-style: preserve-3d;
-
-    transform-origin: bottom;
-    transform: rotateX(-90deg);
-    bottom: 1px;
-    left: 12.5%;
-
-    height: ${thickness}em;
-    width: 75%;
-`
-const backStyle = css`
-    position: absolute;
-    transform-style: preserve-3d;
-
-    transform-origin: top;
-    transform: rotateX(90deg);
-    top: 1px;
-    left: 12.5%;
-
-    height: ${thickness}em;
-    width: 75%;
-`
-
-const topStyle = css`
-    position: absolute;
-    transform: translateZ(${thickness}em);
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
     border-radius: 15%;
+    border: 0.1em black solid;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    outline: 1px solid transparent;
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 15%;
+        border: 0.1em black solid;
+        background-size: cover;
+        transform: translateZ(${thickness}em);
+        backface-visibility: hidden;
+        outline: 1px solid transparent;
+    }
 `
 
-const backgroundImage = (element: Element) => css`
-    background-image: url(${getElementImage(element)});
-`
-
-const bottomStyle = (position: number) => css`
+const diagonal = css`
     position: absolute;
-    height: 100%;
-    width: 100%;
-    border-radius: 15%;
+    height: ${thickness - 0.1}em;
+    transform-origin: bottom left;
+    backface-visibility: hidden;
+    outline: 1px solid transparent;
+`
 
-    ${position === 0 && `box-shadow: 0px 0px 1.5em 0.5em black;`}
+const diagonal1 = css`
+    width: 127%;
+    top: -2.6em;
+    left: 0;
+    transform: rotateZ(38deg) rotateX(-90deg);
+    border-right: 0.1em black solid;
+`
+
+const diagonal2 = css`
+    width: 130%;
+    top: -3.5em;
+    left: 0.5em;
+    transform: rotateZ(45deg) rotateX(-90deg);
+    border-left: 0.1em black solid;
+`
+
+const image = (element: Element) => css`
+    &:after {
+        background-image: url(${getElementImage(element)});
+    }
+`
+
+const color = (element: Element) => {
+    switch (element) {
+        case Element.Void:
+            return css`background: linear-gradient(to right, #714a66, #614058);`
+        case Element.Wind:
+            return css`background: linear-gradient(to right, #bed6ca, #afccbd);`
+        case Element.Fire:
+            return css`background: linear-gradient(to right, #f95703, #e04e03);`
+        case Element.Water:
+            return css`background: linear-gradient(to right, #00a09a, #008782);`
+        case Element.Earth:
+            return css`background: linear-gradient(to right, #896150, #795546);`
+    }
+}
+
+const glowingGoldKeyframes = keyframes`
+    0% {
+        box-shadow: 0 0 1em 0.2em gold;
+    }
+    90%, 100% {
+        box-shadow: 0 0 1.5em 1em gold;
+    }
+`
+
+const glowingGold = css`
+    animation: ${glowingGoldKeyframes} 1.5s infinite alternate;
+`
+
+const glowingGreenKeyframes = keyframes`
+    0% {
+        box-shadow: 0 0 1em 0.2em gold;
+    }
+    90%, 100% {
+        box-shadow: 0 0 1.5em 1em gold;
+    }
+`
+
+const glowingGreen = css`
+    animation: ${glowingGreenKeyframes} 1.5s infinite alternate;
+`
+
+const shadow = css`
+    box-shadow: 0 0 1.5em 0.5em black;
 `
 
 export function getElementImage(element: Element) {
