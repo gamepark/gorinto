@@ -16,7 +16,7 @@ const MountainPanel : FC<{game : GameState, selectedTileInPath?:ElementInPath}> 
         }
     }, [game, selectedTilesInMountain] )
     
-    console.log(selectedTilesInMountain)
+    console.log("contenu du hook", selectedTilesInMountain)
     
     return(
 
@@ -34,7 +34,7 @@ const MountainPanel : FC<{game : GameState, selectedTileInPath?:ElementInPath}> 
                         game = {game}
                         selectedTileInPath = {selectedTileInPath}
 
-                        onSelect = {position => (selectedTilesInMountain.includes({x,y,z:position})      // Déjà sélectionné ?
+                        onSelect = {position => (selectedTilesInMountain.some(element => element.x === x && element.y === y && element.z === position)      // Déjà sélectionné ?
                         ? setSelectedTilesInMountain(removeFromTheHook(selectedTilesInMountain, {x,y,z:position}))      // si oui, On le retire
                         : setSelectedTilesInMountain(current => [...current, {x,y, z:position}])) }      // Si non, on l'ajoute.
                         selectedTilesInMountain = {selectedTilesInMountain}         
@@ -52,7 +52,8 @@ const MountainPanel : FC<{game : GameState, selectedTileInPath?:ElementInPath}> 
 
 function removeFromTheHook(array:{x:number, y:number, z:number}[], object:{x:number, y:number, z:number}) : {x:number, y:number, z:number}[]{
 
-    const result = array.splice(array.findIndex(elem => elem === object),1)
+    const result = array
+    result.splice(array.findIndex(elem => elem === object),1)
     console.log("dans le Remove",result)
     return result
 
