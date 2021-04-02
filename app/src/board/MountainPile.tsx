@@ -20,7 +20,7 @@ type Props = {
     y: number,
     game: GameView,
     selectedTileInPath?: ElementInPath,
-    onSelect: (position: number) => void,
+    onSelect:(x:number,y:number,position: number) => void, 
     selectedTilesInMountain: ElementInPile[]
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>
 
@@ -52,7 +52,7 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
 
                             onClick={() => {
                                 canTakeTile(x, y, index, tilesToTake, game.mountainBoard)
-                                    ? onSelect(index)
+                                    ? onSelect(x,y,index)
                                     : console.log("Ne rien faire")
                                         }
                                     }

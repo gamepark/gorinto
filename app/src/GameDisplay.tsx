@@ -6,9 +6,10 @@ import GameView from '@gamepark/gorinto/types/GameView'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
 import {Letterbox} from '@gamepark/react-components'
-import {FC, Fragment, useMemo, useState} from 'react'
+import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import Board from './board/Board'
 import BurrowTile from './board/BurrowTile'
+import ElementInPile from './board/ElementInPile'
 import GoalCard from './board/GoalCard'
 import KeyElementCardPanel from './board/KeyElementCardPanel'
 import PatternPopUp from './board/PatternPopUp'
@@ -29,6 +30,16 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
   const showPatternPopup = !patternPopUpClosed
 
   const player = game.players.find(player => player.color === playerId)
+
+  // Hooks for move clics
+
+  const [selectedTilesInMountain, setSelectedTilesInMountain] = useState<ElementInPile[]>([])
+
+  useEffect( () => {
+      if (!game.tilesToTake && selectedTilesInMountain.length > 0){
+          setSelectedTilesInMountain([])
+      }
+  }, [game, selectedTilesInMountain] )
 
 
   return (
@@ -64,7 +75,12 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
            
       )}
       
-      <Board game = {game}/>
+      <Board game = {game} 
+             onSelection = {(x,y,position) => (selectedTilesInMountain.some(element => element.x === x && element.y === y && element.z === position)      // Déjà sélectionné ?
+              ? setSelectedTilesInMountain(selectedTilesInMountain.filter(item => item.x !== x || item.y !==y || item.z !== position ))      // si oui, On le retire
+              : game.tilesToTake && selectedTilesInMountain.length < game.tilesToTake?.quantity ? setSelectedTilesInMountain(current => [...current, {x,y, z:position}]) : console.log("Impossible de prendre plus de tuiles")) }      // Si non, on l'ajoute.
+              selectedTilesInMountain = {selectedTilesInMountain}  
+            />
 
       <PatternReminder open={() => setPatternPopUpClosed(false)} />
 

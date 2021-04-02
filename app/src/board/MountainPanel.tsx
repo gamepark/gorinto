@@ -6,17 +6,16 @@ import ElementInPath from "./ElementInPath";
 import ElementInPile from "./ElementInPile";
 import GameView from "@gamepark/gorinto/types/GameView";
 
-const MountainPanel : FC<{game : GameView, selectedTileInPath?:ElementInPath}> = ({game, selectedTileInPath}) => {
+type Props = {
+    game : GameView,
+    selectedTileInPath?:ElementInPath,
+    onSelection:(x:number,y:number,position: number) => void, 
+    selectedTilesInMountain: ElementInPile[]
+}
 
-    const [selectedTilesInMountain, setSelectedTilesInMountain] = useState<ElementInPile[]>([])
+const MountainPanel : FC<Props> = ({game, selectedTileInPath, onSelection, selectedTilesInMountain}) => {
 
-    useEffect( () => {
-        if (!game.tilesToTake && selectedTilesInMountain.length > 0){
-            setSelectedTilesInMountain([])
-        }
-    }, [game, selectedTilesInMountain] )
-    
-    console.log("Dans MountainPanel", selectedTilesInMountain)
+
     
     return(
 
@@ -34,10 +33,8 @@ const MountainPanel : FC<{game : GameView, selectedTileInPath?:ElementInPath}> =
                         game = {game}
                         selectedTileInPath = {selectedTileInPath}
 
-                        onSelect = {position => (selectedTilesInMountain.some(element => element.x === x && element.y === y && element.z === position)      // Déjà sélectionné ?
-                        ? setSelectedTilesInMountain(selectedTilesInMountain.filter(item => item.x !== x || item.y !==y || item.z !== position ))      // si oui, On le retire
-                        : setSelectedTilesInMountain(current => [...current, {x,y, z:position}])) }      // Si non, on l'ajoute.
-                        selectedTilesInMountain = {selectedTilesInMountain}         
+                        onSelect = {onSelection} 
+                        selectedTilesInMountain = {selectedTilesInMountain}    
                         />
 
                     )

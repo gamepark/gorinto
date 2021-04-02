@@ -8,8 +8,16 @@ import MountainPanel from './MountainPanel'
 import ElementInPath from './ElementInPath'
 import PathType from '@gamepark/gorinto/types/PathType'
 import GameView from "@gamepark/gorinto/types/GameView";
+import ElementInPile from './ElementInPile'
 
-const Board : FC<{game:GameView}> = ({game}) => {
+type Props = {
+    game:GameView,
+    onSelection:(x:number,y:number,position: number) => void, 
+    selectedTilesInMountain: ElementInPile[]
+
+}
+
+const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain}) => {
 
     const [selectedTileInPath, setSelectedTileInPath] = useState<ElementInPath>()
 
@@ -20,7 +28,7 @@ const Board : FC<{game:GameView}> = ({game}) => {
 
             <HorizontalPathPanel onSelect = {position => (selectedTileInPath?.path === PathType.Horizontal && selectedTileInPath.position === position)  ? setSelectedTileInPath(undefined) : setSelectedTileInPath({path:PathType.Horizontal, position})} selectedTile = {selectedTileInPath} activePlayer = {game.activePlayer} horizontalPath = {game.horizontalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
             <VerticalPathPanel onSelect = {position => (selectedTileInPath?.path === PathType.Vertical && selectedTileInPath.position === position) ? setSelectedTileInPath(undefined) : setSelectedTileInPath({path:PathType.Vertical, position})} selectedTile = {selectedTileInPath} activePlayer = {game.activePlayer} verticalPath = {game.verticalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
-            <MountainPanel game = {game} selectedTileInPath = {selectedTileInPath} />
+            <MountainPanel game = {game} selectedTileInPath = {selectedTileInPath} onSelection = {onSelection} selectedTilesInMountain = {selectedTilesInMountain} />
         
         </div>
 
