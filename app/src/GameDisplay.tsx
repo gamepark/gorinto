@@ -71,6 +71,8 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
                       position={[Math.trunc(index/2),index%2]}
                       activePlayer = {game.activePlayer}
                       playersNumber = {game.players.length}
+
+                      selectedTilesInMountain = {selectedTilesInMountain}
         />
            
       )}

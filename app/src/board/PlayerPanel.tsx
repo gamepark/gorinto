@@ -5,7 +5,7 @@ import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import { usePlayer } from '@gamepark/react-client'
+import { usePlay, usePlayer } from '@gamepark/react-client'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
@@ -35,6 +35,9 @@ import ElementInPile from './ElementInPile'
 
 import ElementTileForPlayers from './ElementTileForPlayers'
 import {getElementImage} from "./ElementTile";
+import Button from './Button'
+import TilesToTake from '@gamepark/gorinto/types/TilesToTake'
+import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 
 type Props = {
     player: Player
@@ -43,13 +46,16 @@ type Props = {
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
     mountainBoard:number[][][],
     activePlayer:PlayerColor | undefined,
-    playersNumber:number
+    playersNumber:number,
+    selectedTilesInMountain:ElementInPile[]
 } & HTMLAttributes<HTMLDivElement>
 
-const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score}, first, tilesToTake, mountainBoard, activePlayer, playersNumber, ...props}) => {
+const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score}, first, tilesToTake, mountainBoard, activePlayer, playersNumber, selectedTilesInMountain, ...props}) => {
 
     const {t} = useTranslation()
     const playerInfo = usePlayer(color)
+
+    const playTake = usePlay<TakeTile>()
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",
@@ -139,6 +145,22 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
             <div css={playerFooterStyle}>
 
+
+                <Button css={[(selectedTilesInMountain.length === tilesToTake?.quantity && color === activePlayer) || displayValidationButton, validationButtonStyle]} 
+                        onClick={() => {
+                          selectedTilesInMountain.length === tilesToTake?.quantity 
+                          ? (tilesToTake.element !== Element.Earth
+                            ? selectedTilesInMountain.forEach(element => playTake({
+                              type:MoveType.TakeTile,
+                              coordinates:{x:element.x,y:element.y}
+                          })) 
+                            :selectedTilesInMountain.forEach(element => playTake({
+                              type:MoveType.TakeTile,
+                              coordinates:{x:element.x,y:element.y, z:element.z}
+                          })) )
+                          : console.log("ne pas jour le coup") }}> 
+                        {"✓"} 
+                </Button>
                 <div css={[coinPosition]}><img alt="Coin" src={CoinHeads} css={coinStyle(first)} draggable={false}/></div>
                 <div css={scoreStyle(color)}>{displayedScore}</div>
 
@@ -392,6 +414,20 @@ width: 37%;
 transform-style: preserve-3d;
 `
 
+const displayValidationButton = css`
+display:none;
+`
+
+const validationButtonStyle = css`
+
+position:absolute;
+right:20%;
+transform:translateZ(0.01em);
+transform-style:preserve-3d;
+font-size:5em;
+
+`
+
 const coinStyle = (isFirst:boolean) => css`
 width:100%;
 filter: drop-shadow(0 0 1em black);
@@ -455,7 +491,7 @@ function getKanji(color: PlayerColor) {
       case PlayerColor.White:
         return "#FFFFFF"
       case PlayerColor.Black:
-        return "#000080"
+        return "#000000"
       case PlayerColor.Red:
         return "#d01f2f"
       case PlayerColor.Yellow:

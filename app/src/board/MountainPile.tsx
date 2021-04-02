@@ -32,7 +32,7 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
     const canTakeAny = tilesToTake?.element === Element.Earth && tilesToTake.coordinates.length && tilesToTake.coordinates[0].x === x && tilesToTake.coordinates[0].y === y
 
     const playMove = usePlay<MoveTile>()
-    const playTake = usePlay<TakeTile>()
+    
 
     return (
         <>
