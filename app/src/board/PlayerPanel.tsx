@@ -146,10 +146,10 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
             <div css={playerFooterStyle}>
 
 
-                <Button css={[(selectedTilesInMountain.length === tilesToTake?.quantity && color === activePlayer) || displayValidationButton, validationButtonStyle]} 
+                <Button css={[(tilesToTake !== undefined && selectedTilesInMountain.length === Math.min(tilesToTake?.quantity, tilesToTake?.coordinates.length) && color === activePlayer) || displayValidationButton, validationButtonStyle]} 
                         onClick={() => {
-                          selectedTilesInMountain.length === tilesToTake?.quantity 
-                          ? (tilesToTake.element !== Element.Earth
+                          selectedTilesInMountain.length === Math.min(tilesToTake!.quantity,tilesToTake!.coordinates.length) 
+                          ? (tilesToTake!.element !== Element.Earth
                             ? selectedTilesInMountain.forEach(element => playTake({
                               type:MoveType.TakeTile,
                               coordinates:{x:element.x,y:element.y}
