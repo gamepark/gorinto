@@ -207,11 +207,11 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
             <div css={playerCounterStyle}>
 
-                {understanding[Element.Void] > 3 && <div css={countVoid}> {understanding[Element.Void]} </div>}
-                {understanding[Element.Wind] > 3 && <div css={countWind}> {understanding[Element.Wind]} </div>}
-                {understanding[Element.Fire] > 3 && <div css={countFire}> {understanding[Element.Fire]} </div>}
-                {understanding[Element.Water] > 3 && <div css={countWater}> {understanding[Element.Water]} </div>}
-                {understanding[Element.Earth] > 3 && <div css={countEarth}> {understanding[Element.Earth]} </div>}
+                {understanding[Element.Void] > 1 && <div css={countVoid}> {understanding[Element.Void]} </div>}
+                {understanding[Element.Wind] > 1 && <div css={countWind}> {understanding[Element.Wind]} </div>}
+                {understanding[Element.Fire] > 1 && <div css={countFire}> {understanding[Element.Fire]} </div>}
+                {understanding[Element.Water] > 1 && <div css={countWater}> {understanding[Element.Water]} </div>}
+                {understanding[Element.Earth] > 1 && <div css={countEarth}> {understanding[Element.Earth]} </div>}
 
             </div>
 
@@ -240,12 +240,11 @@ transform-style: preserve-3d;
 const playerCounterStyle = css`
 position:absolute;
 bottom : 6%;
-left : 25%;
+left : 42%;
 width:15%;
 height:92%;
 text-align:center;
 transform-style: preserve-3d;
-transform:translateZ(4.05em);
 
 div{
     position:absolute;
