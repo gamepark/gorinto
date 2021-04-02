@@ -1,4 +1,4 @@
-import {Competitive, IncompleteInformation, SequentialGame} from '@gamepark/rules-api'
+import {Action, Competitive, IncompleteInformation, SequentialGame, Undo} from '@gamepark/rules-api'
 import shuffle from 'lodash.shuffle'
 import {Goals} from './cards/Goals'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
@@ -27,8 +27,8 @@ import TilesToTake from './types/TilesToTake'
 const numberOfSeasons = 4
 
 export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor>
-  implements IncompleteInformation<GameState, GameView, Move, MoveView, PlayerColor>,
-    Competitive<GameState, Move, PlayerColor> {
+    implements IncompleteInformation<GameState, GameView, Move, MoveView, PlayerColor>,
+        Competitive<GameState, Move, PlayerColor>, Undo<GameState, Move, PlayerColor> {
 
   constructor(state: GameState)
   constructor(options: GorintoOptions)
@@ -158,6 +158,12 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
     const player = this.state.players.find(player => player.color === playerId)
     if (!player) throw new Error(`Cannot getScore of ${playerId} because he sis not play this game!`)
     return player.score
+  }
+
+  canUndo(action: Action<Move, PlayerColor>, consecutiveActions: Action<Move, PlayerColor>[]): boolean {
+    return !consecutiveActions.length && !action.consequences.some(consequence =>
+      consequence.type === MoveType.ChangeActivePlayer || consequence.type === MoveType.RefillPaths
+    )
   }
 }
 

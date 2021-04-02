@@ -1,4 +1,4 @@
-import {Game} from '@gamepark/rules-api'
+import {Action, Game} from '@gamepark/rules-api'
 import {getPredictableAutomaticMoves} from './Gorinto'
 import {changeActivePlayer} from './moves/ChangeActivePlayer'
 import {moveSeasonMarker} from './moves/MoveSeasonMarker'
@@ -12,6 +12,8 @@ import {takeTile} from './moves/TakeTile'
 import GameView from './types/GameView'
 import MoveType from './types/MoveType'
 import {MoveView} from './types/MoveView'
+import Move from "./types/Move";
+import PlayerColor from "./types/PlayerColor";
 
 export default class GorintoView implements Game<GameView, MoveView> {
   state: GameView
@@ -45,5 +47,13 @@ export default class GorintoView implements Game<GameView, MoveView> {
       case MoveType.ScoreKeyElements:
         return scoreKeyElements(this.state)
     }
+  }
+
+  canUndo(action: Action<MoveView, PlayerColor>, consecutiveActions: Action<MoveView, PlayerColor>[]): boolean {
+  console.log(action)
+  console.log(consecutiveActions)
+    return !consecutiveActions.length && !action.consequences.some(consequence =>
+        consequence.type === MoveType.ChangeActivePlayer || consequence.type === MoveType.RefillPaths
+    )
   }
 }

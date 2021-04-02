@@ -1309,6 +1309,11 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.34.tgz#0a8c348bb23b7b760030f5b1d912e582be4ec915"
   integrity sha512-XcIn3iYbTEzGIxD0/dY5+4f019jIcEIWBiHc3KrmK/ROahwxmZ/s+tdj97p/5K0klz4zZUiMfUlYP0ajhSJjmA==
 
+"@fortawesome/fontawesome-common-types@^0.2.35":
+  version "0.2.35"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.35.tgz#01dd3d054da07a00b764d78748df20daf2b317e9"
+  integrity sha512-IHUfxSEDS9dDGqYwIW7wTN6tn/O8E0n5PcAHz9cAaBoZw6UpG20IG/YM3NNLaGPwPqgjBAFjIURzqoQs3rrtuw==
+
 "@fortawesome/fontawesome-svg-core@^1.2.34":
   version "1.2.34"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.34.tgz#1d1a7c92537cbc2b8a83eef6b6d824b4b5b46b26"
@@ -1323,6 +1328,13 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.34"
 
+"@fortawesome/free-solid-svg-icons@^5.15.3":
+  version "5.15.3"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.15.3.tgz#52eebe354f60dc77e0bde934ffc5c75ffd04f9d8"
+  integrity sha512-XPeeu1IlGYqz4VWGRAT5ukNMd4VHUEEJ7ysZ7pSSgaEtNvSo+FLurybGJVmiqkQdK50OkSja2bfZXOeyMGRD8Q==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.35"
+
 "@fortawesome/react-fontawesome@^0.1.14":
   version "0.1.14"
   resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.14.tgz#bf28875c3935b69ce2dc620e1060b217a47f64ca"
@@ -1330,23 +1342,28 @@
   dependencies:
     prop-types "^15.7.2"
 
-"@gamepark/react-client@~4.4.0":
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-4.4.0.tgz#df25530b97fb8de2c37566b91b924ab23714aca9"
-  integrity sha512-xOPM6GV71eU5BDB5Hq0a+aiEXKGcw/0NyuiSUXb9AwH1q5pfgci1Pk5bJE4Z/IbapYp8mpHSl6C27wy2ZWkGhQ==
+"@gamepark/react-client@~4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-4.5.0.tgz#66c4ea4674af729dfaedd067d189376d624201ae"
+  integrity sha512-hCnTDTnZp6cUSnXj6nqamb6tqKHL5BXBte4wkyxjmm1ckyd08C3GmnXOnpzhWr9ns70L09teYX34vyhxtMloRg==
   dependencies:
     "@apollo/client" "^3.1.3"
     "@datadog/browser-logs" "^1.11.4"
+    "@fortawesome/free-solid-svg-icons" "^5.15.3"
+    "@fortawesome/react-fontawesome" "^0.1.14"
     "@gamepark/rules-api" "^4.2.1"
     "@types/lodash.shuffle" "^4.2.6"
     "@types/react" "^17.0.3"
     assert "^2.0.0"
+    fscreen "^1.2.0"
     graphql "^15.3.0"
     i18next-icu "^2.0.2"
     immer "^7.0.9"
     intl-messageformat "^9.5.2"
     lodash.shuffle "^4.2.0"
     moment "^2.29.1"
+    nosleep.js "^0.12.0"
+    o9n "^2.1.0"
     pusher-js "^7.0.0"
     redux ">=4.0.5"
 
@@ -7265,6 +7282,11 @@ fs.realpath@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
+fscreen@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/fscreen/-/fscreen-1.2.0.tgz#1a8c88e06bc16a07b473ad96196fb06d6657f59e"
+  integrity sha512-hlq4+BU0hlPmwsFjwGGzZ+OZ9N/wq9Ljg/sq3pX+2CD7hrJsX9tJgWWK/wiNTFM212CLHWhicOoqwXyZGGetJg==
+
 fsevents@^1.2.7:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.2.13.tgz#f325cb0455592428bcf11b383370ef70e3bfcc38"
@@ -10613,6 +10635,11 @@ normalize-url@^3.0.0, normalize-url@^3.3.0:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha512-U+JJi7duF1o+u2pynbp2zXDW2/PADgC30f0GsHZtRh+HOcXHnw137TrNlyxxRvWW5fjKd3bcLHPxofWuCjaeZg==
 
+nosleep.js@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/nosleep.js/-/nosleep.js-0.12.0.tgz#a01fddab2c13af357d673928b1f40a9013a4dc08"
+  integrity sha512-9d1HbpKLh3sdWlhXMhU6MMH+wQzKkrgfRkYV0EBdvt99YJfj0ilCJrWRDYG2130Tm4GXbEoTCx5b34JSaP+HhA==
+
 npm-bundled@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.1.1.tgz#1edd570865a94cdb1bc8220775e29466c9fb234b"
@@ -10741,6 +10768,11 @@ nwsapi@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.0.tgz#204879a9e3d068ff2a55139c2c772780681a38b7"
   integrity sha512-h2AatdwYH+JHiZpv7pt/gSX1XoRGb7L/qSIeuqA6GwYoF9w1vP1cw42TO0aI2pNyshRK5893hNSl+1//vHK7hQ==
+
+o9n@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/o9n/-/o9n-2.1.0.tgz#e4566cf95e5abefdd10dd2c2bc304f2d8ebf243c"
+  integrity sha512-Kvf4kB/XBctZwXKwjAmlPVhCqRywMFXl+o0dvhIc04A5gjWdTiQWYgy75vGXPRBxa9TrkWK6rhgtE+o4GnZTYQ==
 
 oauth-sign@~0.9.0:
   version "0.9.0"
