@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
-import {FC, useState} from "react"
+import {FC, useEffect, useState} from "react"
 import board from '../images/board.jpg'
 import HorizontalPathPanel from './HorizontalPathPanel'
 import VerticalPathPanel from './VerticalPathPanel'
@@ -19,7 +19,15 @@ type Props = {
 
 const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain}) => {
 
+    // Hooks for move clics
+
     const [selectedTileInPath, setSelectedTileInPath] = useState<ElementInPath>()
+
+    useEffect( () => {
+        if (game.tilesToTake && selectedTileInPath !== undefined){
+            setSelectedTileInPath(undefined)
+        }
+    }, [game, selectedTileInPath] )
 
 
     return (

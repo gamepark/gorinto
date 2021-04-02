@@ -23,10 +23,12 @@ type Props = {
     element: Element,
     isSelected: boolean
 
+    elementOfTilesToTake?:Element
+
 } & HTMLAttributes<HTMLDivElement>
 
 
-const ElementTile: FC<Props> = ({draggable = false, draggableItem, element, position = 0, isSelected, ...props}) => {
+const ElementTile: FC<Props> = ({draggable = false, draggableItem, element, position = 0, isSelected, elementOfTilesToTake, ...props}) => {
 
     const play = usePlay<MoveTile>()
     const [displayHeight, setDisplayHeight] = useState(position)
@@ -35,8 +37,12 @@ const ElementTile: FC<Props> = ({draggable = false, draggableItem, element, posi
 
     return (
         <Draggable canDrag={draggable} item={item} end={() => setDisplayHeight(position)} drop={play}
-                   css={[elementTileStyle, image(element), color(element), isSelected ? glowingGreen : draggable ? glowingGold : (position === 0 && shadow)]}
-                   preTransform={`translateZ(${displayHeight * 4.01 + 0.01}em)`}
+                   css={[elementTileStyle, image(element), color(element), draggable ? glowingGold : (position === 0 && shadow)]}
+                   preTransform = { isSelected 
+                        ? elementOfTilesToTake === Element.Earth 
+                            ? `translate3d(-4em,0,${displayHeight * 4.01 + 0.01}em)`
+                            : `translateZ(${displayHeight * 4.01 + 0.01 + 6}em)` 
+                        : `translateZ(${displayHeight * 4.01 + 0.01}em)`}
                    {...props}>
             <div css={[diagonal, diagonal1, color(element)]}/>
             <div css={[diagonal, diagonal2, color(element)]}/>

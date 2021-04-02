@@ -146,10 +146,15 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
             <div css={playerFooterStyle}>
 
 
-                <Button css={[(tilesToTake !== undefined && selectedTilesInMountain.length === Math.min(tilesToTake?.quantity, tilesToTake?.coordinates.length) && color === activePlayer) || displayValidationButton, validationButtonStyle]} 
-                        onClick={() => {
-                          selectedTilesInMountain.length === Math.min(tilesToTake!.quantity,tilesToTake!.coordinates.length) 
-                          ? (tilesToTake!.element !== Element.Earth
+                <Button css={[(tilesToTake !== undefined
+                              && selectedTilesInMountain.length === (tilesToTake.element !== Element.Earth 
+                                ? Math.min(tilesToTake?.quantity, tilesToTake?.coordinates.length) 
+                                : tilesToTake.coordinates.length === 0
+                                  ? 0
+                                  : Math.min(tilesToTake.quantity, mountainBoard[tilesToTake.coordinates[0].x][tilesToTake.coordinates[0].y].length-1)) 
+                              && color === activePlayer) || hideValidationButton, validationButtonStyle
+                            ]} 
+                        onClick={() => {(tilesToTake!.element !== Element.Earth
                             ? selectedTilesInMountain.forEach(element => playTake({
                               type:MoveType.TakeTile,
                               coordinates:{x:element.x,y:element.y}
@@ -158,7 +163,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
                               type:MoveType.TakeTile,
                               coordinates:{x:element.x,y:element.y, z:element.z}
                           })) )
-                          : console.log("ne pas jour le coup") }}> 
+                        }}> 
                         {"✓"} 
                 </Button>
                 <div css={[coinPosition]}><img alt="Coin" src={CoinHeads} css={coinStyle(first)} draggable={false}/></div>
@@ -414,7 +419,7 @@ width: 37%;
 transform-style: preserve-3d;
 `
 
-const displayValidationButton = css`
+const hideValidationButton = css`
 display:none;
 `
 
