@@ -161,9 +161,7 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
   }
 
   canUndo(action: Action<Move, PlayerColor>, consecutiveActions: Action<Move, PlayerColor>[]): boolean {
-    return !consecutiveActions.length && !action.consequences.some(consequence =>
-      consequence.type === MoveType.ChangeActivePlayer || consequence.type === MoveType.RefillPaths
-    )
+    return canUndo(action, consecutiveActions)
   }
 }
 
@@ -239,4 +237,10 @@ function seasonShouldEnd(state: GameState | GameView) {
 
 function countElements(path: Path): number {
   return path.reduce((sum, slot) => slot !== null ? sum + 1 : sum, 0)
+}
+
+const immutableConsequences = [MoveType.ChangeActivePlayer, MoveType.ScoreGoals]
+
+export function canUndo(action: Action<Move | MoveView, PlayerColor>, consecutiveActions: Action<Move | MoveView, PlayerColor>[]): boolean {
+  return !consecutiveActions.length && !action.consequences.some(consequence => immutableConsequences.includes(consequence.type))
 }
