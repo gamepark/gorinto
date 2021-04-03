@@ -1,11 +1,10 @@
-import {useGame, usePlayerId, usePlayers} from "@gamepark/react-client";
+import {useGame, usePlayer, usePlayerId, usePlayers} from "@gamepark/react-client";
 import GameView from "@gamepark/gorinto/types/GameView";
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
 import {useTranslation} from "react-i18next";
 import {getPlayerName} from "@gamepark/gorinto/GorintoOptions";
 import MoveType from "@gamepark/gorinto/types/MoveType";
 import Element from "@gamepark/gorinto/types/Element";
-import Player from "@gamepark/gorinto/types/Player";
 
 export default function useHeaderText() {
     const game = useGame<GameView>()
@@ -37,7 +36,8 @@ export default function useHeaderText() {
                 if (player === playersWithHighestScore[0]){
                     return t('Victory ! You win the game with {score} Wisdom Points', {score:highestscore})
                 } else {
-                    return t('{player} wins the game with {score} Wisdom Points ',{player:playersWithHighestScore[0],score:highestscore})
+                    console.log("array fin ",playersWithHighestScore)
+                    return t('{player} wins the game with {score} Wisdom Points ',{player: getPlayerName(playersWithHighestScore[0].color,t) ,score:highestscore})
                 }
             } else {
                 let fewestTiles = 101;
@@ -55,23 +55,23 @@ export default function useHeaderText() {
                     if (player === playersWithFewestTiles[0]){
                         return t("Victory ! Yon win the game with {score} Wisdom Points and {tiles} Elements", {score:highestscore, tiles:fewestTiles})
                     } else {
-                        return t("{player} wins the game with {score} Wisdom Points and {tiles} Elements", {player:playersWithFewestTiles[0], score:highestscore, tiles:fewestTiles})
+                        return t("{player} wins the game with {score} Wisdom Points and {tiles} Elements", {player:getPlayerName(playersWithHighestScore[0].color,t), score:highestscore, tiles:fewestTiles})
                     }
                 } else {
                     if (playersWithFewestTiles.length === 2){
                         return t("Marvelous ! {player1} and {player2} share a harmonious victory with {score} Wisdom Points and {tiles} Elements",
                         {
-                            player1:playersWithFewestTiles[0],
-                            player2:playersWithFewestTiles[1],
+                            player1:getPlayerName(playersWithHighestScore[0].color,t),
+                            player2:getPlayerName(playersWithHighestScore[1].color,t),
                             score:highestscore,
                             tiles:fewestTiles,
                         })
                     } else if (playersWithFewestTiles.length ===3){
                         return t("Incredible ! {player1}, {player2} and {player3} share a harmonious victory with {score} Wisdom Points and {tiles} Elements",
                         {
-                            player1:playersWithFewestTiles[0],
-                            player2:playersWithFewestTiles[1],
-                            player3:playersWithFewestTiles[2],
+                            player1:getPlayerName(playersWithHighestScore[0].color,t),
+                            player2:getPlayerName(playersWithHighestScore[1].color,t),
+                            player3:getPlayerName(playersWithHighestScore[2].color,t),
                             score:highestscore,
                             tiles:fewestTiles,
                         })
