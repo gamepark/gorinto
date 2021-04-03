@@ -159,7 +159,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
                               type:MoveType.TakeTile,
                               coordinates:{x:element.x,y:element.y}
                           })) 
-                            :selectedTilesInMountain.forEach(element => playTake({
+                            :Array.from(selectedTilesInMountain).sort((a,b) => (-a.z + b.z)).forEach(element => playTake({
                               type:MoveType.TakeTile,
                               coordinates:{x:element.x,y:element.y, z:element.z}
                           })) )
