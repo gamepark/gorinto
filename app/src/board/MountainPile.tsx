@@ -68,6 +68,7 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
                 x={x}
                 y={y}
                 height={game.mountainBoard[x][y].length}
+                selectedTileInPath={selectedTileInPath}
                 onClick={() => {
                     canMoveTile(selectedTileInPath, x, y) ? playMove({
                         type: MoveType.MoveTile,

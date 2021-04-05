@@ -12,9 +12,10 @@ type Props = {
     x:number,
     y:number,
     height:number,
+    selectedTileInPath?:ElementInPath|undefined
 } & React.HTMLAttributes<HTMLDivElement>
 
-const MountainDropZone : FC<Props> = ({x, y, height, ...props}) => {
+const MountainDropZone : FC<Props> = ({x, y, height, selectedTileInPath, ...props}) => {
 
     const [{canDrop, isOver}, dropRef] = useDrop({
         accept: ["ElementInPath","ElementInPile"],
@@ -46,7 +47,7 @@ const MountainDropZone : FC<Props> = ({x, y, height, ...props}) => {
 
         <div {...props} ref = {dropRef}> 
         
-            <div css={[canDrop && canDropStyle, isOver && isOverStyle]}>
+            <div css={[canDrop && canDropStyle, isOver && isOverStyle, canDropClick(selectedTileInPath,x,y) && canDropStyle]}>
 
 
             </div>
@@ -55,6 +56,19 @@ const MountainDropZone : FC<Props> = ({x, y, height, ...props}) => {
 
 
       )
+
+}
+
+function canDropClick(selectedTile:ElementInPath|undefined,x:number,y:number):boolean{
+    if (selectedTile === undefined){
+        return false;
+    } else {
+        if (selectedTile.path === PathType.Horizontal){
+            return(selectedTile.position === x)
+        } else {
+            return(selectedTile.position === y)
+        }
+    }
 
 }
 
@@ -67,6 +81,19 @@ height:92%;
 border: 0.5em solid white;
 border-radius:20%;
 transition:background-color linear 0.3s, border linear 0.3s;
+
+&:hover{
+    position:absolute;
+    top:4%;
+    left:4%;
+    width:92%;
+    height:92%;
+    border: 1em solid white;
+    border-radius:20%;
+    background-color:black;
+    transition:background-color linear 0.3s, border linear 0.3s;
+    cursor:pointer;
+}
 `
 
 
