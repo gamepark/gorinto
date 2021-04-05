@@ -42,7 +42,7 @@ export default function useHeaderText() {
             } else {
                 let fewestTiles = 101;
                 let playersWithFewestTiles = [];
-                for (const p of game.players){
+                for (const p of playersWithHighestScore){
                     if (p.understanding.reduce((acc, pile) => pile + acc) <= fewestTiles) {
                         if (p.understanding.reduce((acc, pile) => pile + acc) < fewestTiles){
                             playersWithFewestTiles = []

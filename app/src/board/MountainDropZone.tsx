@@ -44,8 +44,13 @@ const MountainDropZone : FC<Props> = ({x, y, height, ...props}) => {
 
       return(
 
-        <div {...props} ref = {dropRef} css = {[canDrop && canDropStyle, isOver && isOverStyle]}> 
+        <div {...props} ref = {dropRef}> 
         
+            <div css={[canDrop && canDropStyle, isOver && isOverStyle]}>
+
+
+            </div>
+
         </div>
 
 
@@ -54,14 +59,27 @@ const MountainDropZone : FC<Props> = ({x, y, height, ...props}) => {
 }
 
 const canDropStyle = css`
-opacity:0.4;
-background-color:red;
+position:absolute;
+top:4%;
+left:4%;
+width:92%;
+height:92%;
+border: 0.5em solid white;
+border-radius:20%;
+transition:background-color linear 0.3s, border linear 0.3s;
 `
 
 
 const isOverStyle = css`
-opacity:0.6;
-background-color:red;
+position:absolute;
+top:4%;
+left:4%;
+width:92%;
+height:92%;
+border: 1em solid white;
+border-radius:20%;
+background-color:black;
+transition:background-color linear 0.3s, border linear 0.3s;
 `
 
 export default MountainDropZone

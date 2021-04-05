@@ -58,7 +58,7 @@ const animateVKeyFrames = keyframes`
 `
 
 const style = css`
-  background: linear-gradient(-30deg, #000559 50%, #121880 50%);
+  background: linear-gradient(-60deg, #d8d8d8 50%, #bfbebe 50%);
   padding: 0.2em 0.4em;
   margin: 0;
   display: inline-block;
@@ -66,7 +66,7 @@ const style = css`
   transform: translate(0%, 0%);
   cursor: pointer;
   overflow: hidden;
-  color: #d4f7f7;
+  color: black;
   text-align: center;
   font-weight: bold;
   text-transform: uppercase;
@@ -83,14 +83,14 @@ const style = css`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #85adad;
+    background-color: white;
     opacity: 0;
     -webkit-transition: .2s opacity ease-in-out;
     transition: .2s opacity ease-in-out;
   }
 
   &:hover:before {
-    opacity: 0.2;
+    opacity: 0.4;
   }
 
   & > span {
@@ -100,7 +100,7 @@ const style = css`
   & > span:before
   {
     content: '';
-    background: #28afef;
+    background: #000000;
     
   }
 

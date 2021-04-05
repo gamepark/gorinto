@@ -108,7 +108,7 @@ const popupStyle = css`
   outline: none;
   box-shadow: 1em 2em 2.5em -1.5em hsla(0, 0%, 0%, 0.2);
   border:1em black solid;
-  background-color:rgba(0,6,89,0.8);
+  background-color:rgba(157,163,165,1);
   border-radius: 40em 3em 40em 3em/3em 40em 3em 40em;
   
   &:hover{
@@ -117,6 +117,7 @@ const popupStyle = css`
   & > h2 {
     font-size: 5em;
     margin:0;
+    text-shadow: 0.15em 0.15em 0.2em black;
   }
   & > p {
     text-align: justify;
@@ -126,6 +127,8 @@ const popupStyle = css`
     bottom:0%;
     left:8%;
     width:62%;
+
+    text-shadow: 0.1em 0.1em 0.15em black;
   }
   & > button {
     font-size: 3.5em;

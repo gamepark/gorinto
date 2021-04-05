@@ -39,6 +39,8 @@ import Button from './Button'
 import TilesToTake from '@gamepark/gorinto/types/TilesToTake'
 import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 
+import {isFirefox, isSafari} from 'react-device-detect';
+
 type Props = {
     player: Player
     position:number[],
@@ -125,7 +127,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
         <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer, playersNumber), canDrop && canDropStyle(color,activePlayer!), isOver && isOverStyle]}>
 
-            <div css={nameStyle}>{playerInfo?.name === undefined ?  getPlayerName(color, t) : playerInfo?.name}</div>
+            <div css={[nameStyle, isFirefox ? nameStyleLetterSpacingFireFox : nameStyleLetterSpacingOther]}>{playerInfo?.name === undefined ?  getPlayerName(color, t) : playerInfo?.name}</div>
 
             <div css={playerHeaderStyle}>
 
@@ -239,8 +241,8 @@ transform-style: preserve-3d;
 
 const playerCounterStyle = css`
 position:absolute;
-bottom : 6%;
-left : 42%;
+bottom : 7%;
+left : 10%;
 width:15%;
 height:92%;
 text-align:center;
@@ -357,7 +359,6 @@ const nameStyle = css`
   text-orientation: upright;
 
   font-family: 'Prompt' , sans-serif;
-  letter-spacing: -0.6em;
 
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -365,6 +366,14 @@ const nameStyle = css`
   font-size:2.8em;
   text-align:left;
   padding-bottom:0.5em;
+`
+
+const nameStyleLetterSpacingFireFox = css`
+letter-spacing: -0.1em;
+`
+
+const nameStyleLetterSpacingOther = css`
+letter-spacing: -0.6em;
 `
 
 const gPStyle = css`
