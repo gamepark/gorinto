@@ -47,7 +47,7 @@ const MountainDropZone : FC<Props> = ({x, y, height, selectedTileInPath, ...prop
 
         <div {...props} ref = {dropRef}> 
         
-            <div css={[canDrop && canDropStyle, isOver && isOverStyle, canDropClick(selectedTileInPath,x,y) && canDropStyle]}>
+            <div css={[canDrop && canDropStyle, canDrop && isOver && isOverStyle, canDropClick(selectedTileInPath,x,y) && canDropStyle]}>
 
 
             </div>

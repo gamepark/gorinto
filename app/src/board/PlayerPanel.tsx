@@ -39,7 +39,7 @@ import Button from './Button'
 import TilesToTake from '@gamepark/gorinto/types/TilesToTake'
 import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 
-import {isFirefox, isSafari} from 'react-device-detect';
+import {isFirefox} from 'react-device-detect';
 
 type Props = {
     player: Player
@@ -62,7 +62,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",
         canDrop: (item: ElementInPile) => {
-            if (tilesToTake !== undefined){
+            if (tilesToTake !== undefined && activePlayer === color ){
 
                 if (tilesToTake.element !== Element.Earth){
                     return(
@@ -125,7 +125,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
     return(
 
-        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer, playersNumber), canDrop && canDropStyle(color,activePlayer!), isOver && isOverStyle]}>
+        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer, playersNumber), canDrop && canDropStyle(color), canDrop && isOver && isOverStyle(color)]}>
 
             <div css={[nameStyle, isFirefox ? nameStyleLetterSpacingFireFox : nameStyleLetterSpacingOther]}>{playerInfo?.name === undefined ?  getPlayerName(color, t) : playerInfo?.name}</div>
 
@@ -281,17 +281,17 @@ const fireStyle = css`bottom:41% ;`
 const waterStyle = css`bottom:21% ;`
 const earthStyle = css`bottom:1% ;`
 
-const canDropStyle = (color:PlayerColor,activePlayer:PlayerColor) => css`
+const canDropStyle = (color:PlayerColor) => css`
 
-${color === activePlayer && `opacity:0.4;
-background-color:red;`}
-
+background : rgba(7,7,7, 0.8) bottom left 5%/54% url(${getPlayerMat(color)}) no-repeat;
+transform:translateZ(4em);
+transition : transform linear 0.25s, background linear 0.25s;
 
 `
 
-const isOverStyle = css`
-opacity:0.6;
-background-color:red;
+const isOverStyle = (color:PlayerColor) => css`
+background : rgba(0,0,0,0.95) bottom left 5%/54% url(${getPlayerMat(color)}) no-repeat;
+transition : background linear 0.25s;
 `
 
 const playerPanelStyle = (position:number[], color:PlayerColor, activePlayer:PlayerColor | undefined, playersNumber:number) => css`
