@@ -322,8 +322,8 @@ background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${getPlayerMat(color)}) no-
     100% { box-shadow: -0.1em 0px 0.5em -0.3em ${getHexaColor(color)}, 0em 0em 1em 0.5em black; }
 }
 
-${activePlayer === color && `animation: glowingPanelP 3000ms infinite;`};
-box-shadow: 0em 0em 1em 0.5em black;
+${color === activePlayer && `animation: glowingPanelP 3000ms infinite;`};
+box-shadow: 0em 0em 1em 0.5em black;  
 `
 
 function getPlayerMat(color: PlayerColor) {
