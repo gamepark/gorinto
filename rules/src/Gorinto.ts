@@ -35,7 +35,7 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
   constructor(arg: GameState | GorintoOptions) {
     if (isGameOptions(arg)) {
       const game: GameState = {
-        season: 1,                 // Don't start at 4, even for debug
+        season: 1,
         players: setupPlayers(arg.players),
         activePlayer: arg.players[0].id,
         firstPlayer: arg.players[0].id,
