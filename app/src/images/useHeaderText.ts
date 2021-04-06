@@ -110,7 +110,7 @@ export default function useHeaderText() {
             if (game.activePlayer === playerId) {
                 return t("You have to move an element from one path to the mountain")
             } else {
-               return t("{player} have to move an element from one path to the mountain", {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t)})
+               return t("{player} has to move an element from one path to the mountain", {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t)})
             }
         }
     }

@@ -33,8 +33,6 @@ const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain}) => {
 
     const playerId = usePlayerId<PlayerColor>()
 
-    console.log("playerid et active player : ",playerId,game.activePlayer)
-
     return (
 
         <div css={boardStyle}>

@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import {css} from '@emotion/react'
+import {css, keyframes} from '@emotion/react'
 import {getPlayerName} from '@gamepark/gorinto/GorintoOptions'
 import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import { usePlay, usePlayer } from '@gamepark/react-client'
+import { usePlay, usePlayer, usePlayerId } from '@gamepark/react-client'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
@@ -56,8 +56,8 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
     const {t} = useTranslation()
     const playerInfo = usePlayer(color)
-
     const playTake = usePlay<TakeTile>()
+    const playerId = usePlayerId<PlayerColor>()
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",
@@ -125,7 +125,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
     return(
 
-        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer, playersNumber), canDrop && canDropStyle(color), canDrop && isOver && isOverStyle(color)]}>
+        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer, playersNumber), color === activePlayer && animateGlowingActive(color),canDrop && canDropStyle(color), canDrop && isOver && isOverStyle(color)]}>
 
             <div css={[nameStyle, isFirefox ? nameStyleLetterSpacingFireFox : nameStyleLetterSpacingOther]}>{playerInfo?.name === undefined ?  getPlayerName(color, t) : playerInfo?.name}</div>
 
@@ -315,15 +315,18 @@ text-align:right;
 
 background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${getPlayerMat(color)}) no-repeat;
 
-@keyframes glowingPanelP {
-    0% { box-shadow: -0.1em 0px 0.5em -0.3em ${getHexaColor(color)}, 0em 0em 1em 0.5em black; }
-    45% { box-shadow: -2em 0px 1em -0.3em ${getHexaColor(color)}, 0em 0em 1em 0.5em black; }
-    55% { box-shadow: -2em 0px 1em -0.3em ${getHexaColor(color)}, 0em 0em 1em 0.5em black; }
-    100% { box-shadow: -0.1em 0px 0.5em -0.3em ${getHexaColor(color)}, 0em 0em 1em 0.5em black; }
-}
-
-${color === activePlayer && `animation: glowingPanelP 3000ms infinite;`};
 box-shadow: 0em 0em 1em 0.5em black;  
+`
+
+const glowingActive = (colorAnim:PlayerColor|undefined) => keyframes`
+0% { box-shadow: -0.1em 0px 0.5em -0.3em ${getHexaColor(colorAnim)}, 0em 0em 1em 0.5em black; }
+45% { box-shadow: -2em 0px 1em -0.3em ${getHexaColor(colorAnim)}, 0em 0em 1em 0.5em black; }
+55% { box-shadow: -2em 0px 1em -0.3em ${getHexaColor(colorAnim)}, 0em 0em 1em 0.5em black; }
+100% { box-shadow: -0.1em 0px 0.5em -0.3em ${getHexaColor(colorAnim)}, 0em 0em 1em 0.5em black; }
+`
+
+const animateGlowingActive = (color:PlayerColor|undefined) => css`
+animation:${glowingActive(color)} 3000ms infinite;
 `
 
 function getPlayerMat(color: PlayerColor) {
