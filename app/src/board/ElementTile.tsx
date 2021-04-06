@@ -144,19 +144,6 @@ const glowingGold = css`
     animation: ${glowingGoldKeyframes} 1.5s infinite alternate;
 `
 
-const glowingGreenKeyframes = keyframes`
-    0% {
-        box-shadow: 0 0 1em 0.2em green;
-    }
-    90%, 100% {
-        box-shadow: 0 0 1.5em 1em green;
-    }
-`
-
-const glowingGreen = css`
-    animation: ${glowingGreenKeyframes} 1.5s infinite alternate;
-`
-
 const shadow = css`
     box-shadow: 0 0 1.5em 0.5em black;
 `

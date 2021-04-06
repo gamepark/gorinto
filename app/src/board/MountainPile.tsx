@@ -83,14 +83,6 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
     )
 }
 
-function doTakeTile(x: number, y: number, z: number, tilesToTake: TilesToTake): TakeTile {
-    if (tilesToTake.element !== Element.Earth) {
-        return {type: MoveType.TakeTile, coordinates: {x, y}}
-    } else {
-        return {type: MoveType.TakeTile, coordinates: {x, y, z}}
-    }
-}
-
 function canTakeTile(x: number, y: number, z: number, tilesToTake: TilesToTake | undefined, mountainBoard: number[][][]): boolean {
 
     if (tilesToTake === undefined) {
@@ -110,15 +102,6 @@ function canTakeTile(x: number, y: number, z: number, tilesToTake: TilesToTake |
             )
         }
     }
-}
-
-function isSelected(x: number, y: number, z: number, selectedTile: ElementInPile | undefined): boolean {
-    if (selectedTile === undefined) {
-        return false
-    } else {
-        return selectedTile.x === x && selectedTile.y === y && selectedTile.z === z;
-    }
-
 }
 
 function canMoveTile(selectedTileInPath: ElementInPath | undefined, x: number, y: number): boolean {

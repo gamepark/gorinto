@@ -5,7 +5,7 @@ import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import { usePlay, usePlayer, usePlayerId } from '@gamepark/react-client'
+import { usePlay, usePlayer } from '@gamepark/react-client'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
@@ -36,7 +36,6 @@ import ElementInPile from './ElementInPile'
 import ElementTileForPlayers from './ElementTileForPlayers'
 import {getElementImage} from "./ElementTile";
 import Button from './Button'
-import TilesToTake from '@gamepark/gorinto/types/TilesToTake'
 import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 
 import {isFirefox} from 'react-device-detect';
@@ -57,7 +56,6 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
     const {t} = useTranslation()
     const playerInfo = usePlayer(color)
     const playTake = usePlay<TakeTile>()
-    const playerId = usePlayerId<PlayerColor>()
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",

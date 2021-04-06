@@ -1,4 +1,4 @@
-import {useGame, usePlayer, usePlayerId, usePlayers} from "@gamepark/react-client";
+import {useGame, usePlayerId, usePlayers} from "@gamepark/react-client";
 import GameView from "@gamepark/gorinto/types/GameView";
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
 import {useTranslation} from "react-i18next";

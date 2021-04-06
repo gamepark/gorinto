@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {css, keyframes} from '@emotion/react'
+import {css} from '@emotion/react'
 import {Goals} from '@gamepark/gorinto/cards/Goals'
 import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/RemoveTileOnPath'
 import GameView from '@gamepark/gorinto/types/GameView'
@@ -119,15 +119,6 @@ export const getPlayersStartingWith = (game: GameView, playerId?: PlayerColor) =
     return game.players
   }
 }
-
-const burrowTileAnimation = (duration:number) => css`
-animation : ${burrowTileKeyFrames} ${duration}s ;
-`
-
-const burrowTileKeyFrames = keyframes`
-from, to{}
-30%, 70%{transform:translate3d(-100%,0,0);}
-`
 
 const perspective = css`
 position:absolute;

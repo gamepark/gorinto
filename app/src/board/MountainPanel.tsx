@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {css} from "@emotion/react";
-import {FC, useEffect, useState} from "react";
+import {FC} from "react";
 import MountainPile from "./MountainPile";
 import ElementInPath from "./ElementInPath";
 import ElementInPile from "./ElementInPile";
