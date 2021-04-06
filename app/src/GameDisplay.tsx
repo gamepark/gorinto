@@ -80,7 +80,7 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
       <Board game = {game} 
              onSelection = {(x,y,position) => (selectedTilesInMountain.some(element => element.x === x && element.y === y && element.z === position)      // Déjà sélectionné ?
               ? setSelectedTilesInMountain(selectedTilesInMountain.filter(item => item.x !== x || item.y !==y || item.z !== position ))      // si oui, On le retire
-              : game.tilesToTake && selectedTilesInMountain.length < game.tilesToTake?.quantity ? setSelectedTilesInMountain(current => [...current, {x,y, z:position}]) : console.log("Impossible de prendre plus de tuiles")) }      // Si non, on l'ajoute.
+              : game.tilesToTake && selectedTilesInMountain.length < game.tilesToTake?.quantity && game.activePlayer === playerId ? setSelectedTilesInMountain(current => [...current, {x,y, z:position}]) : console.log("Impossible de prendre plus de tuiles")) }      // Si non, on l'ajoute.
               selectedTilesInMountain = {selectedTilesInMountain}  
             />
 
