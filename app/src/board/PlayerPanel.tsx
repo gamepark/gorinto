@@ -123,7 +123,13 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
     return(
 
-        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer, playersNumber), color === activePlayer && animateGlowingActive(color),canDrop && canDropStyle(color), canDrop && isOver && isOverStyle(color)]}>
+        <>
+
+        <div css={[bgContouringStyle(position, playersNumber, color), color === activePlayer && animateGlowingActive(color), canDrop && canDropStyleBG, isOver && isOverStyle(color)]}>
+
+        </div>
+
+        <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer, playersNumber),canDrop && canDropStylePP, canDrop]}>
 
             <div css={[nameStyle, isFirefox ? nameStyleLetterSpacingFireFox : nameStyleLetterSpacingOther]}>{playerInfo?.name === undefined ?  getPlayerName(color, t) : playerInfo?.name}</div>
 
@@ -217,6 +223,8 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
         </div>
 
+        </>
+
     )
 
 }
@@ -279,17 +287,41 @@ const fireStyle = css`bottom:41% ;`
 const waterStyle = css`bottom:21% ;`
 const earthStyle = css`bottom:1% ;`
 
-const canDropStyle = (color:PlayerColor) => css`
-
-background : rgba(7,7,7, 0.8) bottom left 5%/54% url(${getPlayerMat(color)}) no-repeat;
+const canDropStylePP = css`
 transform:translateZ(4em);
-transition : transform linear 0.25s, background linear 0.25s;
+transition : transform linear 0.25s;
+`
 
+const canDropStyleBG = css`
+transform:translateZ(4em);
+transition : transform linear 0.25s,background-color linear 0.25s;
 `
 
 const isOverStyle = (color:PlayerColor) => css`
-background : rgba(0,0,0,0.95) bottom left 5%/54% url(${getPlayerMat(color)}) no-repeat;
-transition : background linear 0.25s;
+background-color : rgba(0,0,0,0.95);
+transition : background-color linear 0.25s;
+`
+
+const bgContouringStyle = (position:number[], playersNumber:number, color:PlayerColor) => css`
+position : absolute;
+transform-style: preserve-3d;
+
+${playersNumber !==3 && `
+bottom : ${Math.abs(position[0] - position[1]) * 37.5}%;
+left : ${0.5+position[0] * 79}%;
+`}
+${playersNumber === 3 && `
+bottom : ${position[1] * 37.5}%;
+left : ${0.5+position[0] * 79}%;
+`}
+z-index:-1;
+width:19.5%;
+height:35%;
+
+border:0.5em ${getHexaColor(color)} solid;
+border-radius: 6% 6% 6% 6%;
+background-color:rgba(0,0,0,0.6);
+transition : transform linear 0.25s;
 `
 
 const playerPanelStyle = (position:number[], color:PlayerColor, activePlayer:PlayerColor | undefined, playersNumber:number) => css`
@@ -311,20 +343,13 @@ width : 20%;
 height : 37.5%;
 text-align:right;
 
-background : rgba(7,7,7, 0.5) bottom left 5%/54% url(${getPlayerMat(color)}) no-repeat;
-
-box-shadow: 0em 0em 1em 0.5em black;  
-`
-
-const glowingActive = (colorAnim:PlayerColor|undefined) => keyframes`
-0% { box-shadow: -0.1em 0px 0.5em -0.3em ${getHexaColor(colorAnim)}, 0em 0em 1em 0.5em black; }
-45% { box-shadow: -2em 0px 1em -0.3em ${getHexaColor(colorAnim)}, 0em 0em 1em 0.5em black; }
-55% { box-shadow: -2em 0px 1em -0.3em ${getHexaColor(colorAnim)}, 0em 0em 1em 0.5em black; }
-100% { box-shadow: -0.1em 0px 0.5em -0.3em ${getHexaColor(colorAnim)}, 0em 0em 1em 0.5em black; }
+background : bottom left 5%/54% url(${getPlayerMat(color)}) no-repeat;
+transition : transform linear 0.25s;
 `
 
 const animateGlowingActive = (color:PlayerColor|undefined) => css`
-animation:${glowingActive(color)} 3000ms infinite;
+background-color:rgba(0,0,0,0.15);
+;
 `
 
 function getPlayerMat(color: PlayerColor) {
@@ -344,7 +369,7 @@ function getPlayerMat(color: PlayerColor) {
 
 const playerHeaderStyle = css`
 position : absolute;
-top : 3%;
+top : 10%;
 right : 6%;
 width : 45%;
 height : 50%;
@@ -352,9 +377,9 @@ height : 50%;
 
 const nameStyle = css`
   position:absolute;
-  right:2%;
-  top:3%;
-  height:94%;
+  right:2.5%;
+  top:8%;
+  height:90%;
 
   writing-mode: vertical-rl;
   text-orientation: upright;
@@ -421,7 +446,7 @@ transform-style: preserve-3d;
 const playerFooterStyle = css`
 
 position:absolute;
-bottom:5%;
+bottom:8%;
 right:6%;
 width: 37%;
 
