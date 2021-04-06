@@ -12,8 +12,7 @@ import BurrowTile from './board/BurrowTile'
 import ElementInPile from './board/ElementInPile'
 import GoalCard from './board/GoalCard'
 import KeyElementCardPanel from './board/KeyElementCardPanel'
-import PatternPopUp from './board/PatternPopUp'
-import PatternReminder from './board/PatternReminder'
+import PatternsReminder from './board/PatternsReminder'
 import PlayerPanel from './board/PlayerPanel'
 import SeasonIndicator from './board/SeasonIndicator'
 import WelcomePopUp from './board/WelcomePopUp'
@@ -22,12 +21,10 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
   const burrowTileAnimation = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move) && game.endOfSeasonStep === undefined)
   const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(false)
-  const [patternPopUpClosed, setPatternPopUpClosed] = useState(true)
   const playerId = usePlayerId<PlayerColor>()
   const players = useMemo(() => getPlayersStartingWith(game, playerId), [game, playerId])  
 
   const showWelcomePopup = !welcomePopUpClosed
-  const showPatternPopup = !patternPopUpClosed
 
   const player = game.players.find(player => player.color === playerId)
 
@@ -84,7 +81,7 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
               selectedTilesInMountain = {selectedTilesInMountain}  
             />
 
-      <PatternReminder open={() => setPatternPopUpClosed(false)} />
+      <PatternsReminder/>
 
       {game.goals.map((goalNumber, index) =>
             
@@ -102,7 +99,6 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
       </div>
 
       {showWelcomePopup && player && <WelcomePopUp player={player} game={game} close={() => setWelcomePopUpClosed(true)} />}
-      {showPatternPopup && <PatternPopUp close={() => setPatternPopUpClosed(true)} />}
 
     </Letterbox>
 
@@ -121,16 +117,15 @@ export const getPlayersStartingWith = (game: GameView, playerId?: PlayerColor) =
 }
 
 const perspective = css`
-position:absolute;
-left:0%;
-top:0%;
-width:100%;
-height:100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 
-transform-style: preserve-3d;
-transform: perspective(200em) rotateX(10deg) translate(1%, -4%) scale(1.02) ;
-transform-origin:21% 125% ;
-
+  transform-style: preserve-3d;
+  transform: perspective(200em) rotateX(10deg) translate(1%, -4%) scale(1.02);
+  transform-origin: 15% 125%;
 `
 
 export default GameDisplay
