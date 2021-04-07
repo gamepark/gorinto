@@ -1,21 +1,27 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
+import { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/moves/MoveTile'
 import MoveType from '@gamepark/gorinto/types/MoveType'
+import Path from '@gamepark/gorinto/types/Path'
 import PathType from '@gamepark/gorinto/types/PathType'
 import {FC} from 'react'
 import {useDrop} from 'react-dnd'
 import ElementInPath from './ElementInPath'
 import ElementInPile from './ElementInPile'
 
-
 type Props = {
     x:number,
     y:number,
     height:number,
     selectedTileInPath?:ElementInPath|undefined
+    onWarning:(path:PathType,x:number, y:number) => void,
+    mountainBoard:number[][][],
+    horizontalPath:Path,
+    verticalPath:Path
+
 } & React.HTMLAttributes<HTMLDivElement>
 
-const MountainDropZone : FC<Props> = ({x, y, height, selectedTileInPath, ...props}) => {
+const MountainDropZone : FC<Props> = ({x, y, height, selectedTileInPath, mountainBoard, horizontalPath, verticalPath, onWarning, ...props}) => {
 
     const [{canDrop, isOver}, dropRef] = useDrop({
         accept: ["ElementInPath","ElementInPile"],
@@ -38,8 +44,8 @@ const MountainDropZone : FC<Props> = ({x, y, height, selectedTileInPath, ...prop
 
         drop: (item: ElementInPath) => {
 
-            return {type : MoveType.MoveTile, path : item.path, x, y}
-
+                return {type : MoveType.MoveTile, path : item.path, x, y}
+ 
         }
       })
 

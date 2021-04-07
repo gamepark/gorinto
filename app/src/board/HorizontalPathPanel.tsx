@@ -16,10 +16,11 @@ type Props = {
     activePlayer: PlayerColor | undefined,
     mountain: Element[][][],
     onSelect: (position: number) => void,
-    selectedTile?: ElementInPath
+    selectedTile?: ElementInPath,
+    onWarning:(path:PathType,x:number, y:number) => void
 }
 
-const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlayer, mountain, onSelect, selectedTile}) => {
+const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlayer, mountain, onSelect, selectedTile, onWarning}) => {
 
     const playerId = usePlayerId()
     const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === PathType.Horizontal)
@@ -39,7 +40,11 @@ const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlay
                         element={tile}
 
                         onClick={() => onSelect(index)}
-                        isSelected={selectedTile?.path === PathType.Horizontal && selectedTile?.position === index && tilesToTake === undefined}/>
+                        isSelected={selectedTile?.path === PathType.Horizontal && selectedTile?.position === index && tilesToTake === undefined}
+                        mountainBoard = {mountain}
+                        onWarning = {onWarning}
+                        />
+                        
 
                 </div>
             )}

@@ -26,21 +26,35 @@ const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain, onWarnin
     // Hooks for move clics
 
     const [selectedTileInPath, setSelectedTileInPath] = useState<ElementInPath>()
+    const playerId = usePlayerId<PlayerColor>()
 
     useEffect( () => {
-        if (game.tilesToTake && selectedTileInPath !== undefined){
+        if ((game.tilesToTake && selectedTileInPath !== undefined) || (game.activePlayer !==playerId && selectedTileInPath !== undefined)){
             setSelectedTileInPath(undefined)
         }
     }, [game, selectedTileInPath] )
-
-    const playerId = usePlayerId<PlayerColor>()
 
     return (
 
         <div css={boardStyle}>
 
-            <HorizontalPathPanel onSelect = {position => (selectedTileInPath?.path === PathType.Horizontal && selectedTileInPath.position === position)  ? setSelectedTileInPath(undefined) : game.activePlayer === playerId && setSelectedTileInPath({path:PathType.Horizontal, position})} selectedTile = {selectedTileInPath} activePlayer = {game.activePlayer} horizontalPath = {game.horizontalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
-            <VerticalPathPanel onSelect = {position => (selectedTileInPath?.path === PathType.Vertical && selectedTileInPath.position === position) ? setSelectedTileInPath(undefined) : game.activePlayer === playerId && setSelectedTileInPath({path:PathType.Vertical, position})} selectedTile = {selectedTileInPath} activePlayer = {game.activePlayer} verticalPath = {game.verticalPath} tilesToTake = {game.tilesToTake} mountain = {game.mountainBoard} />
+            <HorizontalPathPanel onSelect = {position => (selectedTileInPath?.path === PathType.Horizontal && selectedTileInPath.position === position) ? setSelectedTileInPath(undefined) : game.activePlayer === playerId && setSelectedTileInPath({path:PathType.Horizontal, position})} 
+                                 selectedTile = {selectedTileInPath} 
+                                 activePlayer = {game.activePlayer} 
+                                 horizontalPath = {game.horizontalPath} 
+                                 tilesToTake = {game.tilesToTake} 
+                                 mountain = {game.mountainBoard}
+                                 onWarning = {onWarning}
+
+             />
+            <VerticalPathPanel onSelect = {position => (selectedTileInPath?.path === PathType.Vertical && selectedTileInPath.position === position) ? setSelectedTileInPath(undefined) : game.activePlayer === playerId && setSelectedTileInPath({path:PathType.Vertical, position})} 
+                               selectedTile = {selectedTileInPath} 
+                               activePlayer = {game.activePlayer} 
+                               verticalPath = {game.verticalPath} 
+                               tilesToTake = {game.tilesToTake} 
+                               mountain = {game.mountainBoard}
+                               onWarning = {onWarning} 
+            />
             <MountainPanel game = {game} selectedTileInPath = {selectedTileInPath} onSelection = {onSelection} selectedTilesInMountain = {selectedTilesInMountain} onWarning={onWarning} />
         
         </div>

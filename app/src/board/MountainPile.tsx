@@ -52,6 +52,9 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
                             draggableItem={{x, y, z: index}}
                             element={tile}
 
+                            mountainBoard = {game.mountainBoard}
+                            onWarning = {onWarning}
+
                             onClick={() => {
                                 canTakeTile(x, y, index, tilesToTake, game.mountainBoard)
                                     ? onSelect(x,y,index)
@@ -71,6 +74,10 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
                 y={y}
                 height={game.mountainBoard[x][y].length}
                 selectedTileInPath={selectedTileInPath}
+                onWarning={onWarning}
+                mountainBoard={game.mountainBoard}
+                horizontalPath = {game.horizontalPath}
+                verticalPath = {game.verticalPath}
                 onClick={() => {
                     canMoveTile(selectedTileInPath, x, y) 
                     ? getFilterCoordinatesWithPattern(getElementofSelectedTileInPath(selectedTileInPath!, game.horizontalPath, game.verticalPath),{x,y},game.mountainBoard).length === 0 
@@ -89,7 +96,7 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
     )
 }
 
-function getElementofSelectedTileInPath(selectedTileInPath:ElementInPath,horizontalPath:Path, verticalPath:Path):Element{
+export function getElementofSelectedTileInPath(selectedTileInPath:ElementInPath,horizontalPath:Path, verticalPath:Path):Element{
     if (selectedTileInPath.path === PathType.Horizontal){
         return horizontalPath[selectedTileInPath.position]!
     } else {

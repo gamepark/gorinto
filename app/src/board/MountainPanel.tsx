@@ -12,7 +12,7 @@ type Props = {
     selectedTileInPath?:ElementInPath,
     onSelection:(x:number,y:number,position: number) => void, 
     selectedTilesInMountain: ElementInPile[],
-    onWarning:(path:PathType,x:number, y:number) => void
+    onWarning:(path:PathType,x:number, y:number) => void,
 }
 
 const MountainPanel : FC<Props> = ({game, selectedTileInPath, onSelection, selectedTilesInMountain, onWarning}) => {

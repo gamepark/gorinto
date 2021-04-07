@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import {css, keyframes} from '@emotion/react'
-import MoveTile from '@gamepark/gorinto/moves/MoveTile'
+import MoveTile, { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/moves/MoveTile'
+import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 import Element from '@gamepark/gorinto/types/Element'
+import PathType from '@gamepark/gorinto/types/PathType'
 import {usePlay} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
 import {TFunction} from 'i18next'
@@ -13,6 +15,9 @@ import Water from '../images/ElementWater.jpg'
 import Wind from '../images/ElementWind.jpg'
 import ElementInPath from './ElementInPath'
 import ElementInPile from './ElementInPile'
+import {isMoveTile} from '@gamepark/gorinto/moves/MoveTile'
+import { playerColors } from '@gamepark/gorinto/types/PlayerColor'
+import Move from '@gamepark/gorinto/types/Move'
 
 type Props = {
 
@@ -21,22 +26,36 @@ type Props = {
     type: 'ElementInPath' | 'ElementInPile',
     draggableItem: Omit<ElementInPath, "hoverPile"> | Omit<ElementInPile, "hoverPile">,
     element: Element,
-    isSelected: boolean
+    isSelected: boolean,
+
+    onWarning:(path:PathType,x:number, y:number) => void
+    mountainBoard:number[][][],
 
     elementOfTilesToTake?:Element
 
 } & HTMLAttributes<HTMLDivElement>
 
 
-const ElementTile: FC<Props> = ({draggable = false, draggableItem, element, position = 0, isSelected, elementOfTilesToTake, ...props}) => {
+const ElementTile: FC<Props> = ({draggable = false, draggableItem, element, position = 0, isSelected, elementOfTilesToTake, onWarning, mountainBoard, ...props}) => {
 
-    const play = usePlay<MoveTile>()
+    const play = usePlay<Move>()
     const [displayHeight, setDisplayHeight] = useState(position)
     useEffect(() => setDisplayHeight(position), [position])
     const item = {...draggableItem, hoverPile: setDisplayHeight}
 
+    const onDrop = (move:MoveTile | TakeTile) => {
+        if (isMoveTile(move) && getFilterCoordinatesWithPattern(element,{x:move.x,y:move.y},mountainBoard).length === 0){
+            onWarning(move.path,move.x,move.y)
+        } else {
+            play(move)
+        }
+    }
+    
     return (
-        <Draggable canDrag={draggable} item={item} end={() => setDisplayHeight(position)} drop={play}
+        <Draggable canDrag={draggable} 
+                   item={item} 
+                   end={() => setDisplayHeight(position)} 
+                   drop={onDrop}
                    css={[elementTileStyle, image(element), color(element), draggable ? glowingGold : (position === 0 && shadow)]}
                    preTransform = { isSelected 
                         ? elementOfTilesToTake === Element.Earth 
@@ -50,6 +69,8 @@ const ElementTile: FC<Props> = ({draggable = false, draggableItem, element, posi
     )
 
 }
+
+
 
 const thickness = 4; //em unit
 
