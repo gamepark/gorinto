@@ -181,31 +181,31 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
                 {elementArray(understanding[Element.Void],0).length !== 0 ? elementArray(understanding[Element.Void],0).map((tile, index) =>
                     <div css={[voidStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {getElementImage(Element.Void)} element = {Element.Void} position={index} />
+                        <ElementTileForPlayers element = {Element.Void} position={index} />
                     </div>
                 ): <div css={[voidStyle, elementSize]}></div>}
 
                 {elementArray(understanding[Element.Wind],20).length !==0 ? elementArray(understanding[Element.Wind],20).map((tile, index) =>
                     <div css={[windStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {getElementImage(Element.Wind)} element = {Element.Wind} position={index} />
+                        <ElementTileForPlayers element = {Element.Wind} position={index} />
                     </div>
                 ): <div css={[windStyle, elementSize]}></div>}
 
                 {elementArray(understanding[Element.Fire],40).length !==0 ? elementArray(understanding[Element.Fire],40).map((tile, index) =>
                     <div css={[fireStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {getElementImage(Element.Fire)} element = {Element.Fire} position={index} />
+                        <ElementTileForPlayers element = {Element.Fire} position={index} />
                     </div>
                 ): <div css={[fireStyle, elementSize]}></div>}
 
                 {elementArray(understanding[Element.Water],60).length !==0 ? elementArray(understanding[Element.Water],60).map((tile, index) =>
                     <div css={[waterStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {getElementImage(Element.Water)} element = {Element.Water} position={index} />
+                        <ElementTileForPlayers element = {Element.Water} position={index} />
                     </div>
                 ): <div css={[waterStyle, elementSize]}></div>}
 
                 {elementArray(understanding[Element.Earth],80).length !==0 ? elementArray(understanding[Element.Earth],80).map((tile, index) =>
                     <div css={[earthStyle, elementSize, threeDStyle(index)]} key={index}>
-                        <ElementTileForPlayers image = {getElementImage(Element.Earth)} element = {Element.Earth} position={index} />
+                        <ElementTileForPlayers element = {Element.Earth} position={index} />
                     </div>
                 ): <div css={[earthStyle, elementSize]}></div>}
 
@@ -241,7 +241,6 @@ function elementArray(understanding:number, element:number) : number[]{
 }
 
 const threeDStyle = (position:number) => css`
-transform:translateZ(${position*0.75}em);
 transform-style: preserve-3d;
 `
 
