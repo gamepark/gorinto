@@ -1,4 +1,4 @@
-import {Menu, useGame} from '@gamepark/react-client'
+import {FailuresDialog,Menu, useGame} from '@gamepark/react-client'
 import {DndProvider} from 'react-dnd-multi-backend'
 import HTML5ToTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch'
 import GameDisplay from './GameDisplay'
@@ -14,6 +14,7 @@ function App() {
             <Header text={headerText}/>
             {game && <GameDisplay game={game}/>}
             <Menu/>
+            <FailuresDialog/>
         </DndProvider>
     )
 }
