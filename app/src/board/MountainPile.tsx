@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {css, keyframes} from '@emotion/react'
-import MoveTile from '@gamepark/gorinto/moves/MoveTile'
+import MoveTile, { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/moves/MoveTile'
 import TakeTile, {isTakeTile} from '@gamepark/gorinto/moves/TakeTile'
 import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
@@ -13,6 +13,7 @@ import ElementInPile from './ElementInPile'
 import ElementTile from './ElementTile'
 import MountainDropZone from './MountainDropZone'
 import GameView from "@gamepark/gorinto/types/GameView";
+import Path from '@gamepark/gorinto/types/Path'
 
 type Props = {
     pile: number[],
@@ -21,10 +22,11 @@ type Props = {
     game: GameView,
     selectedTileInPath?: ElementInPath,
     onSelect:(x:number,y:number,position: number) => void, 
-    selectedTilesInMountain: ElementInPile[]
+    selectedTilesInMountain: ElementInPile[],
+    onWarning:(path:PathType,x:number, y:number) => void
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>
 
-const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect, selectedTilesInMountain, ...props}) => {
+const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect, selectedTilesInMountain, onWarning,...props}) => {
 
     const playerId = usePlayerId()
     const animation = useAnimation<TakeTile>(animation => isTakeTile(animation.move) && animation.move.coordinates.x === x && animation.move.coordinates.y === y)
@@ -70,17 +72,29 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
                 height={game.mountainBoard[x][y].length}
                 selectedTileInPath={selectedTileInPath}
                 onClick={() => {
-                    canMoveTile(selectedTileInPath, x, y) ? playMove({
-                        type: MoveType.MoveTile,
-                        path: selectedTileInPath!.path,
-                        x,
-                        y
-                    }) : console.log("Ne rien faire")
+                    canMoveTile(selectedTileInPath, x, y) 
+                    ? getFilterCoordinatesWithPattern(getElementofSelectedTileInPath(selectedTileInPath!, game.horizontalPath, game.verticalPath),{x,y},game.mountainBoard).length === 0 
+                        ? onWarning(selectedTileInPath!.path,x,y)
+                        : playMove({
+                            type: MoveType.MoveTile,
+                            path: selectedTileInPath!.path,
+                            x,
+                            y
+                        }) 
+                    : console.log("Ne rien faire")
                 }}
                 {...props}/>
 
         </>
     )
+}
+
+function getElementofSelectedTileInPath(selectedTileInPath:ElementInPath,horizontalPath:Path, verticalPath:Path):Element{
+    if (selectedTileInPath.path === PathType.Horizontal){
+        return horizontalPath[selectedTileInPath.position]!
+    } else {
+        return verticalPath[selectedTileInPath.position]!
+    }
 }
 
 function canTakeTile(x: number, y: number, z: number, tilesToTake: TilesToTake | undefined, mountainBoard: number[][][]): boolean {

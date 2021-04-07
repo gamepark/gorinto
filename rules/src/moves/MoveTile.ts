@@ -1,5 +1,5 @@
 import Coordinates from '../types/Coordinates'
-import {getElementPattern} from '../types/Element'
+import Element, {getElementPattern} from '../types/Element'
 import GameState from '../types/GameState'
 import GameView from '../types/GameView'
 import Move from '../types/Move'
@@ -24,7 +24,7 @@ export function moveTile(state: GameState | GameView, move: MoveTile) {
 
   state.tilesToTake = {
     quantity: player.understanding[element] + 1,
-    coordinates: getElementPattern(element, move).filter(({x, y}) => state.mountainBoard[x][y].length > 0),
+    coordinates: getFilterCoordinatesWithPattern(element, move, state.mountainBoard),
     element: element
   }
 
@@ -33,4 +33,8 @@ export function moveTile(state: GameState | GameView, move: MoveTile) {
 
 export function isMoveTile(move: Move | MoveView): move is MoveTile {
   return move.type === MoveType.MoveTile
+}
+
+export function getFilterCoordinatesWithPattern(element:Element,{x, y}: Coordinates, mountainBoard:number[][][]):Coordinates[]{
+  return getElementPattern(element, {x,y}).filter(({x, y}) => mountainBoard[x][y].length > 0)
 }

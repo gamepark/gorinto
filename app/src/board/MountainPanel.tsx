@@ -5,17 +5,17 @@ import MountainPile from "./MountainPile";
 import ElementInPath from "./ElementInPath";
 import ElementInPile from "./ElementInPile";
 import GameView from "@gamepark/gorinto/types/GameView";
+import PathType from "@gamepark/gorinto/types/PathType";
 
 type Props = {
     game : GameView,
     selectedTileInPath?:ElementInPath,
     onSelection:(x:number,y:number,position: number) => void, 
-    selectedTilesInMountain: ElementInPile[]
+    selectedTilesInMountain: ElementInPile[],
+    onWarning:(path:PathType,x:number, y:number) => void
 }
 
-const MountainPanel : FC<Props> = ({game, selectedTileInPath, onSelection, selectedTilesInMountain}) => {
-
-
+const MountainPanel : FC<Props> = ({game, selectedTileInPath, onSelection, selectedTilesInMountain, onWarning}) => {
     
     return(
 
@@ -34,7 +34,8 @@ const MountainPanel : FC<Props> = ({game, selectedTileInPath, onSelection, selec
                         selectedTileInPath = {selectedTileInPath}
 
                         onSelect = {onSelection} 
-                        selectedTilesInMountain = {selectedTilesInMountain}    
+                        selectedTilesInMountain = {selectedTilesInMountain}  
+                        onWarning = {onWarning}  
                         />
 
                     )

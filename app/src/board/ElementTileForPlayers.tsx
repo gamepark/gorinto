@@ -29,7 +29,7 @@ const ElementTileForPlayers: FC<Props> = ({element, position, ...props}) => {
 
 }
 
-const thickness = 1.5; //em unit
+const thickness = 1.25; //em unit
 
 const elementTileStyle = (position:number) => css`
     position: absolute;
@@ -69,7 +69,7 @@ const diagonal = css`
 
 const diagonal1 = (position:number) => css`
     width: 127%;
-    top: -1em;
+    top: -0.8em;
     left: 0;
     transform: rotateZ(38deg) rotateX(-90deg);
     border-right: 0.1em black solid;
@@ -77,7 +77,7 @@ const diagonal1 = (position:number) => css`
 
 const diagonal2 = (position:number) => css`
     width: 130%;
-    top: -1.25em;
+    top: -1.1em;
     left: 0em;
     transform: rotateZ(45deg) rotateX(-90deg);
     border-left: 0.1em black solid;

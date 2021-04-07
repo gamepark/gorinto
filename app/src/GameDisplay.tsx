@@ -1,8 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
 import {Goals} from '@gamepark/gorinto/cards/Goals'
+import MoveTile from '@gamepark/gorinto/moves/MoveTile'
 import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/RemoveTileOnPath'
 import GameView from '@gamepark/gorinto/types/GameView'
+import Move from '@gamepark/gorinto/types/Move'
+import MoveType from '@gamepark/gorinto/types/MoveType'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
 import {Letterbox} from '@gamepark/react-components'
@@ -15,17 +18,22 @@ import KeyElementCardPanel from './board/KeyElementCardPanel'
 import PatternsReminder from './board/PatternsReminder'
 import PlayerPanel from './board/PlayerPanel'
 import SeasonIndicator from './board/SeasonIndicator'
+import WarningNoElementPopUp from './board/WarningNoElementPopUp'
 import WelcomePopUp from './board/WelcomePopUp'
 
 const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
   const burrowTileAnimation = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move) && game.endOfSeasonStep === undefined)
-  const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(false)
+  const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(true)
+  const [warningNoElementPopUpClosed, setWarningNoElementPopUpClosed] = useState<MoveTile>()
+
+  const showWelcomePopup = !welcomePopUpClosed
+  const showWarningNoElementPopUp = warningNoElementPopUpClosed ? true : false 
+
   const playerId = usePlayerId<PlayerColor>()
   const players = useMemo(() => getPlayersStartingWith(game, playerId), [game, playerId])  
 
-  const showWelcomePopup = !welcomePopUpClosed
-
+  
   const player = game.players.find(player => player.color === playerId)
 
   // Hooks for move clics
@@ -37,7 +45,12 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
           setSelectedTilesInMountain([])
       }
   }, [game, selectedTilesInMountain] )
-
+  
+  useEffect( () => {
+    if (game.activePlayer !== playerId && warningNoElementPopUpClosed !== undefined){
+        setWarningNoElementPopUpClosed(undefined)
+    }
+}, [game, warningNoElementPopUpClosed] )
 
   return (
 
@@ -78,7 +91,9 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
              onSelection = {(x,y,position) => (selectedTilesInMountain.some(element => element.x === x && element.y === y && element.z === position)      // Déjà sélectionné ?
               ? setSelectedTilesInMountain(selectedTilesInMountain.filter(item => item.x !== x || item.y !==y || item.z !== position ))      // si oui, On le retire
               : game.tilesToTake && selectedTilesInMountain.length < game.tilesToTake?.quantity && game.activePlayer === playerId ? setSelectedTilesInMountain(current => [...current, {x,y, z:position}]) : console.log("Impossible de prendre plus de tuiles")) }      // Si non, on l'ajoute.
-              selectedTilesInMountain = {selectedTilesInMountain}  
+              selectedTilesInMountain = {selectedTilesInMountain}
+              onWarning = {(path, x, y) => (setWarningNoElementPopUpClosed({type:MoveType.MoveTile,path,x,y}))}
+
             />
 
       <PatternsReminder/>
@@ -99,6 +114,8 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
       </div>
 
       {showWelcomePopup && player && <WelcomePopUp player={player} game={game} close={() => setWelcomePopUpClosed(true)} />}
+      {showWarningNoElementPopUp && playerId === game.activePlayer && <WarningNoElementPopUp close={() => setWarningNoElementPopUpClosed(undefined)} path={warningNoElementPopUpClosed!.path} x={warningNoElementPopUpClosed!.x} y={warningNoElementPopUpClosed!.y}/>}
+
 
     </Letterbox>
 
