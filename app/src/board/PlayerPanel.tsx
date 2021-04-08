@@ -314,7 +314,7 @@ left : ${0.5+position[0] * 79}%;
 `}
 z-index:-1;
 width:19.5%;
-height:35%;
+height:35.5%;
 
 border:0.5em ${getHexaColor(color)} solid;
 border-radius: 6% 6% 6% 6%;

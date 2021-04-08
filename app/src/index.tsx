@@ -12,6 +12,7 @@ import gorintoAnimations from './GorintoAnimations'
 import Background from './images/BG2.jpg'
 import reportWebVitals from './reportWebVitals'
 import translations from './translations.json'
+import GorintoTuthorial from './tutorial/Tutorial'
 
 setupTranslation(translations, {debug: false})
 
@@ -62,8 +63,12 @@ const style = css`
 
 ReactDOM.render(
   <StrictMode>
-    <GameProvider game="gorinto" Rules={Gorinto} RulesView={GorintoView} optionsDescription={GorintoOptionsDescription}
-                  animations={gorintoAnimations}>
+    <GameProvider game="gorinto" Rules={Gorinto} 
+                  RulesView={GorintoView}
+                  optionsDescription={GorintoOptionsDescription}
+                  animations={gorintoAnimations}
+                  tutorial={GorintoTuthorial}
+    >
       <App/>
     </GameProvider>
     <Global styles={[normalize, style]}/>
