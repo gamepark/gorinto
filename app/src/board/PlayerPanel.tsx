@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import {css, keyframes} from '@emotion/react'
+import {css} from '@emotion/react'
 import {getPlayerName} from '@gamepark/gorinto/GorintoOptions'
 import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import { usePlay, usePlayer } from '@gamepark/react-client'
+import {PlayerTimer, usePlay, usePlayer} from '@gamepark/react-client'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
@@ -34,7 +34,6 @@ import KanjiYellow from '../images/kanji_yellow.jpg'
 import ElementInPile from './ElementInPile'
 
 import ElementTileForPlayers from './ElementTileForPlayers'
-import ElementTile, {getElementImage} from "./ElementTile";
 import Button from './Button'
 import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 
@@ -145,7 +144,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
                 </div>
                 <div css={gPStyle}>+XX GP</div>
-                <div css={chronoStyle}>XX : XX</div>
+                {playerInfo?.time?.playing && <PlayerTimer playerId={color} css={TimerStyle}/>}
 
             </div>
 
@@ -408,11 +407,11 @@ padding-top:0.5em;
 display:none;                       // Need switch with chrono
 `
 
-const chronoStyle = css`
-font-size:2.5em;
-text-align:center;
-padding-top:0.5em;
-//display:none;                     // Need switch with gp
+const TimerStyle = css`
+    display: block;
+    font-size: 2.5em;
+    text-align: center;
+    padding-top: 0.5em;
 `
 
 const avatarStyle = css`
