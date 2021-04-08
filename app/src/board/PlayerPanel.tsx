@@ -34,7 +34,7 @@ import KanjiYellow from '../images/kanji_yellow.jpg'
 import ElementInPile from './ElementInPile'
 
 import ElementTileForPlayers from './ElementTileForPlayers'
-import {getElementImage} from "./ElementTile";
+import ElementTile, {getElementImage} from "./ElementTile";
 import Button from './Button'
 import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 

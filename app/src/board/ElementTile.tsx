@@ -23,8 +23,8 @@ type Props = {
 
     position?: number,
     draggable?: boolean,
-    type: 'ElementInPath' | 'ElementInPile',
-    draggableItem: Omit<ElementInPath, "hoverPile"> | Omit<ElementInPile, "hoverPile">,
+    type?: 'ElementInPath' | 'ElementInPile',
+    draggableItem?: Omit<ElementInPath, "hoverPile"> | Omit<ElementInPile, "hoverPile">,
     element: Element,
     isSelected: boolean,
 
@@ -36,7 +36,7 @@ type Props = {
 } & HTMLAttributes<HTMLDivElement>
 
 
-const ElementTile: FC<Props> = ({draggable = false, draggableItem, element, position = 0, isSelected, elementOfTilesToTake, onWarning, mountainBoard, ...props}) => {
+const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, element, position = 0, isSelected, elementOfTilesToTake, onWarning, mountainBoard, ...props}) => {
 
     const play = usePlay<Move>()
     const [displayHeight, setDisplayHeight] = useState(position)
@@ -53,6 +53,7 @@ const ElementTile: FC<Props> = ({draggable = false, draggableItem, element, posi
     
     return (
         <Draggable canDrag={draggable} 
+                   type={type}
                    item={item} 
                    end={() => setDisplayHeight(position)} 
                    drop={onDrop}

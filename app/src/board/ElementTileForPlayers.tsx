@@ -93,21 +93,21 @@ const color = (element: Element) => {
     switch (element) {
         case Element.Void:
             return css`background: rgb(157,106,143);
-            background: linear-gradient(90deg, rgba(157,106,143,1) 0%, rgba(143,94,130,1) 6%, rgba(97,64,88,1) 20%, rgba(97,64,88,1) 100%);
+            background: linear-gradient(90deg, rgba(157,106,143,1) 0%, rgba(143,94,130,1) 6%, rgba(97,64,88,1) 30%, rgba(97,64,88,1) 100%);
              `
         case Element.Wind:
             return css`background: rgb(222,234,228);
-            background: linear-gradient(90deg, rgba(222,234,228,1) 0%, rgba(206,224,215,1) 6%, rgba(175,204,189,1) 20%, rgba(175,204,189,1) 100%);
+            background: linear-gradient(90deg, rgba(222,234,228,1) 0%, rgba(206,224,215,1) 6%, rgba(175,204,189,1) 30%, rgba(175,204,189,1) 100%);
             `
         case Element.Fire:
             return css`background: rgb(252,119,51);
-            background: linear-gradient(90deg, rgba(252,119,51,1) 0%, rgba(252,103,26,1) 6%, rgba(224,78,3,1) 20%, rgba(224,78,3,1) 100%);`
+            background: linear-gradient(90deg, rgba(252,119,51,1) 0%, rgba(252,103,26,1) 6%, rgba(224,78,3,1) 30%, rgba(224,78,3,1) 100%);`
         case Element.Water:
             return css`background: rgb(0,211,204);
-            background: linear-gradient(90deg, rgba(0,211,204,1) 0%, rgba(0,186,179,1) 6%, rgba(0,135,130,1) 20%, rgba(0,135,130,1) 100%);`
+            background: linear-gradient(90deg, rgba(0,211,204,1) 0%, rgba(0,186,179,1) 6%, rgba(0,135,130,1) 30%, rgba(0,135,130,1) 100%);`
         case Element.Earth:
             return css`background: rgb(166,120,101);
-            background: linear-gradient(90deg, rgba(166,120,101,1) 0%, rgba(153,108,89,1) 6%, rgba(121,85,70,1) 20%, rgba(121,85,70,1) 100%);`
+            background: linear-gradient(90deg, rgba(166,120,101,1) 0%, rgba(153,108,89,1) 6%, rgba(121,85,70,1) 30%, rgba(121,85,70,1) 100%);`
     }
 }
 
