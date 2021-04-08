@@ -1,4 +1,4 @@
-import {Action, Competitive, IncompleteInformation, SequentialGame, Undo} from '@gamepark/rules-api'
+import {Action, Competitive, IncompleteInformation, SequentialGame, TimeLimit, Undo} from '@gamepark/rules-api'
 import shuffle from 'lodash.shuffle'
 import {Goals} from './cards/Goals'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
@@ -28,7 +28,8 @@ const numberOfSeasons = 4
 
 export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor>
     implements IncompleteInformation<GameState, GameView, Move, MoveView, PlayerColor>,
-        Competitive<GameState, Move, PlayerColor>, Undo<GameState, Move, PlayerColor> {
+        Competitive<GameState, Move, PlayerColor>, Undo<GameState, Move, PlayerColor>,
+        TimeLimit<GameState, Move, PlayerColor> {
 
   constructor(state: GameState)
   constructor(options: GorintoOptions)
@@ -141,6 +142,10 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
     } else {
       return move
     }
+  }
+
+  giveTime(playerId: PlayerColor): number {
+    return 40
   }
 
   rankPlayers(playerColorA: PlayerColor, playerColorB: PlayerColor): number {
