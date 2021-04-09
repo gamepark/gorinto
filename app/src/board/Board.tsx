@@ -75,8 +75,6 @@ const boardStyle = css`
     background-position:center;
 
     border: 0.2em black solid;
-    box-shadow: 0em 0em 3em 1.5em black;
-
 
     transform-style: preserve-3d;
 

@@ -78,9 +78,9 @@ left:15%;
 const seasonIndicatorStyle = css`
     position:absolute;
     width: 20%;
-    height:10%;
+    height:9%;
     right:1%;
-    top:0%;
+    top:0;
     background-image : url(${SeasonBoard});
     background-size: contain;
     background-repeat: no-repeat;

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
 import {useState} from "react"
-import Pattern from '../images/GOR_TTS_pattern.jpg'
+import patterns from '../images/patterns.png'
 import {Dialog} from "@gamepark/react-components";
 import {useTranslation} from "react-i18next";
 import Button from "./Button";
@@ -62,15 +62,13 @@ const patternsStyle = css`
     position: absolute;
     left: 0;
     top: 0;
-    height: 10%;
+    height: 9%;
     width: 20%;
-    border-radius: 30% 30% 0 0;
 
-    background-image: url(${Pattern});
+    background-image: url(${patterns});
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-position: bottom;
-    filter: drop-shadow(0 0 0.75em black);
 `
 
 const popupStyle = css`

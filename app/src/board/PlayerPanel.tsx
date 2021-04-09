@@ -314,7 +314,7 @@ left : ${0.5+position[0] * 79}%;
 `}
 z-index:-1;
 width:19.5%;
-height:35.5%;
+height:35.6%;
 
 border:0.5em ${getHexaColor(color)} solid;
 border-radius: 6% 6% 6% 6%;
@@ -467,8 +467,8 @@ font-size:5em;
 
 const coinStyle = (isFirst:boolean) => css`
 width:100%;
-filter: drop-shadow(0 0 1em black);
-${isFirst === false && `transform:translate3d(0,0,200em);`};
+filter: drop-shadow(0 0 0.2em black);
+${!isFirst && `transform:translate3d(0,0,200em);`};
 transform-style:preserve-3d;
 transition:transform 2s;
 `
