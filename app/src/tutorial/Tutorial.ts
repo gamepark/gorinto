@@ -36,6 +36,7 @@ const GorintoTuthorial: Tutorial<GameState,Move, PlayerColor> = {
         horizontalPath:initialBag.splice(0,5) as Path,
         verticalPath:initialBag.splice(0,5) as Path,
         elementTilesBag:initialBag,
+        tutorial:true
     }, [PlayerColor.Black, PlayerColor.Red, PlayerColor.White]],
 
     expectedMoves:() => [

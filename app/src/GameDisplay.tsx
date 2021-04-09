@@ -20,6 +20,7 @@ import PlayerPanel from './board/PlayerPanel'
 import SeasonIndicator from './board/SeasonIndicator'
 import WarningNoElementPopUp from './board/WarningNoElementPopUp'
 import WelcomePopUp from './board/WelcomePopUp'
+import TutorialPopup from './tutorial/TutorialPopup'
 
 const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
@@ -115,7 +116,7 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
       {showWelcomePopup && player && <WelcomePopUp player={player} game={game} close={() => setWelcomePopUpClosed(true)} />}
       {showWarningNoElementPopUp && playerId === game.activePlayer && <WarningNoElementPopUp close={() => setWarningNoElementPopUpClosed(undefined)} path={warningNoElementPopUpClosed!.path} x={warningNoElementPopUpClosed!.x} y={warningNoElementPopUpClosed!.y}/>}
-
+      {game.tutorial && <TutorialPopup game = {game}/>} 
 
     </Letterbox>
 
