@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react"
+import {css} from "@emotion/react"
 import Goal from '@gamepark/gorinto/types/Goal'
-import { FC, HTMLAttributes } from "react"
-import {useTranslation} from 'react-i18next'
+import {FC, HTMLAttributes} from "react"
+import {Trans, useTranslation} from 'react-i18next'
 import BackGroundGoal from "../images/goal_background.jpg"
 
 type Props = {
@@ -19,7 +19,7 @@ const GoalCardPopUp : FC<Props> = ({goal, position, ...props}) => {
         <div css={[goalCardPanelStyle(goal.hint !== undefined), goalCardPanelPosition(position)]}>
         
             {goal.hint && <p>{goal.hint(t)} </p>}
-            <p>{goal.text(t)} </p>
+            <p><Trans defaults={goal.text(t)} components={[<strong css={goalStrongCss}/>]}/></p>
             {goal.conflictLetter && <span className="notranslate" >{goal.conflictLetter}</span>}
         
         </div>
@@ -58,6 +58,7 @@ p{
     width:70%;
     font-family: 'Courgette', cursive;
     letter-spacing: -0.07em;
+    white-space: break-spaces;
 }
 
 ${isHint === false &&
@@ -98,6 +99,11 @@ span{
     text-shadow: 1px 1px 2px black;
 }
 
+`
+
+const goalStrongCss = css`
+    font-weight: normal;
+    color: red;
 `
 
 

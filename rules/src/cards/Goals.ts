@@ -4,7 +4,7 @@ import Goal from '../types/Goal'
 import Player from '../types/Player'
 
 export const Goal1: Goal = {
-  text: t => t('Score each stack that is the same height as one or more of your other stacks.'),
+  text: t => t('goal1'),
   conflictLetter: 'A',
   score: (player: Player) => {
     return player.understanding.reduce((sum, understanding, index) => {
@@ -18,7 +18,7 @@ export const Goal1: Goal = {
 }
 
 export const Goal2: Goal = {
-  text: t => t('Score each stack that is a different height than all of your other stacks.'),
+  text: t => t('goal2'),
   conflictLetter: 'A',
   score: (player: Player) => {
     return player.understanding.reduce((sum, understanding, index) => {
@@ -31,20 +31,20 @@ export const Goal2: Goal = {
   }
 }
 export const Goal3: Goal = {
-  text: t => t('Score each stack with an odd number of tiles.'),
+  text: t => t('goal3'),
   conflictLetter: 'B',
   score: (player: Player) => player.understanding.reduce((sum, understanding) => understanding % 2 === 1 ? sum + understanding : sum, 0)
 }
 
 export const Goal4: Goal = {
-  text: t => t('Score each stack with an even number of tiles.'),
+  text: t => t('goal4'),
   conflictLetter: 'B',
   score: (player: Player) => player.understanding.reduce((sum, understanding) => understanding % 2 === 0 ? sum + understanding : sum, 0)
 }
 
 export const Goal5: Goal = {
-  text: t => t('For each element, the player or players with the tallest stack (of at least 1 tile) scores 3.'),
-  hint: t => t('Resolve the five elements separately'),
+  text: t => t('goal5'),
+  hint: t => t('goal.c.hint'),
   conflictLetter: 'C',
   score: (player: Player, state: GameState | GameView) => player.understanding.reduce((sum, understanding, index) => {
     const otherPlayers = state.players.filter(({color}) => player.color !== color)
@@ -57,8 +57,8 @@ export const Goal5: Goal = {
 }
 
 export const Goal6: Goal = {
-  text: t => t('For each element, the player or players with the shortest stack (of at least 1 tile) scores 3.'),
-  hint: t => t('Resolve the five elements separately'),
+  text: t => t('goal6'),
+  hint: t => t('goal.c.hint'),
   conflictLetter: 'C',
   score: (player: Player, state: GameState | GameView) => player.understanding.reduce((sum, understanding, index) => {
     const otherPlayers = state.players.filter(({color, understanding}) => player.color !== color && understanding[index] > 0)
@@ -71,8 +71,8 @@ export const Goal6: Goal = {
 }
 
 export const Goal7: Goal = {
-  text: t => t('Score each stack that is a different height than the stack in the middle.'),
-  hint: t => t('Imagine your stacks lined up from shortest to tallest (including stacks of zero).'),
+  text: t => t('goal7'),
+  hint: t => t('goal.d.hint'),
   conflictLetter: 'D',
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
@@ -81,8 +81,8 @@ export const Goal7: Goal = {
 }
 
 export const Goal8: Goal = {
-  text: t => t('Score the stack in the middle three times.'),
-  hint: t => t('Imagine your stacks lined up from shortest to tallest (including stacks of zero).'),
+  text: t => t('goal8'),
+  hint: t => t('goal.d.hint'),
   conflictLetter: 'D',
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
@@ -91,16 +91,15 @@ export const Goal8: Goal = {
 }
 
 export const Goal9: Goal = {
-  text: t => t('Score your tallest stack and also any stack tied with it. Score your shortest stack and also any stack tied with it.'),
+  text: t => t('goal9'),
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
-    return sorted.reduce((sum, understanding) => understanding === sorted[0] ? sum + understanding : sum, 0)
-      + sorted.reduce((sum, understanding) => understanding === sorted[4] ? sum + understanding : sum, 0)
+    return sorted.reduce((sum, understanding) => understanding === sorted[0] || understanding === sorted[4] ? sum + understanding : sum, 0)
   }
 }
 
 export const Goal10: Goal = {
-  text: t => t('Score your tallest stack. Score your shortest stack (of at least one tile) twice.'),
+  text: t => t('goal10'),
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
     return sorted[4] + 2 * (sorted.find(understanding => understanding > 0) ?? 0)
@@ -108,8 +107,8 @@ export const Goal10: Goal = {
 }
 
 export const Goal11: Goal = {
-  text: t => t('Score twice the difference between your tallest stack and your shortest stack.'),
-  hint: t => t('A stack of zero may be counted as your shortest stack.'),
+  text: t => t('goal11'),
+  hint: t => t('goal.11.hint'),
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
     return 2 * (sorted[4] - sorted[0])
@@ -117,7 +116,7 @@ export const Goal11: Goal = {
 }
 
 export const Goal12: Goal = {
-  text: t => t('If you have any empty stacks, score zero. Otherwise, score your shortest stack seven times.'),
+  text: t => t('goal12'),
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
     return 7 * sorted[0]
