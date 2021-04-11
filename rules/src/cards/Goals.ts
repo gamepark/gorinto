@@ -94,7 +94,8 @@ export const Goal9: Goal = {
   text: t => t('Score your tallest stack and also any stack tied with it. Score your shortest stack and also any stack tied with it.'),
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
-    return sorted.reduce((sum, understanding) => understanding === sorted[0] || understanding === sorted[4] ? sum + understanding : sum, 0)
+    return sorted.reduce((sum, understanding) => understanding === sorted[0] ? sum + understanding : sum, 0)
+      + sorted.reduce((sum, understanding) => understanding === sorted[4] ? sum + understanding : sum, 0)
   }
 }
 

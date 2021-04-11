@@ -81,7 +81,7 @@ describe('Test Goals.ts', () => {
     expect(Goal9.score(withUnderStanding([5, 3, 4, 4, 0]), anyState)).toBe(5)
     expect(Goal9.score(withUnderStanding([1, 3, 1, 1, 3]), anyState)).toBe(9)
     expect(Goal9.score(withUnderStanding([3, 9, 9, 1, 2]), anyState)).toBe(19)
-    expect(Goal9.score(withUnderStanding([3, 3, 3, 3, 3]), anyState)).toBe(15)
+    expect(Goal9.score(withUnderStanding([3, 3, 3, 3, 3]), anyState)).toBe(30)
     expect(Goal9.score(withUnderStanding([0, 1, 2, 3, 4]), anyState)).toBe(4)
   })
 
