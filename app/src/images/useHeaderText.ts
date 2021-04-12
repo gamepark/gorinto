@@ -5,12 +5,24 @@ import {useTranslation} from "react-i18next";
 import {getPlayerName} from "@gamepark/gorinto/GorintoOptions";
 import MoveType from "@gamepark/gorinto/types/MoveType";
 import Element from "@gamepark/gorinto/types/Element";
+import Player from "@gamepark/gorinto/types/Player";
+import {Player as PlayerInfo} from '@gamepark/react-client'
 
 export default function useHeaderText() {
     const game = useGame<GameView>()
     const playerId = usePlayerId<PlayerColor>()
-    const players = usePlayers()
+    const players = usePlayers<PlayerColor>()
     const {t} = useTranslation()
+
+    function getWinnerPseudo(playerWithHighestScore:Player ,players:PlayerInfo<PlayerColor>[]):string{
+
+        if (players.find(p => p.id === playerWithHighestScore.color,t)!.name === undefined){
+            return getPlayerName(playerWithHighestScore.color,t)
+        } else {
+            return players.find(p => p.id === playerWithHighestScore.color,t)!.name!
+        }   
+
+    }
     
     if (!game) {
         return t('Game loading...')
@@ -19,7 +31,7 @@ export default function useHeaderText() {
         if (!game.activePlayer) {
 
             let highestscore = -1;
-            let playersWithHighestScore = [];
+            let playersWithHighestScore:Player[] = [];
     
             for (const p of game.players){
                 const score = p.score;
@@ -36,8 +48,7 @@ export default function useHeaderText() {
                 if (player === playersWithHighestScore[0]){
                     return t('Victory ! You win the game with {score} Wisdom Points', {score:highestscore})
                 } else {
-                    console.log("array fin ",playersWithHighestScore)
-                    return t('{player} wins the game with {score} Wisdom Points ',{player: getPlayerName(playersWithHighestScore[0].color,t) ,score:highestscore})
+                    return t('{player} wins the game with {score} Wisdom Points ',{player: getWinnerPseudo(playersWithHighestScore[0],players) ,score:highestscore})
                 }
             } else {
                 let fewestTiles = 101;
@@ -55,23 +66,23 @@ export default function useHeaderText() {
                     if (player === playersWithFewestTiles[0]){
                         return t("Victory ! Yon win the game with {score} Wisdom Points and {tiles} Elements", {score:highestscore, tiles:fewestTiles})
                     } else {
-                        return t("{player} wins the game with {score} Wisdom Points and {tiles} Elements", {player:getPlayerName(playersWithHighestScore[0].color,t), score:highestscore, tiles:fewestTiles})
+                        return t("{player} wins the game with {score} Wisdom Points and {tiles} Elements", {player:getWinnerPseudo(playersWithFewestTiles[0],players), score:highestscore, tiles:fewestTiles})
                     }
                 } else {
                     if (playersWithFewestTiles.length === 2){
                         return t("Marvelous ! {player1} and {player2} share a harmonious victory with {score} Wisdom Points and {tiles} Elements",
                         {
-                            player1:getPlayerName(playersWithHighestScore[0].color,t),
-                            player2:getPlayerName(playersWithHighestScore[1].color,t),
+                            player1:getWinnerPseudo(playersWithFewestTiles[0],players),
+                            player2:getWinnerPseudo(playersWithFewestTiles[1],players),
                             score:highestscore,
                             tiles:fewestTiles,
                         })
                     } else if (playersWithFewestTiles.length ===3){
                         return t("Incredible ! {player1}, {player2} and {player3} share a harmonious victory with {score} Wisdom Points and {tiles} Elements",
                         {
-                            player1:getPlayerName(playersWithHighestScore[0].color,t),
-                            player2:getPlayerName(playersWithHighestScore[1].color,t),
-                            player3:getPlayerName(playersWithHighestScore[2].color,t),
+                            player1:getWinnerPseudo(playersWithFewestTiles[0],players),
+                            player2:getWinnerPseudo(playersWithFewestTiles[1],players),
+                            player3:getWinnerPseudo(playersWithFewestTiles[2],players),
                             score:highestscore,
                             tiles:fewestTiles,
                         })
