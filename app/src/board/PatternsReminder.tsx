@@ -78,6 +78,7 @@ const popupStyle = css`
     border-radius: 1em;
     background-image: url(${background});
     width: 80vw;
+    border: 0.1em solid #333333;
 
     &:before {
         content: '';
@@ -89,7 +90,6 @@ const popupStyle = css`
         height: 100%;
         background-color: rgba(255, 255, 255, 0.6);
         border-radius: 1em;
-        border: 0.1em solid #333333;
     }
 `
 
