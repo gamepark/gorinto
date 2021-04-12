@@ -108,14 +108,16 @@ export default function useHeaderText() {
             }
     
             if (game.activePlayer === playerId) {
-                return t('You must take {quantity} tiles from the mountain',
+                return t('You must take {quantity, plural, one {# tile} other {# tiles}} from the mountain',
                     {quantity:(game.tilesToTake.element !== Element.Earth
                                 ? Math.min(game.tilesToTake?.quantity, game.tilesToTake?.coordinates.length) 
                                 : game.tilesToTake.coordinates.length === 0
                                     ? 0
-                                    : Math.min(game.tilesToTake.quantity, game.mountainBoard[game.tilesToTake.coordinates[0].x][game.tilesToTake.coordinates[0].y].length-1))})
+                                    : Math.min(game.tilesToTake.quantity, game.mountainBoard[game.tilesToTake.coordinates[0].x][game.tilesToTake.coordinates[0].y].length-1))
+                                }
+                        )
             } else {
-                return t('{player} must take {quantity} tiles from the mountain', {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t),quantity:Math.min(game.tilesToTake.quantity, game.tilesToTake.coordinates.length)})
+                return t('{player} must take {quantity, plural, one {# tile} other {# tiles}} from the mountain', {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t),quantity:Math.min(game.tilesToTake.quantity, game.tilesToTake.coordinates.length)})
             }
         } else {
             if (game.activePlayer === playerId) {
