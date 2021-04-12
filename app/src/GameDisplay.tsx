@@ -4,7 +4,6 @@ import {Goals} from '@gamepark/gorinto/cards/Goals'
 import MoveTile from '@gamepark/gorinto/moves/MoveTile'
 import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/RemoveTileOnPath'
 import GameView from '@gamepark/gorinto/types/GameView'
-import Move from '@gamepark/gorinto/types/Move'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {useAnimation, usePlayerId} from '@gamepark/react-client'
@@ -100,13 +99,12 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
       <PatternsReminder/>
 
       {game.goals.map((goalNumber, index) =>
-            
-            <GoalCard   key = {index}
-                        goal = {Goals[goalNumber]}
-                        position = {index}
-                        open={() => setWelcomePopUpClosed(false)}
-                        players = {game.players}
-            />
+
+          <GoalCard key={index}
+                    goal={Goals[goalNumber]}
+                    onClick={() => setWelcomePopUpClosed(false)}
+                    css={game.players.length === 4 ? goalCardPosition(index) : goalCardPositionBigger(index)}
+          />
         
       )}
       
@@ -144,6 +142,26 @@ const perspective = css`
   transform-style: preserve-3d;
   transform: perspective(200em) rotateX(10deg) translate(1%, -4%) scale(1.02);
   transform-origin: 15% 125%;
+`
+
+const goalCardPosition = (position: number) => css`
+  position: absolute;
+  top: 10%;
+  left: ${79 + position * 10}%;
+  width: 10%;
+  height: 13%;
+  font-size: 0.85em;
+  cursor: pointer;
+`
+
+const goalCardPositionBigger = (position: number) => css`
+  position: absolute;
+  top: ${10 + position * 25}%;
+  left: 79%;
+  width: 20%;
+  height: 25%;
+  font-size: 1.7em;
+  cursor: pointer;
 `
 
 export default GameDisplay

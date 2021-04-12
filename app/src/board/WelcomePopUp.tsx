@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-
 import Player from "@gamepark/gorinto/types/Player";
 import {usePlayer} from "@gamepark/react-client";
 import {FC} from "react";
@@ -7,12 +6,12 @@ import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTimes} from '@fortawesome/free-solid-svg-icons'
 import {Goals} from "@gamepark/gorinto/cards/Goals";
-import GoalCardPopUp from './GoalCardPopUp';
 import {css} from "@emotion/react";
 import KeyElementCardPanelPopUp from "./KeyElementCardPanelPopUp";
 import {getPlayerName} from "@gamepark/gorinto/GorintoOptions";
 import Button from "./Button";
 import GameView from "@gamepark/gorinto/types/GameView";
+import GoalCard from "./GoalCard";
 
 const WelcomePopUp : FC<{player:Player, game:GameView, close: () => void}> = ({player, game, close}) => {
 
@@ -31,12 +30,9 @@ const WelcomePopUp : FC<{player:Player, game:GameView, close: () => void}> = ({p
                 <div css={cardsStyle}>
 
                     {game.goals.map((goalNumber, index) =>
-                
-                        <GoalCardPopUp key = {index}
-                                  goal = {Goals[goalNumber]}
-                                  position = {index}
-                        />
-            
+
+                        <GoalCard key={index} goal={Goals[goalNumber]} css={goalCardPanelPosition(index)}/>
+
                     )}
 
                     {game.keyElements.map((element, index) =>
@@ -156,6 +152,15 @@ const closePopupStyle = css`
     cursor: pointer;
     color: black;
   }
+`
+
+const goalCardPanelPosition = (position: number) => css`
+    position: absolute;
+    top: 5%;
+    left: ${15 + (position * 37)}%;
+    width: 33.5%;
+    height: 60%;
+    font-size: 2.2em;
 `
 
 export default WelcomePopUp
