@@ -45,6 +45,7 @@ const goalCardCss = css`
         font-family: 'Courgette', cursive;
         letter-spacing: -0.05em;
         line-height: 1.2em;
+        white-space: break-spaces;
         
         strong {
             font-weight: normal;
