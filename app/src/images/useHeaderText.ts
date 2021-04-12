@@ -48,7 +48,7 @@ export default function useHeaderText() {
                 if (player === playersWithHighestScore[0]){
                     return t('Victory ! You win the game with {score} Wisdom Points', {score:highestscore})
                 } else {
-                    return t('{player} wins the game with {score} Wisdom Points ',{player: getWinnerPseudo(playersWithHighestScore[0],players) ,score:highestscore})
+                    return t('{player} wins the game with {score} Wisdom Points',{player: getWinnerPseudo(playersWithHighestScore[0],players),score:highestscore})
                 }
             } else {
                 let fewestTiles = 101;
