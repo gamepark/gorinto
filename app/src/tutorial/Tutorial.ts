@@ -53,8 +53,11 @@ const GorintoTuthorial: Tutorial<GameState,Move, PlayerColor> = {
         {type:MoveType.TakeTile, coordinates:{x:3,y:4}},
 
         {type:MoveType.MoveTile, path:PathType.Horizontal, x:1,y:2},    //Player
-        {type:MoveType.TakeTile, coordinates:{x:0,y:2}},
-        {type:MoveType.TakeTile, coordinates:{x:1,y:3}},
+
+        ...Array(2).fill([
+            {type:MoveType.TakeTile, coordinates:{x:0,y:2}},
+            {type:MoveType.TakeTile, coordinates:{x:1,y:3}}
+          ]),
 
         {type:MoveType.MoveTile, path:PathType.Horizontal, x:0,y:2},
         {type:MoveType.TakeTile, coordinates:{x:0,y:1}},
@@ -64,8 +67,11 @@ const GorintoTuthorial: Tutorial<GameState,Move, PlayerColor> = {
         {type:MoveType.TakeTile, coordinates:{x:3,y:1}},
 
         {type:MoveType.MoveTile, path:PathType.Horizontal, x:2,y:1},    //Player
-        {type:MoveType.TakeTile, coordinates:{x:3,y:1}},
-        {type:MoveType.TakeTile, coordinates:{x:4,y:1}},
+
+        ...Array(2).fill([
+            {type:MoveType.TakeTile, coordinates:{x:3,y:1}},
+            {type:MoveType.TakeTile, coordinates:{x:4,y:1}}
+        ]),
 
         {type:MoveType.MoveTile, path:PathType.Vertical, x:3,y:4},
         {type:MoveType.TakeTile, coordinates:{x:1,y:4}},
@@ -81,10 +87,13 @@ const GorintoTuthorial: Tutorial<GameState,Move, PlayerColor> = {
         {type:MoveType.TakeTile, coordinates:{x:3,y:4,z:0}},
 
         {type:MoveType.MoveTile, path:PathType.Horizontal, x:2,y:3},    //Player
-        {type:MoveType.TakeTile, coordinates:{x:2,y:3,z:3}},
-        {type:MoveType.TakeTile, coordinates:{x:2,y:3,z:2}},
-        {type:MoveType.TakeTile, coordinates:{x:2,y:3,z:1}},
-        {type:MoveType.TakeTile, coordinates:{x:2,y:3,z:0}},
+        
+        ...Array(4).fill([
+            {type:MoveType.TakeTile, coordinates:{x:2,y:3,z:3}},
+            {type:MoveType.TakeTile, coordinates:{x:2,y:3,z:2}},
+            {type:MoveType.TakeTile, coordinates:{x:2,y:3,z:1}},
+            {type:MoveType.TakeTile, coordinates:{x:2,y:3,z:0}}
+        ]),
 
         {type:MoveType.MoveTile, path:PathType.Vertical, x:3,y:3},
         {type:MoveType.TakeTile, coordinates:{x:2,y:3}},
