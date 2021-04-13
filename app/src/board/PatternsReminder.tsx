@@ -128,7 +128,7 @@ const elementRuleCss = css`
     }
 
     & > p {
-        margin: 0;
+        margin: 0 0.2em;
     }
 `
 

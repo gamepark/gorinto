@@ -100,9 +100,6 @@ const GorintoTuthorial: Tutorial<GameState,Move, PlayerColor> = {
         {type:MoveType.MoveTile, path:PathType.Horizontal, x:3,y:4},
         {type:MoveType.TakeTile, coordinates:{x:3,y:4,z:0}},
 
-        {type:MoveType.MoveTile, path:PathType.Horizontal, x:3,y:4},
-        {type:MoveType.TakeTile, coordinates:{x:3,y:4,z:0}},
-
         {type:MoveType.MoveTile, path:PathType.Horizontal, x:1,y:3},
         {type:MoveType.TakeTile, coordinates:{x:0,y:3}},
         {type:MoveType.TakeTile, coordinates:{x:4,y:3}},

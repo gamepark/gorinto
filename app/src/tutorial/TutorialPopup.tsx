@@ -449,6 +449,235 @@ const tutorialDescription:TutorialStepDescription[][] = [
         left: 2
       }
     }, 
+    {
+      title: (t: TFunction) => t('The Water Pattern'),
+      text: (t: TFunction) => t("Learn the Water Pattern now : place this water element on the second line."),
+      boxTop: 20,
+      boxLeft: 20,
+      boxWidth: 40,
+      arrow: {
+        angle: 90,
+        top:10,
+        left: 35
+      }
+    }
+  ],
+  [ 
+    {
+      title: (t: TFunction) => t('The Water Pattern'),
+      text: (t: TFunction) => t("According to Water Pattern, you can gather from the four other spaces in your placement's row."),
+      boxTop: 70,
+      boxLeft: 50,
+      boxWidth: 60,
+    }, 
+    {
+      title: (t: TFunction) => t('The Season Marker'),
+      text: (t: TFunction) => t("But first, let's take a look at this Marker. Each game has four season and we're in the first one."),
+      boxTop: 25,
+      boxLeft: 75,
+      boxWidth: 35,
+      arrow: {
+        angle: 0,
+        top:12,
+        left: 67
+      }
+    }, 
+    {
+      title: (t: TFunction) => t('The End of a Season'),
+      text: (t: TFunction) => t("A season end when it's the turn of the first player to play, but there isn't enough tiles on the paths to make a whole turn."),
+      boxTop: 75,
+      boxLeft: 46,
+      boxWidth: 50,
+      arrow: {
+        angle: 270,
+        top:74,
+        left: 10
+      }
+    }, 
+    {
+      title: (t: TFunction) => t('The Goal Cards'),
+      text: (t: TFunction) => t("At the end of a season, every player score points based on Objective Cards. These cards never change during the game, so make sure to understand them before you start !"),
+      boxTop: 35,
+      boxLeft: 45,
+      boxWidth: 50,
+      arrow: {
+        angle: 90,
+        top:30,
+        left: 65
+      }
+    },
+    {
+      title: (t: TFunction) => t('The Goal Cards'),
+      text: (t: TFunction) => t("In this game, you can score points if you make odd height stacks and stacks of different heights."),
+      boxTop: 35,
+      boxLeft: 45,
+      boxWidth: 50,
+      arrow: {
+        angle: 90,
+        top:30,
+        left: 65
+      }
+    }, 
+    {
+      title: (t: TFunction) => t('The Goal Cards'),
+      text: (t: TFunction) => t("It could be a good strategy to keep odd height stacks ! Pick the Earth Tiles according to the Water Pattern !"),
+      boxTop: 70,
+      boxLeft: 50,
+      boxWidth: 60,
+    } 
+  ],
+  [],
+  [
+    {
+      title: (t: TFunction) => t('Scoring'),
+      text: (t: TFunction) => t("Nice ! Look at the end of the season. You will score 2 points for the first Goal Card, and 5 for the second one. A pretty good start !"),
+      boxTop: 75,
+      boxLeft: 22,
+      boxWidth: 40,
+      arrow: {
+        angle: 180,
+        top:75,
+        left: 6
+      }
+    }, 
+    {
+      title: (t: TFunction) => t('Beginning of a new season'),
+      text: (t: TFunction) => t("When a new season start, the paths are filled again, and the first player is the one who has the lowest score."),
+      boxTop: 50,
+      boxLeft: 50,
+      boxWidth: 60,
+    }, 
+    {
+      title: (t: TFunction) => t('The Earth Pattern'),
+      text: (t: TFunction) => t("Learn the Earth Pattern ! Move this Earth element on the fourth line."),
+      boxTop: 20,
+      boxLeft: 75,
+      boxWidth: 35,
+      arrow: {
+        angle: 270,
+        top:8,
+        left: 46
+      }
+    }
+  ],
+  [
+    {
+      title: (t: TFunction) => t('The Earth Pattern'),
+      text: (t: TFunction) => t("The Earth pattern is the only one which allow you to gather from the stack you placed the tile."),
+      boxTop: 50,
+      boxLeft: 30,
+      boxWidth: 30,
+    }, 
+    {
+      title: (t: TFunction) => t('The Earth Pattern'),
+      text: (t: TFunction) => t("You have a huge understanding of the Earth element ! Take all the tiles !"),
+      boxTop: 50,
+      boxLeft: 30,
+      boxWidth: 30,
+    }, 
+  ],
+  [],[],[],
+  [
+    {
+      title: (t: TFunction) => t('The Earth Pattern'),
+      text: (t: TFunction) => t("Perfect ! Remember that with the Earth Element, and with enough understanding, you can pick more than four tiles although it is the theoretical maximum with the other elements."),
+      boxTop: 55,
+      boxLeft: 15,
+      boxWidth: 30,
+
+    }, 
+    {
+      title: (t: TFunction) => t('The Void Pattern'),
+      text: (t: TFunction) => t("But it's not always possible (or a good idea) to pick the maximum amount of tiles... Move this Void tile on the fifth column."),
+      boxTop: 55,
+      boxLeft: 52,
+      boxWidth: 40,
+      arrow: {
+        angle: 270,
+        top:50,
+        left: 20
+      }
+    }
+  ],
+  [
+    {
+      title: (t: TFunction) => t('The Void Pattern'),
+      text: (t: TFunction) => t("The Void pattern, the last one, allows you to gather tiles diagonally adjacent to your placement."),
+      boxTop: 55,
+      boxLeft: 35,
+      boxWidth: 40,
+    }, 
+    {
+      title: (t: TFunction) => t('Restrictions'),
+      text: (t: TFunction) => t("But even though you have enough understanding to pick two tiles, you can only pick one here, because of the configuration of the Mountain..."),
+      boxTop: 48,
+      boxLeft: 32,
+      boxWidth: 40,
+      arrow: {
+        angle: 90,
+        top:34,
+        left: 48
+      }
+    }, 
+    {
+      title: (t: TFunction) => t('Restrictions'),
+      text: (t: TFunction) => t("When you move a tile, remember you have to pick the maxiumum of tiles according to your understading and the ressources on the mountain. It could be a good idea to pick no element at all !"),
+      boxTop: 50,
+      boxLeft: 50,
+      boxWidth: 50,
+    }, 
+    {
+      title: (t: TFunction) => t('Restrictions'),
+      text: (t: TFunction) => t("Pick the only tile available to achieve this lesson."),
+      boxTop: 65,
+      boxLeft: 39,
+      boxWidth: 30,
+      arrow: {
+        angle: 90,
+        top:60,
+        left: 50
+      }
+    }, 
+  ],
+  [
+    {
+      title: (t: TFunction) => t('The Keys Elements'),
+      text: (t: TFunction) => t("Perfect ! You have all the keys to play Gorinto ! Except one... The Keys Elements."),
+      boxTop: 33,
+      boxLeft: 15,
+      boxWidth: 30,
+      arrow: {
+        angle: 0,
+        top:20,
+        left: 2
+      }
+    }, 
+    {
+      title: (t: TFunction) => t('The Keys Elements'),
+      text: (t: TFunction) => t("Keys Elements is another way to score points in Gorinto. But unlike Goal Cards, you score them at the very end of the game."),
+      boxTop: 33,
+      boxLeft: 15,
+      boxWidth: 30,
+      arrow: {
+        angle: 0,
+        top:20,
+        left: 2
+      }
+    }, 
+    {
+      title: (t: TFunction) => t('The Keys Elements'),
+      text: (t: TFunction) => t("You will score 2 points per Key Element you own. In this game, you will score two points for each Void and Wind element you own."),
+      boxTop: 25,
+      boxLeft: 45,
+      boxWidth: 50,
+    }, 
+    {
+      title: (t: TFunction) => t('The student has surpassed the tutorial'),
+      text: (t: TFunction) => t("You know everything now to play Gorinto ! We let you free to play your last move of the season yourself. Try to make the best move to score a lot of points, maybe by equalizing your height stacks ?"),
+      boxTop: 50,
+      boxLeft: 50,
+      boxWidth: 60,
+    }, 
   ]
 ]
 
