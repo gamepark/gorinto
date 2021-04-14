@@ -23,6 +23,8 @@ const TutorialPopup : FC<{game:GameView}> = ({game}) => {
     const [tutorialIndex, setTutorialIndex] = useState(0)
     const [tutorialDisplay, setTutorialDisplay] = useState(tutorialDescription.length > actionsNumber)
     const [failures] = useFailures()
+    const [hideLastTurnInfo, setHideLastTurnInfo] = useState(false)
+    const [hideThirdTurnInfo, setHideThirdTurnInfo] = useState(false)
 
     const moveTutorial = (deltaMessage: number) => {
       setTutorialIndex(tutorialIndex + deltaMessage)
@@ -87,6 +89,26 @@ const TutorialPopup : FC<{game:GameView}> = ({game}) => {
         currentMessage && currentMessage.arrow &&
           <img alt='Arrow pointing toward current tutorial interest' src={Arrow} draggable="false"
                css={[arrowStyle(currentMessage.arrow.angle), displayPopup ? showArrowStyle(currentMessage.arrow.top, currentMessage.arrow.left) : hideArrowStyle]}/>
+        }
+
+        {
+          game.season === 3 && !hideThirdTurnInfo &&
+          <div css={[popupStyle, popupPosition(thirdTurnInfo)]}>
+            <div css={closePopupStyle} onClick={() => setHideThirdTurnInfo(true)}><FontAwesomeIcon icon={faTimes}/></div>
+            <h2>{thirdTurnInfo.title(t)}</h2>
+            <p>{thirdTurnInfo.text(t)}</p>
+            <Button onClick={() => setHideThirdTurnInfo(true)}>{t('OK')}</Button>
+          </div>
+        }
+
+{
+          game.season === 4 && !hideLastTurnInfo &&
+          <div css={[popupStyle, popupPosition(lastTurnInfo)]}>
+            <div css={closePopupStyle} onClick={() => setHideLastTurnInfo(true)}><FontAwesomeIcon icon={faTimes}/></div>
+            <h2>{lastTurnInfo.title(t)}</h2>
+            <p>{lastTurnInfo.text(t)}</p>
+            <Button onClick={() => setHideLastTurnInfo(true)}>{t('OK')}</Button>
+          </div>
         }
 
         </>
@@ -680,5 +702,22 @@ const tutorialDescription:TutorialStepDescription[][] = [
     }, 
   ]
 ]
+
+const thirdTurnInfo = {
+  title: (t: TFunction) => t('2-player game'),
+  text: (t: TFunction) => t('For information, in a 2-player game, one tile is discarded from a path each turn, except for the first turn.'),
+  boxTop: 50,
+  boxLeft: 50,
+  boxWidth: 70
+}
+
+const lastTurnInfo = {
+  title: (t: TFunction) => t('Last Season'),
+  text: (t: TFunction) => t("It's the last season ! Be sure to pick a lot of Keys Elements, without lose the balance with Goal Cards !"),
+  boxTop: 50,
+  boxLeft: 50,
+  boxWidth: 70
+}
+
 
 export default TutorialPopup
