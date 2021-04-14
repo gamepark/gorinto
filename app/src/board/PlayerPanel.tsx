@@ -144,7 +144,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
                 </div>
                 <div css={gPStyle}>+XX GP</div>
-                {playerInfo?.time?.playing && <PlayerTimer playerId={color} css={TimerStyle}/>}
+                <PlayerTimer playerId={color} css={TimerStyle}/>
 
             </div>
 

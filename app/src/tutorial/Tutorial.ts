@@ -1,11 +1,11 @@
 import GameState from "@gamepark/gorinto/types/GameState";
 import Move from "@gamepark/gorinto/types/Move";
-import PlayerColor, { playerColors } from "@gamepark/gorinto/types/PlayerColor";
-import { Tutorial } from "@gamepark/react-client";
+import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
+import {TutorialDescription} from "@gamepark/react-client";
 import {setupPlayers} from "@gamepark/gorinto/Gorinto"
-import { Goals } from "@gamepark/gorinto/cards/Goals";
-import { elements } from "@gamepark/gorinto/types/Element";
-import Landscape, { getLandscapeDiagram } from "@gamepark/gorinto/Landscape";
+import {Goals} from "@gamepark/gorinto/cards/Goals";
+import {elements} from "@gamepark/gorinto/types/Element";
+import Landscape, {getLandscapeDiagram} from "@gamepark/gorinto/Landscape";
 import Path from "@gamepark/gorinto/types/Path";
 import MoveType from "@gamepark/gorinto/types/MoveType";
 import PathType from "@gamepark/gorinto/types/PathType";
@@ -23,7 +23,7 @@ const initialBag = [elements[1],elements[1],elements[3],elements[2],elements[1],
 
 const tabPlayers = setupPlayers([{id:PlayerColor.Black},{id:PlayerColor.Red},{id:PlayerColor.White}])
 
-const GorintoTuthorial: Tutorial<GameState,Move, PlayerColor> = {
+const GorintoTutorial: TutorialDescription<GameState,Move, PlayerColor> = {
 
     setupTutorial:() => [{
         players: tabPlayers,
@@ -117,4 +117,4 @@ const GorintoTuthorial: Tutorial<GameState,Move, PlayerColor> = {
 
 }
 
-export default GorintoTuthorial
+export default GorintoTutorial

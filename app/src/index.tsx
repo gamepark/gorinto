@@ -12,7 +12,7 @@ import gorintoAnimations from './GorintoAnimations'
 import Background from './images/BG2.jpg'
 import reportWebVitals from './reportWebVitals'
 import translations from './translations.json'
-import GorintoTuthorial from './tutorial/Tutorial'
+import GorintoTutorial from './tutorial/Tutorial'
 
 setupTranslation(translations, {debug: false})
 
@@ -67,7 +67,7 @@ ReactDOM.render(
                   RulesView={GorintoView}
                   optionsDescription={GorintoOptionsDescription}
                   animations={gorintoAnimations}
-                  tutorial={GorintoTuthorial}
+                  tutorial={GorintoTutorial}
     >
       <App/>
     </GameProvider>
