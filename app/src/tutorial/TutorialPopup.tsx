@@ -250,10 +250,10 @@ const closePopupStyle = css`
   margin-top: -2%;
   margin-right: -0%;
   font-size: 4em;
-  color:black;
+  color:white;
   &:hover{
     cursor: pointer;
-    color: white;
+    color: black;
   }
 `
 
@@ -460,7 +460,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     },
     {
       title: (t: TFunction) => t('Understanding'),
-      text: (t: TFunction) => t("But this time, you will pick two tiles, and not only one ! Indeed, the number of tiles you can take is equal to your understanding of the element plus one."),
+      text: (t: TFunction) => t("But this time, you will pick two tiles, and not only one ! Indeed, the number of tiles you must take is equal to your understanding of the element plus one."),
       boxTop: 70,
       boxLeft: 45,
       boxWidth: 50,
@@ -758,7 +758,7 @@ const thirdTurnInfo = {
 
 const lastTurnInfo = {
   title: (t: TFunction) => t('Last Season'),
-  text: (t: TFunction) => t("It's the last season ! Be sure to pick a lot of Keys Elements, without lose the balance with Goal Cards !"),
+  text: (t: TFunction) => t("It's the last season ! Be sure to pick a lot of Keys Elements, without losing the balance with Goal Cards !"),
   boxTop: 50,
   boxLeft: 50,
   boxWidth: 70
