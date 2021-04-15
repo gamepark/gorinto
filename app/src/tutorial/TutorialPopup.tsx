@@ -5,14 +5,26 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import GameView from "@gamepark/gorinto/types/GameView";
 import Move from "@gamepark/gorinto/types/Move";
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
-import { useActions, useAnimation, useFailures, usePlayerId } from "@gamepark/react-client";
+import { useActions, useAnimation, useFailures, usePlayerId, useTutorial } from "@gamepark/react-client";
 import { TFunction } from "i18next";
 import { FC, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Arrow from "../images/tutorial-arrow-grey.png"
 import Button from "../board/Button";
+import background from '../images/BG2.jpg'
 
-const TutorialPopup : FC<{game:GameView}> = ({game}) => {
+declare type Tutorial = {
+  playNextMoves: (quantity?: number) => void;
+  playNextMove: () => void;
+  setOpponentsPlayAutomatically: (value?: boolean) => void;
+};
+
+const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
+
+  const tutorial = useTutorial()
+  useEffect(
+    () => tutorial && tutorial.setOpponentsPlayAutomatically(true), []
+  )
 
     const {t} = useTranslation()
     const playerId = usePlayerId<PlayerColor>()
@@ -25,6 +37,14 @@ const TutorialPopup : FC<{game:GameView}> = ({game}) => {
     const [failures] = useFailures()
     const [hideLastTurnInfo, setHideLastTurnInfo] = useState(false)
     const [hideThirdTurnInfo, setHideThirdTurnInfo] = useState(false)
+    const [tutorialEnd, setTutorialEnd] = useState(true)
+
+    const platformUri = process.env.REACT_APP_PLATFORM_URI || 'http://localhost:3000'
+    const discordUri = 'https://discord.gg/nMSDRag'
+
+    const toggleTutorialEnd = () => {
+      setTutorialEnd(!tutorialEnd)
+    }
 
     const moveTutorial = (deltaMessage: number) => {
       setTutorialIndex(tutorialIndex + deltaMessage)
@@ -68,6 +88,9 @@ const TutorialPopup : FC<{game:GameView}> = ({game}) => {
     return (
         <>
 
+
+
+
         <div css={[popupOverlayStyle, displayPopup ? showPopupOverlayStyle : hidePopupOverlayStyle(85, 90), style]}
             onClick={() => setTutorialDisplay(false)}>
 
@@ -86,7 +109,7 @@ const TutorialPopup : FC<{game:GameView}> = ({game}) => {
         </div>
 
         {
-        currentMessage && currentMessage.arrow &&
+          currentMessage && currentMessage.arrow &&
           <img alt='Arrow pointing toward current tutorial interest' src={Arrow} draggable="false"
                css={[arrowStyle(currentMessage.arrow.angle), displayPopup ? showArrowStyle(currentMessage.arrow.top, currentMessage.arrow.left) : hideArrowStyle]}/>
         }
@@ -101,7 +124,7 @@ const TutorialPopup : FC<{game:GameView}> = ({game}) => {
           </div>
         }
 
-{
+        {
           game.season === 4 && !hideLastTurnInfo &&
           <div css={[popupStyle, popupPosition(lastTurnInfo)]}>
             <div css={closePopupStyle} onClick={() => setHideLastTurnInfo(true)}><FontAwesomeIcon icon={faTimes}/></div>
@@ -111,9 +134,30 @@ const TutorialPopup : FC<{game:GameView}> = ({game}) => {
           </div>
         }
 
+        {
+          game.activePlayer === undefined &&
+          <div css={[popupStyle, endStyle, popupPosition(tutorialEndGame), tutorialEnd && buttonsPosition]}>
+            <div css={closePopupStyle} onClick={() => toggleTutorialEnd()}><FontAwesomeIcon icon={tutorialEnd ? faPlusSquare : faMinusSquare}/></div>
+            {!tutorialEnd &&
+            <>
+              <h2 css={textEndStyle} >{tutorialEndGame.title(t)}</h2>
+              <p css={textEndStyle} >{tutorialEndGame.text(t)}</p>
+            </>
+            }
+            <Button css={buttonStyle} onClick={() => resetTutorial()}>{t('Restart the tutorial')}</Button>
+            <Button css={buttonStyle} onClick={() => window.location.href = platformUri}>{t('Play with friends')}</Button>
+            <Button onClick={() => window.location.href = discordUri}>{t('Find players')}</Button>
+          </div>
+        }
+
         </>
     )
 
+}
+
+export function resetTutorial() {
+  localStorage.removeItem('gorinto')
+  window.location.reload()
 }
 
 export const hidePopupStyle = css`
@@ -133,6 +177,15 @@ export const hidePopupOverlayStyle = (boxTop: number, boxLeft: number) => css`
   width: 0;
   height: 0;
   overflow: hidden;
+`
+
+const endStyle = css`
+background: url(${background});
+`
+
+const textEndStyle = css`
+color: white;
+text-shadow: 0.1em 0.1em black;
 `
 
 const popupOverlayStyle = css`
@@ -163,8 +216,10 @@ const popupStyle = css`
   outline: none;
   box-shadow: 1em 2em 2.5em -1.5em hsla(0, 0%, 0%, 0.2);
   border:1em black solid;
-  background-color:rgba(157,163,165,1);
+  background: url(${background});
   border-radius: 40em 3em 40em 3em/3em 40em 3em 40em;
+  color:white;
+  text-shadow: 0.3em 0.3em black;
   
   &:hover{
       box-shadow: 2em 4em 5em -3em hsla(0,0%,0%,.5);
@@ -172,15 +227,12 @@ const popupStyle = css`
   & > h2 {
     font-size: 5em;
     margin:0;
-    text-shadow: 0.15em 0.15em 0.2em black;
   }
   & > p {
     text-align: center;
     font-size: 3.5em;
 
     width:90%;
-
-    text-shadow: 0.1em 0.1em 0.15em black;
   }
   & > button {
     font-size: 3.5em;
@@ -198,9 +250,10 @@ const closePopupStyle = css`
   margin-top: -2%;
   margin-right: -0%;
   font-size: 4em;
+  color:black;
   &:hover{
     cursor: pointer;
-    color: black;
+    color: white;
   }
 `
 
@@ -215,16 +268,8 @@ export const popupPosition = ({boxWidth, boxTop, boxLeft, arrow}: TutorialStepDe
 `
 
 export const buttonsPosition = css`
-  top: 86%;
+  top: 15%;
   width: 80%;
-`
-
-const resetStyle = css`
-  position: absolute;
-  text-align: center;
-  bottom: 10%;
-  right: 1%;
-  font-size: 3.5em;
 `
 
 const buttonStyle = css`
@@ -717,6 +762,14 @@ const lastTurnInfo = {
   boxTop: 50,
   boxLeft: 50,
   boxWidth: 70
+}
+
+const tutorialEndGame = {
+  title: (t: TFunction) => t('Congratulations!'),
+  text: (t: TFunction) => t('You have finished your first game! You can now play with your friends, or meet other players via our chat room on Discord.'),
+  boxTop: 25,
+  boxLeft: 50,
+  boxWidth: 80
 }
 
 

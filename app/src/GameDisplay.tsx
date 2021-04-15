@@ -6,7 +6,7 @@ import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/Remo
 import GameView from '@gamepark/gorinto/types/GameView'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import {useAnimation, usePlayerId} from '@gamepark/react-client'
+import {useAnimation, usePlayerId, useTutorial} from '@gamepark/react-client'
 import {Letterbox} from '@gamepark/react-components'
 import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import Board from './board/Board'
@@ -35,6 +35,8 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
   
   const player = game.players.find(player => player.color === playerId)
+
+  const tutorial = useTutorial()
 
   // Hooks for move clics
 
@@ -114,7 +116,7 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
       {showWelcomePopup && player && <WelcomePopUp player={player} game={game} close={() => setWelcomePopUpClosed(true)} />}
       {showWarningNoElementPopUp && playerId === game.activePlayer && <WarningNoElementPopUp close={() => setWarningNoElementPopUpClosed(undefined)} path={warningNoElementPopUpClosed!.path} x={warningNoElementPopUpClosed!.x} y={warningNoElementPopUpClosed!.y}/>}
-      {game.tutorial && <TutorialPopup game = {game}/>} 
+      {tutorial && <TutorialPopup game={game} tutorial={tutorial}/>}
 
     </Letterbox>
 
