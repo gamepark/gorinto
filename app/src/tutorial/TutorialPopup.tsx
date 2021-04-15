@@ -334,7 +334,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('Your Opponents'),
-          text: (t: TFunction) => t('You also play against 2 two opponents controlled by the machine : the Red and the White players.'),
+          text: (t: TFunction) => t('You also play against two opponents controlled by the machine : the Red and the White players.'),
           boxTop: 55,
           boxLeft: 47,
           boxWidth: 55,
@@ -365,7 +365,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('The Paths'),
-          text: (t: TFunction) => t('Next to the Mountain, there are the two Paths. When it is your turn, you can pick a tile on a Path and move it on the Mountain in a straight line.'),
+          text: (t: TFunction) => t('Next to the Mountain, there are the two Paths. When it is your turn, you must pick a tile on a Path and move it on the Mountain in a straight line.'),
           boxTop: 35,
           boxLeft: 50,
           boxWidth: 40,
@@ -377,7 +377,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('How to move a tile'),
-          text: (t: TFunction) => t("Enough talking ! You have to move a tile from a path to the mountain first. Try to move this Fire Element on the second column !"),
+          text: (t: TFunction) => t("Enough talking ! You have to move a tile from a Path to the Mountain first. Try to move this Fire Element on the second column !"),
           boxTop: 45,
           boxLeft: 40,
           boxWidth: 50,
@@ -467,7 +467,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     },
     {
       title: (t: TFunction) => t('Understanding'),
-      text: (t: TFunction) => t("You have juste move a Wind Element, and you have already collected one Wind Element. Your understanding of this element is 1, so you can gather 1 + 1 = 2 tiles."),
+      text: (t: TFunction) => t("You have just move a Wind Element, and you have already collected one Wind Element. Your understanding of this element is 1, so you can gather 1 + 1 = 2 tiles."),
       boxTop: 70,
       boxLeft: 45,
       boxWidth: 60,
@@ -738,6 +738,13 @@ const tutorialDescription:TutorialStepDescription[][] = [
       boxLeft: 45,
       boxWidth: 50,
     }, 
+    {
+      title: (t: TFunction) => t('The Element Bag'),
+      text: (t: TFunction) => t("One more thing, there is 100 element tiles in a game of Gorinto. Each tile is present twenty times, and all tiles are picked during the game."),
+      boxTop: 25,
+      boxLeft: 45,
+      boxWidth: 50,
+    },
     {
       title: (t: TFunction) => t('The student has surpassed the tutorial'),
       text: (t: TFunction) => t("You know everything now to play Gorinto ! We let you free to play your last move of the season yourself. Try to make the best move to score a lot of points, maybe by equalizing your height stacks ?"),
