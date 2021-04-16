@@ -4,7 +4,7 @@ import MoveTile, { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/mov
 import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 import Element from '@gamepark/gorinto/types/Element'
 import PathType from '@gamepark/gorinto/types/PathType'
-import {usePlay} from '@gamepark/react-client'
+import {usePlay, useSound} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
 import {TFunction} from 'i18next'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
@@ -16,8 +16,8 @@ import Wind from '../images/ElementWind.jpg'
 import ElementInPath from './ElementInPath'
 import ElementInPile from './ElementInPile'
 import {isMoveTile} from '@gamepark/gorinto/moves/MoveTile'
-import { playerColors } from '@gamepark/gorinto/types/PlayerColor'
 import Move from '@gamepark/gorinto/types/Move'
+import moveTileSound from '../sounds/tic.mp3'
 
 type Props = {
 
@@ -43,10 +43,13 @@ const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, elem
     useEffect(() => setDisplayHeight(position), [position])
     const item = {...draggableItem, hoverPile: setDisplayHeight}
 
+    const moveSound = useSound(moveTileSound)
+
     const onDrop = (move:MoveTile | TakeTile) => {
         if (isMoveTile(move) && getFilterCoordinatesWithPattern(element,{x:move.x,y:move.y},mountainBoard).length === 0){
             onWarning(move.path,move.x,move.y)
         } else {
+            moveSound.play()
             play(move)
         }
     }

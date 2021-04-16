@@ -6,7 +6,7 @@ import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/Remo
 import GameView from '@gamepark/gorinto/types/GameView'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import {useAnimation, usePlayerId, useSound, useTutorial} from '@gamepark/react-client'
+import {useAnimation, usePlay, usePlayerId, useSound, useTutorial} from '@gamepark/react-client'
 import {Letterbox} from '@gamepark/react-components'
 import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import Board from './board/Board'

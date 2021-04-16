@@ -5,10 +5,11 @@ import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/Remo
 import Element from '@gamepark/gorinto/types/Element'
 import PathType from '@gamepark/gorinto/types/PathType'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import {useAnimation, usePlayerId} from '@gamepark/react-client'
-import {FC} from 'react'
+import {useAnimation, usePlayerId, useSound} from '@gamepark/react-client'
+import {FC, useEffect} from 'react'
 import ElementInPath from './ElementInPath'
 import ElementTile from './ElementTile'
+import moveTileSound from '../sounds/tic.mp3'
 
 type Props = {
     tilesToTake: { quantity: number, coordinates: { x: number, y: number }[], element?: Element } | undefined,
@@ -25,6 +26,14 @@ const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlay
     const playerId = usePlayerId()
     const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === PathType.Horizontal)
     const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move))
+
+    const moveSound = useSound(moveTileSound)
+
+    useEffect(() => {
+        if (animationMoveTile && animationMoveTile.move){
+            moveSound.play()
+        }
+    },[animationMoveTile && animationMoveTile.move])
 
     return (
         <div css={horizontalPathPanel}>

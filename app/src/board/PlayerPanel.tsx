@@ -5,7 +5,7 @@ import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import {PlayerTimer, usePlay, usePlayer} from '@gamepark/react-client'
+import {PlayerTimer, usePlay, usePlayer, useSound} from '@gamepark/react-client'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
@@ -39,6 +39,8 @@ import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 
 import {isFirefox} from 'react-device-detect';
 
+import moveTileSound from '../sounds/tic.mp3'
+
 type Props = {
     player: Player
     position:number[],
@@ -55,6 +57,8 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
     const {t} = useTranslation()
     const playerInfo = usePlayer(color)
     const playTake = usePlay<TakeTile>()
+
+    const moveSound = useSound(moveTileSound)
 
     const [{canDrop, isOver}, dropPlayerRef] = useDrop({
         accept: "ElementInPile",
@@ -160,11 +164,11 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
                               && color === activePlayer) || hideValidationButton, validationButtonStyle
                             ]} 
                         onClick={() => {(tilesToTake!.element !== Element.Earth
-                            ? selectedTilesInMountain.forEach(element => playTake({
+                            ? moveSound.play() && selectedTilesInMountain.forEach(element => playTake({
                               type:MoveType.TakeTile,
                               coordinates:{x:element.x,y:element.y}
                           })) 
-                            :Array.from(selectedTilesInMountain).sort((a,b) => (-a.z + b.z)).forEach(element => playTake({
+                            : moveSound.play() && Array.from(selectedTilesInMountain).sort((a,b) => (-a.z + b.z)).forEach(element => playTake({
                               type:MoveType.TakeTile,
                               coordinates:{x:element.x,y:element.y, z:element.z}
                           })) )

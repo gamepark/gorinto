@@ -6,14 +6,15 @@ import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import PathType from '@gamepark/gorinto/types/PathType'
 import TilesToTake from '@gamepark/gorinto/types/TilesToTake'
-import {useAnimation, usePlay, usePlayerId} from '@gamepark/react-client'
-import {FC, HTMLAttributes} from 'react'
+import {useAnimation, usePlay, usePlayerId, useSound} from '@gamepark/react-client'
+import {FC, HTMLAttributes, useEffect} from 'react'
 import ElementInPath from './ElementInPath'
 import ElementInPile from './ElementInPile'
 import ElementTile from './ElementTile'
 import MountainDropZone from './MountainDropZone'
 import GameView from "@gamepark/gorinto/types/GameView";
 import Path from '@gamepark/gorinto/types/Path'
+import moveTileSound from '../sounds/tic.mp3'
 
 type Props = {
     pile: number[],
@@ -34,7 +35,13 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
     const canTakeAny = tilesToTake?.element === Element.Earth && tilesToTake.coordinates.length && tilesToTake.coordinates[0].x === x && tilesToTake.coordinates[0].y === y
 
     const playMove = usePlay<MoveTile>()
-    
+    const moveSound = useSound(moveTileSound)
+
+    useEffect(() => {
+        if (animation && animation.move){
+            moveSound.play()
+        }
+    },[animation && animation.move])
 
     return (
         <>
@@ -82,7 +89,7 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
                     canMoveTile(selectedTileInPath, x, y) 
                     ? getFilterCoordinatesWithPattern(getElementofSelectedTileInPath(selectedTileInPath!, game.horizontalPath, game.verticalPath),{x,y},game.mountainBoard).length === 0 
                         ? onWarning(selectedTileInPath!.path,x,y)
-                        : playMove({
+                        : moveSound.play() && playMove({
                             type: MoveType.MoveTile,
                             path: selectedTileInPath!.path,
                             x,
