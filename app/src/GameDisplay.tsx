@@ -6,7 +6,7 @@ import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/Remo
 import GameView from '@gamepark/gorinto/types/GameView'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import {useAnimation, usePlayerId, useTutorial} from '@gamepark/react-client'
+import {useAnimation, usePlayerId, useSound, useTutorial} from '@gamepark/react-client'
 import {Letterbox} from '@gamepark/react-components'
 import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import Board from './board/Board'
@@ -20,20 +20,19 @@ import SeasonIndicator from './board/SeasonIndicator'
 import WarningNoElementPopUp from './board/WarningNoElementPopUp'
 import WelcomePopUp from './board/WelcomePopUp'
 import TutorialPopup from './tutorial/TutorialPopup'
+import ActivePlayerSound from './sounds/gongv1.mp3'
 
 const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
   const burrowTileAnimation = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move) && game.endOfSeasonStep === undefined)
+  
   const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(true)
   const [warningNoElementPopUpClosed, setWarningNoElementPopUpClosed] = useState<MoveTile>()
-
   const showWelcomePopup = !welcomePopUpClosed
   const showWarningNoElementPopUp = warningNoElementPopUpClosed ? true : false 
 
   const playerId = usePlayerId<PlayerColor>()
-  const players = useMemo(() => getPlayersStartingWith(game, playerId), [game, playerId])  
-
-  
+  const players = useMemo(() => getPlayersStartingWith(game, playerId), [game, playerId])    
   const player = game.players.find(player => player.color === playerId)
 
   const tutorial = useTutorial()
@@ -52,7 +51,18 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
     if (game.activePlayer !== playerId && warningNoElementPopUpClosed !== undefined){
         setWarningNoElementPopUpClosed(undefined)
     }
-}, [game, warningNoElementPopUpClosed] )
+  }, [game, warningNoElementPopUpClosed] )
+
+  const yourTurn = useSound(ActivePlayerSound) 
+
+  useEffect(() => 
+    {
+      if (playerId === game.activePlayer){
+        console.log('play the sound !')
+        yourTurn.play()
+      }
+    }, [game.activePlayer || game.season]
+  )
 
   return (
 
