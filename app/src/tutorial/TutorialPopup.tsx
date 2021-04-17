@@ -575,7 +575,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     },
     {
       title: (t: TFunction) => t('The Goal Cards'),
-      text: (t: TFunction) => t("In this game, you can score points if you make odd height stacks and stacks of different heights."),
+      text: (t: TFunction) => t("In this game, you can score points if you make odd height stacks and stacks of same heights."),
       boxTop: 35,
       boxLeft: 45,
       boxWidth: 50,
