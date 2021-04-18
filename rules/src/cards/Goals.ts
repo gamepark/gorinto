@@ -4,7 +4,7 @@ import Goal from '../types/Goal'
 import Player from '../types/Player'
 
 export const Goal1: Goal = {
-  text: t => t('goal1'),
+  text: 'goal1',
   conflictLetter: 'A',
   score: (player: Player) => {
     return player.understanding.reduce((sum, understanding, index) => {
@@ -18,7 +18,7 @@ export const Goal1: Goal = {
 }
 
 export const Goal2: Goal = {
-  text: t => t('goal2'),
+  text: 'goal2',
   conflictLetter: 'A',
   score: (player: Player) => {
     return player.understanding.reduce((sum, understanding, index) => {
@@ -31,19 +31,19 @@ export const Goal2: Goal = {
   }
 }
 export const Goal3: Goal = {
-  text: t => t('goal3'),
+  text: 'goal3',
   conflictLetter: 'B',
   score: (player: Player) => player.understanding.reduce((sum, understanding) => understanding % 2 === 1 ? sum + understanding : sum, 0)
 }
 
 export const Goal4: Goal = {
-  text: t => t('goal4'),
+  text: 'goal4',
   conflictLetter: 'B',
   score: (player: Player) => player.understanding.reduce((sum, understanding) => understanding % 2 === 0 ? sum + understanding : sum, 0)
 }
 
 export const Goal5: Goal = {
-  text: t => t('goal5'),
+  text: 'goal5',
   hint: t => t('goal.c.hint'),
   conflictLetter: 'C',
   score: (player: Player, state: GameState | GameView) => player.understanding.reduce((sum, understanding, index) => {
@@ -57,7 +57,7 @@ export const Goal5: Goal = {
 }
 
 export const Goal6: Goal = {
-  text: t => t('goal6'),
+  text: 'goal6',
   hint: t => t('goal.c.hint'),
   conflictLetter: 'C',
   score: (player: Player, state: GameState | GameView) => player.understanding.reduce((sum, understanding, index) => {
@@ -71,7 +71,7 @@ export const Goal6: Goal = {
 }
 
 export const Goal7: Goal = {
-  text: t => t('goal7'),
+  text: 'goal7',
   hint: t => t('goal.d.hint'),
   conflictLetter: 'D',
   score: (player: Player) => {
@@ -81,7 +81,7 @@ export const Goal7: Goal = {
 }
 
 export const Goal8: Goal = {
-  text: t => t('goal8'),
+  text: 'goal8',
   hint: t => t('goal.d.hint'),
   conflictLetter: 'D',
   score: (player: Player) => {
@@ -91,7 +91,7 @@ export const Goal8: Goal = {
 }
 
 export const Goal9: Goal = {
-  text: t => t('goal9'),
+  text: 'goal9',
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
     return sorted.reduce((sum, understanding) => understanding === sorted[0] || understanding === sorted[4] ? sum + understanding : sum, 0)
@@ -99,7 +99,7 @@ export const Goal9: Goal = {
 }
 
 export const Goal10: Goal = {
-  text: t => t('goal10'),
+  text: 'goal10',
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
     return sorted[4] + 2 * (sorted.find(understanding => understanding > 0) ?? 0)
@@ -107,7 +107,7 @@ export const Goal10: Goal = {
 }
 
 export const Goal11: Goal = {
-  text: t => t('goal11'),
+  text: 'goal11',
   hint: t => t('goal.11.hint'),
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
@@ -116,7 +116,7 @@ export const Goal11: Goal = {
 }
 
 export const Goal12: Goal = {
-  text: t => t('goal12'),
+  text: 'goal12',
   score: (player: Player) => {
     const sorted: number[] = (Array.from(player.understanding)).sort((a, b) => a - b)
     return 7 * sorted[0]

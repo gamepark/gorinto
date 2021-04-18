@@ -14,7 +14,7 @@ import reportWebVitals from './reportWebVitals'
 import translations from './translations.json'
 import GorintoTutorial from './tutorial/Tutorial'
 
-setupTranslation(translations, {debug: false})
+setupTranslation(translations)
 
 const style = css`
   html {

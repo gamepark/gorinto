@@ -1,4 +1,4 @@
-import {useGame, usePlayerId, usePlayers} from "@gamepark/react-client";
+import {Player as PlayerInfo, useGame, usePlayerId, usePlayers} from "@gamepark/react-client";
 import GameView from "@gamepark/gorinto/types/GameView";
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
 import {useTranslation} from "react-i18next";
@@ -6,7 +6,6 @@ import {getPlayerName} from "@gamepark/gorinto/GorintoOptions";
 import MoveType from "@gamepark/gorinto/types/MoveType";
 import Element from "@gamepark/gorinto/types/Element";
 import Player from "@gamepark/gorinto/types/Player";
-import {Player as PlayerInfo} from '@gamepark/react-client'
 
 export default function useHeaderText() {
     const game = useGame<GameView>()
@@ -46,9 +45,9 @@ export default function useHeaderText() {
     
             if (playersWithHighestScore.length === 1){
                 if (player === playersWithHighestScore[0]){
-                    return t('Victory ! You win the game with {score} Wisdom Points', {score:highestscore})
+                    return t('you.win', {score:highestscore})
                 } else {
-                    return t('{player} wins the game with {score} Wisdom Points',{player: getWinnerPseudo(playersWithHighestScore[0],players),score:highestscore})
+                    return t('player.wins',{player: getWinnerPseudo(playersWithHighestScore[0],players),score:highestscore})
                 }
             } else {
                 let fewestTiles = 101;
@@ -64,13 +63,13 @@ export default function useHeaderText() {
                 }
                 if (playersWithFewestTiles.length === 1){
                     if (player === playersWithFewestTiles[0]){
-                        return t("Victory ! Yon win the game with {score} Wisdom Points and {tiles} Elements", {score:highestscore, tiles:fewestTiles})
+                        return t("you.win.tie.breaker", {score:highestscore, tiles:fewestTiles})
                     } else {
-                        return t("{player} wins the game with {score} Wisdom Points and {tiles} Elements", {player:getWinnerPseudo(playersWithFewestTiles[0],players), score:highestscore, tiles:fewestTiles})
+                        return t("player.wins.tie.breaker", {player:getWinnerPseudo(playersWithFewestTiles[0],players), score:highestscore, tiles:fewestTiles})
                     }
                 } else {
                     if (playersWithFewestTiles.length === 2){
-                        return t("Marvelous ! {player1} and {player2} share a harmonious victory with {score} Wisdom Points and {tiles} Elements",
+                        return t("2.players.tie",
                         {
                             player1:getWinnerPseudo(playersWithFewestTiles[0],players),
                             player2:getWinnerPseudo(playersWithFewestTiles[1],players),
@@ -78,7 +77,7 @@ export default function useHeaderText() {
                             tiles:fewestTiles,
                         })
                     } else if (playersWithFewestTiles.length ===3){
-                        return t("Incredible ! {player1}, {player2} and {player3} share a harmonious victory with {score} Wisdom Points and {tiles} Elements",
+                        return t("3.players.tie",
                         {
                             player1:getWinnerPseudo(playersWithFewestTiles[0],players),
                             player2:getWinnerPseudo(playersWithFewestTiles[1],players),
@@ -87,7 +86,7 @@ export default function useHeaderText() {
                             tiles:fewestTiles,
                         })
                     } else {
-                        return t("It can't be... It's a perfect tie ! All players share a harmonious victory with {score} Wisdom Points and {tiles} Elements",
+                        return t("perfect.tie",
                         {
                             score:highestscore,
                             tiles:fewestTiles,
@@ -108,7 +107,7 @@ export default function useHeaderText() {
             }
     
             if (game.activePlayer === playerId) {
-                return t('You must take {quantity, plural, one {# tile} other {# tiles}} from the mountain',
+                return t('you.must.take',
                     {quantity:(game.tilesToTake.element !== Element.Earth
                                 ? Math.min(game.tilesToTake?.quantity, game.tilesToTake?.coordinates.length) 
                                 : game.tilesToTake.coordinates.length === 0
@@ -117,13 +116,13 @@ export default function useHeaderText() {
                                 }
                         )
             } else {
-                return t('{player} must take {quantity, plural, one {# tile} other {# tiles}} from the mountain', {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t),quantity:Math.min(game.tilesToTake.quantity, game.tilesToTake.coordinates.length)})
+                return t('player.must.take', {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t),quantity:Math.min(game.tilesToTake.quantity, game.tilesToTake.coordinates.length)})
             }
         } else {
             if (game.activePlayer === playerId) {
-                return t("You have to move an element from one path to the mountain")
+                return t("you.must.move")
             } else {
-               return t("{player} has to move an element from one path to the mountain", {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t)})
+                return t("player.must.move", {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t)})
             }
         }
     }

@@ -45,7 +45,7 @@ const WelcomePopUp : FC<{player:Player, game:GameView, close: () => void}> = ({p
 
                 </div>
 
-                <p> {t("You play with these two Goals and with these two Key Elements. Good luck, and have fun !")} </p>
+                <p> {t("welcome.text")} </p>
 
                 <Button css={buttonPosition} onClick={close}>{t('Understood')}</Button>
 

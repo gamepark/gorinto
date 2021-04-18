@@ -29,27 +29,27 @@ export default function PatternsReminder() {
                     <div css={elementRuleCss}>
                         <img src={patternVoid} alt="Void pattern"/>
                         <h3>{getElementName(Element.Void, t)}</h3>
-                        <p>{t("Can gather from the four locations diagonally adjacent to your placement.")}</p>
+                        <p>{t("void.pattern.rule")}</p>
                     </div>
                     <div css={elementRuleCss}>
                         <img src={patternWind} alt="Wind pattern"/>
                         <h3>{getElementName(Element.Wind, t)}</h3>
-                        <p>{t("Can gather from the four locations orthogonally adjacent to your placement.")}</p>
+                        <p>{t("wind.pattern.rule")}</p>
                     </div>
                     <div css={elementRuleCss}>
                         <img src={patternFire} alt="Fire pattern"/>
                         <h3>{getElementName(Element.Fire, t)}</h3>
-                        <p>{t("Can gather from the four other spaces in your placement’s column.")}</p>
+                        <p>{t("fire.pattern.rule")}</p>
                     </div>
                     <div css={elementRuleCss}>
                         <img src={patternWater} alt="Water pattern"/>
                         <h3>{getElementName(Element.Water, t)}</h3>
-                        <p>{t("Can gather from the four other spaces in your placement’s row.")}</p>
+                        <p>{t("water.pattern.rule")}</p>
                     </div>
                     <div css={elementRuleCss}>
                         <img src={patternEarth} alt="Earth pattern"/>
                         <h3>{getElementName(Element.Earth, t)}</h3>
-                        <p>{t("Can gather from the stack you placed upon.")}</p>
+                        <p>{t("earth.pattern.rule")}</p>
                     </div>
                 </div>
                 <Button css={buttonCss} onClick={() => setDialogOpen(false)}>{t("Understood")}</Button>

@@ -18,7 +18,7 @@ const GoalCard: FC<Props> = ({goal, ...props}) => {
         <div css={goalCardCss} {...props}>
 
             {goal.hint && <p css={hintCss}>{goal.hint(t)}</p>}
-            <p><Trans defaults={goal.text(t)} components={[<strong/>]}/></p>
+            <p><Trans defaults={goal.text} components={[<strong/>]}/></p>
             {goal.conflictLetter && <span className="notranslate" css={conflictLetterCss}>{goal.conflictLetter}</span>}
 
         </div>

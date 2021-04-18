@@ -55,13 +55,12 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
   const yourTurn = useSound(ActivePlayerSound) 
 
-  useEffect(() => 
-    {
+  useEffect(() => {
       if (playerId === game.activePlayer){
         console.log('play the sound !')
-        yourTurn.play()
+        yourTurn.play().catch(e => console.warn('cannot play sound', e))
       }
-    }, [game.activePlayer || game.season]
+    }, [game.activePlayer, game.season]
   )
 
   return (

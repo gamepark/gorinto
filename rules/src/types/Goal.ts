@@ -5,7 +5,7 @@ import Player from './Player'
 
 type Goal = {
   hint?: (t: TFunction) => string;
-  text: (t: TFunction) => string;
+  text: string;
   conflictLetter?: 'A' | 'B' | 'C' | 'D';
   score: (player: Player, state: GameState | GameView) => number
 }
