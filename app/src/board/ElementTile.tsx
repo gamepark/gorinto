@@ -40,7 +40,9 @@ const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, elem
 
     const play = usePlay<Move>()
     const [displayHeight, setDisplayHeight] = useState(position)
-    useEffect(() => setDisplayHeight(position), [position])
+    useEffect(() => {
+        setDisplayHeight(position)
+    }, [position])
     const item = {...draggableItem, hoverPile: setDisplayHeight}
 
     const moveSound = useSound(moveTileSound)

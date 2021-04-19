@@ -33,7 +33,7 @@ const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlay
         if (animationMoveTile && animationMoveTile.move){
             moveSound.play()
         }
-    },[animationMoveTile && animationMoveTile.move])
+    },[animationMoveTile])
 
     return (
         <div css={horizontalPathPanel}>

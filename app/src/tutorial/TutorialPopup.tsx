@@ -21,11 +21,6 @@ declare type Tutorial = {
 
 const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
 
-  const tutorial = useTutorial()
-  useEffect(
-    () => tutorial && tutorial.setOpponentsPlayAutomatically(true), []
-  )
-
     const {t} = useTranslation()
     const playerId = usePlayerId<PlayerColor>()
     const actions = useActions<Move, PlayerColor>()
@@ -81,9 +76,17 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
     }, [actionsNumber, failures])
 
     const currentMessage = tutorialMessage(tutorialIndex)
-    const displayPopup = tutorialDisplay && currentMessage && !failures.length
+    const indexsWhichDontDisplay = [[2,1],[5,1],[8,1],[13,1],[15,0]];
 
+    const displayPopup = playerId === game.activePlayer 
+    ? tutorialDisplay && currentMessage && !failures.length
+    : tutorialDisplay && currentMessage && !failures.length && !(indexsWhichDontDisplay.some(tab => tab[0] === actionsNumber && tab[1] === tutorialIndex))
 
+    const tutorial = useTutorial()
+    useEffect(() => {
+      tutorial && tutorial.setOpponentsPlayAutomatically(true)
+      }, []
+    )
 
     return (
         <>

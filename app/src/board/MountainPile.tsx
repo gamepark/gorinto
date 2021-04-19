@@ -29,6 +29,8 @@ type Props = {
 
 const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect, selectedTilesInMountain, onWarning,...props}) => {
 
+console.log("Dans MountainPile n° ",x*5+y)
+
     const playerId = usePlayerId()
     const animation = useAnimation<TakeTile>(animation => isTakeTile(animation.move) && animation.move.coordinates.x === x && animation.move.coordinates.y === y)
     const tilesToTake = game.tilesToTake
@@ -41,7 +43,7 @@ const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect
         if (animation && animation.move){
             moveSound.play()
         }
-    },[animation && animation.move])
+    },[animation])
 
     return (
         <>

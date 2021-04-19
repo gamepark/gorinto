@@ -107,7 +107,8 @@ export default function useHeaderText() {
             }
     
             if (game.activePlayer === playerId) {
-                return t('you.must.take',
+                if (game.tilesToTake.quantity !==0){
+                    return t('you.must.take',
                     {quantity:(game.tilesToTake.element !== Element.Earth
                                 ? Math.min(game.tilesToTake?.quantity, game.tilesToTake?.coordinates.length) 
                                 : game.tilesToTake.coordinates.length === 0
@@ -115,8 +116,16 @@ export default function useHeaderText() {
                                     : Math.min(game.tilesToTake.quantity, game.mountainBoard[game.tilesToTake.coordinates[0].x][game.tilesToTake.coordinates[0].y].length-1))
                                 }
                         )
+                } else {
+                    return t('removing.tile')
+                }
+
             } else {
-                return t('player.must.take', {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t),quantity:Math.min(game.tilesToTake.quantity, game.tilesToTake.coordinates.length)})
+                if (game.tilesToTake.quantity !==0){
+                    return t('player.must.take', {player: players.find(p => p.id === game.activePlayer)?.name ?? getPlayerName(game.activePlayer, t),quantity:Math.min(game.tilesToTake.quantity, game.tilesToTake.coordinates.length)})
+                } else {
+                    return t('removing.tile')
+                }
             }
         } else {
             if (game.activePlayer === playerId) {

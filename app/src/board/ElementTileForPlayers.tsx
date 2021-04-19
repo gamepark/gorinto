@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {css, keyframes} from '@emotion/react'
+import {css} from '@emotion/react'
 import Element from '@gamepark/gorinto/types/Element'
 import {TFunction} from 'i18next'
 import {FC, HTMLAttributes} from 'react'

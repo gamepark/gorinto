@@ -11,7 +11,6 @@ import GameView from "@gamepark/gorinto/types/GameView";
 import ElementInPile from './ElementInPile'
 import { usePlayerId } from '@gamepark/react-client'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import Path from '@gamepark/gorinto/types/Path'
 
 type Props = {
     game:GameView,
@@ -23,6 +22,7 @@ type Props = {
 
 const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain, onWarning}) => {
 
+    console.log("affichage board")
     // Hooks for move clics
 
     const [selectedTileInPath, setSelectedTileInPath] = useState<ElementInPath>()
@@ -32,7 +32,7 @@ const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain, onWarnin
         if ((game.tilesToTake && selectedTileInPath !== undefined) || (game.activePlayer !==playerId && selectedTileInPath !== undefined)){
             setSelectedTileInPath(undefined)
         }
-    }, [game, selectedTileInPath] )
+    }, [game.tilesToTake, game.activePlayer, selectedTileInPath] )
 
     return (
 

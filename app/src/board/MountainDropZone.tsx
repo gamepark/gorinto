@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
-import { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/moves/MoveTile'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import Path from '@gamepark/gorinto/types/Path'
 import PathType from '@gamepark/gorinto/types/PathType'

@@ -6,7 +6,7 @@ import RemoveTileOnPath, {isRemoveTileOnPath} from '@gamepark/gorinto/moves/Remo
 import GameView from '@gamepark/gorinto/types/GameView'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import {useAnimation, usePlay, usePlayerId, useSound, useTutorial} from '@gamepark/react-client'
+import {useAnimation, usePlayerId, useSound, useTutorial} from '@gamepark/react-client'
 import {Letterbox} from '@gamepark/react-components'
 import {FC, Fragment, useEffect, useMemo, useState} from 'react'
 import Board from './board/Board'
@@ -45,13 +45,13 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
       if (!game.tilesToTake && selectedTilesInMountain.length > 0){
           setSelectedTilesInMountain([])
       }
-  }, [game, selectedTilesInMountain] )
+  }, [game.tilesToTake, selectedTilesInMountain] )
   
   useEffect( () => {
     if (game.activePlayer !== playerId && warningNoElementPopUpClosed !== undefined){
         setWarningNoElementPopUpClosed(undefined)
     }
-  }, [game, warningNoElementPopUpClosed] )
+  }, [game.activePlayer, warningNoElementPopUpClosed] )
 
   const yourTurn = useSound(ActivePlayerSound) 
 

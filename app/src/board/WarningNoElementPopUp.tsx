@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import {usePlay, usePlayer} from "@gamepark/react-client";
+import {usePlay} from "@gamepark/react-client";
 import {FC} from "react";
 import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'

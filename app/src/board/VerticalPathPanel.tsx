@@ -33,7 +33,7 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
         if (animationMoveTile && animationMoveTile.move){
             moveSound.play()
         }
-    },[animationMoveTile && animationMoveTile.move])
+    },[animationMoveTile])
     
     return(
 
