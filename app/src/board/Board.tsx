@@ -38,7 +38,7 @@ const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain, onWarnin
 
         <div css={boardStyle}>
 
-            <HorizontalPathPanel onSelect = {position => (selectedTileInPath?.path === PathType.Horizontal && selectedTileInPath.position === position) ? setSelectedTileInPath(undefined) : game.activePlayer === playerId && setSelectedTileInPath({path:PathType.Horizontal, position})} 
+            <HorizontalPathPanel onSelect = {position => (selectedTileInPath?.path === PathType.Horizontal && selectedTileInPath.position === position) ? setSelectedTileInPath(undefined) : game.activePlayer === playerId && setSelectedTileInPath({path:PathType.Horizontal, position, element:game.verticalPath[position]})} 
                                  selectedTile = {selectedTileInPath} 
                                  activePlayer = {game.activePlayer} 
                                  horizontalPath = {game.horizontalPath} 
@@ -47,7 +47,7 @@ const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain, onWarnin
                                  onWarning = {onWarning}
 
              />
-            <VerticalPathPanel onSelect = {position => (selectedTileInPath?.path === PathType.Vertical && selectedTileInPath.position === position) ? setSelectedTileInPath(undefined) : game.activePlayer === playerId && setSelectedTileInPath({path:PathType.Vertical, position})} 
+            <VerticalPathPanel onSelect = {position => (selectedTileInPath?.path === PathType.Vertical && selectedTileInPath.position === position) ? setSelectedTileInPath(undefined) : game.activePlayer === playerId && setSelectedTileInPath({path:PathType.Vertical, position, element:game.verticalPath[position]})} 
                                selectedTile = {selectedTileInPath} 
                                activePlayer = {game.activePlayer} 
                                verticalPath = {game.verticalPath} 
@@ -55,7 +55,13 @@ const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain, onWarnin
                                mountain = {game.mountainBoard}
                                onWarning = {onWarning} 
             />
-            <MountainPanel game = {game} selectedTileInPath = {selectedTileInPath} onSelection = {onSelection} selectedTilesInMountain = {selectedTilesInMountain} onWarning={onWarning} />
+            <MountainPanel mountainBoard={game.mountainBoard} 
+                           activePlayer = {game.activePlayer}
+                           tilesToTake = {game.tilesToTake}
+                           selectedTileInPath = {selectedTileInPath} 
+                           onSelection = {onSelection} 
+                           selectedTilesInMountain = {selectedTilesInMountain} 
+                           onWarning={onWarning} />
         
         </div>
 

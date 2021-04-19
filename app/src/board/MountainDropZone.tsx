@@ -13,14 +13,10 @@ type Props = {
     y:number,
     height:number,
     selectedTileInPath?:ElementInPath|undefined
-    onWarning:(path:PathType,x:number, y:number) => void,
-    mountainBoard:number[][][],
-    horizontalPath:Path,
-    verticalPath:Path
 
 } & React.HTMLAttributes<HTMLDivElement>
 
-const MountainDropZone : FC<Props> = ({x, y, height, selectedTileInPath, mountainBoard, horizontalPath, verticalPath, onWarning, ...props}) => {
+const MountainDropZone : FC<Props> = ({x, y, height, selectedTileInPath, ...props}) => {
 
     const [{canDrop, isOver}, dropRef] = useDrop({
         accept: ["ElementInPath","ElementInPile"],

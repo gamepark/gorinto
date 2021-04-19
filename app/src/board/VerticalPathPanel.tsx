@@ -54,7 +54,7 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
 
                              onClick = {() => onSelect(index)}
                              isSelected = {selectedTile?.path === PathType.Vertical && selectedTile?.position === index && tilesToTake === undefined ? true : false}
-                             mountainBoard = {mountain}
+
                              onWarning = {onWarning}
               
               />

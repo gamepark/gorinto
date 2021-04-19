@@ -4,7 +4,7 @@ import MoveTile, { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/mov
 import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 import Element from '@gamepark/gorinto/types/Element'
 import PathType from '@gamepark/gorinto/types/PathType'
-import {usePlay, useSound} from '@gamepark/react-client'
+import {useGame, usePlay, useSound} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
 import {TFunction} from 'i18next'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
@@ -18,6 +18,7 @@ import ElementInPile from './ElementInPile'
 import {isMoveTile} from '@gamepark/gorinto/moves/MoveTile'
 import Move from '@gamepark/gorinto/types/Move'
 import moveTileSound from '../sounds/tic.mp3'
+import GameView from '@gamepark/gorinto/types/GameView'
 
 type Props = {
 
@@ -29,14 +30,12 @@ type Props = {
     isSelected: boolean,
 
     onWarning:(path:PathType,x:number, y:number) => void
-    mountainBoard:number[][][],
 
     elementOfTilesToTake?:Element
 
 } & HTMLAttributes<HTMLDivElement>
 
-
-const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, element, position = 0, isSelected, elementOfTilesToTake, onWarning, mountainBoard, ...props}) => {
+const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, element, position = 0, isSelected, elementOfTilesToTake, onWarning, ...props}) => {
 
     const play = usePlay<Move>()
     const [displayHeight, setDisplayHeight] = useState(position)
@@ -48,12 +47,11 @@ const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, elem
     const moveSound = useSound(moveTileSound)
 
     const onDrop = (move:MoveTile | TakeTile) => {
-        if (isMoveTile(move) && getFilterCoordinatesWithPattern(element,{x:move.x,y:move.y},mountainBoard).length === 0){
-            onWarning(move.path,move.x,move.y)
-        } else {
+
+            //DONT FORGET TO REPLACE THE WARNING POP UP CODE HERE
+
             moveSound.play()
             play(move)
-        }
     }
     
     return (

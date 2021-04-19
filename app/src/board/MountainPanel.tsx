@@ -4,24 +4,27 @@ import {FC} from "react";
 import MountainPile from "./MountainPile";
 import ElementInPath from "./ElementInPath";
 import ElementInPile from "./ElementInPile";
-import GameView from "@gamepark/gorinto/types/GameView";
 import PathType from "@gamepark/gorinto/types/PathType";
+import TilesToTake from "@gamepark/gorinto/types/TilesToTake";
+import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
 
 type Props = {
-    game : GameView,
+    mountainBoard:number[][][],
+    tilesToTake:TilesToTake | undefined,
+    activePlayer:PlayerColor | undefined
     selectedTileInPath?:ElementInPath,
     onSelection:(x:number,y:number,position: number) => void, 
     selectedTilesInMountain: ElementInPile[],
     onWarning:(path:PathType,x:number, y:number) => void,
 }
 
-const MountainPanel : FC<Props> = ({game, selectedTileInPath, onSelection, selectedTilesInMountain, onWarning}) => {
+const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, selectedTileInPath, onSelection, selectedTilesInMountain, onWarning}) => {
     
     return(
 
         <div css = {mountainPanelStyle}>
 
-            {game.mountainBoard.map((row, x) =>
+            {mountainBoard.map((row, x) =>
             
                     row.map((pile, y) =>
 
@@ -30,7 +33,9 @@ const MountainPanel : FC<Props> = ({game, selectedTileInPath, onSelection, selec
                         pile = {pile} 
                         x = {x}
                         y = {y}
-                        game = {game}
+                        activePlayer = {activePlayer}
+                        tilesToTake = {tilesToTake}
+                        mountainBoard = {mountainBoard}
                         selectedTileInPath = {selectedTileInPath}
 
                         onSelect = {onSelection} 

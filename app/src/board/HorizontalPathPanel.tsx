@@ -50,7 +50,6 @@ const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlay
 
                         onClick={() => onSelect(index)}
                         isSelected={selectedTile?.path === PathType.Horizontal && selectedTile?.position === index && tilesToTake === undefined}
-                        mountainBoard = {mountain}
                         onWarning = {onWarning}
                         />
                         

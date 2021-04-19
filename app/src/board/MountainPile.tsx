@@ -12,28 +12,29 @@ import ElementInPath from './ElementInPath'
 import ElementInPile from './ElementInPile'
 import ElementTile from './ElementTile'
 import MountainDropZone from './MountainDropZone'
-import GameView from "@gamepark/gorinto/types/GameView";
-import Path from '@gamepark/gorinto/types/Path'
 import moveTileSound from '../sounds/tic.mp3'
+import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 
 type Props = {
     pile: number[],
     x: number,
     y: number,
-    game: GameView,
+    tilesToTake: TilesToTake | undefined
+    activePlayer: PlayerColor | undefined
+    mountainBoard:number[][][]
+
     selectedTileInPath?: ElementInPath,
     onSelect:(x:number,y:number,position: number) => void, 
     selectedTilesInMountain: ElementInPile[],
     onWarning:(path:PathType,x:number, y:number) => void
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>
 
-const MountainPile: FC<Props> = ({pile, x, y, game, selectedTileInPath, onSelect, selectedTilesInMountain, onWarning,...props}) => {
+const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, mountainBoard, selectedTileInPath, onSelect, selectedTilesInMountain, onWarning,...props}) => {
 
 console.log("Dans MountainPile n° ",x*5+y)
 
     const playerId = usePlayerId()
     const animation = useAnimation<TakeTile>(animation => isTakeTile(animation.move) && animation.move.coordinates.x === x && animation.move.coordinates.y === y)
-    const tilesToTake = game.tilesToTake
     const canTakeAny = tilesToTake?.element === Element.Earth && tilesToTake.coordinates.length && tilesToTake.coordinates[0].x === x && tilesToTake.coordinates[0].y === y
 
     const playMove = usePlay<MoveTile>()
@@ -51,21 +52,20 @@ console.log("Dans MountainPile n° ",x*5+y)
                 {pile.map((tile, index) =>
                     <div css={positionTile} key={index}>
                         <ElementTile
-                            css={[animation && game.mountainBoard[x][y].length === index + 1 && tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index + 1),
+                            css={[animation && mountainBoard[x][y].length === index + 1 && tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index + 1),
                                 animation && tilesToTake?.element === Element.Earth && index === animation.move.coordinates.z && takeTileEarthAnimation(animation.duration, index + 1),
                                 canTakeAny && shadowStyle
                             ]}
                             position={canTakeAny ? 3 * index : index}
-                            draggable={playerId === game.activePlayer && canDrag(game, x, y, index)}
+                            draggable={playerId === activePlayer && canDrag(tilesToTake, mountainBoard, x, y, index)}
                             type='ElementInPile'
                             draggableItem={{x, y, z: index}}
                             element={tile}
 
-                            mountainBoard = {game.mountainBoard}
                             onWarning = {onWarning}
 
                             onClick={() => {
-                                canTakeTile(x, y, index, tilesToTake, game.mountainBoard)
+                                canTakeTile(x, y, index, tilesToTake, mountainBoard)
                                     ? onSelect(x,y,index)
                                     : console.log("Ne rien faire")
                                         }
@@ -81,15 +81,11 @@ console.log("Dans MountainPile n° ",x*5+y)
             <MountainDropZone
                 x={x}
                 y={y}
-                height={game.mountainBoard[x][y].length}
+                height={mountainBoard[x][y].length}
                 selectedTileInPath={selectedTileInPath}
-                onWarning={onWarning}
-                mountainBoard={game.mountainBoard}
-                horizontalPath = {game.horizontalPath}
-                verticalPath = {game.verticalPath}
                 onClick={() => {
                     canMoveTile(selectedTileInPath, x, y) 
-                    ? getFilterCoordinatesWithPattern(getElementofSelectedTileInPath(selectedTileInPath!, game.horizontalPath, game.verticalPath),{x,y},game.mountainBoard).length === 0 
+                    ? getFilterCoordinatesWithPattern(selectedTileInPath!.element!,{x,y},mountainBoard).length === 0 
                         ? onWarning(selectedTileInPath!.path,x,y)
                         : moveSound.play() && playMove({
                             type: MoveType.MoveTile,
@@ -103,14 +99,6 @@ console.log("Dans MountainPile n° ",x*5+y)
 
         </>
     )
-}
-
-export function getElementofSelectedTileInPath(selectedTileInPath:ElementInPath,horizontalPath:Path, verticalPath:Path):Element{
-    if (selectedTileInPath.path === PathType.Horizontal){
-        return horizontalPath[selectedTileInPath.position]!
-    } else {
-        return verticalPath[selectedTileInPath.position]!
-    }
 }
 
 function canTakeTile(x: number, y: number, z: number, tilesToTake: TilesToTake | undefined, mountainBoard: number[][][]): boolean {
@@ -146,23 +134,23 @@ function canMoveTile(selectedTileInPath: ElementInPath | undefined, x: number, y
     }
 }
 
-function canDrag(game: GameView, x: number, y: number, z: number): boolean {
+function canDrag(tilesToTake:TilesToTake|undefined, mountain:number[][][], x: number, y: number, z: number): boolean {
 
-    if (game.tilesToTake === undefined) {
+    if (tilesToTake === undefined) {
         return false;
-    } else if (game.tilesToTake.quantity === 0) {
+    } else if (tilesToTake.quantity === 0) {
         return false
-    } else if (game.tilesToTake.element !== Element.Earth) {
+    } else if (tilesToTake.element !== Element.Earth) {
         return (
-            (game.tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
+            (tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
             &&
-            (z === game.mountainBoard[x][y].length - 1)
+            (z === mountain[x][y].length - 1)
         )
     } else {
         return (
-            (game.tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
+            (tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
             &&
-            (z !== game.mountainBoard[x][y].length - 1)
+            (z !== mountain[x][y].length - 1)
         )
     }
 }
