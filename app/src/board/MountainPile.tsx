@@ -15,6 +15,7 @@ import MountainDropZone from './MountainDropZone'
 import moveTileSound from '../sounds/tic.mp3'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {ResetSelectedTileInPath, resetSelectedTileInPathMove} from '../moves/SetSelectedTileInPath'
+import SetSelectedTilesInPile, { setSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
 
 type Props = {
     pile: number[],
@@ -25,12 +26,11 @@ type Props = {
     mountainBoard:number[][][]
 
     selectedTileInPath?: ElementInPath,
-    onSelect:(x:number,y:number,position: number) => void, 
-    selectedTilesInMountain: ElementInPile[],
+    selectedTilesInMountain: ElementInPile[] | undefined,
     onWarning:(path:PathType,x:number, y:number) => void
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>
 
-const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, mountainBoard, selectedTileInPath, onSelect, selectedTilesInMountain, onWarning,...props}) => {
+const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, mountainBoard, selectedTileInPath, selectedTilesInMountain, onWarning,...props}) => {
 
 console.log("Dans MountainPile n° ",x*5+y)
 
@@ -40,6 +40,9 @@ console.log("Dans MountainPile n° ",x*5+y)
 
     const playMove = usePlay<MoveTile>()
     const playResetTileInPath = usePlay<ResetSelectedTileInPath>()
+    
+    const playSelectTileInPile = usePlay<SetSelectedTilesInPile>()
+
     const moveSound = useSound(moveTileSound)
 
     useEffect(() => {
@@ -79,14 +82,12 @@ console.log("Dans MountainPile n° ",x*5+y)
                             onWarning = {onWarning}
 
                             onClick={() => {
-                                canTakeTile(x, y, index, tilesToTake, mountainBoard)
-                                    ? onSelect(x,y,index)
-                                    : console.log("Ne rien faire")
+                                            playSelectTileInPile(setSelectedTilesInPileMove(x,y,index), {local:true})
                                         }
                                     }
 
                             elementOfTilesToTake = {tilesToTake ? tilesToTake.element : undefined}
-                            isSelected={selectedTilesInMountain?.some((element => element.x === x && element.y === y && element.z === index)) && tilesToTake !== undefined}
+                            isSelected={selectedTilesInMountain === undefined ? false : selectedTilesInMountain.some((element => element.x === x && element.y === y && element.z === index)) && tilesToTake !== undefined}
                         />
                     </div>
                 )}
@@ -113,7 +114,7 @@ console.log("Dans MountainPile n° ",x*5+y)
 
 
 
-function canTakeTile(x: number, y: number, z: number, tilesToTake: TilesToTake | undefined, mountainBoard: number[][][]): boolean {
+export function canTakeTile(x: number, y: number, z: number, tilesToTake: TilesToTake | undefined, mountainBoard: number[][][]): boolean {
 
     if (tilesToTake === undefined) {
         return false

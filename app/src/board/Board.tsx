@@ -1,34 +1,25 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
-import {FC, useEffect, useState} from "react"
+import {FC} from "react"
 import board from '../images/board.jpg'
 import HorizontalPathPanel from './HorizontalPathPanel'
 import VerticalPathPanel from './VerticalPathPanel'
 import MountainPanel from './MountainPanel'
-import ElementInPath from './ElementInPath'
 import PathType from '@gamepark/gorinto/types/PathType'
 import GameView from "@gamepark/gorinto/types/GameView";
-import ElementInPile from './ElementInPile'
 import { usePlay, usePlayerId } from '@gamepark/react-client'
-import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import { setSelectedTileInPathMove } from '../moves/SetSelectedTileInPath'
 
 type Props = {
     game:GameView,
-    onSelection:(x:number,y:number,position: number) => void, 
-    selectedTilesInMountain: ElementInPile[],
     onWarning:(path:PathType,x:number, y:number) => void
-
 }
 
-const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain, onWarning}) => {
+const Board : FC<Props> = ({game, onWarning}) => {
 
     const playSelectTilePath = usePlay()
 
     console.log("affichage board")
-    // Hooks for move clics
-
-    const playerId = usePlayerId<PlayerColor>()
 
     return (
 
@@ -55,8 +46,7 @@ const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain, onWarnin
                            activePlayer = {game.activePlayer}
                            tilesToTake = {game.tilesToTake}
                            selectedTileInPath = {game.selectedTileInPath} 
-                           onSelection = {onSelection} 
-                           selectedTilesInMountain = {selectedTilesInMountain} 
+                           selectedTilesInMountain = {game.selectedTilesInPile} 
                            onWarning={onWarning} />
         
         </div>

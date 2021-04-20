@@ -13,12 +13,11 @@ type Props = {
     tilesToTake:TilesToTake | undefined,
     activePlayer:PlayerColor | undefined
     selectedTileInPath?:ElementInPath,
-    onSelection:(x:number,y:number,position: number) => void, 
-    selectedTilesInMountain: ElementInPile[],
+    selectedTilesInMountain: ElementInPile[] | undefined,
     onWarning:(path:PathType,x:number, y:number) => void,
 }
 
-const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, selectedTileInPath, onSelection, selectedTilesInMountain, onWarning}) => {
+const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, selectedTileInPath, selectedTilesInMountain, onWarning}) => {
     
     return(
 
@@ -38,7 +37,6 @@ const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, se
                         mountainBoard = {mountainBoard}
                         selectedTileInPath = {selectedTileInPath}
 
-                        onSelect = {onSelection} 
                         selectedTilesInMountain = {selectedTilesInMountain}  
                         onWarning = {onWarning}  
                         />

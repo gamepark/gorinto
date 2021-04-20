@@ -40,6 +40,7 @@ import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 import {isFirefox} from 'react-device-detect';
 
 import moveTileSound from '../sounds/tic.mp3'
+import { ResetSelectedTilesInPile, resetSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
 
 type Props = {
     player: Player
@@ -49,7 +50,7 @@ type Props = {
     mountainBoard:number[][][],
     activePlayer:PlayerColor | undefined,
     playersNumber:number,
-    selectedTilesInMountain:ElementInPile[]
+    selectedTilesInMountain:ElementInPile[]|undefined
 } & HTMLAttributes<HTMLDivElement>
 
 const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score}, first, tilesToTake, mountainBoard, activePlayer, playersNumber, selectedTilesInMountain, ...props}) => {
@@ -57,6 +58,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
     const {t} = useTranslation()
     const playerInfo = usePlayer(color)
     const playTake = usePlay<TakeTile>()
+    const playReset = usePlay<ResetSelectedTilesInPile>()
 
     const moveSound = useSound(moveTileSound)
 
@@ -124,6 +126,22 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
       }, [score])
 
+      function completeTakeMove():void{
+        moveSound.play() 
+        if (tilesToTake?.element !== Element.Earth){
+          selectedTilesInMountain!.forEach(element => playTake({
+            type:MoveType.TakeTile,
+            coordinates:{x:element.x,y:element.y}
+          }))
+        } else {
+          Array.from(selectedTilesInMountain!).sort((a,b) => (-a.z + b.z)).forEach(element => playTake({
+            type:MoveType.TakeTile,
+            coordinates:{x:element.x,y:element.y, z:element.z}
+          }))
+        }
+        playReset(resetSelectedTilesInPileMove(), {local:true})
+    }
+
     return(
 
         <>
@@ -155,7 +173,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
             <div css={playerFooterStyle}>
 
 
-                <Button css={[(tilesToTake !== undefined
+                <Button css={[(tilesToTake !== undefined && selectedTilesInMountain
                               && selectedTilesInMountain.length === (tilesToTake.element !== Element.Earth 
                                 ? Math.min(tilesToTake?.quantity, tilesToTake?.coordinates.length) 
                                 : tilesToTake.coordinates.length === 0
@@ -163,16 +181,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
                                   : Math.min(tilesToTake.quantity, mountainBoard[tilesToTake.coordinates[0].x][tilesToTake.coordinates[0].y].length-1)) 
                               && color === activePlayer) || hideValidationButton, validationButtonStyle
                             ]} 
-                        onClick={() => {(tilesToTake!.element !== Element.Earth
-                            ? moveSound.play() && selectedTilesInMountain.forEach(element => playTake({
-                              type:MoveType.TakeTile,
-                              coordinates:{x:element.x,y:element.y}
-                          })) 
-                            : moveSound.play() && Array.from(selectedTilesInMountain).sort((a,b) => (-a.z + b.z)).forEach(element => playTake({
-                              type:MoveType.TakeTile,
-                              coordinates:{x:element.x,y:element.y, z:element.z}
-                          })) )
-                        }}> 
+                        onClick={() => {completeTakeMove()}}> 
                         {"✓"} 
                 </Button>
                 <div css={[coinPosition]}><img alt="Coin" src={CoinHeads} css={coinStyle(first)} draggable={false}/></div>

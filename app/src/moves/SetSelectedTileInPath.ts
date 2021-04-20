@@ -1,9 +1,9 @@
 import Element from "@gamepark/gorinto/types/Element"
-import ElementInPath from "@gamepark/gorinto/types/ElementInPath"
+import ElementInPath from "../board/ElementInPath"
 import GameView from "@gamepark/gorinto/types/GameView"
 import PathType from "@gamepark/gorinto/types/PathType"
 
-export default interface SetSelectedTileInPath {
+  export default interface SetSelectedTileInPath {
     type: 'SetSelectedTileInPath'
     selectedTileInPath:ElementInPath|undefined
   }
