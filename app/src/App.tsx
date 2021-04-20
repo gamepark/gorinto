@@ -20,7 +20,7 @@ function App() {
 
     return (
         <DndProvider options={HTML5ToTouch}>
-            <Header text={headerText}/>
+            <Header> {headerText}</Header>
             {game && !loadingSounds && <GameDisplay game={game}/>}
             <SoundLoader sounds={[FirstPlayerSound, MoveTileSound]} onSoundLoad={() => setSoundLoading(false)} />
             <Menu/>
