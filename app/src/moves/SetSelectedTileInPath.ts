@@ -8,8 +8,16 @@ export default interface SetSelectedTileInPath {
     selectedTileInPath:ElementInPath|undefined
   }
 
-  export const setSelectedTileInPathMove = (position:number, path:PathType): SetSelectedTileInPath => ({
-    type: 'SetSelectedTileInPath', selectedTileInPath:{path, position}
+  export interface ResetSelectedTileInPath {
+    type:'ResetSelectedTileInPath'
+  }
+
+  export const setSelectedTileInPathMove = (position:number, path:PathType, element:Element): SetSelectedTileInPath => ({
+    type: 'SetSelectedTileInPath', selectedTileInPath:{path, position, element}
+  })
+
+  export const resetSelectedTileInPathMove = () : ResetSelectedTileInPath => ({
+    type:'ResetSelectedTileInPath'
   })
   
   export function setSelectedTileInPath(state: GameView, move: SetSelectedTileInPath) {
@@ -20,3 +28,7 @@ export default interface SetSelectedTileInPath {
     }
 
   } 
+
+  export function resetSelectedTileInPath(state: GameView, move: ResetSelectedTileInPath){
+    state.selectedTileInPath = undefined
+  }

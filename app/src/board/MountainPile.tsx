@@ -14,6 +14,7 @@ import ElementTile from './ElementTile'
 import MountainDropZone from './MountainDropZone'
 import moveTileSound from '../sounds/tic.mp3'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
+import {ResetSelectedTileInPath, resetSelectedTileInPathMove} from '../moves/SetSelectedTileInPath'
 
 type Props = {
     pile: number[],
@@ -38,6 +39,7 @@ console.log("Dans MountainPile n° ",x*5+y)
     const canTakeAny = tilesToTake?.element === Element.Earth && tilesToTake.coordinates.length && tilesToTake.coordinates[0].x === x && tilesToTake.coordinates[0].y === y
 
     const playMove = usePlay<MoveTile>()
+    const playResetTileInPath = usePlay<ResetSelectedTileInPath>()
     const moveSound = useSound(moveTileSound)
 
     useEffect(() => {
@@ -45,6 +47,18 @@ console.log("Dans MountainPile n° ",x*5+y)
             moveSound.play()
         }
     },[animation])
+
+    function playCompleteMoveTile(selectedTileInPath:ElementInPath|undefined, x:number, y:number):void{
+        moveSound.play()
+        playMove({
+            type: MoveType.MoveTile,
+            path: selectedTileInPath!.path,
+            x,
+            y
+        })
+        playResetTileInPath(resetSelectedTileInPathMove(), {local: true})
+
+    }
 
     return (
         <>
@@ -87,12 +101,8 @@ console.log("Dans MountainPile n° ",x*5+y)
                     canMoveTile(selectedTileInPath, x, y) 
                     ? getFilterCoordinatesWithPattern(selectedTileInPath!.element!,{x,y},mountainBoard).length === 0 
                         ? onWarning(selectedTileInPath!.path,x,y)
-                        : moveSound.play() && playMove({
-                            type: MoveType.MoveTile,
-                            path: selectedTileInPath!.path,
-                            x,
-                            y
-                        }) 
+                        : playCompleteMoveTile(selectedTileInPath,x,y)
+                          
                     : console.log("Ne rien faire")
                 }}
                 {...props}/>
@@ -100,6 +110,8 @@ console.log("Dans MountainPile n° ",x*5+y)
         </>
     )
 }
+
+
 
 function canTakeTile(x: number, y: number, z: number, tilesToTake: TilesToTake | undefined, mountainBoard: number[][][]): boolean {
 

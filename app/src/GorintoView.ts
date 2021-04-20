@@ -13,9 +13,9 @@ import GameView from '@gamepark/gorinto/types/GameView'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import {MoveView} from '@gamepark/gorinto/types/MoveView'
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor"
-import SetSelectedTileInPath, { setSelectedTileInPath } from './moves/SetSelectedTileInPath'
+import SetSelectedTileInPath, { ResetSelectedTileInPath, resetSelectedTileInPath, setSelectedTileInPath } from './moves/SetSelectedTileInPath'
 
-type LocalMove = MoveView | SetSelectedTileInPath
+type LocalMove = MoveView | SetSelectedTileInPath | ResetSelectedTileInPath
 
 export default class GorintoView implements Game<GameView, LocalMove>, Undo<GameView, MoveView, PlayerColor> {
   state: GameView
@@ -50,6 +50,8 @@ export default class GorintoView implements Game<GameView, LocalMove>, Undo<Game
         return scoreKeyElements(this.state)
       case 'SetSelectedTileInPath':
         return setSelectedTileInPath(this.state,move)
+      case 'ResetSelectedTileInPath' : 
+        return resetSelectedTileInPath(this.state,move)
     }
   }
 
