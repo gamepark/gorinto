@@ -9,8 +9,9 @@ import ElementInPath from './ElementInPath'
 import PathType from '@gamepark/gorinto/types/PathType'
 import GameView from "@gamepark/gorinto/types/GameView";
 import ElementInPile from './ElementInPile'
-import { usePlayerId } from '@gamepark/react-client'
+import { usePlay, usePlayerId } from '@gamepark/react-client'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
+import { setSelectedTileInPathMove } from '../moves/SetSelectedTileInPath'
 
 type Props = {
     game:GameView,
@@ -21,6 +22,8 @@ type Props = {
 }
 
 const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain, onWarning}) => {
+
+    const playSelectTilePath = usePlay()
 
     console.log("affichage board")
     // Hooks for move clics
@@ -38,8 +41,8 @@ const Board : FC<Props> = ({game, onSelection, selectedTilesInMountain, onWarnin
 
         <div css={boardStyle}>
 
-            <HorizontalPathPanel onSelect = {position => (selectedTileInPath?.path === PathType.Horizontal && selectedTileInPath.position === position) ? setSelectedTileInPath(undefined) : game.activePlayer === playerId && setSelectedTileInPath({path:PathType.Horizontal, position, element:game.verticalPath[position]})} 
-                                 selectedTile = {selectedTileInPath} 
+            <HorizontalPathPanel onSelect = {position => (playSelectTilePath(setSelectedTileInPathMove(position, PathType.Horizontal), {local: true}))} 
+                                 selectedTile = {game.selectedTileInPath} 
                                  activePlayer = {game.activePlayer} 
                                  horizontalPath = {game.horizontalPath} 
                                  tilesToTake = {game.tilesToTake} 

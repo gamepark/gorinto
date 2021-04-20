@@ -1,6 +1,10 @@
+import ElementInPath from './ElementInPath'
 import GameState from './GameState'
 
-type GameView = Omit<GameState, 'elementTilesBag'>
+
+type GameView = Omit<GameState, 'elementTilesBag'> & {
+  selectedTileInPath? : ElementInPath
+}
 
 export default GameView
 

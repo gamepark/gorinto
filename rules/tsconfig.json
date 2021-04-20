@@ -10,6 +10,6 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src"],
+  "include": ["src", "../app/src/GorintoView.ts"],
   "exclude": ["node_modules"]
 }
