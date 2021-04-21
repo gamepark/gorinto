@@ -63,6 +63,8 @@ const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, se
         
     }
 
+    console.log(selectedTileInPath)
+
     return(
 
         <div css = {mountainPanelStyle}>

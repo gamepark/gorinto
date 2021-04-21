@@ -43,7 +43,7 @@ const Board : FC<Props> = ({game, onWarning}) => {
                                  onWarning = {onWarning}
 
              />
-            <VerticalPathPanel onSelect = {position => (playSelectTilePath(setSelectedTileInPathMove(position, PathType.Vertical, game.horizontalPath[position]!), {local: true}))} 
+            <VerticalPathPanel onSelect = {position => (playSelectTilePath(setSelectedTileInPathMove(position, PathType.Vertical, game.verticalPath[position]!), {local: true}))} 
                                selectedTile = {game.selectedTileInPath} 
                                activePlayer = {game.activePlayer} 
                                verticalPath = {game.verticalPath} 

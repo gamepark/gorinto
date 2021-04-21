@@ -33,8 +33,6 @@ type Props = {
 
 const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, heightPile, verifyAndCompleteMove, selectedTileInPath, selectedTilesInMountain, onWarning,...props}) => {
 
-console.log("Dans MountainPile n° ",x*5+y)
-
     const playerId = usePlayerId()
     const animation = useAnimation<TakeTile>(animation => isTakeTile(animation.move) && animation.move.coordinates.x === x && animation.move.coordinates.y === y)
     const canTakeAny = tilesToTake?.element === Element.Earth && tilesToTake.coordinates.length && tilesToTake.coordinates[0].x === x && tilesToTake.coordinates[0].y === y
