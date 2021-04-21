@@ -23,23 +23,21 @@ type Props = {
     y: number,
     tilesToTake: TilesToTake | undefined
     activePlayer: PlayerColor | undefined
-    mountainBoard:number[][][]
+    heightPile:number
+    verifyAndCompleteMove:(tile:ElementInPath|undefined,x:number,y:number) => void
 
     selectedTileInPath?: ElementInPath,
     selectedTilesInMountain: ElementInPile[] | undefined,
     onWarning:(path:PathType,x:number, y:number) => void
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>
 
-const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, mountainBoard, selectedTileInPath, selectedTilesInMountain, onWarning,...props}) => {
+const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, heightPile, verifyAndCompleteMove, selectedTileInPath, selectedTilesInMountain, onWarning,...props}) => {
 
 console.log("Dans MountainPile n° ",x*5+y)
 
     const playerId = usePlayerId()
     const animation = useAnimation<TakeTile>(animation => isTakeTile(animation.move) && animation.move.coordinates.x === x && animation.move.coordinates.y === y)
     const canTakeAny = tilesToTake?.element === Element.Earth && tilesToTake.coordinates.length && tilesToTake.coordinates[0].x === x && tilesToTake.coordinates[0].y === y
-
-    const playMove = usePlay<MoveTile>()
-    const playResetTileInPath = usePlay<ResetSelectedTileInPath>()
     
     const playSelectTileInPile = usePlay<SetSelectedTilesInPile>()
 
@@ -51,35 +49,23 @@ console.log("Dans MountainPile n° ",x*5+y)
         }
     },[animation])
 
-    function playCompleteMoveTile(selectedTileInPath:ElementInPath|undefined, x:number, y:number):void{
-        moveSound.play()
-        playMove({
-            type: MoveType.MoveTile,
-            path: selectedTileInPath!.path,
-            x,
-            y
-        })
-        playResetTileInPath(resetSelectedTileInPathMove(), {local: true})
-
-    }
-
     return (
         <>
             <div {...props} css={[!tilesToTake && noPointerEvents, renderContext]}>
                 {pile.map((tile, index) =>
                     <div css={positionTile} key={index}>
                         <ElementTile
-                            css={[animation && mountainBoard[x][y].length === index + 1 && tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index + 1),
+                            css={[animation && heightPile === index + 1 && tilesToTake?.element !== Element.Earth && takeTileAnimation(animation.duration, index + 1),
                                 animation && tilesToTake?.element === Element.Earth && index === animation.move.coordinates.z && takeTileEarthAnimation(animation.duration, index + 1),
                                 canTakeAny && shadowStyle
                             ]}
                             position={canTakeAny ? 3 * index : index}
-                            draggable={playerId === activePlayer && canDrag(tilesToTake, mountainBoard, x, y, index)}
+                            draggable={playerId === activePlayer && canDrag(tilesToTake, heightPile, x, y, index)}
                             type='ElementInPile'
                             draggableItem={{x, y, z: index}}
                             element={tile}
 
-                            onWarning = {onWarning}
+
 
                             onClick={() => {
                                             playSelectTileInPile(setSelectedTilesInPileMove(x,y,index), {local:true})
@@ -96,15 +82,10 @@ console.log("Dans MountainPile n° ",x*5+y)
             <MountainDropZone
                 x={x}
                 y={y}
-                height={mountainBoard[x][y].length}
+                height={heightPile}
                 selectedTileInPath={selectedTileInPath}
                 onClick={() => {
-                    canMoveTile(selectedTileInPath, x, y) 
-                    ? getFilterCoordinatesWithPattern(selectedTileInPath!.element!,{x,y},mountainBoard).length === 0 
-                        ? onWarning(selectedTileInPath!.path,x,y)
-                        : playCompleteMoveTile(selectedTileInPath,x,y)
-                          
-                    : console.log("Ne rien faire")
+                    verifyAndCompleteMove(selectedTileInPath,x,y)
                 }}
                 {...props}/>
 
@@ -135,19 +116,7 @@ export function canTakeTile(x: number, y: number, z: number, tilesToTake: TilesT
     }
 }
 
-function canMoveTile(selectedTileInPath: ElementInPath | undefined, x: number, y: number): boolean {
-    if (selectedTileInPath === undefined) {
-        return false
-    } else if (selectedTileInPath.path === PathType.Horizontal) {
-        return selectedTileInPath.position === x;
-    } else if (selectedTileInPath.path === PathType.Vertical) {
-        return selectedTileInPath.position === y
-    } else {
-        return false
-    }
-}
-
-function canDrag(tilesToTake:TilesToTake|undefined, mountain:number[][][], x: number, y: number, z: number): boolean {
+function canDrag(tilesToTake:TilesToTake|undefined, heightPile:number, x: number, y: number, z: number): boolean {
 
     if (tilesToTake === undefined) {
         return false;
@@ -157,13 +126,13 @@ function canDrag(tilesToTake:TilesToTake|undefined, mountain:number[][][], x: nu
         return (
             (tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
             &&
-            (z === mountain[x][y].length - 1)
+            (z === heightPile - 1)
         )
     } else {
         return (
             (tilesToTake.coordinates.find(coord => (coord.x === x) && (coord.y === y)) !== undefined)
             &&
-            (z !== mountain[x][y].length - 1)
+            (z !== heightPile - 1)
         )
     }
 }

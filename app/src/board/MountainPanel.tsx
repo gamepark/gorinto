@@ -7,6 +7,11 @@ import ElementInPile from "./ElementInPile";
 import PathType from "@gamepark/gorinto/types/PathType";
 import TilesToTake from "@gamepark/gorinto/types/TilesToTake";
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
+import { usePlay, useSound } from "@gamepark/react-client";
+import moveTileSound from '../sounds/tic.mp3'
+import { ResetSelectedTileInPath, resetSelectedTileInPathMove } from "../moves/SetSelectedTileInPath";
+import MoveTile, { getFilterCoordinatesWithPattern } from "@gamepark/gorinto/moves/MoveTile";
+import MoveType from "@gamepark/gorinto/types/MoveType";
 
 type Props = {
     mountainBoard:number[][][],
@@ -19,6 +24,45 @@ type Props = {
 
 const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, selectedTileInPath, selectedTilesInMountain, onWarning}) => {
     
+    const moveSound = useSound(moveTileSound)
+    const playMove = usePlay<MoveTile>()
+
+    const playResetTileInPath = usePlay<ResetSelectedTileInPath>()
+
+    function canMoveTile(selectedTileInPath: ElementInPath | undefined, x: number, y: number): boolean {
+        if (selectedTileInPath === undefined) {
+            return false
+        } else if (selectedTileInPath.path === PathType.Horizontal) {
+            return selectedTileInPath.position === x;
+        } else if (selectedTileInPath.path === PathType.Vertical) {
+            return selectedTileInPath.position === y
+        } else {
+            return false
+        }
+    }
+
+    function playCompleteMoveTile(selectedTileInPath:ElementInPath|undefined, x:number, y:number):void{
+        moveSound.play()
+        playMove({
+            type: MoveType.MoveTile,
+            path: selectedTileInPath!.path,
+            x,
+            y
+        })
+        playResetTileInPath(resetSelectedTileInPathMove(), {local: true})
+
+    }
+
+    function verifyAndPlayCompleteMoveTile(selectedTileInPath:ElementInPath|undefined, x:number, y:number):void{
+        
+        canMoveTile(selectedTileInPath,x,y)
+        ? getFilterCoordinatesWithPattern(selectedTileInPath!.element!, {x,y}, mountainBoard).length === 0
+            ? onWarning(selectedTileInPath!.path,x,y)
+            : playCompleteMoveTile(selectedTileInPath,x,y)
+        : console.log("rien faire")
+        
+    }
+
     return(
 
         <div css = {mountainPanelStyle}>
@@ -34,11 +78,12 @@ const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, se
                         y = {y}
                         activePlayer = {activePlayer}
                         tilesToTake = {tilesToTake}
-                        mountainBoard = {mountainBoard}
+                        heightPile = {mountainBoard[x][y].length}
                         selectedTileInPath = {selectedTileInPath}
 
                         selectedTilesInMountain = {selectedTilesInMountain}  
                         onWarning = {onWarning}  
+                        verifyAndCompleteMove = {(tile,x,y) => (verifyAndPlayCompleteMoveTile(tile,x,y))}
                         />
 
                     )

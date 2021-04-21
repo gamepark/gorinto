@@ -29,13 +29,11 @@ type Props = {
     element: Element,
     isSelected: boolean,
 
-    onWarning:(path:PathType,x:number, y:number) => void
-
     elementOfTilesToTake?:Element
 
 } & HTMLAttributes<HTMLDivElement>
 
-const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, element, position = 0, isSelected, elementOfTilesToTake, onWarning, ...props}) => {
+const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, element, position = 0, isSelected, elementOfTilesToTake, ...props}) => {
 
     const play = usePlay<Move>()
     const [displayHeight, setDisplayHeight] = useState(position)

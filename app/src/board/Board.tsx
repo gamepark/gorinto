@@ -7,12 +7,13 @@ import VerticalPathPanel from './VerticalPathPanel'
 import MountainPanel from './MountainPanel'
 import PathType from '@gamepark/gorinto/types/PathType'
 import GameView from "@gamepark/gorinto/types/GameView";
-import { usePlay, usePlayerId } from '@gamepark/react-client'
+import { usePlay } from '@gamepark/react-client'
 import { setSelectedTileInPathMove } from '../moves/SetSelectedTileInPath'
 
 type Props = {
     game:GameView,
     onWarning:(path:PathType,x:number, y:number) => void
+
 }
 
 const Board : FC<Props> = ({game, onWarning}) => {
