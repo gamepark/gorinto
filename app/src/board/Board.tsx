@@ -9,6 +9,9 @@ import PathType from '@gamepark/gorinto/types/PathType'
 import GameView from "@gamepark/gorinto/types/GameView";
 import { usePlay } from '@gamepark/react-client'
 import { setSelectedTileInPathMove } from '../moves/SetSelectedTileInPath'
+import ElementInPath from '@gamepark/gorinto/types/ElementInPath'
+import { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/moves/MoveTile'
+import Element from '@gamepark/gorinto/types/Element'
 
 type Props = {
     game:GameView,
@@ -19,6 +22,10 @@ type Props = {
 const Board : FC<Props> = ({game, onWarning}) => {
 
     const playSelectTilePath = usePlay()
+
+    function verifyIfWarningIsNeeded(TileInPath:Element, x:number, y:number):boolean{
+        return getFilterCoordinatesWithPattern(TileInPath,{x,y},game.mountainBoard).length === 0
+    }
 
     console.log("affichage board")
 
@@ -32,6 +39,7 @@ const Board : FC<Props> = ({game, onWarning}) => {
                                  horizontalPath = {game.horizontalPath} 
                                  tilesToTake = {game.tilesToTake} 
                                  mountain = {game.mountainBoard}
+                                 verifyIfWarningIsNeeded = {(tile,x,y) => verifyIfWarningIsNeeded(tile,x,y)}
                                  onWarning = {onWarning}
 
              />
@@ -41,6 +49,7 @@ const Board : FC<Props> = ({game, onWarning}) => {
                                verticalPath = {game.verticalPath} 
                                tilesToTake = {game.tilesToTake} 
                                mountain = {game.mountainBoard}
+                               verifyIfWarningIsNeeded = {(tile,x,y) => verifyIfWarningIsNeeded(tile,x,y)}
                                onWarning = {onWarning} 
             />
             <MountainPanel mountainBoard={game.mountainBoard} 

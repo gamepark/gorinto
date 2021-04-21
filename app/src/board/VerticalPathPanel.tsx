@@ -18,10 +18,11 @@ type Props = {
     mountain:number[][][],
     onSelect:(position:number) => void,
     selectedTile?:ElementInPath,
+    verifyIfWarningIsNeeded : (tile:Element, x:number,y:number) => boolean,
     onWarning:(path:PathType,x:number, y:number) => void
 }
 
-const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer, mountain, onSelect, selectedTile, onWarning}) => {
+const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer, mountain, onSelect, selectedTile, verifyIfWarningIsNeeded, onWarning}) => {
 
     const playerId = usePlayerId<PlayerColor>()
     const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === PathType.Vertical)
@@ -49,11 +50,13 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
                             ]}
                              draggable = {playerId === activePlayer && !tilesToTake  && !animationRemoveTile}
                              type = 'ElementInPath'
-                             draggableItem = {{path: PathType.Vertical, position : index}}
+                             draggableItem = {{path: PathType.Vertical, position : index, element:tile}}
                              element = {tile}
-
                              onClick = {() => onSelect(index)}
                              isSelected = {selectedTile?.path === PathType.Vertical && selectedTile?.position === index && tilesToTake === undefined ? true : false}              
+                             verifyIfWarningIsNeeded = {verifyIfWarningIsNeeded}
+                             onWarning = {onWarning}
+              
               />
 
             </div>

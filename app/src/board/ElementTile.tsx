@@ -19,6 +19,7 @@ import {isMoveTile} from '@gamepark/gorinto/moves/MoveTile'
 import Move from '@gamepark/gorinto/types/Move'
 import moveTileSound from '../sounds/tic.mp3'
 import GameView from '@gamepark/gorinto/types/GameView'
+import { ResetSelectedTileInPath, resetSelectedTileInPathMove } from '../moves/SetSelectedTileInPath'
 
 type Props = {
 
@@ -28,14 +29,18 @@ type Props = {
     draggableItem?: Omit<ElementInPath, "hoverPile"> | Omit<ElementInPile, "hoverPile">,
     element: Element,
     isSelected: boolean,
-
     elementOfTilesToTake?:Element
 
-} & HTMLAttributes<HTMLDivElement>
+    verifyIfWarningIsNeeded? : (tile:Element, x:number,y:number) => boolean,
+    onWarning?:(path:PathType,x:number, y:number) => void
 
-const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, element, position = 0, isSelected, elementOfTilesToTake, ...props}) => {
+} & HTMLAttributes<HTMLDivElement> 
+
+const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, element, position = 0, isSelected, elementOfTilesToTake, verifyIfWarningIsNeeded, onWarning, ...props}) => {
 
     const play = usePlay<Move>()
+    const playResetTileInPath = usePlay<ResetSelectedTileInPath>()
+
     const [displayHeight, setDisplayHeight] = useState(position)
     useEffect(() => {
         setDisplayHeight(position)
@@ -46,10 +51,16 @@ const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, elem
 
     const onDrop = (move:MoveTile | TakeTile) => {
 
-            //DONT FORGET TO REPLACE THE WARNING POP UP CODE HERE
+            if(isMoveTile(move)){
+                if(verifyIfWarningIsNeeded!(element,move.x,move.y)) {
+                    onWarning!(move.path,move.x,move.y)
+                } else {
+                    playResetTileInPath(resetSelectedTileInPathMove(),{local:true})
+                    moveSound.play()
+                    play(move)
+                }
+            }
 
-            moveSound.play()
-            play(move)
     }
     
     return (
