@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import {usePlay} from "@gamepark/react-client";
+import {usePlay, useSound} from "@gamepark/react-client";
 import {FC} from "react";
 import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -10,11 +10,28 @@ import Button from "./Button";
 import MoveTile from "@gamepark/gorinto/moves/MoveTile";
 import PathType from "@gamepark/gorinto/types/PathType";
 import MoveType from "@gamepark/gorinto/types/MoveType";
+import moveTileSound from '../sounds/tic.mp3'
+import { ResetSelectedTileInPath, resetSelectedTileInPathMove } from "../moves/SetSelectedTileInPath";
 
 const WarningNoElementPopUp : FC<{close: () => void, path:PathType, x:number, y:number}> = ({close, path, x, y}) => {
 
     const {t} = useTranslation()
     const playMove = usePlay<MoveTile>()
+    const moveSound = useSound(moveTileSound)
+    const playResetTileInPath = usePlay<ResetSelectedTileInPath>()
+
+
+    function playCompleteMoveTile(path:PathType, x:number, y:number):void{
+      moveSound.play()
+      playMove({
+          type: MoveType.MoveTile,
+          path,
+          x,
+          y
+      })
+      playResetTileInPath(resetSelectedTileInPathMove(), {local: true})
+
+  }
 
     return(
 
@@ -26,7 +43,7 @@ const WarningNoElementPopUp : FC<{close: () => void, path:PathType, x:number, y:
                 <h2>{t("Warning !")}</h2>
                 <p>{t("You're about to play a move which doesn't allow you to pick any tile ! Do you still want to do it ?")}</p>
 
-                <Button css={buttonPosition1} onClick={() => playMove({type:MoveType.MoveTile,path,x,y})}>{t("Yes ! Sure")}</Button>
+                <Button css={buttonPosition1} onClick={() => playCompleteMoveTile(path, x,y)}>{t("Yes ! Sure")}</Button>
                 <Button css={buttonPosition2} onClick={close}>{t("No ! Don't")}</Button>
 
             </div>
