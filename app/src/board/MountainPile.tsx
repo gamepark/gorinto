@@ -47,6 +47,10 @@ const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, heightP
         }
     },[animation && animation.move])
 
+    function playSound(sound:HTMLAudioElement):void{
+        sound.play()
+    }
+
     return (
         <>
             <div {...props} css={[!tilesToTake && noPointerEvents, renderContext]}>
@@ -72,6 +76,9 @@ const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, heightP
 
                             elementOfTilesToTake = {tilesToTake ? tilesToTake.element : undefined}
                             isSelected={selectedTilesInMountain === undefined ? false : selectedTilesInMountain.some((element => element.x === x && element.y === y && element.z === index)) && tilesToTake !== undefined}
+                            playSound = {(sound) => playSound(sound)}
+                            sound = {moveSound}
+
                         />
                     </div>
                 )}

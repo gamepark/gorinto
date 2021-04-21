@@ -36,6 +36,10 @@ const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlay
         }
     },[animationMoveTile && animationMoveTile.move])
 
+    function playSound(sound:HTMLAudioElement):void{
+        sound.play()
+    }
+
     return (
         <div css={horizontalPathPanel}>
             {horizontalPath.map((tile, index) => tile === null ? null :
@@ -52,6 +56,9 @@ const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlay
                         isSelected={selectedTile?.path === PathType.Horizontal && selectedTile?.position === index && tilesToTake === undefined}
                         verifyIfWarningIsNeeded = {verifyIfWarningIsNeeded}
                         onWarning = {onWarning}
+                        playSound = {(sound) => playSound(sound)}
+                        sound = {moveSound}
+
                         />
                         
 

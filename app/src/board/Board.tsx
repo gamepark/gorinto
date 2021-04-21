@@ -9,7 +9,6 @@ import PathType from '@gamepark/gorinto/types/PathType'
 import GameView from "@gamepark/gorinto/types/GameView";
 import { usePlay } from '@gamepark/react-client'
 import { setSelectedTileInPathMove } from '../moves/SetSelectedTileInPath'
-import ElementInPath from '@gamepark/gorinto/types/ElementInPath'
 import { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/moves/MoveTile'
 import Element from '@gamepark/gorinto/types/Element'
 
@@ -26,8 +25,6 @@ const Board : FC<Props> = ({game, onWarning}) => {
     function verifyIfWarningIsNeeded(TileInPath:Element, x:number, y:number):boolean{
         return getFilterCoordinatesWithPattern(TileInPath,{x,y},game.mountainBoard).length === 0
     }
-
-    console.log("affichage board")
 
     return (
 

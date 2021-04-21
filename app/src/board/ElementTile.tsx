@@ -17,7 +17,6 @@ import ElementInPath from './ElementInPath'
 import ElementInPile from './ElementInPile'
 import {isMoveTile} from '@gamepark/gorinto/moves/MoveTile'
 import Move from '@gamepark/gorinto/types/Move'
-import moveTileSound from '../sounds/tic.mp3'
 import { ResetSelectedTileInPath, resetSelectedTileInPathMove } from '../moves/SetSelectedTileInPath'
 import { ResetSelectedTilesInPile, resetSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
 
@@ -30,13 +29,14 @@ type Props = {
     element: Element,
     isSelected: boolean,
     elementOfTilesToTake?:Element
-
+    playSound:(sound:HTMLAudioElement) => void
+    sound:HTMLAudioElement
     verifyIfWarningIsNeeded? : (tile:Element, x:number,y:number) => boolean,
     onWarning?:(path:PathType,x:number, y:number) => void
 
 } & HTMLAttributes<HTMLDivElement> 
 
-const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, element, position = 0, isSelected, elementOfTilesToTake, verifyIfWarningIsNeeded, onWarning, ...props}) => {
+const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, element, position = 0, isSelected, elementOfTilesToTake, verifyIfWarningIsNeeded, onWarning, playSound, sound, ...props}) => {
 
     const play = usePlay<Move>()
     const playResetTileInPath = usePlay<ResetSelectedTileInPath>()
@@ -47,8 +47,6 @@ const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, elem
         setDisplayHeight(position)
     }, [position])
     const item = {...draggableItem, hoverPile: setDisplayHeight}
-
-    //const moveSound = useSound(moveTileSound)
 
     const onDrop = (move:MoveTile | TakeTile) => {
 
@@ -63,7 +61,7 @@ const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, elem
                 playResetTilesInPile(resetSelectedTilesInPileMove(),{local:true})
                 play(move)
             }
-            //moveSound.play()
+            playSound(sound)
 
     }
     

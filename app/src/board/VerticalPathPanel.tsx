@@ -36,6 +36,10 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
         }
     },[animationMoveTile && animationMoveTile.move])
 
+    function playSound(sound:HTMLAudioElement):void{
+        sound.play()
+    }
+
     return(
 
         <div css = {verticalPathPanel}>
@@ -56,6 +60,8 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
                              isSelected = {selectedTile?.path === PathType.Vertical && selectedTile?.position === index && tilesToTake === undefined ? true : false}              
                              verifyIfWarningIsNeeded = {verifyIfWarningIsNeeded}
                              onWarning = {onWarning}
+                             playSound = {(sound) => playSound(sound)}
+                             sound = {moveSound}
               
               />
 
