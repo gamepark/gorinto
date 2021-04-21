@@ -4,7 +4,7 @@ import MoveTile, { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/mov
 import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 import Element from '@gamepark/gorinto/types/Element'
 import PathType from '@gamepark/gorinto/types/PathType'
-import {useGame, usePlay, useSound} from '@gamepark/react-client'
+import {usePlay, useSound} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
 import {TFunction} from 'i18next'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
@@ -18,8 +18,8 @@ import ElementInPile from './ElementInPile'
 import {isMoveTile} from '@gamepark/gorinto/moves/MoveTile'
 import Move from '@gamepark/gorinto/types/Move'
 import moveTileSound from '../sounds/tic.mp3'
-import GameView from '@gamepark/gorinto/types/GameView'
 import { ResetSelectedTileInPath, resetSelectedTileInPathMove } from '../moves/SetSelectedTileInPath'
+import { ResetSelectedTilesInPile, resetSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
 
 type Props = {
 
@@ -40,6 +40,7 @@ const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, elem
 
     const play = usePlay<Move>()
     const playResetTileInPath = usePlay<ResetSelectedTileInPath>()
+    const playResetTilesInPile = usePlay<ResetSelectedTilesInPile>()
 
     const [displayHeight, setDisplayHeight] = useState(position)
     useEffect(() => {
@@ -59,6 +60,10 @@ const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, elem
                     moveSound.play()
                     play(move)
                 }
+            } else {
+                playResetTilesInPile(resetSelectedTilesInPileMove(),{local:true})
+                moveSound.play()
+                play(move)
             }
 
     }
