@@ -27,15 +27,15 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
     const playerId = usePlayerId<PlayerColor>()
     const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === PathType.Vertical)
     const animationRemoveTile = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move))
-
+    
     const moveSound = useSound(moveTileSound)
 
     useEffect(() => {
         if (animationMoveTile && animationMoveTile.move){
             moveSound.play()
         }
-    },[animationMoveTile])
-    
+    },[animationMoveTile && animationMoveTile.move])
+
     return(
 
         <div css = {verticalPathPanel}>

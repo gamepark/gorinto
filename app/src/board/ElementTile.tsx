@@ -48,7 +48,7 @@ const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, elem
     }, [position])
     const item = {...draggableItem, hoverPile: setDisplayHeight}
 
-    const moveSound = useSound(moveTileSound)
+    //const moveSound = useSound(moveTileSound)
 
     const onDrop = (move:MoveTile | TakeTile) => {
 
@@ -57,14 +57,13 @@ const ElementTile: FC<Props> = ({draggable = false, type='', draggableItem, elem
                     onWarning!(move.path,move.x,move.y)
                 } else {
                     playResetTileInPath(resetSelectedTileInPathMove(),{local:true})
-                    moveSound.play()
                     play(move)
                 }
             } else {
                 playResetTilesInPile(resetSelectedTilesInPileMove(),{local:true})
-                moveSound.play()
                 play(move)
             }
+            //moveSound.play()
 
     }
     

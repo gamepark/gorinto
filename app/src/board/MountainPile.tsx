@@ -45,7 +45,7 @@ const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, heightP
         if (animation && animation.move){
             moveSound.play()
         }
-    },[animation])
+    },[animation && animation.move])
 
     return (
         <>

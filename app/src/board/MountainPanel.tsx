@@ -24,7 +24,7 @@ type Props = {
 
 const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, selectedTileInPath, selectedTilesInMountain, onWarning}) => {
     
-    const moveSound = useSound(moveTileSound)
+    //const moveSound = useSound(moveTileSound)
     const playMove = usePlay<MoveTile>()
 
     const playResetTileInPath = usePlay<ResetSelectedTileInPath>()
@@ -42,7 +42,7 @@ const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, se
     }
 
     function playCompleteMoveTile(selectedTileInPath:ElementInPath|undefined, x:number, y:number):void{
-        moveSound.play()
+        //moveSound.play()
         playMove({
             type: MoveType.MoveTile,
             path: selectedTileInPath!.path,
