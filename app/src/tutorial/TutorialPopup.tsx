@@ -34,7 +34,7 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
     const [hideThirdTurnInfo, setHideThirdTurnInfo] = useState(false)
     const [tutorialEnd, setTutorialEnd] = useState(true)
 
-    const platformUri = process.env.REACT_APP_PLATFORM_URI || 'http://localhost:3000'
+    const platformUri = process.env.REACT_APP_PLATFORM_URI ?? 'https://game-park.com'
     const discordUri = 'https://discord.gg/nMSDRag'
 
     const toggleTutorialEnd = () => {
