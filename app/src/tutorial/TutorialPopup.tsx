@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import GameView from "@gamepark/gorinto/types/GameView";
 import Move from "@gamepark/gorinto/types/Move";
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
-import { useActions, useAnimation, useFailures, usePlayerId, useTutorial } from "@gamepark/react-client";
+import { useActions, useFailures, usePlayerId, useTutorial } from "@gamepark/react-client";
 import { TFunction } from "i18next";
 import { FC, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -26,7 +26,6 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
     const actions = useActions<Move, PlayerColor>()
     const actionsNumber = actions !== undefined ? actions.filter(action => action.playerId === playerId).length : 0
     const previousActionNumber = useRef(actionsNumber)
-    const animation = useAnimation<Move>()
     const [tutorialIndex, setTutorialIndex] = useState(0)
     const [tutorialDisplay, setTutorialDisplay] = useState(tutorialDescription.length > actionsNumber)
     const [failures] = useFailures()
