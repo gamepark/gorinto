@@ -134,6 +134,11 @@
             "Restart the tutorial": "Restart the tutorial",
             "Play with friends": "Play with friends",
             "Find players": "Find players",
+            "removing.tile": "2-players rule : removing a tile randomly...",
+            "Warning !": "Warning !",
+            "You're about to play a move which doesn't allow you to pick any tile ! Do you still want to do it ?": "You're about to play a move which doesn't allow you to pick any tile ! Do you still want to do it ?",
+            "Yes ! Sure": "Yes ! Sure",
+            "No ! Don't": "No ! Don't",
             "Menu": "Menu",
             "Validate": "Validate",
             "Cancel": "Cancel",
@@ -179,7 +184,9 @@
             "fs.dialog.p1": "This game is designed for landscape mode, we recommend to flip your screen.",
             "fs.dialog.p2": "You can also enable fullscreen.",
             "Enable sound": "Enable sound",
-            "Mute sound": "Mute sound"
+            "Mute sound": "Mute sound",
+            "Light mode": "Light mode",
+            "Dark mode": "Dark mode"
         }
     },
     "fr": {
@@ -284,7 +291,7 @@
             "In this game, you can score points if you make odd height stacks and stacks of same heights.": "Dans cette partie, vous pouvez marquer des points si vous faites des piles de tuiles de hauteur impaire, ou bien des piles de hauteurs identiques.",
             "It could be a good strategy to keep odd height stacks ! Pick the Earth Tiles according to the Water Pattern !": "C'est peut être une bonne stratégie de garder des piles de hauteur impaire ! Prenez les tuiles Terre selon le Motif de l'Eau !",
             "Scoring": "Score",
-            "Nice ! Look at the end of the season. You will score 2 points for the first Goal Card, and 5 for the second one. A pretty good start !": "Bien ! Regardez la fin de la saison. Vous allez marquer 2 points pour la première Carte Objectif, et 5 pour la seconde. C'est plutôt un bon dbéut !",
+            "Nice ! Look at the end of the season. You will score 2 points for the first Goal Card, and 5 for the second one. A pretty good start !": "Bien ! Regardez la fin de la saison. Vous allez marquer 2 points pour la première Carte Objectif, et 5 pour la seconde. C'est plutôt un bon début !",
             "Beginning of a new season": "Début d'une nouvelle saison",
             "When a new season start, the paths are filled again, and the first player is the one who has the lowest score.": "Lorsqu'une nouvelle saison commence, les chemins sont remplis à nouveau et le premier joueur est celui qui a le score le plus bas.",
             "The Earth Pattern": "Le Motif de Terre",
@@ -317,6 +324,11 @@
             "Restart the tutorial": "Recommencer le tutoriel",
             "Play with friends": "Jouer avec des amis",
             "Find players": "Trouver des joueurs",
+            "removing.tile": "Règle pour deux joueurs : retrait d'une tuile aléatoire...",
+            "Warning !": "Attention !",
+            "You're about to play a move which doesn't allow you to pick any tile ! Do you still want to do it ?": "Vous êtes sur le point de jouer un coup qui ne vous autorisera pas à prendre de tuile. Voulez vous continuer malgré tout ?",
+            "Yes ! Sure": "Oui ! Bien sûr !",
+            "No ! Don't": "Non ! Stop !",
             "Menu": "Menu",
             "Validate": "Valider",
             "Cancel": "Annuler",
@@ -362,7 +374,9 @@
             "fs.dialog.p1": "Ce jeu est conçu pour le mode paysage, nous vous conseillons de tourner votre écran.",
             "fs.dialog.p2": "Vous pouvez aussi passer en plein écran.",
             "Enable sound": "Activer le son",
-            "Mute sound": "Couper le son"
+            "Mute sound": "Couper le son",
+            "Light mode": "Mode clair",
+            "Dark mode": "Mode sombre"
         }
     },
     "de": {
@@ -425,7 +439,9 @@
             "eject.dialog.p3": "Falls ihr denkt, dass der Spieler nicht zurückkehrt, dürft ihr ihn aus der Partie entfernen.",
             "Eject {player}": "{player} entfernen",
             "Enable sound": "Ton einschalten",
-            "Mute sound": "Stummschalten"
+            "Mute sound": "Stummschalten",
+            "Light mode": "Tagmodus",
+            "Dark mode": "Nachtmodus"
         }
     }
 }

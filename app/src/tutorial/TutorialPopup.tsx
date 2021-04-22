@@ -775,7 +775,7 @@ const lastTurnInfo = {
 }
 
 const tutorialEndGame = {
-  title: (t: TFunction) => t('Congratulations!'),
+  title: (t: TFunction) => t('Congratulations'),
   text: (t: TFunction) => t('You have finished your first game! You can now play with your friends, or meet other players via our chat room on Discord.'),
   boxTop: 25,
   boxLeft: 50,
