@@ -16,6 +16,7 @@ const SoundLoader : FC<Props> = ({sounds, onSoundLoad}) => {
             let audio = new Audio()
             audio.addEventListener('canplaythrough',onLoad,false)
             audio.src = sound;
+            audio.load();
         })
     }, [])
 
