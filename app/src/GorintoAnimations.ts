@@ -18,6 +18,8 @@ const gorintoAnimations : Animations<GameView, MoveView, PlayerColor> = {
             return 2
         } else if (move.type === MoveType.SwitchFirstPlayer){
             return 1
+        } else if (move.type === MoveType.ScoreGoals){
+            return 4
         }
 
         return 0              

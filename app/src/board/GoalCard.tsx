@@ -1,17 +1,22 @@
 /** @jsxImportSource @emotion/react */
 import {css} from "@emotion/react"
+import ScoreGoals, { isScoreGoals } from "@gamepark/gorinto/moves/ScoreGoals"
 import Goal from '@gamepark/gorinto/types/Goal'
+import { useAnimation } from "@gamepark/react-client"
 import {FC, HTMLAttributes} from "react"
 import {Trans, useTranslation} from 'react-i18next'
 import goalCardBackground from "../images/goal_background.jpg"
 
 type Props = {
     goal: Goal
+    score?:number
 } & HTMLAttributes<HTMLDivElement>
 
-const GoalCard: FC<Props> = ({goal, ...props}) => {
+const GoalCard: FC<Props> = ({goal, score, ...props}) => {
 
     const {t} = useTranslation()
+    const animationScoring = useAnimation<ScoreGoals>(animation => isScoreGoals(animation.move))
+
 
     return (
 
@@ -21,11 +26,43 @@ const GoalCard: FC<Props> = ({goal, ...props}) => {
             <p><Trans defaults={goal.text} components={[<strong/>]}/></p>
             {goal.conflictLetter && <span className="notranslate" css={conflictLetterCss}>{goal.conflictLetter}</span>}
 
+        {score !== undefined &&
+                <p css = {[hintForScoring, !animationScoring && hidden, score === 0 && redStyle]}>+{score}</p>
+        }
         </div>
 
     )
 
 }
+
+const redStyle = css`
+color:#B51313;
+`
+
+const hidden = css`
+visibility:hidden;
+background-color:rgba(255,255,255,0);
+opacity:0;
+transition:opacity 1s, visibility 1s, background-color 1s;
+`
+
+
+const hintForScoring = css`
+visibility:visible;
+position:absolute;
+width:80%;
+top:0%;
+left:10%;
+margin:0.25em 0!important;
+padding:0.37em 0!important;
+background-color:rgba(255,255,255,0.5);
+opacity:1;
+transition:opacity 1s,visibility 1s, background-color 1s;
+
+font-size : 6em;
+text-align:center;
+
+`
 
 const goalCardCss = css`
     background-image: url(${goalCardBackground});

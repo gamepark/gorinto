@@ -100,7 +100,8 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
                     goal={Goals[goalNumber]}
                     onClick={() => setWelcomePopUpClosed(false)}
                     css={game.players.length === 4 ? goalCardPosition(index) : goalCardPositionBigger(index)}
-          />
+                    score = {player && Goals[goalNumber].score(player,game)}
+                    />
         
       )}
       
