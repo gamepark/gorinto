@@ -70,7 +70,7 @@ const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, heightP
 
 
                             onClick={() => {
-                                            playSelectTileInPile(setSelectedTilesInPileMove(x,y,index), {local:true})
+                                            playerId === activePlayer && playSelectTileInPile(setSelectedTilesInPileMove(x,y,index), {local:true})
                                         }
                                     }
 

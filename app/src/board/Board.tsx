@@ -7,10 +7,11 @@ import VerticalPathPanel from './VerticalPathPanel'
 import MountainPanel from './MountainPanel'
 import PathType from '@gamepark/gorinto/types/PathType'
 import GameView from "@gamepark/gorinto/types/GameView";
-import { usePlay } from '@gamepark/react-client'
+import { usePlay, usePlayerId } from '@gamepark/react-client'
 import { setSelectedTileInPathMove } from '../moves/SetSelectedTileInPath'
 import { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/moves/MoveTile'
 import Element from '@gamepark/gorinto/types/Element'
+import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 
 type Props = {
     game:GameView,
@@ -21,6 +22,8 @@ type Props = {
 const Board : FC<Props> = ({game, onWarning}) => {
 
     const playSelectTilePath = usePlay()
+    const playerId = usePlayerId<PlayerColor>()
+
 
     function verifyIfWarningIsNeeded(TileInPath:Element, x:number, y:number):boolean{
         return getFilterCoordinatesWithPattern(TileInPath,{x,y},game.mountainBoard).length === 0
@@ -30,7 +33,7 @@ const Board : FC<Props> = ({game, onWarning}) => {
 
         <div css={boardStyle}>
 
-            <HorizontalPathPanel onSelect = {position => (playSelectTilePath(setSelectedTileInPathMove(position, PathType.Horizontal, game.horizontalPath[position]!), {local: true}))} 
+            <HorizontalPathPanel onSelect = {position => (playerId === game.activePlayer && playSelectTilePath(setSelectedTileInPathMove(position, PathType.Horizontal, game.horizontalPath[position]!), {local: true}))} 
                                  selectedTile = {game.selectedTileInPath} 
                                  activePlayer = {game.activePlayer} 
                                  horizontalPath = {game.horizontalPath} 
@@ -40,7 +43,7 @@ const Board : FC<Props> = ({game, onWarning}) => {
                                  onWarning = {onWarning}
 
              />
-            <VerticalPathPanel onSelect = {position => (playSelectTilePath(setSelectedTileInPathMove(position, PathType.Vertical, game.verticalPath[position]!), {local: true}))} 
+            <VerticalPathPanel onSelect = {position => (playerId === game.activePlayer && playSelectTilePath(setSelectedTileInPathMove(position, PathType.Vertical, game.verticalPath[position]!), {local: true}))} 
                                selectedTile = {game.selectedTileInPath} 
                                activePlayer = {game.activePlayer} 
                                verticalPath = {game.verticalPath} 
