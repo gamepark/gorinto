@@ -379,7 +379,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('How to move a tile'),
-          text: (t: TFunction) => t("Enough talking ! You have to move a tile from a Path to the Mountain first. Try to move this Fire Element on the second column !"),
+          text: (t: TFunction) => t("Enough talking ! You have to move a tile from a Path to the Mountain first. Try to move this orange Fire Element on the second column !"),
           boxTop: 45,
           boxLeft: 40,
           boxWidth: 50,
@@ -441,7 +441,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
       },    
       {
         title: (t: TFunction) => t('The Wind Pattern'),
-        text: (t: TFunction) => t("Time to learn another Pattern. Move this Wind element on the third line."),
+        text: (t: TFunction) => t("Time to learn another Pattern. Move this white Wind element on the third line."),
         boxTop: 20,
         boxLeft: 71,
         boxWidth: 40,
@@ -520,7 +520,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     }, 
     {
       title: (t: TFunction) => t('The Water Pattern'),
-      text: (t: TFunction) => t("Learn the Water Pattern now : place this water element on the second line."),
+      text: (t: TFunction) => t("Learn the Water Pattern now : place this blue Water element on the second line."),
       boxTop: 20,
       boxLeft: 20,
       boxWidth: 40,
@@ -618,7 +618,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     }, 
     {
       title: (t: TFunction) => t('The Earth Pattern'),
-      text: (t: TFunction) => t("Learn the Earth Pattern ! Move this Earth element on the fourth line."),
+      text: (t: TFunction) => t("Learn the Earth Pattern ! Move this brown Earth element on the fourth line."),
       boxTop: 20,
       boxLeft: 75,
       boxWidth: 35,
@@ -657,7 +657,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     }, 
     {
       title: (t: TFunction) => t('The Void Pattern'),
-      text: (t: TFunction) => t("But it's not always possible (or a good idea) to pick the maximum amount of tiles... Move this Void tile on the fifth column."),
+      text: (t: TFunction) => t("But it's not always possible (or a good idea) to pick the maximum amount of tiles... Move this purple Void tile on the fifth column."),
       boxTop: 55,
       boxLeft: 52,
       boxWidth: 40,
