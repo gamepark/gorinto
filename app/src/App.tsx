@@ -25,8 +25,6 @@ function App() {
 
     const loading = !game || isSoundsLoading || isJustDisplayed
 
-    console.log(loading)
-
     return (
         <DndProvider options={HTML5ToTouch}>
             <Header> {headerText}</Header>
