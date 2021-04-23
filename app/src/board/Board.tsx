@@ -26,9 +26,8 @@ const Board : FC<Props> = ({game, onWarning}) => {
     const playSelectTilePile = usePlay<SetSelectedTilesInPile>()
     const playerId = usePlayerId<PlayerColor>()
 
-
     useEffect(() => {
-        if (game.tilesToTake && playerId === game.activePlayer){
+        if (game.tilesToTake && playerId === game.activePlayer && game.tilesToTake.coordinates.length !== 0){
             if (game.tilesToTake.element !== Element.Earth){
                 if (game.tilesToTake.quantity >= game.tilesToTake.coordinates.length){
                     for (let i=0;i<game.tilesToTake.coordinates.length;i++){
@@ -41,14 +40,16 @@ const Board : FC<Props> = ({game, onWarning}) => {
                         playSelectTilePile(setSelectedTilesInPileMove(game.tilesToTake.coordinates[0].x, game.tilesToTake.coordinates[0].y,i),{local:true})
                     }
                 }
+
             }
         }
-    },[game.tilesToTake, game.tilesToTake?.coordinates])
+    },[game.activePlayer === playerId, game.tilesToTake?.coordinates])
 
 
     function verifyIfWarningIsNeeded(TileInPath:Element, x:number, y:number):boolean{
         return getFilterCoordinatesWithPattern(TileInPath,{x,y},game.mountainBoard).length === 0
     }
+
 
     return (
 
