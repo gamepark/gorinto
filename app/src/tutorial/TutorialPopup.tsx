@@ -90,9 +90,6 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
     return (
         <>
 
-
-
-
         <div css={[popupOverlayStyle, displayPopup ? showPopupOverlayStyle : hidePopupOverlayStyle(85, 90), style]}
             onClick={() => setTutorialDisplay(false)}>
 
@@ -109,6 +106,11 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
             </div>
 
         </div>
+
+        {
+        !displayPopup && tutorialDescription.length > actionsNumber &&
+        <Button css={resetStyle} onClick={() => resetTutorialDisplay()}>{t('Show Tutorial')}</Button>
+      }
 
         {
           currentMessage && currentMessage.arrow &&
@@ -298,6 +300,14 @@ const hideArrowStyle = css`
   top: 90%;
   left: 90%;
   width: 0;
+`
+
+const resetStyle = css`
+  position: absolute;
+  text-align: center;
+  bottom: 36.5%;
+  right: 1%;
+  font-size: 3em;
 `
 
 type TutorialStepDescription = {
