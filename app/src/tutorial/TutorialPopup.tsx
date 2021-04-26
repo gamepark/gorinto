@@ -8,7 +8,7 @@ import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
 import { useActions, useFailures, usePlayerId, useTutorial } from "@gamepark/react-client";
 import { TFunction } from "i18next";
 import { FC, useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import Arrow from "../images/tutorial-arrow-grey.png"
 import Button from "../board/Button";
 import background from '../images/BG2.jpg'
@@ -99,7 +99,7 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
               <div css={closePopupStyle} onClick={() => setTutorialDisplay(false)}><FontAwesomeIcon icon={faTimes}/></div>
 
               {currentMessage && <h2>{currentMessage.title(t)}</h2>}
-              {currentMessage && <p>{currentMessage.text(t)}</p>}
+              {currentMessage && <p> <Trans defaults={currentMessage.text} components={[<strong/>]} /> </p>}
               {tutorialIndex > 0 && <Button css={buttonStyle} onClick={() => moveTutorial(-1)}>{'<<'}</Button>}
               <Button onClick={() => moveTutorial(1)}>{t('OK')}</Button>
 
@@ -123,7 +123,7 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
           <div css={[popupStyle, popupPosition(thirdTurnInfo)]}>
             <div css={closePopupStyle} onClick={() => setHideThirdTurnInfo(true)}><FontAwesomeIcon icon={faTimes}/></div>
             <h2>{thirdTurnInfo.title(t)}</h2>
-            <p>{thirdTurnInfo.text(t)}</p>
+            <p>{thirdTurnInfo.text}</p>
             <Button onClick={() => setHideThirdTurnInfo(true)}>{t('OK')}</Button>
           </div>
         }
@@ -133,7 +133,7 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
           <div css={[popupStyle, popupPosition(lastTurnInfo)]}>
             <div css={closePopupStyle} onClick={() => setHideLastTurnInfo(true)}><FontAwesomeIcon icon={faTimes}/></div>
             <h2>{lastTurnInfo.title(t)}</h2>
-            <p>{lastTurnInfo.text(t)}</p>
+            <p>{lastTurnInfo.text}</p>
             <Button onClick={() => setHideLastTurnInfo(true)}>{t('OK')}</Button>
           </div>
         }
@@ -145,7 +145,7 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
             {!tutorialEnd &&
             <>
               <h2 css={textEndStyle} >{tutorialEndGame.title(t)}</h2>
-              <p css={textEndStyle} >{tutorialEndGame.text(t)}</p>
+              <p css={textEndStyle} >{tutorialEndGame.text}</p>
             </>
             }
             <Button css={buttonStyle} onClick={() => resetTutorial()}>{t('Restart the tutorial')}</Button>
@@ -221,22 +221,41 @@ const popupStyle = css`
   box-shadow: 1em 2em 2.5em -1.5em hsla(0, 0%, 0%, 0.2);
   border:1em black solid;
   background: url(${background});
+  background-color: black;
   border-radius: 40em 3em 40em 3em/3em 40em 3em 40em;
   color:white;
-  text-shadow: 0.3em 0.3em black;
+  font-family: 'Mulish', sans-serif;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    border-radius: 40em 1.5em 40em 1.5em/1.5em 40em 1.5em 40em;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
   
   &:hover{
       box-shadow: 2em 4em 5em -3em hsla(0,0%,0%,.5);
     }
   & > h2 {
+    position:relative;
     font-size: 5em;
     margin:0;
   }
   & > p {
+    position:relative;
     text-align: center;
     font-size: 3.5em;
+    white-space: break-spaces;
 
-    width:90%;
+    strong {
+      font-weight:bold;
+    }
+
   }
   & > button {
     font-size: 3.5em;
@@ -312,7 +331,7 @@ const resetStyle = css`
 
 type TutorialStepDescription = {
     title: (t: TFunction) => string
-    text: (t: TFunction) => string
+    text: string
     boxTop: number
     boxLeft: number
     boxWidth: number
@@ -327,14 +346,14 @@ const tutorialDescription:TutorialStepDescription[][] = [
     [
         {
           title: (t: TFunction) => t('Welcome to Gorinto tutorial'),
-          text: (t: TFunction) => t('tuto.welcome'),
+          text: 'tuto.welcome',
           boxTop: 40,
           boxLeft: 50,
           boxWidth: 60
         },
         {
           title: (t: TFunction) => t('Your Gorinto'),
-          text: (t: TFunction) => t('tuto.your.gorinto'),
+          text: 'tuto.your.gorinto',
           boxTop: 78,
           boxLeft: 42,
           boxWidth: 50,
@@ -346,14 +365,14 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('Your Opponents'),
-          text: (t: TFunction) => t('tuto.your.opponents'),
+          text: 'tuto.your.opponents',
           boxTop: 55,
           boxLeft: 47,
           boxWidth: 55,
         },
         {
           title: (t: TFunction) => t('The Seasons'),
-          text: (t: TFunction) => t('tuto.seasons'),
+          text: 'tuto.seasons',
           boxTop: 26,
           boxLeft: 72,
           boxWidth: 30,
@@ -365,7 +384,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('Wisdom Points'),
-          text: (t: TFunction) => t('tuto.wisdom.points'),
+          text: 'tuto.wisdom.points',
           boxTop: 73,
           boxLeft: 30,
           boxWidth: 55,
@@ -377,7 +396,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('The Goals'),
-          text: (t: TFunction) => t('tuto.goals'),
+          text: 'tuto.goals',
           boxTop: 40,
           boxLeft: 44,
           boxWidth: 50,
@@ -389,7 +408,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('The Key Elements'),
-          text: (t: TFunction) => t('tuto.keys'),
+          text: 'tuto.keys',
           boxTop: 25,
           boxLeft: 51,
           boxWidth: 50,
@@ -401,7 +420,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('The Board'),
-          text: (t: TFunction) => t('tuto.board'),
+          text: 'tuto.board',
           boxTop: 60,
           boxLeft: 50,
           boxWidth: 70,
@@ -413,7 +432,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('The Paths'),
-          text: (t: TFunction) => t('tuto.paths'),
+          text: 'tuto.paths',
           boxTop: 35,
           boxLeft: 50,
           boxWidth: 40,
@@ -425,7 +444,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('How to move a tile'),
-          text: (t: TFunction) => t("tuto.move.fire"),
+          text: "tuto.move.fire",
           boxTop: 45,
           boxLeft: 40,
           boxWidth: 50,
@@ -439,7 +458,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     [
       {
         title: (t: TFunction) => t('How to take a tile'),
-        text: (t: TFunction) => t("tuto.take.intro"),
+        text: "tuto.take.intro",
         boxTop: 50,
         boxLeft: 50,
         boxWidth: 40,
@@ -447,7 +466,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
       },
       {
         title: (t: TFunction) => t('The Patterns'),
-        text: (t: TFunction) => t("tuto.patterns"),
+        text: "tuto.patterns",
         boxTop: 30,
         boxLeft: 15,
         boxWidth: 30,
@@ -459,14 +478,14 @@ const tutorialDescription:TutorialStepDescription[][] = [
       },
       {
         title: (t: TFunction) => t('The Fire Pattern'),
-        text: (t: TFunction) => t("tuto.pattern.fire"),
+        text: "tuto.pattern.fire",
         boxTop: 50,
         boxLeft: 70,
         boxWidth: 30,
       },
       {
         title: (t: TFunction) => t('Collect a tile'),
-        text: (t: TFunction) => t("tuto.take.with.fire.pattern"),
+        text: "tuto.take.with.fire.pattern",
         boxTop: 50,
         boxLeft: 70,
         boxWidth: 30,
@@ -480,15 +499,15 @@ const tutorialDescription:TutorialStepDescription[][] = [
     [
       {
         title: (t: TFunction) => t('End of your turn'),
-        text: (t: TFunction) => t("tuto.end.first.turn"),
+        text: "tuto.end.first.turn",
         boxTop: 70,
         boxLeft: 15,
         boxWidth: 30,
       },    
       {
         title: (t: TFunction) => t('The Wind Pattern'),
-        text: (t: TFunction) => t("tuto.move.wind"),
-        boxTop: 20,
+        text: "tuto.move.wind",
+        boxTop: 22,
         boxLeft: 71,
         boxWidth: 40,
         arrow: {
@@ -501,21 +520,21 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [
     {
       title: (t: TFunction) => t('The Wind Pattern'),
-      text: (t: TFunction) => t("tuto.wind.pattern"),
+      text: "tuto.wind.pattern",
       boxTop: 40,
       boxLeft: 80,
       boxWidth: 30,
     },
     {
       title: (t: TFunction) => t('Understanding'),
-      text: (t: TFunction) => t("tuto.understanding"),
+      text: "tuto.understanding",
       boxTop: 50,
       boxLeft: 50,
       boxWidth: 60,
     },
     {
       title: (t: TFunction) => t('Understanding'),
-      text: (t: TFunction) => t("tuto.understanding.wind"),
+      text: "tuto.understanding.wind",
       boxTop: 70,
       boxLeft: 45,
       boxWidth: 60,
@@ -527,7 +546,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     },
     {
       title: (t: TFunction) => t('Collect two tiles'),
-      text: (t: TFunction) => t("tuto.take.with.wind"),
+      text: "tuto.take.with.wind",
       boxTop: 65,
       boxLeft: 72,
       boxWidth: 40,
@@ -542,14 +561,14 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [
     {
       title: (t: TFunction) => t('End of your turn'),
-      text: (t: TFunction) => t("tuto.end.second.turn"),
+      text: "tuto.end.second.turn",
       boxTop: 35,
       boxLeft: 15,
       boxWidth: 30
     }, 
     {
-      title: (t: TFunction) => t('New turn'),
-      text: (t: TFunction) => t("tuto.move.water"),
+      title: (t: TFunction) => t('New Turn'),
+      text: "tuto.move.water",
       boxTop: 20,
       boxLeft: 20,
       boxWidth: 40,
@@ -563,7 +582,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [ 
     {
       title: (t: TFunction) => t('The Water Pattern'),
-      text: (t: TFunction) => t("tuto.water.pattern"),
+      text: "tuto.water.pattern",
       boxTop: 70,
       boxLeft: 50,
       boxWidth: 60,
@@ -573,14 +592,14 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [
     {
       title: (t: TFunction) => t('End of the Season'),
-      text: (t: TFunction) => t("tuto.end.third.turn"),
+      text: "tuto.end.third.turn",
       boxTop: 75,
       boxLeft: 22,
       boxWidth: 40,
     }, 
     {
       title: (t: TFunction) => t('End of the Season'),
-      text: (t: TFunction) => t("tuto.push.marker"),
+      text: "tuto.push.marker",
       boxTop: 18,
       boxLeft: 46,
       boxWidth: 40,
@@ -592,7 +611,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     }, 
     {
       title: (t: TFunction) => t('End of the Season'),
-      text: (t: TFunction) => t("tuto.count.goals"),
+      text: "tuto.count.goals",
       boxTop: 48,
       boxLeft: 44,
       boxWidth: 50,
@@ -604,7 +623,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     },
     {
       title: (t: TFunction) => t('Your Wisdom Points'),
-      text: (t: TFunction) => t("tuto.your.wisdom.points"),
+      text: "tuto.your.wisdom.points",
       boxTop: 75,
       boxLeft: 20,
       boxWidth: 40,
@@ -616,7 +635,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     },
     {
       title: (t: TFunction) => t('Start of a New Season'),
-      text: (t: TFunction) => t("tuto.start.new.season"),
+      text: "tuto.start.new.season",
       boxTop: 50,
       boxLeft: 50,
       boxWidth: 50,
@@ -624,7 +643,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     },
     {
       title: (t: TFunction) => t('New Turn'),
-      text: (t: TFunction) => t("tuto.move.earth"),
+      text: "tuto.move.earth",
       boxTop: 20,
       boxLeft: 75,
       boxWidth: 35,
@@ -638,14 +657,14 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [
     {
       title: (t: TFunction) => t('The Earth Pattern'),
-      text: (t: TFunction) => t("tuto.earth.pattern"),
+      text: "tuto.earth.pattern",
       boxTop: 50,
       boxLeft: 30,
       boxWidth: 30,
     }, 
     {
       title: (t: TFunction) => t('Understanding'),
-      text: (t: TFunction) => t("tuto.understanding.earth"),
+      text: "tuto.understanding.earth",
       boxTop: 75,
       boxLeft: 22,
       boxWidth: 45,
@@ -657,7 +676,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     }, 
     {
       title: (t: TFunction) => t('Collect 4 tiles'),
-      text: (t: TFunction) => t("tuto.take.with.earth"),
+      text: "tuto.take.with.earth",
       boxTop: 50,
       boxLeft: 30,
       boxWidth: 30,
@@ -667,7 +686,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [
     {
       title: (t: TFunction) => t('New turn'),
-      text: (t: TFunction) => t("tuto.move.void"),
+      text: "tuto.move.void",
       boxTop: 55,
       boxLeft: 52,
       boxWidth: 40,
@@ -682,14 +701,14 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [
     {
       title: (t: TFunction) => t('The Void Pattern'),
-      text: (t: TFunction) => t("tuto.void.pattern"),
+      text: "tuto.void.pattern",
       boxTop: 55,
       boxLeft: 35,
       boxWidth: 40,
     }, 
     {
       title: (t: TFunction) => t('Understanding'),
-      text: (t: TFunction) => t("tuto.understanding.void"),
+      text: "tuto.understanding.void",
       boxTop: 48,
       boxLeft: 32,
       boxWidth: 40,
@@ -701,14 +720,14 @@ const tutorialDescription:TutorialStepDescription[][] = [
     }, 
     {
       title: (t: TFunction) => t('Understanding'),
-      text: (t: TFunction) => t("tuto.must.take.max"),
+      text: "tuto.must.take.max",
       boxTop: 50,
       boxLeft: 50,
       boxWidth: 60,
     }, 
     {
       title: (t: TFunction) => t('Collect this tile'),
-      text: (t: TFunction) => t("tuto.take.with.void"),
+      text: "tuto.take.with.void",
       boxTop: 65,
       boxLeft: 39,
       boxWidth: 30,
@@ -722,7 +741,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [
     {
       title: (t: TFunction) => t("It's your turn !"),
-      text: (t: TFunction) => t("tuto.reminder.scoring"),
+      text: "tuto.reminder.scoring",
       boxTop: 50,
       boxLeft: 50,
       boxWidth: 75,
@@ -730,7 +749,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
 
     {
       title: (t: TFunction) => t("It's your turn !"),
-      text: (t: TFunction) => t("tuto.end.help"),
+      text: "tuto.end.help",
       boxTop: 25,
       boxLeft: 30,
       boxWidth: 60,
@@ -745,7 +764,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
 
 const thirdTurnInfo = {
   title: (t: TFunction) => t('2-player game'),
-  text: (t: TFunction) => t('For information, in a 2-player game, one tile is discarded from a path each turn, except for the first turn.'),
+  text: 'For information, in a 2-player game, one tile is discarded from a path each turn, except for the first turn.',
   boxTop: 50,
   boxLeft: 50,
   boxWidth: 70
@@ -753,7 +772,7 @@ const thirdTurnInfo = {
 
 const lastTurnInfo = {
   title: (t: TFunction) => t('Last Season'),
-  text: (t: TFunction) => t("It's the last season ! Be sure to pick a lot of Keys Elements, without losing the balance with Goal Cards !"),
+  text: "It's the last season ! Be sure to pick a lot of Keys Elements, without losing the balance with Goal Cards !",
   boxTop: 50,
   boxLeft: 50,
   boxWidth: 70
@@ -761,7 +780,7 @@ const lastTurnInfo = {
 
 const tutorialEndGame = {
   title: (t: TFunction) => t('Congratulations'),
-  text: (t: TFunction) => t('You have finished your first game! You can now play with your friends, or meet other players via our chat room on Discord.'),
+  text: 'You have finished your first game! You can now play with your friends, or meet other players via our chat room on Discord.',
   boxTop: 25,
   boxLeft: 50,
   boxWidth: 80

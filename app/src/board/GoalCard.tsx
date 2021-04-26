@@ -100,7 +100,7 @@ const conflictLetterCss = css`
     position: absolute;
     bottom: 6%;
     right: 8%;
-    font-family: 'Bubblegum Sans', cursive;
+    font-family: 'Mulish', cursive;
     color: white;
     text-shadow: 1px 1px 2px black;
 `
