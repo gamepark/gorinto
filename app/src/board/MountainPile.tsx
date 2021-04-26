@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {css, keyframes} from '@emotion/react'
-import MoveTile, { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/moves/MoveTile'
 import TakeTile, {isTakeTile} from '@gamepark/gorinto/moves/TakeTile'
 import Element from '@gamepark/gorinto/types/Element'
-import MoveType from '@gamepark/gorinto/types/MoveType'
 import PathType from '@gamepark/gorinto/types/PathType'
 import TilesToTake from '@gamepark/gorinto/types/TilesToTake'
 import {useAnimation, usePlay, usePlayerId, useSound} from '@gamepark/react-client'
@@ -14,7 +12,6 @@ import ElementTile from './ElementTile'
 import MountainDropZone from './MountainDropZone'
 import moveTileSound from '../sounds/tic.mp3'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import {ResetSelectedTileInPath, resetSelectedTileInPathMove} from '../moves/SetSelectedTileInPath'
 import SetSelectedTilesInPile, { setSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
 
 type Props = {

@@ -75,7 +75,7 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
     }, [actionsNumber, failures])
 
     const currentMessage = tutorialMessage(tutorialIndex)
-    const indexsWhichDontDisplay = [[2,1],[5,1],[8,1],[13,1],[15,0]];
+    const indexsWhichDontDisplay = [[2,1],[5,1],[8,1],[13,0],[15,0]];
 
     const displayPopup = playerId === game.activePlayer 
     ? tutorialDisplay && currentMessage && !failures.length
@@ -327,33 +327,45 @@ const tutorialDescription:TutorialStepDescription[][] = [
     [
         {
           title: (t: TFunction) => t('Welcome to Gorinto tutorial'),
-          text: (t: TFunction) => t('In Gorinto, you are trying to reach perfect balance between the five Elements. Master specifical rules to build the greatest Gorinto.'),
+          text: (t: TFunction) => t('tuto.welcome'),
           boxTop: 40,
           boxLeft: 50,
           boxWidth: 60
         },
         {
           title: (t: TFunction) => t('Your Gorinto'),
-          text: (t: TFunction) => t('In this tutorial, you are the Black Player.'),
+          text: (t: TFunction) => t('tuto.your.gorinto'),
           boxTop: 78,
-          boxLeft: 52,
+          boxLeft: 42,
           boxWidth: 50,
           arrow: {
             angle: 270,
             top: 72,
-            left: 15
+            left: 5
           }
         },
         {
           title: (t: TFunction) => t('Your Opponents'),
-          text: (t: TFunction) => t('You also play against two opponents controlled by the machine : the Red and the White players.'),
+          text: (t: TFunction) => t('tuto.your.opponents'),
           boxTop: 55,
           boxLeft: 47,
           boxWidth: 55,
         },
         {
-          title: (t: TFunction) => t('Goal of the game'),
-          text: (t: TFunction) => t('The goal of this game is to score more Wisdom Points than your opponents, by collecting elements and following specific rules.'),
+          title: (t: TFunction) => t('The Seasons'),
+          text: (t: TFunction) => t('tuto.seasons'),
+          boxTop: 26,
+          boxLeft: 72,
+          boxWidth: 30,
+          arrow: {
+            angle: 0,
+            top: 13,
+            left: 68
+          }
+        },
+        {
+          title: (t: TFunction) => t('Wisdom Points'),
+          text: (t: TFunction) => t('tuto.wisdom.points'),
           boxTop: 73,
           boxLeft: 30,
           boxWidth: 55,
@@ -364,8 +376,32 @@ const tutorialDescription:TutorialStepDescription[][] = [
           }
         },
         {
+          title: (t: TFunction) => t('The Goals'),
+          text: (t: TFunction) => t('tuto.goals'),
+          boxTop: 40,
+          boxLeft: 44,
+          boxWidth: 50,
+          arrow: {
+            angle: 90,
+            top: 33,
+            left: 65
+          }
+        },
+        {
+          title: (t: TFunction) => t('The Key Elements'),
+          text: (t: TFunction) => t('tuto.keys'),
+          boxTop: 25,
+          boxLeft: 51,
+          boxWidth: 50,
+          arrow: {
+            angle: 270,
+            top: 15,
+            left: 14
+          }
+        },
+        {
           title: (t: TFunction) => t('The Board'),
-          text: (t: TFunction) => t('Here is the board, also called the Mountain. It is here you will place and pick tiles during the game.'),
+          text: (t: TFunction) => t('tuto.board'),
           boxTop: 60,
           boxLeft: 50,
           boxWidth: 70,
@@ -377,7 +413,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('The Paths'),
-          text: (t: TFunction) => t('Next to the Mountain, there are the two Paths. When it is your turn, you must pick a tile on a Path and move it on the Mountain in a straight line.'),
+          text: (t: TFunction) => t('tuto.paths'),
           boxTop: 35,
           boxLeft: 50,
           boxWidth: 40,
@@ -389,7 +425,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         },
         {
           title: (t: TFunction) => t('How to move a tile'),
-          text: (t: TFunction) => t("Enough talking ! You have to move a tile from a Path to the Mountain first. Try to move this orange Fire Element on the second column !"),
+          text: (t: TFunction) => t("tuto.move.fire"),
           boxTop: 45,
           boxLeft: 40,
           boxWidth: 50,
@@ -403,7 +439,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     [
       {
         title: (t: TFunction) => t('How to take a tile'),
-        text: (t: TFunction) => t("Great ! It is time to complete your move by picking a tile on the Mountain."),
+        text: (t: TFunction) => t("tuto.take.intro"),
         boxTop: 50,
         boxLeft: 50,
         boxWidth: 40,
@@ -411,7 +447,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
       },
       {
         title: (t: TFunction) => t('The Patterns'),
-        text: (t: TFunction) => t("In Gorinto, elements you can take depend on the element you just put on the Mountain. Each element correspond to one Pattern, for a total of five Patterns."),
+        text: (t: TFunction) => t("tuto.patterns"),
         boxTop: 30,
         boxLeft: 15,
         boxWidth: 30,
@@ -423,14 +459,14 @@ const tutorialDescription:TutorialStepDescription[][] = [
       },
       {
         title: (t: TFunction) => t('The Fire Pattern'),
-        text: (t: TFunction) => t("Start with the fire pattern. You can take tiles from the four other spaces in your placement's column. There are shining in yellow on the Mountain."),
+        text: (t: TFunction) => t("tuto.pattern.fire"),
         boxTop: 50,
         boxLeft: 70,
         boxWidth: 30,
       },
       {
-        title: (t: TFunction) => t('The Fire Pattern'),
-        text: (t: TFunction) => t("Take your first tile according to this pattern ! Take this Wind tile by moving it over your Gorinto or by clicking it. It will be useful for our next turn."),
+        title: (t: TFunction) => t('Collect a tile'),
+        text: (t: TFunction) => t("tuto.take.with.fire.pattern"),
         boxTop: 50,
         boxLeft: 70,
         boxWidth: 30,
@@ -443,15 +479,15 @@ const tutorialDescription:TutorialStepDescription[][] = [
     ],
     [
       {
-        title: (t: TFunction) => t('Understanding'),
-        text: (t: TFunction) => t("Nice ! You have increased your Wind element understanding by one. But your turn is over now. Let your opponents play..."),
+        title: (t: TFunction) => t('End of your turn'),
+        text: (t: TFunction) => t("tuto.end.first.turn"),
         boxTop: 70,
         boxLeft: 15,
         boxWidth: 30,
       },    
       {
         title: (t: TFunction) => t('The Wind Pattern'),
-        text: (t: TFunction) => t("Time to learn another Pattern. Move this white Wind element on the third line."),
+        text: (t: TFunction) => t("tuto.move.wind"),
         boxTop: 20,
         boxLeft: 71,
         boxWidth: 40,
@@ -465,21 +501,21 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [
     {
       title: (t: TFunction) => t('The Wind Pattern'),
-      text: (t: TFunction) => t("According to Wind pattern, you can take tiles from the four locations orthogonally adjacent to your placement. There are shining in yellow on the Mountain."),
+      text: (t: TFunction) => t("tuto.wind.pattern"),
       boxTop: 40,
       boxLeft: 80,
       boxWidth: 30,
     },
     {
       title: (t: TFunction) => t('Understanding'),
-      text: (t: TFunction) => t("But this time, you will pick two tiles, and not only one ! Indeed, the number of tiles you must take is equal to your understanding of the element plus one."),
-      boxTop: 70,
-      boxLeft: 45,
-      boxWidth: 50,
+      text: (t: TFunction) => t("tuto.understanding"),
+      boxTop: 50,
+      boxLeft: 50,
+      boxWidth: 60,
     },
     {
       title: (t: TFunction) => t('Understanding'),
-      text: (t: TFunction) => t("You have just move a Wind Element, and you have already collected one Wind Element. Your understanding of this element is 1, so you can gather 1 + 1 = 2 tiles."),
+      text: (t: TFunction) => t("tuto.understanding.wind"),
       boxTop: 70,
       boxLeft: 45,
       boxWidth: 60,
@@ -490,20 +526,8 @@ const tutorialDescription:TutorialStepDescription[][] = [
       }
     },
     {
-      title: (t: TFunction) => t('Understanding'),
-      text: (t: TFunction) => t("Notice that for the other elements, you have not collected any tile yet, so you can collect 0 + 1 = 1 tile if you move any other tile except Wind."),
-      boxTop: 78,
-      boxLeft: 45,
-      boxWidth: 60,
-      arrow: {
-        angle: 270,
-        top:77,
-        left: 2
-      }
-    },
-    {
-      title: (t: TFunction) => t('Understanding'),
-      text: (t: TFunction) => t("For now, just collect the Water element and the Earth Element here."),
+      title: (t: TFunction) => t('Collect two tiles'),
+      text: (t: TFunction) => t("tuto.take.with.wind"),
       boxTop: 65,
       boxLeft: 72,
       boxWidth: 40,
@@ -517,20 +541,15 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [],
   [
     {
-      title: (t: TFunction) => t('The Patterns'),
-      text: (t: TFunction) => t("Good ! If you forget one pattern, click here to view the five patterns of the game."),
-      boxTop: 25,
+      title: (t: TFunction) => t('End of your turn'),
+      text: (t: TFunction) => t("tuto.end.second.turn"),
+      boxTop: 35,
       boxLeft: 15,
-      boxWidth: 30,
-      arrow: {
-        angle: 0,
-        top:12,
-        left: 2
-      }
+      boxWidth: 30
     }, 
     {
-      title: (t: TFunction) => t('The Water Pattern'),
-      text: (t: TFunction) => t("Learn the Water Pattern now : place this blue Water element on the second line."),
+      title: (t: TFunction) => t('New turn'),
+      text: (t: TFunction) => t("tuto.move.water"),
       boxTop: 20,
       boxLeft: 20,
       boxWidth: 40,
@@ -544,91 +563,68 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [ 
     {
       title: (t: TFunction) => t('The Water Pattern'),
-      text: (t: TFunction) => t("According to Water Pattern, you can gather from the four other spaces in your placement's row."),
+      text: (t: TFunction) => t("tuto.water.pattern"),
       boxTop: 70,
       boxLeft: 50,
       boxWidth: 60,
     }, 
-    {
-      title: (t: TFunction) => t('The Season Marker'),
-      text: (t: TFunction) => t("But first, let's take a look at this Marker. Each game has four season and we're in the first one."),
-      boxTop: 25,
-      boxLeft: 75,
-      boxWidth: 35,
-      arrow: {
-        angle: 0,
-        top:12,
-        left: 67
-      }
-    }, 
-    {
-      title: (t: TFunction) => t('The End of a Season'),
-      text: (t: TFunction) => t("A season end when it's the turn of the first player to play, but there isn't enough tiles on the paths to make a whole turn."),
-      boxTop: 75,
-      boxLeft: 46,
-      boxWidth: 50,
-      arrow: {
-        angle: 270,
-        top:74,
-        left: 10
-      }
-    }, 
-    {
-      title: (t: TFunction) => t('The Goal Cards'),
-      text: (t: TFunction) => t("At the end of a season, every player score points based on Objective Cards. These cards never change during the game, so make sure to understand them before you start !"),
-      boxTop: 35,
-      boxLeft: 45,
-      boxWidth: 50,
-      arrow: {
-        angle: 90,
-        top:30,
-        left: 65
-      }
-    },
-    {
-      title: (t: TFunction) => t('The Goal Cards'),
-      text: (t: TFunction) => t("In this game, you can score points if you make odd height stacks and stacks of same heights."),
-      boxTop: 35,
-      boxLeft: 45,
-      boxWidth: 50,
-      arrow: {
-        angle: 90,
-        top:30,
-        left: 65
-      }
-    }, 
-    {
-      title: (t: TFunction) => t('The Goal Cards'),
-      text: (t: TFunction) => t("It could be a good strategy to keep odd height stacks ! Pick the Earth Tiles according to the Water Pattern !"),
-      boxTop: 70,
-      boxLeft: 50,
-      boxWidth: 60,
-    } 
   ],
   [],
   [
     {
-      title: (t: TFunction) => t('Scoring'),
-      text: (t: TFunction) => t("Nice ! Look at the end of the season. You will score 2 points for the first Goal Card, and 5 for the second one. A pretty good start !"),
+      title: (t: TFunction) => t('End of the Season'),
+      text: (t: TFunction) => t("tuto.end.third.turn"),
       boxTop: 75,
       boxLeft: 22,
       boxWidth: 40,
+    }, 
+    {
+      title: (t: TFunction) => t('End of the Season'),
+      text: (t: TFunction) => t("tuto.push.marker"),
+      boxTop: 18,
+      boxLeft: 46,
+      boxWidth: 40,
       arrow: {
-        angle: 180,
-        top:75,
-        left: 6
+        angle: 90,
+        top:6,
+        left: 62
       }
     }, 
     {
-      title: (t: TFunction) => t('Beginning of a new season'),
-      text: (t: TFunction) => t("When a new season start, the paths are filled again, and the first player is the one who has the lowest score."),
+      title: (t: TFunction) => t('End of the Season'),
+      text: (t: TFunction) => t("tuto.count.goals"),
+      boxTop: 48,
+      boxLeft: 44,
+      boxWidth: 50,
+      arrow: {
+        angle: 90,
+        top:32,
+        left: 65
+      }
+    },
+    {
+      title: (t: TFunction) => t('Your Wisdom Points'),
+      text: (t: TFunction) => t("tuto.your.wisdom.points"),
+      boxTop: 75,
+      boxLeft: 20,
+      boxWidth: 40,
+      arrow: {
+        angle: 180,
+        top:76,
+        left: 6
+      }
+    },
+    {
+      title: (t: TFunction) => t('Start of a New Season'),
+      text: (t: TFunction) => t("tuto.start.new.season"),
       boxTop: 50,
       boxLeft: 50,
-      boxWidth: 60,
-    }, 
+      boxWidth: 50,
+
+    },
     {
-      title: (t: TFunction) => t('The Earth Pattern'),
-      text: (t: TFunction) => t("Learn the Earth Pattern ! Move this brown Earth element on the fourth line."),
+      title: (t: TFunction) => t('New Turn'),
+      text: (t: TFunction) => t("tuto.move.earth"),
       boxTop: 20,
       boxLeft: 75,
       boxWidth: 35,
@@ -642,14 +638,26 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [
     {
       title: (t: TFunction) => t('The Earth Pattern'),
-      text: (t: TFunction) => t("The Earth pattern is the only one which allow you to gather from the stack you placed the tile."),
+      text: (t: TFunction) => t("tuto.earth.pattern"),
       boxTop: 50,
       boxLeft: 30,
       boxWidth: 30,
     }, 
     {
-      title: (t: TFunction) => t('The Earth Pattern'),
-      text: (t: TFunction) => t("You have a huge understanding of the Earth element ! Take all the tiles !"),
+      title: (t: TFunction) => t('Understanding'),
+      text: (t: TFunction) => t("tuto.understanding.earth"),
+      boxTop: 75,
+      boxLeft: 22,
+      boxWidth: 45,
+      arrow: {
+        angle: 180,
+        top:76,
+        left: 2
+      }
+    }, 
+    {
+      title: (t: TFunction) => t('Collect 4 tiles'),
+      text: (t: TFunction) => t("tuto.take.with.earth"),
       boxTop: 50,
       boxLeft: 30,
       boxWidth: 30,
@@ -658,16 +666,8 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [],[],[],
   [
     {
-      title: (t: TFunction) => t('The Earth Pattern'),
-      text: (t: TFunction) => t("Perfect ! Remember that with the Earth Element, and with enough understanding, you can pick more than four tiles although it is the theoretical maximum with the other elements."),
-      boxTop: 55,
-      boxLeft: 15,
-      boxWidth: 30,
-
-    }, 
-    {
-      title: (t: TFunction) => t('The Void Pattern'),
-      text: (t: TFunction) => t("But it's not always possible (or a good idea) to pick the maximum amount of tiles... Move this purple Void tile on the fifth column."),
+      title: (t: TFunction) => t('New turn'),
+      text: (t: TFunction) => t("tuto.move.void"),
       boxTop: 55,
       boxLeft: 52,
       boxWidth: 40,
@@ -676,19 +676,20 @@ const tutorialDescription:TutorialStepDescription[][] = [
         top:50,
         left: 20
       }
+
     }
   ],
   [
     {
       title: (t: TFunction) => t('The Void Pattern'),
-      text: (t: TFunction) => t("The Void pattern, the last one, allows you to gather tiles diagonally adjacent to your placement."),
+      text: (t: TFunction) => t("tuto.void.pattern"),
       boxTop: 55,
       boxLeft: 35,
       boxWidth: 40,
     }, 
     {
-      title: (t: TFunction) => t('Restrictions'),
-      text: (t: TFunction) => t("But even though you have enough understanding to pick two tiles, you can only pick one here, because of the configuration of the Mountain..."),
+      title: (t: TFunction) => t('Understanding'),
+      text: (t: TFunction) => t("tuto.understanding.void"),
       boxTop: 48,
       boxLeft: 32,
       boxWidth: 40,
@@ -699,15 +700,15 @@ const tutorialDescription:TutorialStepDescription[][] = [
       }
     }, 
     {
-      title: (t: TFunction) => t('Restrictions'),
-      text: (t: TFunction) => t("When you move a tile, remember you have to pick the maxiumum of tiles according to your understading and the ressources on the mountain. It could be a good idea to pick no element at all !"),
+      title: (t: TFunction) => t('Understanding'),
+      text: (t: TFunction) => t("tuto.must.take.max"),
       boxTop: 50,
       boxLeft: 50,
-      boxWidth: 50,
+      boxWidth: 60,
     }, 
     {
-      title: (t: TFunction) => t('Restrictions'),
-      text: (t: TFunction) => t("Pick the only tile available to achieve this lesson."),
+      title: (t: TFunction) => t('Collect this tile'),
+      text: (t: TFunction) => t("tuto.take.with.void"),
       boxTop: 65,
       boxLeft: 39,
       boxWidth: 30,
@@ -720,49 +721,24 @@ const tutorialDescription:TutorialStepDescription[][] = [
   ],
   [
     {
-      title: (t: TFunction) => t('The Keys Elements'),
-      text: (t: TFunction) => t("Perfect ! You have all the keys to play Gorinto ! Except one... The Keys Elements."),
-      boxTop: 33,
-      boxLeft: 15,
-      boxWidth: 30,
-      arrow: {
-        angle: 0,
-        top:20,
-        left: 2
-      }
-    }, 
-    {
-      title: (t: TFunction) => t('The Keys Elements'),
-      text: (t: TFunction) => t("Keys Elements is another way to score points in Gorinto. But unlike Goal Cards, you score them at the very end of the game."),
-      boxTop: 33,
-      boxLeft: 15,
-      boxWidth: 30,
-      arrow: {
-        angle: 0,
-        top:20,
-        left: 2
-      }
-    }, 
-    {
-      title: (t: TFunction) => t('The Keys Elements'),
-      text: (t: TFunction) => t("You will score 2 points per Key Element you own. In this game, you will score two points for each Void and Wind element you own."),
-      boxTop: 25,
-      boxLeft: 45,
-      boxWidth: 50,
-    }, 
-    {
-      title: (t: TFunction) => t('The Element Bag'),
-      text: (t: TFunction) => t("One more thing, there is 100 element tiles in a game of Gorinto. Each tile is present twenty times, and all tiles are picked during the game."),
-      boxTop: 25,
-      boxLeft: 45,
-      boxWidth: 50,
-    },
-    {
-      title: (t: TFunction) => t('The student has surpassed the tutorial'),
-      text: (t: TFunction) => t("You know everything now to play Gorinto ! We let you free to play your last move of the season yourself. Try to make the best move to score a lot of points, maybe by equalizing your height stacks ?"),
+      title: (t: TFunction) => t("It's your turn !"),
+      text: (t: TFunction) => t("tuto.reminder.scoring"),
       boxTop: 50,
       boxLeft: 50,
+      boxWidth: 75,
+    }, 
+
+    {
+      title: (t: TFunction) => t("It's your turn !"),
+      text: (t: TFunction) => t("tuto.end.help"),
+      boxTop: 25,
+      boxLeft: 30,
       boxWidth: 60,
+      arrow: {
+        angle: 0,
+        top:10,
+        left: 3
+      }
     }, 
   ]
 ]

@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import {css, keyframes} from '@emotion/react'
-import MoveTile, { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/moves/MoveTile'
+import MoveTile from '@gamepark/gorinto/moves/MoveTile'
 import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 import Element from '@gamepark/gorinto/types/Element'
 import PathType from '@gamepark/gorinto/types/PathType'
-import {usePlay, useSound} from '@gamepark/react-client'
+import {usePlay} from '@gamepark/react-client'
 import {Draggable} from '@gamepark/react-components'
 import {TFunction} from 'i18next'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'

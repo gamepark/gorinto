@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
 import MoveType from '@gamepark/gorinto/types/MoveType'
-import Path from '@gamepark/gorinto/types/Path'
 import PathType from '@gamepark/gorinto/types/PathType'
 import {FC} from 'react'
 import {useDrop} from 'react-dnd'
