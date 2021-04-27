@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import Player from "@gamepark/gorinto/types/Player";
-import {usePlayer} from "@gamepark/react-client";
+import {usePlayer, usePlayerId} from "@gamepark/react-client";
 import {FC} from "react";
 import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -12,11 +12,14 @@ import {getPlayerName} from "@gamepark/gorinto/GorintoOptions";
 import Button from "./Button";
 import GameView from "@gamepark/gorinto/types/GameView";
 import GoalCard from "./GoalCard";
+import background from '../images/BG2.jpg'
+import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
 
-const WelcomePopUp : FC<{player:Player, game:GameView, close: () => void}> = ({player, game, close}) => {
+const WelcomePopUp : FC<{player:Player | undefined, game:GameView, close: () => void}> = ({player, game, close}) => {
 
     const {t} = useTranslation()
-    const playerInfo = usePlayer(player.color)
+    const playerInfo = usePlayer(player !== undefined ? player.color : undefined) 
+    const playerId = usePlayerId<PlayerColor>()
 
     return(
 
@@ -25,7 +28,11 @@ const WelcomePopUp : FC<{player:Player, game:GameView, close: () => void}> = ({p
             <div css={[popupStyle, popupPosition]} onClick={event => event.stopPropagation()}>
 
                 <div css = {closePopupStyle} onClick={close}> <FontAwesomeIcon icon={faTimes} /> </div>
-                <h2>{t("Welcome, {playerName}",{playerName: playerInfo?.name !== undefined ? playerInfo?.name : getPlayerName(player.color,t)})}</h2>
+                <h2>{t("Welcome, {playerName}",{playerName: playerId !== undefined 
+                  ? playerInfo?.name !== undefined 
+                    ? playerInfo?.name 
+                    : getPlayerName(player!.color,t)
+                  : "deer spectator"})}</h2>
 
                 <div css={cardsStyle}>
 
@@ -45,14 +52,11 @@ const WelcomePopUp : FC<{player:Player, game:GameView, close: () => void}> = ({p
 
                 </div>
 
-                <p> {t("welcome.text")} </p>
+                <p> {playerId !== undefined ? t("welcome.text") : t("welcome.text.spec")} </p>
 
                 <Button css={buttonPosition} onClick={close}>{t('Understood')}</Button>
 
             </div>
-
-
-
 
         </div>
 
@@ -104,27 +108,39 @@ const popupStyle = css`
   outline: none;
   box-shadow: 1em 2em 2.5em -1.5em hsla(0, 0%, 0%, 0.2);
   border:1em black solid;
-  background-color:rgba(157,163,165,1);
+  background: url(${background});
+  background-color: black;
   border-radius: 40em 3em 40em 3em/3em 40em 3em 40em;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    border-radius: 40em 1.5em 40em 1.5em/1.5em 40em 1.5em 40em;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
   
   &:hover{
       box-shadow: 2em 4em 5em -3em hsla(0,0%,0%,.5);
     }
   & > h2 {
+    position:relative;
     font-size: 5em;
     margin:0;
-    text-shadow: 0.15em 0.15em 0.2em black;
   }
   & > p {
     text-align: justify;
-    font-size: 3.5em;
+    font-size: 3em;
 
     position:absolute;
     bottom:0%;
     left:8%;
     width:62%;
 
-    text-shadow: 0.1em 0.1em 0.15em black;
   }
   & > button {
     font-size: 3.5em;

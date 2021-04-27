@@ -395,7 +395,7 @@ const nameStyle = css`
   writing-mode: vertical-rl;
   text-orientation: upright;
 
-  font-family: 'Prompt' , sans-serif;
+  font-family: 'Mulish' , sans-serif;
 
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -406,11 +406,11 @@ const nameStyle = css`
 `
 
 const nameStyleLetterSpacingFireFox = css`
-letter-spacing: -0.1em;
+letter-spacing: -0.4em;
 `
 
 const nameStyleLetterSpacingOther = css`
-letter-spacing: -0.6em;
+letter-spacing: -0.4em;
 `
 
 const gPStyle = css`

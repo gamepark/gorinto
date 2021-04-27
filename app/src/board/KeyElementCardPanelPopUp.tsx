@@ -93,8 +93,6 @@ background-image : url(${image});;
 background-size : contain;
 background-repeat : no-repeat;
 background-position : top;
-
-box-shadow: 0em 0.5em 2em black;
 `
 
 export default KeyElementCardPanelPopUp

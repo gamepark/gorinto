@@ -123,17 +123,17 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
           <div css={[popupStyle, popupPosition(thirdTurnInfo)]}>
             <div css={closePopupStyle} onClick={() => setHideThirdTurnInfo(true)}><FontAwesomeIcon icon={faTimes}/></div>
             <h2>{thirdTurnInfo.title(t)}</h2>
-            <p>{thirdTurnInfo.text}</p>
+            <p>{t(thirdTurnInfo.text)}</p>
             <Button onClick={() => setHideThirdTurnInfo(true)}>{t('OK')}</Button>
           </div>
         }
 
         {
-          game.season === 4 && !hideLastTurnInfo &&
+          game.season === 4 && game.activePlayer !== undefined && !hideLastTurnInfo &&
           <div css={[popupStyle, popupPosition(lastTurnInfo)]}>
             <div css={closePopupStyle} onClick={() => setHideLastTurnInfo(true)}><FontAwesomeIcon icon={faTimes}/></div>
             <h2>{lastTurnInfo.title(t)}</h2>
-            <p>{lastTurnInfo.text}</p>
+            <p>{t(lastTurnInfo.text)}</p>
             <Button onClick={() => setHideLastTurnInfo(true)}>{t('OK')}</Button>
           </div>
         }
@@ -145,7 +145,7 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
             {!tutorialEnd &&
             <>
               <h2 css={textEndStyle} >{tutorialEndGame.title(t)}</h2>
-              <p css={textEndStyle} >{tutorialEndGame.text}</p>
+              <p css={textEndStyle} >{t(tutorialEndGame.text)}</p>
             </>
             }
             <Button css={buttonStyle} onClick={() => resetTutorial()}>{t('Restart the tutorial')}</Button>
@@ -189,7 +189,6 @@ background: url(${background});
 
 const textEndStyle = css`
 color: white;
-text-shadow: 0.1em 0.1em black;
 `
 
 const popupOverlayStyle = css`
@@ -685,7 +684,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [],[],[],
   [
     {
-      title: (t: TFunction) => t('New turn'),
+      title: (t: TFunction) => t('New Turn'),
       text: "tuto.move.void",
       boxTop: 55,
       boxLeft: 52,

@@ -25,7 +25,9 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
   const burrowTileAnimation = useAnimation<RemoveTileOnPath>(animation => isRemoveTileOnPath(animation.move) && game.endOfSeasonStep === undefined)
   
-  const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(true)
+  const tutorial = useTutorial()
+
+  const [welcomePopUpClosed, setWelcomePopUpClosed] = useState(tutorial ? true : false)
   const [warningNoElementPopUpClosed, setWarningNoElementPopUpClosed] = useState<MoveTile>()
   const showWelcomePopup = !welcomePopUpClosed
   const showWarningNoElementPopUp = warningNoElementPopUpClosed ? true : false 
@@ -33,8 +35,6 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
   const playerId = usePlayerId<PlayerColor>()
   const players = useMemo(() => getPlayersStartingWith(game, playerId), [game, playerId])    
   const player = game.players.find(player => player.color === playerId)
-
-  const tutorial = useTutorial()
   
   useEffect( () => {
     if (game.activePlayer !== playerId && warningNoElementPopUpClosed !== undefined){
