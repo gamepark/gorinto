@@ -55,11 +55,13 @@ const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, se
 
     function verifyAndPlayCompleteMoveTile(selectedTileInPath:ElementInPath|undefined, x:number, y:number):void{
         
-        canMoveTile(selectedTileInPath,x,y)
-        ? getFilterCoordinatesWithPattern(selectedTileInPath!.element!, {x,y}, mountainBoard).length === 0
+        if(canMoveTile(selectedTileInPath,x,y)){
+            getFilterCoordinatesWithPattern(selectedTileInPath!.element!, {x,y}, mountainBoard).length === 0
             ? onWarning(selectedTileInPath!.path,x,y)
             : playCompleteMoveTile(selectedTileInPath,x,y)
-        : console.log("rien faire")
+        } else {
+            
+        }
         
     }
 

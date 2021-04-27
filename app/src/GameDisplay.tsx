@@ -66,8 +66,8 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
             
         <KeyElementCardPanel  key = {index}
                               element = {element}
-                              position = {index}
-                              open={() => setWelcomePopUpClosed(false)}
+                              css={keyElementCardPosition(index)}
+                              onClick={() => setWelcomePopUpClosed(false)}
         />
       )}
             
@@ -159,6 +159,16 @@ const goalCardPositionBigger = (position: number) => css`
   height: 25%;
   font-size: 1.7em;
   cursor: pointer;
+`
+
+const keyElementCardPosition = (position:number) => css`
+position: absolute;
+top: 10%;
+left: ${position * 10}%;
+width: 10%;
+height: 13%;
+font-size: 1em;
+cursor: pointer;
 `
 
 export default GameDisplay

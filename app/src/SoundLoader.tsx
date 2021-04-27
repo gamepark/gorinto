@@ -11,7 +11,6 @@ const SoundLoader : FC<Props> = ({sounds, onSoundLoad}) => {
     const totalLoadCount = sounds.length
 
     useEffect(() => {
-        console.log("loading sound")
         sounds.forEach(sound => {
             let audio = new Audio()
             audio.addEventListener('canplaythrough',onLoad,false)

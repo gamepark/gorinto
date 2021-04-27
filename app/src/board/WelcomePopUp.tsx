@@ -7,19 +7,20 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faTimes} from '@fortawesome/free-solid-svg-icons'
 import {Goals} from "@gamepark/gorinto/cards/Goals";
 import {css} from "@emotion/react";
-import KeyElementCardPanelPopUp from "./KeyElementCardPanelPopUp";
 import {getPlayerName} from "@gamepark/gorinto/GorintoOptions";
 import Button from "./Button";
 import GameView from "@gamepark/gorinto/types/GameView";
 import GoalCard from "./GoalCard";
 import background from '../images/BG2.jpg'
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
+import KeyElementCardPanel from "./KeyElementCardPanel";
 
 const WelcomePopUp : FC<{player:Player | undefined, game:GameView, close: () => void}> = ({player, game, close}) => {
 
     const {t} = useTranslation()
     const playerInfo = usePlayer(player !== undefined ? player.color : undefined) 
     const playerId = usePlayerId<PlayerColor>()
+    const isSpec = playerId === undefined
 
     return(
 
@@ -28,31 +29,38 @@ const WelcomePopUp : FC<{player:Player | undefined, game:GameView, close: () => 
             <div css={[popupStyle, popupPosition]} onClick={event => event.stopPropagation()}>
 
                 <div css = {closePopupStyle} onClick={close}> <FontAwesomeIcon icon={faTimes} /> </div>
-                <h2>{t("Welcome, {playerName}",{playerName: playerId !== undefined 
+                <h2>{t("Welcome, {playerName}",{playerName: !isSpec 
                   ? playerInfo?.name !== undefined 
                     ? playerInfo?.name 
                     : getPlayerName(player!.color,t)
-                  : "deer spectator"})}</h2>
+                  : t("dear spectator")})}</h2>
 
-                <div css={cardsStyle}>
+                <p>{isSpec ? t("welcome.spec.objectives") : t("welcome.player.objectives")}</p>
 
+                <div css={goalCardsStyle}>
                     {game.goals.map((goalNumber, index) =>
 
-                        <GoalCard key={index} goal={Goals[goalNumber]} css={goalCardPanelPosition(index)}/>
+                        <GoalCard key={index} 
+                                  goal={Goals[goalNumber]} 
+                                  css={goalCardPanelPosition}/>
 
                     )}
 
+                </div>
+                <p>{isSpec ? t("welcome.spec.key.elements") : t("welcome.player.key.elements")}</p>
+
+                <div css={keyElementCardsStyle}>
+
                     {game.keyElements.map((element, index) =>
                 
-                        <KeyElementCardPanelPopUp key = {index}
-                                                  element = {element}
-                                                  position = {index}
+                        <KeyElementCardPanel key = {index}
+                                             element = {element}
+                                             css={keyElementCardPanelPosition}
                         />
                     )}
 
                 </div>
 
-                <p> {playerId !== undefined ? t("welcome.text") : t("welcome.text.spec")} </p>
 
                 <Button css={buttonPosition} onClick={close}>{t('Understood')}</Button>
 
@@ -65,18 +73,47 @@ const WelcomePopUp : FC<{player:Player | undefined, game:GameView, close: () => 
 }
 
 const buttonPosition = css`
-position:absolute;
-right:8%;
-bottom:4%;
-
-height:10%;
+position:relative;
+bottom:9%;
+left:40%;
 `
 
-const cardsStyle = css`
-position:absolute;
+const goalCardsStyle = css`
+position:relative;
+margin: 1em auto;
+height:40%;
+width:90%;
 
-width:95%;
-height:70%;
+display:flex;
+flex-direction:row;
+justify-content: center;
+`
+
+const goalCardPanelPosition = css`
+    position:relative;
+    height:100%;
+    width:32%;
+    margin:0em 1em;
+    font-size: 2.2em;
+`
+
+const keyElementCardsStyle = css`
+position:relative;
+margin: 1em auto;
+height:25%;
+width:90%;
+
+display:flex;
+flex-direction:row;
+justify-content: center;
+`
+
+const keyElementCardPanelPosition = css`
+  position:relative;
+  height:100%;
+  width:21%;
+  margin:0em 1em;
+  font-size: 1.2em;
 `
 
 const popupOverlayStyle = css`
@@ -133,13 +170,11 @@ const popupStyle = css`
     margin:0;
   }
   & > p {
-    text-align: justify;
+    position:relative;
+    text-align: center;
     font-size: 3em;
-
-    position:absolute;
-    bottom:0%;
-    left:8%;
-    width:62%;
+    margin:0.5em auto;
+    width:80%;
 
   }
   & > button {
@@ -168,15 +203,6 @@ const closePopupStyle = css`
     cursor: pointer;
     color: black;
   }
-`
-
-const goalCardPanelPosition = (position: number) => css`
-    position: absolute;
-    top: 5%;
-    left: ${15 + (position * 37)}%;
-    width: 33.5%;
-    height: 60%;
-    font-size: 2.2em;
 `
 
 export default WelcomePopUp
