@@ -19,6 +19,7 @@ type GameState = {
   tilesToTake?: TilesToTake;
   endOfSeasonStep?: EndOfSeasonStep;
   tutorial?:boolean;
+  isTacticalRemove?:boolean
 }
 
 export default GameState

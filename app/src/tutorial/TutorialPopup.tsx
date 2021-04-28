@@ -31,14 +31,10 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
     const [failures] = useFailures()
     const [hideLastTurnInfo, setHideLastTurnInfo] = useState(false)
     const [hideThirdTurnInfo, setHideThirdTurnInfo] = useState(false)
-    const [tutorialEnd, setTutorialEnd] = useState(true)
+    const [hideEndInfo, setHideEndInfo] = useState(false)
 
     const platformUri = process.env.REACT_APP_PLATFORM_URI ?? 'https://game-park.com'
     const discordUri = 'https://discord.gg/nMSDRag'
-
-    const toggleTutorialEnd = () => {
-      setTutorialEnd(!tutorialEnd)
-    }
 
     const moveTutorial = (deltaMessage: number) => {
       setTutorialIndex(tutorialIndex + deltaMessage)
@@ -46,8 +42,20 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
     }
     
     const resetTutorialDisplay = () => {
-      setTutorialIndex(0)
-      setTutorialDisplay(true)
+      if (game.activePlayer !== undefined){
+        if (game.season === 3){
+          setHideThirdTurnInfo(false)
+        } else if (game.season === 4){
+          setHideLastTurnInfo(false)
+        } else {
+          setTutorialIndex(0)
+          setTutorialDisplay(true)
+        }
+
+      } else {
+        setHideEndInfo(false)
+      }
+
     }
 
     const tutorialMessage = (index: number) => {
@@ -108,7 +116,7 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
         </div>
 
         {
-        !displayPopup && tutorialDescription.length > actionsNumber &&
+        !displayPopup && 
         <Button css={resetStyle} onClick={() => resetTutorialDisplay()}>{t('Show Tutorial')}</Button>
       }
 
@@ -139,15 +147,11 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
         }
 
         {
-          game.activePlayer === undefined &&
-          <div css={[popupStyle, endStyle, popupPosition(tutorialEndGame), tutorialEnd && buttonsPosition]}>
-            <div css={closePopupStyle} onClick={() => toggleTutorialEnd()}><FontAwesomeIcon icon={tutorialEnd ? faPlusSquare : faMinusSquare}/></div>
-            {!tutorialEnd &&
-            <>
-              <h2 css={textEndStyle} >{tutorialEndGame.title(t)}</h2>
-              <p css={textEndStyle} >{t(tutorialEndGame.text)}</p>
-            </>
-            }
+          game.activePlayer === undefined && !hideEndInfo &&
+          <div css={[popupStyle, endStyle, popupPosition(tutorialEndGame)]}>
+            <div css={closePopupStyle} onClick={() => setHideEndInfo(true)}><FontAwesomeIcon icon={faTimes}/></div>
+            <h2 css={textEndStyle} >{tutorialEndGame.title(t)}</h2>
+            <p css={textEndStyle} >{t(tutorialEndGame.text)}</p>
             <Button css={buttonStyle} onClick={() => resetTutorial()}>{t('Restart the tutorial')}</Button>
             <Button css={buttonStyle} onClick={() => window.location.href = platformUri}>{t('Play with friends')}</Button>
             <Button onClick={() => window.location.href = discordUri}>{t('Find players')}</Button>

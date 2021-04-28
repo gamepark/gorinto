@@ -20,9 +20,10 @@ type Props = {
     selectedTile?: ElementInPath,
     verifyIfWarningIsNeeded : (tile:Element, x:number,y:number) => boolean,
     onWarning:(path:PathType,x:number, y:number) => void
+    isTacticalRemove:boolean | undefined
 }
 
-const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlayer, mountain, onSelect, selectedTile, verifyIfWarningIsNeeded, onWarning}) => {
+const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlayer, mountain, onSelect, selectedTile, verifyIfWarningIsNeeded, onWarning, isTacticalRemove}) => {
 
     const playerId = usePlayerId()
     const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === PathType.Horizontal)
@@ -40,6 +41,18 @@ const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlay
         sound.play()
     }
 
+    function isDraggable():boolean{
+        if (activePlayer !== playerId){
+            return false
+        } else {
+            if (!tilesToTake){
+                return animationRemoveTile === undefined
+            } else {
+                return isTacticalRemove === true
+            }
+        }
+    }
+
     return (
         <div css={horizontalPathPanel}>
             {horizontalPath.map((tile, index) => tile === null ? null :
@@ -48,7 +61,7 @@ const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlay
                         css={[animationMoveTile && animationMoveTile.move.x === index && moveTileAnimation(animationMoveTile.move.y, mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, maxPileHeightOnTheColumn(index, mountain), animationMoveTile.duration),
                             animationRemoveTile && animationRemoveTile.move.index === index && animationRemoveTile.move.path === PathType.Horizontal && removeTileAnimation(animationRemoveTile.duration)
                         ]}
-                        draggable={playerId === activePlayer && !tilesToTake && activePlayer !== undefined && !animationRemoveTile}
+                        draggable={isDraggable()}
                         type='ElementInPath'
                         draggableItem={{path: PathType.Horizontal, position: index, element:tile}}
                         element={tile}

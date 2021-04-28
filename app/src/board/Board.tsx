@@ -50,7 +50,6 @@ const Board : FC<Props> = ({game, onWarning}) => {
         return getFilterCoordinatesWithPattern(TileInPath,{x,y},game.mountainBoard).length === 0
     }
 
-
     return (
 
         <div css={boardStyle}>
@@ -63,6 +62,7 @@ const Board : FC<Props> = ({game, onWarning}) => {
                                  mountain = {game.mountainBoard}
                                  verifyIfWarningIsNeeded = {(tile,x,y) => verifyIfWarningIsNeeded(tile,x,y)}
                                  onWarning = {onWarning}
+                                 isTacticalRemove = {game.isTacticalRemove}
 
              />
             <VerticalPathPanel onSelect = {position => (playerId === game.activePlayer && playSelectTilePath(setSelectedTileInPathMove(position, PathType.Vertical, game.verticalPath[position]!), {local: true}))} 
@@ -86,6 +86,7 @@ const Board : FC<Props> = ({game, onWarning}) => {
     )
 
 }
+
 
 const boardStyle = css`
     position : absolute;

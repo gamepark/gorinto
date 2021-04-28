@@ -7,7 +7,7 @@ import {changeActivePlayer, getNextPlayer} from './moves/ChangeActivePlayer'
 import {moveSeasonMarker} from './moves/MoveSeasonMarker'
 import MoveTile, {moveTile} from './moves/MoveTile'
 import {fillPaths, refillPaths} from './moves/RefillPaths'
-import {removeTileOnPath} from './moves/RemoveTileOnPath'
+import RemoveTileOnPath, {removeTileOnPath} from './moves/RemoveTileOnPath'
 import {scoreGoals} from './moves/ScoreGoals'
 import {scoreKeyElements} from './moves/ScoreKeyElements'
 import {switchFirstPlayer} from './moves/SwitchFirstPlayer'
@@ -45,12 +45,12 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
         elementTilesBag: setupElementTilesBag(),
         horizontalPath: [null, null, null, null, null],
         verticalPath: [null, null, null, null, null],
-        mountainBoard: []
+        mountainBoard: [],
+        isTacticalRemove:arg.isTacticalRemove
       }
 
       fillPaths(game)
       game.mountainBoard = setupMountain(game, arg.landscape)
-
       super(game)
     } else {
       super(arg)
@@ -67,12 +67,15 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
       && this.state.verticalPath.every(slot => slot === null)) {
       return {type: MoveType.RefillPaths}
     } else if (this.state.tilesToTake && cantPickAnyTile(this.state.tilesToTake) && mustRemoveTileFromPaths(this.state)) {
-      // TODO: option for tactical method, in which case it won't be automatic but chosen
-      const tiles = this.state.horizontalPath.map((slot, index) => ({path: PathType.Horizontal, index, slot}))
+      
+      if (this.state.isTacticalRemove !== true){
+        const tiles = this.state.horizontalPath.map((slot, index) => ({path: PathType.Horizontal, index, slot}))
         .concat(this.state.verticalPath.map((slot, index) => ({path: PathType.Vertical, index, slot})))
         .filter(option => option.slot !== null)
-      const randomTile = tiles[Math.floor(Math.random() * Math.floor(tiles.length))]
-      return {type: MoveType.RemoveTileOnPath, ...randomTile}
+        const randomTile = tiles[Math.floor(Math.random() * Math.floor(tiles.length))]
+        return {type: MoveType.RemoveTileOnPath, ...randomTile}
+      }
+
     } else {
       return getPredictableAutomaticMoves(this.state)
     }
@@ -93,18 +96,34 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
       }
       return moves
     } else {
-      const takes: TakeTile[] = []
-      if (this.state.tilesToTake.element !== Element.Earth) {
-        for (let item of this.state.tilesToTake.coordinates) {
-          takes.push({type: MoveType.TakeTile, coordinates: item})
+      if (this.state.isTacticalRemove === true && cantPickAnyTile(this.state.tilesToTake) && mustRemoveTileFromPaths(this.state)){
+        const removes : RemoveTileOnPath[] = []
+        for (let i=0;i<5;i++){
+          if (this.state.horizontalPath[i] !== null){
+            removes.push({type:MoveType.RemoveTileOnPath, path:PathType.Horizontal,index:i})
+          }
+          if (this.state.verticalPath[i] !== null){
+            removes.push({type:MoveType.RemoveTileOnPath, path:PathType.Vertical,index:i})
+          }
         }
-      } else if (this.state.tilesToTake.coordinates.length > 0) {
-        const {y, x} = this.state.tilesToTake.coordinates[0]
-        for (let z = 0; z < this.state.mountainBoard[x][y].length - 1; z++) {
-          takes.push({type: MoveType.TakeTile, coordinates: {x, y, z}})
+        return removes
+      } else {
+
+        const takes: TakeTile[] = []
+        if (this.state.tilesToTake.element !== Element.Earth) {
+          for (let item of this.state.tilesToTake.coordinates) {
+            takes.push({type: MoveType.TakeTile, coordinates: item})
+          }
+        } else if (this.state.tilesToTake.coordinates.length > 0) {
+          const {y, x} = this.state.tilesToTake.coordinates[0]
+          for (let z = 0; z < this.state.mountainBoard[x][y].length - 1; z++) {
+            takes.push({type: MoveType.TakeTile, coordinates: {x, y, z}})
+          }
         }
+        return takes
+
       }
-      return takes
+
     }
   }
 
@@ -226,11 +245,11 @@ export function getPredictableAutomaticMoves(state: GameState | GameView): Move 
   }
 }
 
-function cantPickAnyTile(tilesToTake: TilesToTake): boolean {
+export function cantPickAnyTile(tilesToTake: TilesToTake): boolean {
   return tilesToTake.coordinates.length === 0 || tilesToTake.quantity === 0
 }
 
-function mustRemoveTileFromPaths(state: GameState | GameView): boolean {
+export function mustRemoveTileFromPaths(state: GameState | GameView): boolean {
   if (state.players.length !== 2) return false
   const remainingTiles = countElements(state.horizontalPath) + countElements(state.verticalPath)
   return remainingTiles === 7 || remainingTiles === 5 || remainingTiles === 3

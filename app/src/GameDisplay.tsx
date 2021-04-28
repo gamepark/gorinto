@@ -20,6 +20,8 @@ import WarningNoElementPopUp from './board/WarningNoElementPopUp'
 import WelcomePopUp from './board/WelcomePopUp'
 import TutorialPopup from './tutorial/TutorialPopup'
 import ActivePlayerSound from './sounds/gongv1.mp3'
+import {cantPickAnyTile, mustRemoveTileFromPaths} from '@gamepark/gorinto/Gorinto'
+import DiscardZone from './board/DiscardZone'
 
 const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
@@ -106,6 +108,7 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
       )}
       
       <BurrowTile index={burrowTileAnimation && burrowTileAnimation.move.index} path = {burrowTileAnimation && burrowTileAnimation.move.path}/>
+      {game.isTacticalRemove === true && game.tilesToTake && cantPickAnyTile(game.tilesToTake) && mustRemoveTileFromPaths(game) && <DiscardZone />}
       
       </div>
 
