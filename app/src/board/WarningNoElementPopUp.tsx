@@ -11,6 +11,7 @@ import MoveTile from "@gamepark/gorinto/moves/MoveTile";
 import PathType from "@gamepark/gorinto/types/PathType";
 import MoveType from "@gamepark/gorinto/types/MoveType";
 import moveTileSound from '../sounds/tic.mp3'
+import background from '../images/BG2.jpg'
 import { ResetSelectedTileInPath, resetSelectedTileInPathMove } from "../moves/SetSelectedTileInPath";
 
 const WarningNoElementPopUp : FC<{close: () => void, path:PathType, x:number, y:number}> = ({close, path, x, y}) => {
@@ -102,14 +103,28 @@ const popupStyle = css`
   outline: none;
   box-shadow: 1em 2em 2.5em -1.5em hsla(0, 0%, 0%, 0.2);
   border:1em black solid;
-  background-color:rgba(177,183,185,1);
+  background: url(${background});
+  background-color: black;
   border-radius: 40em 3em 40em 3em/3em 40em 3em 40em;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    border-radius: 40em 1.5em 40em 1.5em/1.5em 40em 1.5em 40em;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
   
   &:hover{
       box-shadow: 2em 4em 5em -3em hsla(0,0%,0%,.5);
     }
 
   & > h2 {
+    position:relative;
       text-align:center;
       font-size:6em;
       color:#c70000;
@@ -119,11 +134,12 @@ const popupStyle = css`
   }
 
   & > p {
+    position:relative;
     text-align: center;
     font-size: 4em;
 
     width:100%;
-    color:black;
+    color:white;
     margin-top:0.5em;
     margin-bottom:0.5em;
 
