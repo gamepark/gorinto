@@ -3,19 +3,17 @@ import {DndProvider} from 'react-dnd-multi-backend'
 import HTML5ToTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch'
 import GameDisplay from './GameDisplay'
 import GameView from "@gamepark/gorinto/types/GameView";
-import useHeaderText from "./images/useHeaderText";
 import {Header, LoadingScreen} from "@gamepark/react-components";
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import SoundLoader from './SoundLoader';
 import FirstPlayerSound from './sounds/gongv1.mp3'
 import MoveTileSound from './sounds/tic.mp3'
 import GorintoBox from './images/gorintoBox.png'
-import { css } from '@emotion/react';
-
+import {css} from '@emotion/react';
+import HeaderText from "./HeaderText";
 
 function App() {
     const game = useGame<GameView>()
-    const headerText = useHeaderText()
 
     const [isSoundsLoading, setSoundLoading] = useState(true)
     const [isJustDisplayed, setJustDisplayed] = useState(true)
@@ -27,7 +25,7 @@ function App() {
 
     return (
         <DndProvider options={HTML5ToTouch}>
-            <Header> {headerText}</Header>
+            <Header><HeaderText loading={loading} game={game}/></Header>
             <LoadingScreen gameBox={GorintoBox} author="Richard Yaner" artist="Josh Cappel" publisher={["Grand Games Guild","Super Meeple"]} display={loading} css={[loadingStyle, !loading && hideStyle]} />
             {!loading && <GameDisplay game={game!}/>}
             <SoundLoader sounds={[FirstPlayerSound, MoveTileSound]} onSoundLoad={() => setSoundLoading(false)} />
