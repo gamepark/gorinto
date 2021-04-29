@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import {faMinusSquare, faPlusSquare, faTimes} from '@fortawesome/free-solid-svg-icons'
+import {css} from "@emotion/react";
+import {faTimes} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import GameView from "@gamepark/gorinto/types/GameView";
 import Move from "@gamepark/gorinto/types/Move";
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
-import { useActions, useFailures, usePlayerId, useTutorial } from "@gamepark/react-client";
-import { TFunction } from "i18next";
-import { FC, useEffect, useRef, useState } from "react";
-import { Trans, useTranslation } from "react-i18next";
+import {useActions, useFailures, usePlayerId, useTutorial} from "@gamepark/react-client";
+import {TFunction} from "i18next";
+import {FC, useEffect, useRef, useState} from "react";
+import {Trans, useTranslation} from "react-i18next";
 import Arrow from "../images/tutorial-arrow-grey.png"
 import Button from "../board/Button";
 import background from '../images/BG2.jpg'
@@ -293,11 +293,6 @@ export const popupPosition = ({boxWidth, boxTop, boxLeft, arrow}: TutorialStepDe
   transform: translate(-50%, ${!arrow || arrow.angle % 180 !== 0 ? '-50%' : arrow.angle % 360 === 0 ? '0%' : '-100%'});
 `
 
-export const buttonsPosition = css`
-  top: 15%;
-  width: 80%;
-`
-
 const buttonStyle = css`
   margin-right: 1em;
 `
@@ -367,7 +362,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
           }
         },
         {
-          title: (t: TFunction) => t('Your Opponents'),
+          title: (t: TFunction) => t('Your opponents'),
           text: 'tuto.your.opponents',
           boxTop: 55,
           boxLeft: 47,
@@ -386,7 +381,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
           }
         },
         {
-          title: (t: TFunction) => t('Wisdom Points'),
+          title: (t: TFunction) => t('Wisdom points'),
           text: 'tuto.wisdom.points',
           boxTop: 73,
           boxLeft: 30,
@@ -422,7 +417,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
           }
         },
         {
-          title: (t: TFunction) => t('The Board'),
+          title: (t: TFunction) => t('The board'),
           text: 'tuto.board',
           boxTop: 60,
           boxLeft: 50,
@@ -434,8 +429,8 @@ const tutorialDescription:TutorialStepDescription[][] = [
           }
         },
         {
-          title: (t: TFunction) => t('The Paths'),
-          text: 'tuto.paths',
+          title: (t: TFunction) => t('The Path'),
+          text: 'tuto.path',
           boxTop: 35,
           boxLeft: 50,
           boxWidth: 40,
@@ -487,7 +482,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
         boxWidth: 30,
       },
       {
-        title: (t: TFunction) => t('Collect a tile'),
+        title: (t: TFunction) => t('tuto.gather', {number: 1}),
         text: "tuto.take.with.fire.pattern",
         boxTop: 50,
         boxLeft: 70,
@@ -548,7 +543,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
       }
     },
     {
-      title: (t: TFunction) => t('Collect two tiles'),
+      title: (t: TFunction) => t('tuto.gather', {number: 2}),
       text: "tuto.take.with.wind",
       boxTop: 65,
       boxLeft: 72,
@@ -570,7 +565,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
       boxWidth: 30
     }, 
     {
-      title: (t: TFunction) => t('New Turn'),
+      title: (t: TFunction) => t('New turn'),
       text: "tuto.move.water",
       boxTop: 20,
       boxLeft: 20,
@@ -625,7 +620,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
       }
     },
     {
-      title: (t: TFunction) => t('Your Wisdom Points'),
+      title: (t: TFunction) => t('Your Wisdom points'),
       text: "tuto.your.wisdom.points",
       boxTop: 75,
       boxLeft: 20,
@@ -637,7 +632,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
       }
     },
     {
-      title: (t: TFunction) => t('Start of a New Season'),
+      title: (t: TFunction) => t('Start of a new Season'),
       text: "tuto.start.new.season",
       boxTop: 50,
       boxLeft: 50,
@@ -645,7 +640,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
 
     },
     {
-      title: (t: TFunction) => t('New Turn'),
+      title: (t: TFunction) => t('New turn'),
       text: "tuto.move.earth",
       boxTop: 20,
       boxLeft: 75,
@@ -678,7 +673,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
       }
     }, 
     {
-      title: (t: TFunction) => t('Collect 4 tiles'),
+      title: (t: TFunction) => t('tuto.gather', {number: 4}),
       text: "tuto.take.with.earth",
       boxTop: 50,
       boxLeft: 30,
@@ -688,7 +683,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
   [],[],[],
   [
     {
-      title: (t: TFunction) => t('New Turn'),
+      title: (t: TFunction) => t('New turn'),
       text: "tuto.move.void",
       boxTop: 55,
       boxLeft: 52,
@@ -729,7 +724,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
       boxWidth: 60,
     }, 
     {
-      title: (t: TFunction) => t('Collect this tile'),
+      title: (t: TFunction) => t('Gather this tile'),
       text: "tuto.take.with.void",
       boxTop: 65,
       boxLeft: 39,
@@ -743,7 +738,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
   ],
   [
     {
-      title: (t: TFunction) => t("It's your turn !"),
+      title: (t: TFunction) => t('It’s your turn!'),
       text: "tuto.reminder.scoring",
       boxTop: 50,
       boxLeft: 50,
@@ -751,7 +746,7 @@ const tutorialDescription:TutorialStepDescription[][] = [
     }, 
 
     {
-      title: (t: TFunction) => t("It's your turn !"),
+      title: (t: TFunction) => t('It’s your turn!'),
       text: "tuto.end.help",
       boxTop: 25,
       boxLeft: 30,
@@ -766,8 +761,8 @@ const tutorialDescription:TutorialStepDescription[][] = [
 ]
 
 const thirdTurnInfo = {
-  title: (t: TFunction) => t('2-player game'),
-  text: 'For information, in a 2-player game, one tile is discarded from a path each turn, except for the first turn.',
+  title: (t: TFunction) => t('Two player game'),
+  text: 'tuto.2.players',
   boxTop: 50,
   boxLeft: 50,
   boxWidth: 70
@@ -775,7 +770,7 @@ const thirdTurnInfo = {
 
 const lastTurnInfo = {
   title: (t: TFunction) => t('Last Season'),
-  text: "It's the last season ! Be sure to pick a lot of Keys Elements, without losing the balance with Goal Cards !",
+  text: "tuto.last.season",
   boxTop: 50,
   boxLeft: 50,
   boxWidth: 70
@@ -784,7 +779,7 @@ const lastTurnInfo = {
 const tutorialEndGame = {
   title: (t: TFunction) => t('Congratulations'),
   text: 'You have finished your first game! You can now play with your friends, or meet other players via our chat room on Discord.',
-  boxTop: 25,
+  boxTop: 29,
   boxLeft: 50,
   boxWidth: 80
 }

@@ -41,11 +41,11 @@ const WarningNoElementPopUp : FC<{close: () => void, path:PathType, x:number, y:
             <div css={[popupStyle, popupPosition]} onClick={event => event.stopPropagation()}>
 
                 <div css = {closePopupStyle} onClick={close}> <FontAwesomeIcon icon={faTimes} /> </div>
-                <h2>{t("Warning !")}</h2>
-                <p>{t("You're about to play a move which doesn't allow you to pick any tile ! Do you still want to do it ?")}</p>
+                <h2>{t("Warning!")}</h2>
+                <p>{t("warning.no.tiles")}</p>
 
-                <Button css={buttonPosition1} onClick={() => playCompleteMoveTile(path, x,y)}>{t("Yes ! Sure")}</Button>
-                <Button css={buttonPosition2} onClick={close}>{t("No ! Don't")}</Button>
+                <Button css={buttonPosition1} onClick={close}>{t('Cancel')}</Button>
+                <Button css={buttonPosition2} onClick={() => playCompleteMoveTile(path, x,y)}>{t('Confirm')}</Button>
 
             </div>
 

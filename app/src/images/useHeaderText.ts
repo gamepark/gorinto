@@ -101,9 +101,9 @@ export default function useHeaderText() {
             if (game.endOfSeasonStep === MoveType.MoveSeasonMarker){
                 return t('The season is cleared. Moving to the next season...')
             } else if (game.endOfSeasonStep === MoveType.RefillPaths){
-                return t("Refilling paths in progress...")
+                return t('Refilling paths in progress...')
             } else if (game.endOfSeasonStep === MoveType.SwitchFirstPlayer){
-                return t("Changing the first player coin' owner...")
+                return t('Passing the Start coin...')
             }
     
             if (game.activePlayer === playerId) {
