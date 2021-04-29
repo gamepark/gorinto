@@ -66,7 +66,7 @@ const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlay
                         draggableItem={{path: PathType.Horizontal, position: index, element:tile}}
                         element={tile}
                         onClick={() => onSelect(index)}
-                        isSelected={selectedTile?.path === PathType.Horizontal && selectedTile?.position === index && tilesToTake === undefined}
+                        isSelected={selectedTile?.path === PathType.Horizontal && selectedTile?.position === index && (tilesToTake === undefined ? true : tilesToTake?.quantity === 0 && isTacticalRemove === true ? true : false)}
                         verifyIfWarningIsNeeded = {verifyIfWarningIsNeeded}
                         onWarning = {onWarning}
                         playSound = {(sound) => playSound(sound)}

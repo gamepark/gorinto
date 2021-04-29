@@ -31,7 +31,7 @@ const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, se
     const playResetTileInPath = usePlay<ResetSelectedTileInPath>()
 
     function canMoveTile(selectedTileInPath: ElementInPath | undefined, x: number, y: number): boolean {
-        if (selectedTileInPath === undefined) {
+        if (selectedTileInPath === undefined || tilesToTake?.quantity === 0) {
             return false
         } else if (selectedTileInPath.path === PathType.Horizontal) {
             return selectedTileInPath.position === x;
