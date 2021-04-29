@@ -6,7 +6,7 @@ import { Animations } from "@gamepark/react-client";
 
 const gorintoAnimations : Animations<GameView, MoveView, PlayerColor> = {
 
-    getAnimationDuration(move:MoveView,{action,playerId}){
+    getAnimationDuration(move:MoveView,{action, state, playerId}){
 
         if(move.type === MoveType.MoveTile){
             return action.playerId === playerId ? 0 : 1.5            // In seconds
@@ -15,7 +15,7 @@ const gorintoAnimations : Animations<GameView, MoveView, PlayerColor> = {
         } else if (move.type === MoveType.MoveSeasonMarker){
             return 1
         } else if (move.type === MoveType.RemoveTileOnPath){
-            return 2
+            return (state.isTacticalRemove === true ? action.playerId === playerId ? 0 : 2 : 2)
         } else if (move.type === MoveType.SwitchFirstPlayer){
             return 1
         } else if (move.type === MoveType.ScoreGoals){

@@ -107,7 +107,7 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
         
       )}
       
-      <BurrowTile index={burrowTileAnimation && burrowTileAnimation.move.index} path = {burrowTileAnimation && burrowTileAnimation.move.path}/>
+      {!game.isTacticalRemove && <BurrowTile index={burrowTileAnimation && burrowTileAnimation.move.index} path = {burrowTileAnimation && burrowTileAnimation.move.path}/>}
       {game.isTacticalRemove === true && game.tilesToTake && cantPickAnyTile(game.tilesToTake) && mustRemoveTileFromPaths(game) && <DiscardZone />}
       
       </div>

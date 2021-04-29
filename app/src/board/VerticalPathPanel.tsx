@@ -20,9 +20,10 @@ type Props = {
     selectedTile?:ElementInPath,
     verifyIfWarningIsNeeded : (tile:Element, x:number,y:number) => boolean,
     onWarning:(path:PathType,x:number, y:number) => void
+    isTacticalRemove:boolean | undefined
 }
 
-const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer, mountain, onSelect, selectedTile, verifyIfWarningIsNeeded, onWarning}) => {
+const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer, mountain, onSelect, selectedTile, verifyIfWarningIsNeeded, onWarning, isTacticalRemove}) => {
 
     const playerId = usePlayerId<PlayerColor>()
     const animationMoveTile = useAnimation<MoveTile>(animation => isMoveTile(animation.move) && animation.move.path === PathType.Vertical)
@@ -40,6 +41,18 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
         sound.play()
     }
 
+    function isDraggable():boolean{
+        if (activePlayer !== playerId){
+            return false
+        } else {
+            if (!tilesToTake){
+                return animationRemoveTile === undefined
+            } else {
+                return isTacticalRemove === true
+            }
+        }
+    }
+
     return(
 
         <div css = {verticalPathPanel}>
@@ -52,7 +65,7 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
                              css = {[animationMoveTile && animationMoveTile.move.y === index && moveTileAnimation(animationMoveTile.move.x, mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, maxPileHeightOnTheLine(index, mountain),animationMoveTile.duration),
                                      animationRemoveTile && animationRemoveTile.move.index === index && animationRemoveTile.move.path === PathType.Vertical && removeTileAnimation(animationRemoveTile.duration)
                             ]}
-                             draggable = {playerId === activePlayer && !tilesToTake  && !animationRemoveTile}
+                             draggable = {isDraggable()}
                              type = 'ElementInPath'
                              draggableItem = {{path: PathType.Vertical, position : index, element:tile}}
                              element = {tile}

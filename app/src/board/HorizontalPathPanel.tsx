@@ -59,7 +59,7 @@ const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlay
                 <div css={positionTile(index)} key={index}>
                     <ElementTile
                         css={[animationMoveTile && animationMoveTile.move.x === index && moveTileAnimation(animationMoveTile.move.y, mountain[animationMoveTile.move.x][animationMoveTile.move.y].length, maxPileHeightOnTheColumn(index, mountain), animationMoveTile.duration),
-                            animationRemoveTile && animationRemoveTile.move.index === index && animationRemoveTile.move.path === PathType.Horizontal && removeTileAnimation(animationRemoveTile.duration)
+                            animationRemoveTile && animationRemoveTile.move.index === index && animationRemoveTile.move.path === PathType.Horizontal && removeTileAnimation(isTacticalRemove ? activePlayer === playerId ? 0 : animationRemoveTile.duration : animationRemoveTile.duration)
                         ]}
                         draggable={isDraggable()}
                         type='ElementInPath'

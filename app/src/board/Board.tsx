@@ -73,6 +73,7 @@ const Board : FC<Props> = ({game, onWarning}) => {
                                mountain = {game.mountainBoard}
                                verifyIfWarningIsNeeded = {(tile,x,y) => verifyIfWarningIsNeeded(tile,x,y)}
                                onWarning = {onWarning} 
+                               isTacticalRemove = {game.isTacticalRemove}
             />
             <MountainPanel mountainBoard={game.mountainBoard} 
                            activePlayer = {game.activePlayer}
