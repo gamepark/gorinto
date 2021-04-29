@@ -20,9 +20,10 @@ type Props = {
     selectedTileInPath?:ElementInPath,
     selectedTilesInMountain: ElementInPile[] | undefined,
     onWarning:(path:PathType,x:number, y:number) => void,
+    isTacticalRemove:boolean | undefined
 }
 
-const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, selectedTileInPath, selectedTilesInMountain, onWarning}) => {
+const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, selectedTileInPath, selectedTilesInMountain, onWarning, isTacticalRemove}) => {
     
     const moveSound = useSound(moveTileSound)
     const playMove = usePlay<MoveTile>()
@@ -86,6 +87,7 @@ const MountainPanel : FC<Props> = ({mountainBoard, tilesToTake, activePlayer, se
                         selectedTilesInMountain = {selectedTilesInMountain}  
                         onWarning = {onWarning}  
                         verifyAndCompleteMove = {(tile,x,y) => (verifyAndPlayCompleteMoveTile(tile,x,y))}
+                        isTacticalRemove = {isTacticalRemove}
                         />
 
                     )

@@ -80,7 +80,8 @@ const Board : FC<Props> = ({game, onWarning}) => {
                            tilesToTake = {game.tilesToTake}
                            selectedTileInPath = {game.selectedTileInPath} 
                            selectedTilesInMountain = {game.selectedTilesInPile} 
-                           onWarning={onWarning} />
+                           onWarning={onWarning}
+                           isTacticalRemove = {game.isTacticalRemove} />
         
         </div>
 

@@ -2,6 +2,7 @@
 import {css} from '@emotion/react'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import PathType from '@gamepark/gorinto/types/PathType'
+import TilesToTake from '@gamepark/gorinto/types/TilesToTake'
 import {FC} from 'react'
 import {useDrop} from 'react-dnd'
 import ElementInPath from './ElementInPath'
@@ -12,18 +13,19 @@ type Props = {
     y:number,
     height:number,
     selectedTileInPath?:ElementInPath|undefined
+    tilesToTake:TilesToTake | undefined
 
 } & React.HTMLAttributes<HTMLDivElement>
 
-const MountainDropZone : FC<Props> = ({x, y, height, selectedTileInPath, ...props}) => {
+const MountainDropZone : FC<Props> = ({x, y, height, selectedTileInPath, tilesToTake, ...props}) => {
 
     const [{canDrop, isOver}, dropRef] = useDrop({
         accept: ["ElementInPath","ElementInPile"],
         canDrop: (item: ElementInPath) => {
             if (item.path === PathType.Horizontal){
-                return(item.position === x)
+                return(!tilesToTake && item.position === x)
             } else {
-                return(item.position === y)
+                return(!tilesToTake && item.position === y)
             }
         },
         collect: monitor => ({
@@ -47,7 +49,7 @@ const MountainDropZone : FC<Props> = ({x, y, height, selectedTileInPath, ...prop
 
         <div {...props} ref = {dropRef}> 
         
-            <div css={[canDrop && canDropStyle, canDrop && isOver && isOverStyle, canDropClick(selectedTileInPath,x,y) && canDropStyle]}>
+            <div css={[canDrop && canDropStyle, canDrop && isOver && isOverStyle, canDropClick(selectedTileInPath,x,y) && !tilesToTake && canDropStyle]}>
 
 
             </div>

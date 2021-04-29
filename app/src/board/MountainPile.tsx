@@ -22,17 +22,17 @@ type Props = {
     activePlayer: PlayerColor | undefined
     heightPile:number
     verifyAndCompleteMove:(tile:ElementInPath|undefined,x:number,y:number) => void
-
     selectedTileInPath?: ElementInPath,
     selectedTilesInMountain: ElementInPile[] | undefined,
     onWarning:(path:PathType,x:number, y:number) => void
+    isTacticalRemove:boolean | undefined
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>
 
-const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, heightPile, verifyAndCompleteMove, selectedTileInPath, selectedTilesInMountain, onWarning,...props}) => {
+const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, heightPile, verifyAndCompleteMove, selectedTileInPath, selectedTilesInMountain, onWarning, isTacticalRemove, ...props}) => {
 
     const playerId = usePlayerId()
     const animation = useAnimation<TakeTile>(animation => isTakeTile(animation.move) && animation.move.coordinates.x === x && animation.move.coordinates.y === y)
-    const canTakeAny = tilesToTake?.element === Element.Earth && tilesToTake.coordinates.length && tilesToTake.coordinates[0].x === x && tilesToTake.coordinates[0].y === y
+    const canTakeAny = tilesToTake?.element === Element.Earth && tilesToTake.quantity !== 0 && tilesToTake.coordinates.length && tilesToTake.coordinates[0].x === x && tilesToTake.coordinates[0].y === y
     
     const playSelectTileInPile = usePlay<SetSelectedTilesInPile>()
 
@@ -89,6 +89,7 @@ const MountainPile: FC<Props> = ({pile, x, y, tilesToTake, activePlayer, heightP
                 onClick={() => {
                     verifyAndCompleteMove(selectedTileInPath,x,y)
                 }}
+                tilesToTake = {tilesToTake}
                 {...props}/>
 
         </>
