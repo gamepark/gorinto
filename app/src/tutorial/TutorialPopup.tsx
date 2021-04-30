@@ -247,7 +247,7 @@ const popupStyle = css`
   & > h2 {
     position:relative;
     font-size: 5em;
-    margin:0;
+    margin:0 1em;
   }
   & > p {
     position:relative;
