@@ -50,8 +50,19 @@ function HeaderOngoingGameText({game, activePlayer}: { game: GameView, activePla
             return <>{t('you.must.take', {quantity})}</>
         }
         return <>{t('player.must.take', {player: players.find(p => p.id === activePlayer)?.name ?? getPlayerName(activePlayer, t), quantity})}</>
+    } else {
+        if (game.isTacticalRemove === true){
+            if (activePlayer === playerId) {
+                return <>{t('you.tactical.remove')}</>
+            } else {
+                return <>{t('player.tactical.remove')}</>
+            }
+        } else {
+            return <>{t('removing.tile')}</>
+        }
+        
     }
-    return <>{t('removing.tile')}</>
+
 }
 
 function getNumberOfTilesToTake(tilesToTake: TilesToTake, mountainBoard: Element[][][]) {

@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import GameView from "@gamepark/gorinto/types/GameView";
 import Move from "@gamepark/gorinto/types/Move";
 import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
-import {useActions, useFailures, usePlayerId, useTutorial} from "@gamepark/react-client";
+import {useActions, useFailures, usePlayerId} from "@gamepark/react-client";
 import {TFunction} from "i18next";
 import {FC, useEffect, useRef, useState} from "react";
 import {Trans, useTranslation} from "react-i18next";
@@ -19,7 +19,7 @@ declare type Tutorial = {
   setOpponentsPlayAutomatically: (value?: boolean) => void;
 };
 
-const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
+const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game, tutorial}) => {
 
     const {t} = useTranslation()
     const playerId = usePlayerId<PlayerColor>()
@@ -84,16 +84,15 @@ const TutorialPopup : FC<{game:GameView, tutorial:Tutorial}> = ({game}) => {
 
     const currentMessage = tutorialMessage(tutorialIndex)
     const indexsWhichDontDisplay = [[2,1],[5,1],[8,1],[13,0],[15,0]];
+    const indexsWhereIADontPlay = [[8,1],[8,2],[8,3],[8,4]];
 
     const displayPopup = playerId === game.activePlayer 
     ? tutorialDisplay && currentMessage && !failures.length
     : tutorialDisplay && currentMessage && !failures.length && !(indexsWhichDontDisplay.some(tab => tab[0] === actionsNumber && tab[1] === tutorialIndex))
 
-    const tutorial = useTutorial()
     useEffect(() => {
-      tutorial && tutorial.setOpponentsPlayAutomatically(true)
-      }, []
-    )
+          tutorial.setOpponentsPlayAutomatically(true)
+    }, [])
 
     return (
         <>

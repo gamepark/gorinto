@@ -69,6 +69,10 @@ const patternsStyle = css`
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom;
+
+    &:hover{
+        cursor:pointer;
+    }
 `
 
 const popupStyle = css`
@@ -102,6 +106,9 @@ const closePopupStyle = css`
 
     &:active {
         top: 0.45em;
+    }
+    &:hover{
+        color:white;
     }
 `
 
