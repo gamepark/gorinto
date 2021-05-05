@@ -35,8 +35,7 @@ const GorintoTutorial: TutorialDescription<GameState,Move, PlayerColor> = {
         mountainBoard:getLandscapeDiagram(Landscape.Peak).map(row => row.map(height => Array.from(Array(height)).map(() => initialBag.pop()!))),
         horizontalPath:initialBag.splice(0,5) as Path,
         verticalPath:initialBag.splice(0,5) as Path,
-        elementTilesBag:initialBag,
-        tutorial:true
+        elementTilesBag:initialBag
     }, [PlayerColor.Black, PlayerColor.Red, PlayerColor.White]],
 
     expectedMoves:() => [

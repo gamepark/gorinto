@@ -18,7 +18,6 @@ type GameState = {
   mountainBoard: Element[][][];
   tilesToTake?: TilesToTake;
   endOfSeasonStep?: EndOfSeasonStep;
-  tutorial?:boolean;
   isTacticalRemove?:boolean
 }
 
