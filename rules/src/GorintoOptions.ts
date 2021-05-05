@@ -7,6 +7,7 @@ import PlayerColor, {playerColors} from './types/PlayerColor'
 export type GorintoGameOptions = {
   landscape: Landscape
   isTacticalRemove : boolean
+  isCompassionRoundOrder : boolean
 }
 
 export type GorintoPlayerOptions = { id: PlayerColor }
@@ -40,6 +41,11 @@ export const GorintoOptionsDescription: OptionsDescription<GorintoGameOptions, G
   isTacticalRemove:{
     type:OptionType.BOOLEAN,
     getLabel:(t:Function) => t('Tactical rule for 2 Players')
+  },
+
+  isCompassionRoundOrder:{
+    type:OptionType.BOOLEAN,
+    getLabel:(t:Function) => t('Compassion Round Order')
   },
 
   players: {

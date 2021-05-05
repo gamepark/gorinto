@@ -3,7 +3,7 @@ import shuffle from 'lodash.shuffle'
 import {Goals} from './cards/Goals'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
 import Landscape, {getLandscapeDiagram} from './Landscape'
-import {changeActivePlayer, getNextPlayer} from './moves/ChangeActivePlayer'
+import {changeActivePlayer, getNextPlayer, getNextPlayerWithCompassion} from './moves/ChangeActivePlayer'
 import {moveSeasonMarker} from './moves/MoveSeasonMarker'
 import MoveTile, {moveTile} from './moves/MoveTile'
 import {fillPaths, refillPaths} from './moves/RefillPaths'
@@ -46,11 +46,13 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
         horizontalPath: [null, null, null, null, null],
         verticalPath: [null, null, null, null, null],
         mountainBoard: [],
-        isTacticalRemove:arg.isTacticalRemove
+        isTacticalRemove:arg.isTacticalRemove,
+        isCompassionRoundOrder:arg.isCompassionRoundOrder
       }
 
       fillPaths(game)
       game.mountainBoard = setupMountain(game, arg.landscape)
+      setupCompassionOrder(game.players, arg.isCompassionRoundOrder)
       super(game)
     } else {
       super(arg)
@@ -256,11 +258,19 @@ export function mustRemoveTileFromPaths(state: GameState | GameView): boolean {
 }
 
 function seasonShouldEnd(state: GameState | GameView) {
-  return getNextPlayer(state) === state.firstPlayer && countElements(state.horizontalPath) + countElements(state.verticalPath) < state.players.length
+  if (state.isCompassionRoundOrder !== true) {
+    return getNextPlayer(state) === state.firstPlayer && countElements(state.horizontalPath) + countElements(state.verticalPath) < state.players.length
+  } else {
+    return getNextPlayerWithCompassion(state) === state.firstPlayer && countElements(state.horizontalPath) + countElements(state.verticalPath) < state.players.length
+  }
 }
 
 function countElements(path: Path): number {
   return path.reduce((sum, slot) => slot !== null ? sum + 1 : sum, 0)
+}
+
+function setupCompassionOrder(players:Player[], isCompassionRoundOrder:boolean):void{
+  isCompassionRoundOrder === true && players.forEach((p, i) => p.compassionOrder = i+1)
 }
 
 const immutableConsequences = [MoveType.ChangeActivePlayer, MoveType.ScoreGoals]

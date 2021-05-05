@@ -5,7 +5,7 @@ import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import {PlayerTimer, usePlay, usePlayer, useSound} from '@gamepark/react-client'
+import {PlayerTimer, useAnimation, usePlay, usePlayer, useSound} from '@gamepark/react-client'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
@@ -31,6 +31,15 @@ import KanjiRed from '../images/kanji_red.jpg'
 import KanjiWhite from '../images/kanji_white.jpg'
 import KanjiYellow from '../images/kanji_yellow.jpg'
 
+import CompassionOrderTile1 from '../images/GOR_tts_Kitsune_kisunetile1.png'
+import CompassionOrderTile2 from '../images/GOR_tts_Kitsune_kisunetile2.png'
+import CompassionOrderTile3 from '../images/GOR_tts_Kitsune_kisunetile3.png'
+import CompassionOrderTile4 from '../images/GOR_tts_Kitsune_kisunetile4.png'
+import CompassionOrderTile5 from '../images/GOR_tts_Kitsune_kisunetile5.png'
+import CompassionOrderTileVerso from '../images/GOR_tts_Kitsune_kisunetile-BACK.png'
+
+
+
 import ElementInPile from './ElementInPile'
 
 import ElementTileForPlayers from './ElementTileForPlayers'
@@ -41,6 +50,8 @@ import {isFirefox} from 'react-device-detect';
 
 import moveTileSound from '../sounds/tic.mp3'
 import { ResetSelectedTilesInPile, resetSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
+import EndOfSeasonStep from '@gamepark/gorinto/types/EndOfSeasonStep'
+import SwitchFirstPlayer, { isSwitchFirstPlayer } from '@gamepark/gorinto/moves/SwitchFirstPlayer'
 
 type Props = {
     player: Player
@@ -51,14 +62,16 @@ type Props = {
     activePlayer:PlayerColor | undefined,
     playersNumber:number,
     selectedTilesInMountain:ElementInPile[]|undefined
+    isRoundOrderCompassion:boolean
 } & HTMLAttributes<HTMLDivElement>
 
-const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score}, first, tilesToTake, mountainBoard, activePlayer, playersNumber, selectedTilesInMountain, ...props}) => {
+const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score, compassionOrder}, first, tilesToTake, mountainBoard, activePlayer, playersNumber, selectedTilesInMountain, isRoundOrderCompassion, ...props}) => {
 
     const {t} = useTranslation()
     const playerInfo = usePlayer(color)
     const playTake = usePlay<TakeTile>()
     const playReset = usePlay<ResetSelectedTilesInPile>()
+    const changeFirstPlayerAnimation = useAnimation<SwitchFirstPlayer>(animation => isSwitchFirstPlayer(animation.move))
 
     const moveSound = useSound(moveTileSound)
 
@@ -184,7 +197,17 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
                         onClick={() => {completeTakeMove()}}> 
                         {"✓"} 
                 </Button>
-                <div css={[coinPosition]}><img alt="Coin" src={CoinHeads} css={coinStyle(first)} draggable={false}/></div>
+
+
+                {isRoundOrderCompassion !== true 
+                ? <div css={[coinPosition]}><img alt="Coin" src={CoinHeads} css={coinStyle(first)} draggable={false}/></div>
+                : <div css={[coinPosition, changeFirstPlayerAnimation && flipStyle]}>
+                    <img alt="Compassion" src={getCompassionTile(compassionOrder)} css={sizeKitsuneTileRecto} draggable={false}/>
+                    <img alt="VersoCompassion" src={CompassionOrderTileVerso} css={sizeKitsuneTileVerso} draggable={false}/>
+                  </div>
+                } 
+
+
                 <div css={scoreStyle(color)}>{displayedScore}</div>
 
             </div>
@@ -491,7 +514,30 @@ margin-right:auto;
 margin-left:auto;
 padding-bottom:1em;
 width:50%;
+height:7em;
 transform-style:preserve-3d;
+transition:transform 1s ease-in-out;
+`
+
+const flipStyle = css`
+transform:rotateY(180deg);
+transition:transform 1s ease-in-out;
+`
+
+const sizeKitsuneTileRecto = css`
+position:absolute;
+top: 0%;
+left: 0%;
+width:100%;
+transform:rotateY(360deg);
+`
+
+const sizeKitsuneTileVerso = css`
+position:absolute;
+top: 0%;
+left: 0%;
+width:100%;
+transform:rotateY(180deg);
 `
 
 const scoreStyle = (color:PlayerColor) => css`
@@ -548,6 +594,21 @@ function getKanji(color: PlayerColor) {
         return 	"#ffc20e"
       default:
         return "#1E90FF"
+    }
+  }
+
+  function getCompassionTile(turn:number | undefined):string{
+    switch (turn) {
+      case 1:
+        return CompassionOrderTile1
+      case 2:
+        return CompassionOrderTile2
+      case 3:
+        return CompassionOrderTile3
+      case 4:
+        return 	CompassionOrderTile4
+      default:
+        return CompassionOrderTile5
     }
   }
 

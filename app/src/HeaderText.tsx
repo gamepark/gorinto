@@ -36,7 +36,11 @@ function HeaderOngoingGameText({game, activePlayer}: { game: GameView, activePla
         case MoveType.RefillPaths:
             return <>{t('Refilling paths in progress...')}</>
         case MoveType.SwitchFirstPlayer:
-            return <>{t('Passing the Start coin...')}</>
+            if(game.isCompassionRoundOrder === true){
+                return <>{t('Redistributing the Round Order tiles with compassion...')}</>
+            } else {
+                return <>{t('Passing the Start coin...')}</>
+            }
     }
     if (!game.tilesToTake) {
         if (activePlayer === playerId) {

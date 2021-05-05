@@ -19,6 +19,7 @@ type GameState = {
   tilesToTake?: TilesToTake;
   endOfSeasonStep?: EndOfSeasonStep;
   isTacticalRemove?:boolean
+  isCompassionRoundOrder?:boolean;
 }
 
 export default GameState
