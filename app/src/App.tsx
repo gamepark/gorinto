@@ -26,7 +26,8 @@ function App() {
     return (
         <DndProvider options={HTML5ToTouch}>
             <Header><HeaderText loading={loading} game={game}/></Header>
-            <LoadingScreen gameBox={GorintoBox} author="Richard Yaner" artist="Josh Cappel" publisher={["Grand Games Guild","Super Meeple"]} display={loading} css={[loadingStyle, !loading && hideStyle]} />
+            <LoadingScreen gameBox={GorintoBox} author="Richard Yaner" artist="Josh Cappel" publisher={["Grand Games Guild","Super Meeple"]} developer="Théo Grégorio"
+                           display={loading} css={[loadingStyle, !loading && hideStyle]} />
             {!loading && <GameDisplay game={game!}/>}
             <SoundLoader sounds={[FirstPlayerSound, MoveTileSound]} onSoundLoad={() => setSoundLoading(false)} />
             <Menu/>

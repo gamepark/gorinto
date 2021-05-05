@@ -1375,22 +1375,15 @@
     pusher-js "^7.0.0"
     redux ">=4.0.5"
 
-"@gamepark/react-components@~4.14.7":
-  version "4.14.7"
-  resolved "https://registry.yarnpkg.com/@gamepark/react-components/-/react-components-4.14.7.tgz#2b931c8129ad98f1c570eb2651305260e2d2fdf2"
-  integrity sha512-R1VuJ8/4+n9ygjVjuyfwRVwgp89r2p8pY4qHduXunY4ot0a7RYjwJ/8T8ERzkYjH9ScVxryaB47GkRh1MkgPfg==
+"@gamepark/react-components@~4.14.10":
+  version "4.14.10"
+  resolved "https://registry.yarnpkg.com/@gamepark/react-components/-/react-components-4.14.10.tgz#92347bc3348ff64c1749ed4f61b87bbe4a5e5cb4"
+  integrity sha512-qzkHMW25C3C6cu4xrGvFu/NXf4y77wPT6CKHvNjXqgng5qPz4nIKyvociDNN3P0kkUFeYbxM1H9uigMIP9XH9Q==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.34"
     "@fortawesome/free-solid-svg-icons" "^5.15.2"
     "@fortawesome/react-fontawesome" "^0.1.14"
     "@react-dnd/shallowequal" "^2.0.0"
-
-"@gamepark/rules-api@^4.14.7":
-  version "4.14.7"
-  resolved "https://registry.yarnpkg.com/@gamepark/rules-api/-/rules-api-4.14.7.tgz#7d40df1fcb21afd21724ba48bf082975fcd50cdd"
-  integrity sha512-EmZCuFUDnJEN6hoTDdsUSAtv179GrHLdVyfxAIq99NqA+9XyDLIuRSRhAwLeEWlBaDP2cWc2MNOZCSvBGwFC0g==
-  dependencies:
-    fast-deep-equal "^3.1.3"
 
 "@gamepark/rules-api@^4.14.8":
   version "4.14.8"
