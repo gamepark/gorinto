@@ -201,7 +201,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
                 {isRoundOrderCompassion !== true 
                 ? <div css={[coinPosition]}><img alt="Coin" src={CoinHeads} css={coinStyle(first)} draggable={false}/></div>
-                : <div css={[coinPosition, changeFirstPlayerAnimation && flipStyle]}>
+                : <div css={[coinPosition, flipStyle]}>
                     <img alt="Compassion" src={getCompassionTile(compassionOrder)} css={sizeKitsuneTileRecto} draggable={false}/>
                     <img alt="VersoCompassion" src={CompassionOrderTileVerso} css={sizeKitsuneTileVerso} draggable={false}/>
                   </div>
