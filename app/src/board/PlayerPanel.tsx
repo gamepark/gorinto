@@ -50,7 +50,6 @@ import {isFirefox} from 'react-device-detect';
 
 import moveTileSound from '../sounds/tic.mp3'
 import { ResetSelectedTilesInPile, resetSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
-import EndOfSeasonStep from '@gamepark/gorinto/types/EndOfSeasonStep'
 import SwitchFirstPlayer, { isSwitchFirstPlayer } from '@gamepark/gorinto/moves/SwitchFirstPlayer'
 
 type Props = {
@@ -61,8 +60,8 @@ type Props = {
     mountainBoard:number[][][],
     activePlayer:PlayerColor | undefined,
     playersNumber:number,
-    selectedTilesInMountain:ElementInPile[]|undefined
-    isRoundOrderCompassion:boolean
+    selectedTilesInMountain:ElementInPile[]|undefined,
+    isRoundOrderCompassion:boolean,
 } & HTMLAttributes<HTMLDivElement>
 
 const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score, compassionOrder}, first, tilesToTake, mountainBoard, activePlayer, playersNumber, selectedTilesInMountain, isRoundOrderCompassion, ...props}) => {
@@ -121,6 +120,14 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
       const [displayedScore, setDisplayedScore] = useState(score)
       const [scoreInterval, setScoreInterval] = useState<NodeJS.Timeout>()
+      const [timingForEachTick, setTimingForEachTick] = useState(0)
+
+      useEffect(() => {
+        if(score-displayedScore !== 0){
+          setTimingForEachTick(4000/(score-displayedScore))
+        }
+      }, [score])
+
       useEffect(() => {
           if (scoreInterval || displayedScore === score){
               return
@@ -132,12 +139,12 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
                 return currentScore
             }
             return currentScore +1
-        })}, 200)
+        })}, timingForEachTick)
 
         setScoreInterval(interval)
 
 
-      }, [score])
+      }, [timingForEachTick])
 
       function completeTakeMove():void{
         moveSound.play() 
@@ -201,7 +208,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
                 {isRoundOrderCompassion !== true 
                 ? <div css={[coinPosition]}><img alt="Coin" src={CoinHeads} css={coinStyle(first)} draggable={false}/></div>
-                : <div css={[coinPosition, flipStyle]}>
+                : <div css={[coinPosition, changeFirstPlayerAnimation && flipStyle]}>
                     <img alt="Compassion" src={getCompassionTile(compassionOrder)} css={sizeKitsuneTileRecto} draggable={false}/>
                     <img alt="VersoCompassion" src={CompassionOrderTileVerso} css={sizeKitsuneTileVerso} draggable={false}/>
                   </div>

@@ -8,6 +8,7 @@ import {TFunction} from "i18next";
 import MoveType from "@gamepark/gorinto/types/MoveType";
 import Element from "@gamepark/gorinto/types/Element";
 import TilesToTake from "@gamepark/gorinto/types/TilesToTake";
+import { useEffect, useState } from "react";
 
 type Props = {
     game?: GameView
@@ -86,6 +87,17 @@ function HeaderGameOverText({game}: { game: GameView }) {
     const players = usePlayers<PlayerColor>()
     let highestScore = -1;
     let playersWithHighestScore: Player[] = [];
+    const [scoreSuspense, setScoreSuspense] = useState(true)
+
+    useEffect(() => {
+        if (game.activePlayer === undefined) {
+          setTimeout(() => setScoreSuspense(false), 5000)
+        } 
+      }, [game, setScoreSuspense])
+
+    if (scoreSuspense === true){
+        return <>{t('score.suspens')}</>
+    }
 
     for (const p of game.players) {
         const score = p.score;
