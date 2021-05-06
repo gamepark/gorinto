@@ -213,6 +213,7 @@ const popupStyle = css`
   position: absolute;
   text-align: center;
 
+  transform:translate3d(0,0,0);
   z-index : 102;
   border-radius: 1em;
   box-sizing: border-box;

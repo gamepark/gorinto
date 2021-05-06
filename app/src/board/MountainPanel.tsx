@@ -109,6 +109,7 @@ top:${y*20}%;
 
 width:20%;
 height:20%;
+transform-style:preserve-3d;
 `
 
 
