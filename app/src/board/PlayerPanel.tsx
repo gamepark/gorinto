@@ -356,6 +356,7 @@ bottom : ${position[1] * 37.5}%;
 left : ${0.5+position[0] * 79}%;
 `}
 z-index:-1;
+transform: translateZ(0em);
 width:19.5%;
 height:35.6%;
 
