@@ -79,6 +79,7 @@ const popupOverlayStyle = css`
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+  transform: translateZ(30em);
   z-index: 99;
   transition: all .5s ease;
 `
@@ -94,6 +95,7 @@ const popupStyle = css`
   text-align: center;
   height: 42%;
   width:60%;
+  transform: translateZ(0em);
   z-index : 102;
   border-radius: 1em;
   box-sizing: border-box;
