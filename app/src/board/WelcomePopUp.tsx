@@ -137,7 +137,6 @@ const popupStyle = css`
   text-align: center;
   height: 80%;
   width:80%;
-  transform: translateZ(0em);
   z-index : 102;
   border-radius: 1em;
   box-sizing: border-box;
@@ -187,7 +186,7 @@ const popupStyle = css`
 const popupPosition = css`
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) translateZ(30em);
 `
 
 const style = css`

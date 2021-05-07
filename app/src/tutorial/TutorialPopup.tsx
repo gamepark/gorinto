@@ -213,8 +213,6 @@ const showPopupOverlayStyle = css`
 const popupStyle = css`
   position: absolute;
   text-align: center;
-
-  transform:translate3d(0,0,0);
   z-index : 102;
   border-radius: 1em;
   box-sizing: border-box;
@@ -291,7 +289,7 @@ export const popupPosition = ({boxWidth, boxTop, boxLeft, arrow}: TutorialStepDe
   width: ${boxWidth}%;
   top: ${boxTop}%;
   left: ${boxLeft}%;
-  transform: translate(-50%, ${!arrow || arrow.angle % 180 !== 0 ? '-50%' : arrow.angle % 360 === 0 ? '0%' : '-100%'});
+  transform: translate(-50%, ${!arrow || arrow.angle % 180 !== 0 ? '-50%' : arrow.angle % 360 === 0 ? '0%' : '-100%'}) translateZ(30em);
 `
 
 const buttonStyle = css`
@@ -300,7 +298,7 @@ const buttonStyle = css`
 
 const arrowStyle = (angle: number) => css`
   position: absolute;
-  transform: rotate(${angle}deg);
+  transform: rotate(${angle}deg) translateZ(30em);
   will-change: transform;
   z-index: 102;
   transition-property: top, left, transform;
