@@ -510,7 +510,7 @@ font-size:5em;
 
 const coinStyle = (isFirst:boolean) => css`
 width:100%;
-filter: drop-shadow(0 0 0.2em black);
+${isFirst && `filter: drop-shadow(0 0 0.2em black);`};
 ${!isFirst && `transform:translate3d(0,0,200em);`};
 transform-style:preserve-3d;
 transition:transform 2s;
