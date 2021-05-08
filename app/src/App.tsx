@@ -11,9 +11,12 @@ import MoveTileSound from './sounds/tic.mp3'
 import GorintoBox from './images/gorintoBox.png'
 import {css} from '@emotion/react';
 import HeaderText from "./HeaderText";
+import { AudioLoader } from './AudioLoader';
 
 function App() {
     const game = useGame<GameView>()
+
+    const [audioLoader, setAudioLoader] = useState<AudioLoader>()
 
     const [isSoundsLoading, setSoundLoading] = useState(true)
     const [isJustDisplayed, setJustDisplayed] = useState(true)
@@ -28,8 +31,8 @@ function App() {
             <Header><HeaderText loading={loading} game={game}/></Header>
             <LoadingScreen gameBox={GorintoBox} author="Richard Yaner" artist="Josh Cappel" publisher={["Grand Games Guild","Super Meeple"]} developer="Théo Grégorio"
                            display={loading} css={[loadingStyle, !loading && hideStyle]} />
-            {!loading && <GameDisplay game={game!}/>}
-            <SoundLoader sounds={[FirstPlayerSound, MoveTileSound]} onSoundLoad={() => setSoundLoading(false)} />
+            {!loading && audioLoader && <GameDisplay game={game!}/>}
+            <SoundLoader sounds={[FirstPlayerSound, MoveTileSound]} onSoundLoad={() => setSoundLoading(false)} onSoundsPrepared={ (audioLoader) => setAudioLoader(audioLoader) }/>
             <Menu/>
             <FailuresDialog/>
             <FullscreenDialog/>
