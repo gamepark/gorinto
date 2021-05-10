@@ -38,8 +38,6 @@ import CompassionOrderTile4 from '../images/GOR_tts_Kitsune_kisunetile4.png'
 import CompassionOrderTile5 from '../images/GOR_tts_Kitsune_kisunetile5.png'
 import CompassionOrderTileVerso from '../images/GOR_tts_Kitsune_kisunetile-BACK.png'
 
-
-
 import ElementInPile from './ElementInPile'
 
 import ElementTileForPlayers from './ElementTileForPlayers'
@@ -51,6 +49,8 @@ import {isFirefox} from 'react-device-detect';
 import moveTileSound from '../sounds/tic.mp3'
 import { ResetSelectedTilesInPile, resetSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
 import SwitchFirstPlayer, { isSwitchFirstPlayer } from '@gamepark/gorinto/moves/SwitchFirstPlayer'
+
+import gamePointIcon from '../images/game-point.svg'
 
 type Props = {
     player: Player
@@ -71,6 +71,7 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
     const playTake = usePlay<TakeTile>()
     const playReset = usePlay<ResetSelectedTilesInPile>()
     const changeFirstPlayerAnimation = useAnimation<SwitchFirstPlayer>(animation => isSwitchFirstPlayer(animation.move))
+    const [gamePoints,] = useState(playerInfo?.gamePointsDelta);
 
     const moveSound = useSound(moveTileSound)
 
@@ -185,8 +186,15 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
 
 
                 </div>
-                <div css={gPStyle}>+XX GP</div>
-                <PlayerTimer playerId={color} css={TimerStyle}/>
+                <div css={gPStyle}>
+                { typeof gamePoints === 'number' &&
+                    <span css={css`flex-shrink: 0`}>
+                        <img src={gamePointIcon} alt="Game point icon" css={gamePointIconStyle}/>
+                        {gamePoints > 0 && '+'}{ playerInfo?.gamePointsDelta }
+                    </span>
+                }</div>
+
+                <PlayerTimer playerId={color} css={[activePlayer !== undefined ? TimerStyle : DontDisplayStyle]}/>
 
             </div>
 
@@ -448,7 +456,10 @@ const gPStyle = css`
 font-size:2.5em;
 text-align:center;
 padding-top:0.5em;
-display:none;                       // Need switch with chrono
+`
+
+const gamePointIconStyle = css`
+  height: 1em;
 `
 
 const TimerStyle = css`
@@ -456,6 +467,10 @@ const TimerStyle = css`
     font-size: 2.5em;
     text-align: center;
     padding-top: 0.5em;
+`
+
+const DontDisplayStyle = css`
+  display:none;
 `
 
 const avatarStyle = css`
