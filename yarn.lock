@@ -1349,10 +1349,10 @@
   dependencies:
     prop-types "^15.7.2"
 
-"@gamepark/react-client@~4.14.11":
-  version "4.14.11"
-  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-4.14.11.tgz#1d656d9cfb47d57f837c5a3a25be89382c3861a9"
-  integrity sha512-hsFmDDmwXQeAwHDw9BDAqX8512c2p6muDOQYG3Z4Rq+OAcK4dowfNow5eBOzSBt/QY/kt85a7kdFscsMjX68Vg==
+"@gamepark/react-client@~4.14.13":
+  version "4.14.13"
+  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-4.14.13.tgz#c256a9cb5cf691b42bcfe6c6a4116e70ee72ecf6"
+  integrity sha512-NN+XVU8DWTHfkWwW+OhO8cwQ4mmfOLRLsnhv6LAtX8V8jXUP7Qx4z8B5LYH8CUiBHAg8eukTQUzAJ4XzrRb04Q==
   dependencies:
     "@apollo/client" "^3.1.3"
     "@datadog/browser-logs" "^2.8.1"
@@ -1389,6 +1389,16 @@
   version "4.14.11"
   resolved "https://registry.yarnpkg.com/@gamepark/rules-api/-/rules-api-4.14.11.tgz#deb6cad1696ed5af3826542c6af491e0c93f8320"
   integrity sha512-4PkaYzJOmfO9Ja+lj7gwNomr2+LqRdbPr1EqC4qAPFz9uIrUUPjClRl1UL8HdoE4kLRpwwunPwYDCwwQa825eQ==
+<<<<<<< HEAD
+=======
+  dependencies:
+    fast-deep-equal "^3.1.3"
+
+"@gamepark/rules-api@^4.14.8":
+  version "4.14.8"
+  resolved "https://registry.yarnpkg.com/@gamepark/rules-api/-/rules-api-4.14.8.tgz#637ae4a8dc42c502381bd3515919f78d803ad289"
+  integrity sha512-hpG6FcHN/6CznOc+DFtfjI/gfm5q4qkmiptbFy6OknnV9gu3+3GYRfYobmQP6aXrGAwGUvw6LmaqjYdXGlbBog==
+>>>>>>> a1e0fa9... MaJ react client 4-14-13
   dependencies:
     fast-deep-equal "^3.1.3"
 
