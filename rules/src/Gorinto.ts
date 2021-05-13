@@ -166,7 +166,7 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
   }
 
   giveTime(playerId: PlayerColor): number {
-    return 50
+    return 60
   }
 
   rankPlayers(playerColorA: PlayerColor, playerColorB: PlayerColor): number {
