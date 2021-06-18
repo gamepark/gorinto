@@ -5,13 +5,11 @@ import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import {PlayerTimer, useAnimation, usePlay, usePlayer, useSound} from '@gamepark/react-client'
+import {Avatar, PlayerTimer, useAnimation, usePlay, usePlayer, useSound} from '@gamepark/react-client'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
 import CoinHeads from '../images/CoinHeads.png'
-
-import Avatar from 'avataaars'
 
 import BlackGor from '../images/GOR_TTS_playermat_black.png'
 import BlueGor from '../images/GOR_TTS_playermat_blue.png'
@@ -47,10 +45,11 @@ import TakeTile from '@gamepark/gorinto/moves/TakeTile'
 import {isFirefox} from 'react-device-detect';
 
 import moveTileSound from '../sounds/tic.mp3'
-import { ResetSelectedTilesInPile, resetSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
-import SwitchFirstPlayer, { isSwitchFirstPlayer } from '@gamepark/gorinto/moves/SwitchFirstPlayer'
+import {ResetSelectedTilesInPile, resetSelectedTilesInPileMove} from '../moves/SetSelectedTilesInPile'
+import SwitchFirstPlayer, {isSwitchFirstPlayer} from '@gamepark/gorinto/moves/SwitchFirstPlayer'
 
 import gamePointIcon from '../images/game-point.svg'
+import {SpeechBubbleDirection} from "@gamepark/react-client/dist/Avatar";
 
 type Props = {
     player: Player
@@ -180,7 +179,12 @@ const PlayerPanel : FC<Props> = ({position, player: {color, understanding, score
                 <div css={avatarStyle}>
 
                     {playerInfo?.avatar ? 
-                        <Avatar style={{width:'100%', height:'100%'}} avatarStyle="Circle" {...playerInfo.avatar}/> 
+                        <Avatar css={avatarInnerStyle} playerId={color}
+                                speechBubbleProps={{
+                                    parent: 'letterbox',
+                                    css: speechBubbleStyle(position),
+                                    direction: position[0] === 0 ? SpeechBubbleDirection.TOP_RIGHT : SpeechBubbleDirection.TOP_LEFT
+                                }}/>
                         : <img alt={t('Player avatar')} src={getKanji(color)} css={kanjiStyle} draggable={false}/>
                     }
 
@@ -423,6 +427,7 @@ top : 10%;
 right : 6%;
 width : 45%;
 height : 50%;
+transform-style: preserve-3d;
 `
 
 const nameStyle = css`
@@ -481,6 +486,52 @@ margin-left: auto;
 
 height:7em;
 width:7em;
+    
+transform-style: preserve-3d;
+`
+
+const avatarInnerStyle = css`
+width:100%;
+height:100%;
+position: relative;
+color: black;
+transform-style: preserve-3d;
+`
+
+const speechBubbleStyle = (position: number[]) => {
+    if (position[0] && position[1]) {
+        return bottomRightPanelSpeechBubbleStyle
+    } else if (position[0]) {
+        return topRightPanelSpeechBubbleStyle
+    } else if (position[1]) {
+        return topLeftPanelSpeechBubbleStyle
+    } else {
+        return bottomLeftPanelSpeechBubbleStyle
+    }
+}
+
+const topRightPanelSpeechBubbleStyle = css`
+    color: black;
+    bottom: 65% !important;
+    left: 87.3% !important;
+`
+
+const topLeftPanelSpeechBubbleStyle = css`
+    color: black;
+    bottom: 65% !important;
+    right: 82.7% !important;
+`
+
+const bottomRightPanelSpeechBubbleStyle = css`
+    color: black;
+    bottom: 32% !important;
+    left: 89.6% !important;
+`
+
+const bottomLeftPanelSpeechBubbleStyle = css`
+    color: black;
+    bottom: 32% !important;
+    right: 82.6% !important;
 `
 
 const kanjiStyle = css`
