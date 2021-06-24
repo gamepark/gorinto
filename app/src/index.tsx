@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {css, Global} from '@emotion/react'
 import Gorinto from '@gamepark/gorinto/Gorinto'
-import {GorintoOptionsDescription} from '@gamepark/gorinto/GorintoOptions'
+import {GorintoOptionsSpec} from '@gamepark/gorinto/GorintoOptions'
 import {GameProvider, setupTranslation} from '@gamepark/react-client'
 import normalize from 'emotion-normalize'
 import React, {StrictMode} from 'react'
@@ -65,7 +65,7 @@ ReactDOM.render(
   <StrictMode>
     <GameProvider game="gorinto" Rules={Gorinto} 
                   RulesView={GorintoView}
-                  optionsDescription={GorintoOptionsDescription}
+                  optionsSpec={GorintoOptionsSpec}
                   animations={gorintoAnimations}
                   tutorial={GorintoTutorial}
     >

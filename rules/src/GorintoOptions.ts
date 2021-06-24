@@ -1,29 +1,29 @@
-import {GameOptions, OptionsDescription, OptionType} from '@gamepark/rules-api'
+import {OptionsSpec} from '@gamepark/rules-api'
 import {TFunction} from 'i18next'
 import Landscape, {landscapes} from './Landscape'
 import GameState from './types/GameState'
 import PlayerColor, {playerColors} from './types/PlayerColor'
 
-export type GorintoGameOptions = {
+export type GorintoPlayerOptions = {
+  id: PlayerColor
+}
+
+export type GorintoOptions = {
+  players: GorintoPlayerOptions[]
   landscape: Landscape
   isTacticalRemove : boolean
   isCompassionRoundOrder : boolean
 }
 
-export type GorintoPlayerOptions = { id: PlayerColor }
-
-export type GorintoOptions = GameOptions<GorintoGameOptions, GorintoPlayerOptions>
-
 export function isGameOptions(arg: GameState | GorintoOptions): arg is GorintoOptions {
   return typeof (arg as GameState).season === 'undefined'
 }
 
-export const GorintoOptionsDescription: OptionsDescription<GorintoGameOptions, GorintoPlayerOptions> = {
+export const GorintoOptionsSpec: OptionsSpec<GorintoOptions> = {
   landscape: {
-    type: OptionType.LIST,
-    getLabel: (t: TFunction) => t('Mountain landscape'),
+    label: (t: TFunction) => t('Mountain landscape'),
     values: landscapes,
-    getValueLabel: (landscape, t) => {
+    valueLabel: (landscape, t) => {
       switch (landscape) {
         case Landscape.Peak:
           return t('Peak diagram')
@@ -39,21 +39,18 @@ export const GorintoOptionsDescription: OptionsDescription<GorintoGameOptions, G
     }
   },
   isTacticalRemove:{
-    type:OptionType.BOOLEAN,
-    getLabel:(t:Function) => t('Tactical rule for 2 Players')
+    label:(t:Function) => t('Tactical rule for 2 Players')
   },
 
   isCompassionRoundOrder:{
-    type:OptionType.BOOLEAN,
-    getLabel:(t:Function) => t('Compassion Round Order')
+    label:(t:Function) => t('Compassion Round Order')
   },
 
   players: {
     id: {
-      type: OptionType.LIST,
-      getLabel: (t: TFunction) => t('Player color'),
+      label: (t: TFunction) => t('Player color'),
       values: playerColors,
-      getValueLabel: getPlayerName
+      valueLabel: getPlayerName
     }
   }
 }
