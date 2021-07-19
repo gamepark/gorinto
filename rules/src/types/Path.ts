@@ -1,6 +1,6 @@
 import Element from './Element'
 
-type Path = [PathSlot, PathSlot, PathSlot, PathSlot, PathSlot]
+type Path = PathSlot[]
 
 export default Path
 
