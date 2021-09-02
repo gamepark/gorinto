@@ -58,7 +58,7 @@ const GameDisplay: FC<{game:GameView}> = ({game}) => {
 
     <Fragment>
 
-    <Letterbox top={0}>
+    <Letterbox top={0} id="letterbox">
 
       <div css={perspective}>
 

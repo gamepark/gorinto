@@ -6,7 +6,7 @@ import Landscape, {getLandscapeDiagram} from './Landscape'
 import {changeActivePlayer, getNextPlayer, getNextPlayerWithCompassion} from './moves/ChangeActivePlayer'
 import {moveSeasonMarker} from './moves/MoveSeasonMarker'
 import MoveTile, {moveTile} from './moves/MoveTile'
-import {fillPaths, refillPaths} from './moves/RefillPaths'
+import {fillPaths, getRefillPathsView, refillPaths} from './moves/RefillPaths'
 import RemoveTileOnPath, {removeTileOnPath} from './moves/RemoveTileOnPath'
 import {scoreGoals} from './moves/ScoreGoals'
 import {scoreKeyElements} from './moves/ScoreKeyElements'
@@ -158,15 +158,11 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
   }
 
   getMoveView(move: Move): MoveView {
-    if (move.type === MoveType.RefillPaths) {
-      return {...move, horizontalPath: this.state.horizontalPath, verticalPath: this.state.verticalPath}
-    } else {
-      return move
-    }
+    return move.type === MoveType.RefillPaths ? getRefillPathsView(this.state) : move
   }
 
   giveTime(playerId: PlayerColor): number {
-    return 50
+    return 60
   }
 
   rankPlayers(playerColorA: PlayerColor, playerColorB: PlayerColor): number {
@@ -270,7 +266,7 @@ function countElements(path: Path): number {
 }
 
 function setupCompassionOrder(players:Player[], isCompassionRoundOrder:boolean):void{
-  isCompassionRoundOrder === true && players.forEach((p, i) => p.compassionOrder = i+1)
+  isCompassionRoundOrder && players.forEach((p, i) => p.compassionOrder = i+1)
 }
 
 const immutableConsequences = [MoveType.ChangeActivePlayer, MoveType.ScoreGoals]
