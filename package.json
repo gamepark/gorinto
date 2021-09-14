@@ -1,6 +1,9 @@
 {
   "private": true,
-  "workspaces": ["rules", "app"],
+  "workspaces": [
+    "rules",
+    "app"
+  ],
   "license": "ISC",
   "devDependencies": {
     "lerna": "^4.0.0",

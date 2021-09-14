@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import {css} from '@emotion/react'
 import {FC, useEffect} from "react"
-import board from '../images/board.jpg'
 import HorizontalPathPanel from './HorizontalPathPanel'
 import VerticalPathPanel from './VerticalPathPanel'
 import MountainPanel from './MountainPanel'
@@ -13,6 +12,7 @@ import { getFilterCoordinatesWithPattern } from '@gamepark/gorinto/moves/MoveTil
 import Element from '@gamepark/gorinto/types/Element'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import SetSelectedTilesInPile, { setSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
+import Images from '../images/Images'
 
 type Props = {
     game:GameView,
@@ -97,7 +97,7 @@ const boardStyle = css`
     width : 56.25%
 ;
     height :100%;
-    background-image : url(${board});
+    background-image : url(${Images.board});
     background-size:cover;
     background-position:center;
 
