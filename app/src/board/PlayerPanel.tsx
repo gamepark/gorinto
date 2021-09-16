@@ -5,7 +5,7 @@ import Element from '@gamepark/gorinto/types/Element'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import {Avatar, PlayerTimer, useAnimation, usePlay, usePlayer, useSound} from '@gamepark/react-client'
+import {Avatar, GamePoints, PlayerTimer, SpeechBubbleDirection, useAnimation, usePlay, usePlayer, useSound} from '@gamepark/react-client'
 import {FC, HTMLAttributes, useEffect, useState} from 'react'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
@@ -17,8 +17,6 @@ import {isFirefox} from 'react-device-detect'
 import moveTileSound from '../sounds/tic.mp3'
 import {ResetSelectedTilesInPile, resetSelectedTilesInPileMove} from '../moves/SetSelectedTilesInPile'
 import SwitchFirstPlayer, {isSwitchFirstPlayer} from '@gamepark/gorinto/moves/SwitchFirstPlayer'
-import gamePointIcon from '../images/game-point.svg'
-import {SpeechBubbleDirection} from '@gamepark/react-client/dist/Avatar'
 import Images from '../images/Images'
 import {Picture} from '@gamepark/react-components'
 
@@ -52,7 +50,6 @@ const PlayerPanel: FC<Props> = ({
   const playTake = usePlay<TakeTile>()
   const playReset = usePlay<ResetSelectedTilesInPile>()
   const changeFirstPlayerAnimation = useAnimation<SwitchFirstPlayer>(animation => isSwitchFirstPlayer(animation.move))
-  const [gamePoints] = useState(playerInfo?.gamePointsDelta)
 
   const moveSound = useSound(moveTileSound)
 
@@ -175,14 +172,8 @@ const PlayerPanel: FC<Props> = ({
 
 
           </div>
-          <div css={gPStyle}>
-            {typeof gamePoints === 'number' &&
-            <span css={css`flex-shrink: 0`}>
-                        <Picture src={gamePointIcon} alt="Game point icon" css={gamePointIconStyle}/>
-              {gamePoints > 0 && '+'}{playerInfo?.gamePointsDelta}
-                    </span>
-            }</div>
 
+          <GamePoints playerId={color} css={gPStyle}/>
           <PlayerTimer playerId={color} css={[activePlayer !== undefined ? TimerStyle : DontDisplayStyle]}/>
 
         </div>
@@ -445,13 +436,10 @@ const nameStyleLetterSpacingOther = css`
 `
 
 const gPStyle = css`
+  display: block;
   font-size: 2.5em;
   text-align: center;
   padding-top: 0.5em;
-`
-
-const gamePointIconStyle = css`
-  height: 1em;
 `
 
 const TimerStyle = css`
