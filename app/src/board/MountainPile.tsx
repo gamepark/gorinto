@@ -1,18 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import {css, keyframes} from '@emotion/react'
-import TakeTile, {isTakeTile} from '@gamepark/gorinto/moves/TakeTile'
 import Element from '@gamepark/gorinto/types/Element'
 import PathType from '@gamepark/gorinto/types/PathType'
 import TilesToTake from '@gamepark/gorinto/types/TilesToTake'
-import {useAnimation, usePlay, usePlayerId, useSound} from '@gamepark/react-client'
-import {FC, HTMLAttributes, useEffect} from 'react'
+import {FC, HTMLAttributes} from 'react'
 import ElementInPath from './ElementInPath'
 import ElementInPile from './ElementInPile'
-import ElementTile from './ElementTile'
 import MountainDropZone from './MountainDropZone'
 
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
-import SetSelectedTilesInPile, { setSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
 
 type Props = {
     pile: number[],
