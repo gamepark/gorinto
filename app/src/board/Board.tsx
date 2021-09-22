@@ -54,7 +54,7 @@ const Board : FC<Props> = ({game, onWarning}) => {
 
         <div css={boardStyle}>
 
-            <HorizontalPathPanel onSelect = {position => (playerId === game.activePlayer && (game.tilesToTake === undefined || (game.isTacticalRemove === true && game.tilesToTake.quantity === 0)) && playSelectTilePath(setSelectedTileInPathMove(position, PathType.Horizontal, game.horizontalPath[position]!), {local: true}))} 
+            <HorizontalPathPanel onSelect = {position => ((playerId === game.activePlayer && game.activePlayer !== undefined) && (game.tilesToTake === undefined || (game.isTacticalRemove === true && game.tilesToTake.quantity === 0)) && playSelectTilePath(setSelectedTileInPathMove(position, PathType.Horizontal, game.horizontalPath[position]!), {local: true}))} 
                                  selectedTile = {game.selectedTileInPath} 
                                  activePlayer = {game.activePlayer} 
                                  horizontalPath = {game.horizontalPath} 
@@ -65,7 +65,7 @@ const Board : FC<Props> = ({game, onWarning}) => {
                                  isTacticalRemove = {game.isTacticalRemove}
 
              />
-            <VerticalPathPanel onSelect = {position => (playerId === game.activePlayer && (game.tilesToTake === undefined || (game.isTacticalRemove === true && game.tilesToTake.quantity === 0)) && playSelectTilePath(setSelectedTileInPathMove(position, PathType.Vertical, game.verticalPath[position]!), {local: true}))} 
+            <VerticalPathPanel onSelect = {position => ((playerId === game.activePlayer && game.activePlayer !== undefined) && (game.tilesToTake === undefined || (game.isTacticalRemove === true && game.tilesToTake.quantity === 0)) && playSelectTilePath(setSelectedTileInPathMove(position, PathType.Vertical, game.verticalPath[position]!), {local: true}))} 
                                selectedTile = {game.selectedTileInPath} 
                                activePlayer = {game.activePlayer} 
                                verticalPath = {game.verticalPath} 

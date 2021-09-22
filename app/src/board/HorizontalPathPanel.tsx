@@ -42,7 +42,7 @@ const HorizontalPathPanel: FC<Props> = ({tilesToTake, horizontalPath, activePlay
     }
 
     function isDraggable():boolean{
-        if (activePlayer !== playerId){
+        if (activePlayer !== playerId || activePlayer === undefined){
             return false
         } else {
             if (!tilesToTake){
