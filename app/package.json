@@ -7,19 +7,18 @@
   "license": "ISC",
   "dependencies": {
     "@emotion/react": "^11.1.5",
-    "@gamepark/react-client": "~5.6.1",
-    "@gamepark/react-components": "~5.5.3",
+    "@gamepark/react-client": "~5.6.3",
+    "@gamepark/react-components": "~5.6.3",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
+    "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.1.9",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^15.3.0",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.3",
     "@types/react": "^17.0.3",
     "@types/react-dnd-multi-backend": "^6.0.0",
     "@types/react-dom": "^17.0.2",
     "@types/react-redux": "^7.1.16",
     "audio-loader": "^1.0.3",
-    "avataaars": "^1.2.2",
     "customize-cra": "^1.0.0",
     "emotion-normalize": "^11.0.1",
     "i18next": "^20.2.4",
@@ -37,7 +36,7 @@
     "react-i18next": "^11.8.8",
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^2.1.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
