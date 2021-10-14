@@ -13,7 +13,6 @@ import ElementInPile from './ElementInPile'
 import ElementTileForPlayers from './ElementTileForPlayers'
 import Button from './Button'
 import TakeTile from '@gamepark/gorinto/moves/TakeTile'
-import {isFirefox} from 'react-device-detect'
 import moveTileSound from '../sounds/tic.mp3'
 import {ResetSelectedTilesInPile, resetSelectedTilesInPileMove} from '../moves/SetSelectedTilesInPile'
 import SwitchFirstPlayer, {isSwitchFirstPlayer} from '@gamepark/gorinto/moves/SwitchFirstPlayer'
@@ -153,8 +152,7 @@ const PlayerPanel: FC<Props> = ({
 
       <div {...props} ref={dropPlayerRef} css={[playerPanelStyle(position, color, activePlayer, playersNumber), canDrop && canDropStylePP, canDrop]}>
 
-        <div
-          css={[nameStyle, isFirefox ? nameStyleLetterSpacingFireFox : nameStyleLetterSpacingOther]}>{playerInfo?.name === undefined ? getPlayerName(color, t) : playerInfo?.name}</div>
+        <div css={nameStyle}>{playerInfo?.name === undefined ? getPlayerName(color, t) : playerInfo?.name}</div>
 
         <div css={playerHeaderStyle}>
 
@@ -425,13 +423,6 @@ const nameStyle = css`
   font-size: 2.8em;
   text-align: left;
   padding-bottom: 0.5em;
-`
-
-const nameStyleLetterSpacingFireFox = css`
-  letter-spacing: -0.4em;
-`
-
-const nameStyleLetterSpacingOther = css`
   letter-spacing: -0.4em;
 `
 
