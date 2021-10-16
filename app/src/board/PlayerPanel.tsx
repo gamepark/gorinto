@@ -195,11 +195,11 @@ const PlayerPanel: FC<Props> = ({
 
 
           {!isRoundOrderCompassion
-            ? <div css={[coinPosition]}><Picture alt="Coin" src={Images.CoinHeads} css={coinStyle(first)}/></div>
+            ? <div css={[coinPosition, coinStyle(first)]}><Picture alt="Coin" src={Images.CoinHeads} css={coinSize}/></div>
             : <div css={[coinPosition, changeFirstPlayerAnimation && flipStyle]}>
-              <Picture alt="Compassion" src={getCompassionTile(compassionOrder)} css={sizeKitsuneTileRecto}/>
-              <Picture alt="VersoCompassion" src={Images.CompassionOrderTileVerso} css={sizeKitsuneTileVerso}/>
-            </div>
+                <div css={sizeKitsuneTileRecto(getCompassionTile(compassionOrder))}> </div>
+                <div css={sizeKitsuneTileVerso}> </div>
+              </div>
           }
 
 
@@ -271,6 +271,11 @@ function elementArray(understanding: number, element: number): number[] {
   return result
 
 }
+
+const coinSize = css`
+width:100%;
+height:100%;
+`
 
 const threeDStyle = (position: number) => css`
   transform-style: preserve-3d;
@@ -542,7 +547,7 @@ const validationButtonStyle = css`
 `
 
 const coinStyle = (isFirst: boolean) => css`
-  width: 100%;
+  position:relative;
   ${isFirst && `filter: drop-shadow(0 0 0.2em black);`};
   ${!isFirst && `transform:translate3d(0,0,200em);`};
   transform-style: preserve-3d;
@@ -561,23 +566,37 @@ const coinPosition = css`
 
 const flipStyle = css`
   transform: rotateY(180deg);
+  transform-style:preserve-3d;
   transition: transform 1s ease-in-out;
 `
 
-const sizeKitsuneTileRecto = css`
+const sizeKitsuneTileRecto = (image:string) => css`
   position: absolute;
   top: 0%;
   left: 0%;
+  height:100%;
   width: 100%;
-  transform: rotateY(360deg);
+  background-image: url(${image});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top;
+  backface-visibility:hidden;
+  transform-style: preserve-3d;
 `
 
 const sizeKitsuneTileVerso = css`
   position: absolute;
   top: 0%;
   left: 0%;
+  height:100%;
   width: 100%;
+  background-image: url(${Images.CompassionOrderTileVerso});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top;
   transform: rotateY(180deg);
+  backface-visibility:hidden;
+  transform-style: preserve-3d;
 `
 
 const scoreStyle = (color: PlayerColor) => css`
