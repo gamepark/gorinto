@@ -6,7 +6,7 @@ import MoveType from '@gamepark/gorinto/types/MoveType'
 import Player from '@gamepark/gorinto/types/Player'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import {Avatar, GamePoints, PlayerTimer, SpeechBubbleDirection, useAnimation, usePlay, usePlayer, useSound} from '@gamepark/react-client'
-import {FC, HTMLAttributes, useEffect, useState} from 'react'
+import {FC, HTMLAttributes} from 'react'
 import {useDrop} from 'react-dnd'
 import {useTranslation} from 'react-i18next'
 import ElementInPile from './ElementInPile'
@@ -18,6 +18,7 @@ import {ResetSelectedTilesInPile, resetSelectedTilesInPileMove} from '../moves/S
 import SwitchFirstPlayer, {isSwitchFirstPlayer} from '@gamepark/gorinto/moves/SwitchFirstPlayer'
 import Images from '../images/Images'
 import {Picture} from '@gamepark/react-components'
+import ScoreDisplay from './ScoreDisplay'
 
 type Props = {
   player: Player
@@ -95,36 +96,6 @@ const PlayerPanel: FC<Props> = ({
     }
   })
 
-  const [displayedScore, setDisplayedScore] = useState(score)
-  const [scoreInterval, setScoreInterval] = useState<NodeJS.Timeout>()
-  const [timingForEachTick, setTimingForEachTick] = useState(0)
-
-  useEffect(() => {
-    if (score - displayedScore !== 0) {
-      setTimingForEachTick(4000 / (score - displayedScore))
-    }
-  }, [score])
-
-  useEffect(() => {
-    if (scoreInterval || displayedScore === score) {
-      return
-    }
-    const interval = setInterval(() => {
-      setDisplayedScore(currentScore => {
-        if (currentScore === score) {
-          clearInterval(interval)
-          setScoreInterval(undefined)
-          return currentScore
-        }
-        return currentScore + 1
-      })
-    }, timingForEachTick)
-
-    setScoreInterval(interval)
-
-
-  }, [timingForEachTick])
-
   function completeTakeMove(): void {
     moveSound.play()
     if (tilesToTake?.element !== Element.Earth) {
@@ -146,7 +117,7 @@ const PlayerPanel: FC<Props> = ({
     <>
 
       <div
-        css={[bgContouringStyle(position, playersNumber, color), color === activePlayer && animateGlowingActive(color), canDrop && canDropStyleBG, isOver && isOverStyle(color)]}>
+        css={[bgContouringStyle(position, playersNumber, color), color === activePlayer && animateGlowingActive, canDrop && canDropStyleBG, isOver && isOverStyle]}>
 
       </div>
 
@@ -202,42 +173,41 @@ const PlayerPanel: FC<Props> = ({
               </div>
           }
 
-
-          <div css={scoreStyle(color)}>{displayedScore}</div>
+          <ScoreDisplay score={score} css={scoreStyle(color)}/>
 
         </div>
 
         <div css={playerElementStyle}>
 
           {elementArray(understanding[Element.Void], 0).length !== 0 ? elementArray(understanding[Element.Void], 0).map((tile, index) =>
-            <div css={[voidStyle, elementSize, threeDStyle(index)]} key={index}>
+            <div css={[voidStyle, elementSize, threeDStyle]} key={index}>
               <ElementTileForPlayers element={Element.Void} position={index}/>
             </div>
           ) : <div css={[voidStyle, elementSize]}/>}
 
           {elementArray(understanding[Element.Wind], 20).length !== 0 ? elementArray(understanding[Element.Wind], 20).map((tile, index) =>
-            <div css={[windStyle, elementSize, threeDStyle(index)]} key={index}>
+            <div css={[windStyle, elementSize, threeDStyle]} key={index}>
               <ElementTileForPlayers element={Element.Wind} position={index}/>
             </div>
-          ) : <div css={[windStyle, elementSize]}></div>}
+          ) : <div css={[windStyle, elementSize]}/>}
 
           {elementArray(understanding[Element.Fire], 40).length !== 0 ? elementArray(understanding[Element.Fire], 40).map((tile, index) =>
-            <div css={[fireStyle, elementSize, threeDStyle(index)]} key={index}>
+            <div css={[fireStyle, elementSize, threeDStyle]} key={index}>
               <ElementTileForPlayers element={Element.Fire} position={index}/>
             </div>
-          ) : <div css={[fireStyle, elementSize]}></div>}
+          ) : <div css={[fireStyle, elementSize]}/>}
 
           {elementArray(understanding[Element.Water], 60).length !== 0 ? elementArray(understanding[Element.Water], 60).map((tile, index) =>
-            <div css={[waterStyle, elementSize, threeDStyle(index)]} key={index}>
+            <div css={[waterStyle, elementSize, threeDStyle]} key={index}>
               <ElementTileForPlayers element={Element.Water} position={index}/>
             </div>
-          ) : <div css={[waterStyle, elementSize]}></div>}
+          ) : <div css={[waterStyle, elementSize]}/>}
 
           {elementArray(understanding[Element.Earth], 80).length !== 0 ? elementArray(understanding[Element.Earth], 80).map((tile, index) =>
-            <div css={[earthStyle, elementSize, threeDStyle(index)]} key={index}>
+            <div css={[earthStyle, elementSize, threeDStyle]} key={index}>
               <ElementTileForPlayers element={Element.Earth} position={index}/>
             </div>
-          ) : <div css={[earthStyle, elementSize]}></div>}
+          ) : <div css={[earthStyle, elementSize]}/>}
 
         </div>
 
@@ -277,7 +247,7 @@ width:100%;
 height:100%;
 `
 
-const threeDStyle = (position: number) => css`
+const threeDStyle = css`
   transform-style: preserve-3d;
 `
 
@@ -309,7 +279,7 @@ const countVoid = css`bottom: 80%;`
 const countWind = css`bottom: 60%;`
 const countFire = css`bottom: 40%;`
 const countWater = css`bottom: 20%;`
-const countEarth = css`bottom: 0%;`
+const countEarth = css`bottom: 0;`
 
 const elementSize = css`
   position: absolute;
@@ -333,7 +303,7 @@ const canDropStyleBG = css`
   transition: transform linear 0.25s, background-color linear 0.25s;
 `
 
-const isOverStyle = (color: PlayerColor) => css`
+const isOverStyle = css`
   background-color: rgba(0, 0, 0, 0.95);
   transition: background-color linear 0.25s;
 `
@@ -383,8 +353,8 @@ left : ${position[0] * 79}%;
   transition: transform linear 0.25s;
 `
 
-const animateGlowingActive = (color: PlayerColor | undefined) => css`
-  background-color: rgba(0, 0, 0, 0.15);;
+const animateGlowingActive = css`
+  background-color: rgba(0, 0, 0, 0.15);
 `
 
 function getPlayerMat(color: PlayerColor) {
@@ -572,8 +542,8 @@ const flipStyle = css`
 
 const sizeKitsuneTileRecto = (image:string) => css`
   position: absolute;
-  top: 0%;
-  left: 0%;
+  top: 0;
+  left: 0;
   height:100%;
   width: 100%;
   background-image: url(${image});
@@ -586,8 +556,8 @@ const sizeKitsuneTileRecto = (image:string) => css`
 
 const sizeKitsuneTileVerso = css`
   position: absolute;
-  top: 0%;
-  left: 0%;
+  top: 0;
+  left: 0;
   height:100%;
   width: 100%;
   background-image: url(${Images.CompassionOrderTileVerso});
