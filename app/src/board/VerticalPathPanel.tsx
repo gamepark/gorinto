@@ -10,6 +10,7 @@ import {FC, useEffect} from 'react'
 import ElementInPath from './ElementInPath'
 import ElementTile from './ElementTile'
 import moveTileSound from '../sounds/tic.mp3'
+import { getNumberOfTilesToTake } from './Board'
 
 type Props = {
     tilesToTake:{quantity : number, coordinates:{x:number,y:number}[], element?:Element} | undefined,
@@ -70,7 +71,7 @@ const VerticalPathPanel : FC<Props> = ({tilesToTake, verticalPath, activePlayer,
                              draggableItem = {{path: PathType.Vertical, position : index, element:tile}}
                              element = {tile}
                              onClick = {() => onSelect(index)}
-                             isSelected = {selectedTile?.path === PathType.Vertical && selectedTile?.position === index && (tilesToTake === undefined ? true : tilesToTake?.quantity === 0 && isTacticalRemove === true ? true : false)}              
+                             isSelected = {selectedTile?.path === PathType.Vertical && selectedTile?.position === index && (tilesToTake === undefined ? true : getNumberOfTilesToTake(tilesToTake, mountain) === 0 && isTacticalRemove === true ? true : false)}              
                              verifyIfWarningIsNeeded = {verifyIfWarningIsNeeded}
                              onWarning = {onWarning}
                              playSound = {(sound) => playSound(sound)}

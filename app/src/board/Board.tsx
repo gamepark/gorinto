@@ -13,6 +13,7 @@ import Element from '@gamepark/gorinto/types/Element'
 import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
 import SetSelectedTilesInPile, { setSelectedTilesInPileMove } from '../moves/SetSelectedTilesInPile'
 import Images from '../images/Images'
+import TilesToTake from '@gamepark/gorinto/types/TilesToTake'
 
 type Props = {
     game:GameView,
@@ -50,11 +51,16 @@ const Board : FC<Props> = ({game, onWarning}) => {
         return getFilterCoordinatesWithPattern(TileInPath,{x,y},game.mountainBoard).length === 0
     }
 
+    function canSelectPathTile():boolean{
+        return (playerId === game.activePlayer && game.activePlayer !== undefined)
+        && (game.tilesToTake === undefined || (game.isTacticalRemove === true && getNumberOfTilesToTake(game.tilesToTake, game.mountainBoard) === 0 ))
+    }
+
     return (
 
         <div css={boardStyle}>
 
-            <HorizontalPathPanel onSelect = {position => ((playerId === game.activePlayer && game.activePlayer !== undefined) && (game.tilesToTake === undefined || (game.isTacticalRemove === true && game.tilesToTake.quantity === 0)) && playSelectTilePath(setSelectedTileInPathMove(position, PathType.Horizontal, game.horizontalPath[position]!), {local: true}))} 
+            <HorizontalPathPanel onSelect = {position => (canSelectPathTile() && playSelectTilePath(setSelectedTileInPathMove(position, PathType.Horizontal, game.horizontalPath[position]!), {local: true}))} 
                                  selectedTile = {game.selectedTileInPath} 
                                  activePlayer = {game.activePlayer} 
                                  horizontalPath = {game.horizontalPath} 
@@ -65,7 +71,7 @@ const Board : FC<Props> = ({game, onWarning}) => {
                                  isTacticalRemove = {game.isTacticalRemove}
 
              />
-            <VerticalPathPanel onSelect = {position => ((playerId === game.activePlayer && game.activePlayer !== undefined) && (game.tilesToTake === undefined || (game.isTacticalRemove === true && game.tilesToTake.quantity === 0)) && playSelectTilePath(setSelectedTileInPathMove(position, PathType.Vertical, game.verticalPath[position]!), {local: true}))} 
+            <VerticalPathPanel onSelect = {position => (canSelectPathTile() && playSelectTilePath(setSelectedTileInPathMove(position, PathType.Vertical, game.verticalPath[position]!), {local: true}))} 
                                selectedTile = {game.selectedTileInPath} 
                                activePlayer = {game.activePlayer} 
                                verticalPath = {game.verticalPath} 
@@ -87,6 +93,16 @@ const Board : FC<Props> = ({game, onWarning}) => {
 
     )
 
+}
+
+export function getNumberOfTilesToTake(tilesToTake: TilesToTake, mountainBoard: Element[][][]) {
+    if (tilesToTake.element !== Element.Earth) {
+        return Math.min(tilesToTake.quantity, tilesToTake.coordinates.length);
+    }
+    if (tilesToTake.coordinates.length === 0) {
+        return 0;
+    }
+    return Math.min(tilesToTake.quantity, mountainBoard[tilesToTake.coordinates[0].x][tilesToTake.coordinates[0].y].length - 1);
 }
 
 
