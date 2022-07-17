@@ -63,7 +63,12 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
     return this.state.activePlayer
   }
 
-  getAutomaticMove(): Move | void {
+  getAutomaticMoves(): Move[] {
+    const move = this.getAutomaticMove()
+    return move ? [move] : []
+  }
+
+  getAutomaticMove(): Move | undefined {
     if (this.state.endOfSeasonStep === MoveType.RefillPaths
       && this.state.horizontalPath.every(slot => slot === null)
       && this.state.verticalPath.every(slot => slot === null)) {
@@ -76,6 +81,8 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
         .filter(option => option.slot !== null)
         const randomTile = tiles[Math.floor(Math.random() * Math.floor(tiles.length))]
         return {type: MoveType.RemoveTileOnPath, ...randomTile}
+      } else {
+        return
       }
 
     } else {
@@ -216,7 +223,7 @@ function setupMountain(game: GameState, landscape: Landscape = Landscape.Peak): 
   return getLandscapeDiagram(landscape).map(row => row.map(height => Array.from(Array(height)).map(() => game.elementTilesBag.pop()!)))
 }
 
-export function getPredictableAutomaticMoves(state: GameState | GameView): Move & MoveView | void {
+export function getPredictableAutomaticMoves(state: GameState | GameView): Move & MoveView | undefined {
   if (state.endOfSeasonStep !== undefined) {
     if (state.endOfSeasonStep === MoveType.MoveSeasonMarker && state.season === numberOfSeasons) {
       if (state.activePlayer !== undefined) {
@@ -241,6 +248,7 @@ export function getPredictableAutomaticMoves(state: GameState | GameView): Move 
       return {type: MoveType.ChangeActivePlayer}
     }
   }
+  return
 }
 
 export function cantPickAnyTile(tilesToTake: TilesToTake): boolean {

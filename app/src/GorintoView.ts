@@ -12,12 +12,11 @@ import {takeTile} from '@gamepark/gorinto/moves/TakeTile'
 import GameView from '@gamepark/gorinto/types/GameView'
 import MoveType from '@gamepark/gorinto/types/MoveType'
 import {MoveView} from '@gamepark/gorinto/types/MoveView'
-import PlayerColor from "@gamepark/gorinto/types/PlayerColor"
-import SetSelectedTileInPath, { ResetSelectedTileInPath, resetSelectedTileInPath, setSelectedTileInPath } from './moves/SetSelectedTileInPath'
-import SetSelectedTilesInPile, { resetSelectedTilesInPile, ResetSelectedTilesInPile, setSelectedTilesInPath } from './moves/SetSelectedTilesInPile'
+import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
+import SetSelectedTileInPath, {ResetSelectedTileInPath, resetSelectedTileInPath, setSelectedTileInPath} from './moves/SetSelectedTileInPath'
+import SetSelectedTilesInPile, {resetSelectedTilesInPile, ResetSelectedTilesInPile, setSelectedTilesInPath} from './moves/SetSelectedTilesInPile'
 
-type LocalMove = MoveView | SetSelectedTileInPath | ResetSelectedTileInPath | SetSelectedTilesInPile
-                          | ResetSelectedTilesInPile
+type LocalMove = MoveView | SetSelectedTileInPath | ResetSelectedTileInPath | SetSelectedTilesInPile | ResetSelectedTilesInPile
 
 export default class GorintoView implements Game<GameView, LocalMove>, Undo<GameView, MoveView, PlayerColor> {
   state: GameView
@@ -26,8 +25,9 @@ export default class GorintoView implements Game<GameView, LocalMove>, Undo<Game
     this.state = state
   }
 
-  getAutomaticMove(): MoveView | void {
-    return getPredictableAutomaticMoves(this.state)
+  getAutomaticMoves(): MoveView[] {
+    const move = getPredictableAutomaticMoves(this.state)
+    return move ? [move] : []
   }
 
   play(move: LocalMove): void {
@@ -51,13 +51,13 @@ export default class GorintoView implements Game<GameView, LocalMove>, Undo<Game
       case MoveType.ScoreKeyElements:
         return scoreKeyElements(this.state)
       case 'SetSelectedTileInPath':
-        return setSelectedTileInPath(this.state,move)
-      case 'ResetSelectedTileInPath' : 
-        return resetSelectedTileInPath(this.state,move)
+        return setSelectedTileInPath(this.state, move)
+      case 'ResetSelectedTileInPath' :
+        return resetSelectedTileInPath(this.state, move)
       case 'SetSelectedTilesInPile' :
-        return setSelectedTilesInPath(this.state,move)
+        return setSelectedTilesInPath(this.state, move)
       case 'ResetSelectedTilesInPile' :
-        return resetSelectedTilesInPile(this.state,move)
+        return resetSelectedTilesInPile(this.state, move)
     }
   }
 

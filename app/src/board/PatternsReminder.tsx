@@ -72,6 +72,9 @@ const patternsStyle = css`
 
 const popupStyle = css`
   position: relative;
+  font-size: 3.2em;
+  padding: 1em;
+  box-shadow: black 0 0 0.2em;
   color: black;
   text-align: center;
   border-radius: 1em;
