@@ -1,12 +1,12 @@
-import GameView from "@gamepark/gorinto/types/GameView";
-import MoveType from "@gamepark/gorinto/types/MoveType";
-import { MoveView } from "@gamepark/gorinto/types/MoveView";
-import PlayerColor from "@gamepark/gorinto/types/PlayerColor";
-import { Animations } from "@gamepark/react-client";
+import GameView from '@gamepark/gorinto/types/GameView'
+import MoveType from '@gamepark/gorinto/types/MoveType'
+import {MoveView} from '@gamepark/gorinto/types/MoveView'
+import PlayerColor from '@gamepark/gorinto/types/PlayerColor'
+import {Animations} from '@gamepark/react-client'
+import AnimationContext from '@gamepark/react-client/dist/animations/AnimationContext'
 
-const gorintoAnimations : Animations<GameView, MoveView, PlayerColor> = {
-
-    getAnimationDuration(move:MoveView,{action, state, playerId}){
+export default class GorintoAnimations extends Animations<GameView, MoveView> {
+    override getPreDuration(move: MoveView, {action, state, playerId}: AnimationContext<GameView, MoveView, PlayerColor>): number {
 
         if(move.type === MoveType.MoveTile){
             return action.playerId === playerId ? 0 : 1.5            // In seconds
@@ -23,9 +23,5 @@ const gorintoAnimations : Animations<GameView, MoveView, PlayerColor> = {
         }
 
         return 0              
-
     }
-
 }
-
-export default gorintoAnimations

@@ -1,4 +1,4 @@
-import {Action, Game, Undo} from '@gamepark/rules-api'
+import {Action, Rules, Undo} from '@gamepark/rules-api'
 import {canUndo, getPredictableAutomaticMoves} from '@gamepark/gorinto/Gorinto'
 import {changeActivePlayer} from '@gamepark/gorinto/moves/ChangeActivePlayer'
 import {moveSeasonMarker} from '@gamepark/gorinto/moves/MoveSeasonMarker'
@@ -18,11 +18,10 @@ import SetSelectedTilesInPile, {resetSelectedTilesInPile, ResetSelectedTilesInPi
 
 type LocalMove = MoveView | SetSelectedTileInPath | ResetSelectedTileInPath | SetSelectedTilesInPile | ResetSelectedTilesInPile
 
-export default class GorintoView implements Game<GameView, LocalMove>, Undo<GameView, MoveView, PlayerColor> {
-  state: GameView
+export default class GorintoView extends Rules<GameView, LocalMove, PlayerColor> implements Undo<GameView, MoveView, PlayerColor> {
 
-  constructor(state: GameView) {
-    this.state = state
+  getActivePlayer() {
+    return this.state.activePlayer
   }
 
   getAutomaticMoves(): MoveView[] {
@@ -30,35 +29,49 @@ export default class GorintoView implements Game<GameView, LocalMove>, Undo<Game
     return move ? [move] : []
   }
 
-  play(move: LocalMove): void {
+  play(move: LocalMove): MoveView[] {
     switch (move.type) {
       case MoveType.MoveTile:
-        return moveTile(this.state, move)
+        moveTile(this.state, move)
+        break
       case MoveType.TakeTile:
-        return takeTile(this.state, move)
+        takeTile(this.state, move)
+        break
       case MoveType.ChangeActivePlayer:
-        return changeActivePlayer(this.state)
+        changeActivePlayer(this.state)
+        break
       case MoveType.ScoreGoals:
-        return scoreGoals(this.state)
+        scoreGoals(this.state)
+        break
       case MoveType.MoveSeasonMarker:
-        return moveSeasonMarker(this.state)
+        moveSeasonMarker(this.state)
+        break
       case MoveType.RemoveTileOnPath:
-        return removeTileOnPath(this.state, move)
+        removeTileOnPath(this.state, move)
+        break
       case MoveType.RefillPaths:
-        return refillPathsInView(this.state, move)
+        refillPathsInView(this.state, move)
+        break
       case MoveType.SwitchFirstPlayer:
-        return switchFirstPlayer(this.state)
+        switchFirstPlayer(this.state)
+        break
       case MoveType.ScoreKeyElements:
-        return scoreKeyElements(this.state)
+        scoreKeyElements(this.state)
+        break
       case 'SetSelectedTileInPath':
-        return setSelectedTileInPath(this.state, move)
+        setSelectedTileInPath(this.state, move)
+        break
       case 'ResetSelectedTileInPath' :
-        return resetSelectedTileInPath(this.state, move)
+        resetSelectedTileInPath(this.state, move)
+        break
       case 'SetSelectedTilesInPile' :
-        return setSelectedTilesInPath(this.state, move)
+        setSelectedTilesInPath(this.state, move)
+        break
       case 'ResetSelectedTilesInPile' :
-        return resetSelectedTilesInPile(this.state, move)
+        resetSelectedTilesInPile(this.state, move)
+        break
     }
+    return []
   }
 
   canUndo(action: Action<MoveView, PlayerColor>, consecutiveActions: Action<MoveView, PlayerColor>[]): boolean {

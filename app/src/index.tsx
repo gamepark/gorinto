@@ -7,7 +7,7 @@ import normalize from 'emotion-normalize'
 import React, {StrictMode} from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import gorintoAnimations from './GorintoAnimations'
+import GorintoAnimations from './GorintoAnimations'
 import GorintoView from './GorintoView'
 import Background from './images/BG2.jpg'
 import reportWebVitals from './reportWebVitals'
@@ -66,7 +66,7 @@ ReactDOM.render(
     <GameProvider game="gorinto" Rules={Gorinto} 
                   RulesView={GorintoView}
                   optionsSpec={GorintoOptionsSpec}
-                  animations={gorintoAnimations}
+                  animations={new GorintoAnimations()}
                   tutorial={GorintoTutorial}
     >
       <App/>

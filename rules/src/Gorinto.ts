@@ -1,4 +1,4 @@
-import {Action, Competitive, IncompleteInformation, SequentialGame, TimeLimit, Undo} from '@gamepark/rules-api'
+import {Action, Competitive, IncompleteInformation, Rules, TimeLimit, Undo} from '@gamepark/rules-api'
 import shuffle from 'lodash.shuffle'
 import {Goals} from './cards/Goals'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
@@ -26,8 +26,8 @@ import TilesToTake from './types/TilesToTake'
 
 const numberOfSeasons = 4
 
-export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor>
-    implements IncompleteInformation<GameState, GameView, Move, MoveView, PlayerColor>,
+export default class Gorinto extends Rules<GameState, Move, PlayerColor>
+    implements IncompleteInformation<GameView, Move, MoveView>,
         Competitive<GameState, Move, PlayerColor>, Undo<GameState, Move, PlayerColor>,
         TimeLimit<GameState, Move, PlayerColor> {
 
@@ -90,7 +90,8 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
     }
   }
 
-  getLegalMoves(): Move[] {
+  getLegalMoves(playerId: PlayerColor): Move[] {
+    if (playerId !== this.getActivePlayer()) return []
     if (this.state.tilesToTake === undefined) {
       const moves: MoveTile[] = []
       for (let x = 0; x < 5; x++) {
@@ -136,27 +137,37 @@ export default class Gorinto extends SequentialGame<GameState, Move, PlayerColor
     }
   }
 
-  play(move: Move): void {
+  play(move: Move): Move[] {
     switch (move.type) {
       case MoveType.MoveTile:
-        return moveTile(this.state, move)
+        moveTile(this.state, move)
+        break
       case MoveType.TakeTile:
-        return takeTile(this.state, move)
+        takeTile(this.state, move)
+        break
       case MoveType.ChangeActivePlayer:
-        return changeActivePlayer(this.state)
+        changeActivePlayer(this.state)
+        break
       case MoveType.ScoreGoals:
-        return scoreGoals(this.state)
+        scoreGoals(this.state)
+        break
       case MoveType.MoveSeasonMarker:
-        return moveSeasonMarker(this.state)
+        moveSeasonMarker(this.state)
+        break
       case MoveType.RemoveTileOnPath:
-        return removeTileOnPath(this.state, move)
+        removeTileOnPath(this.state, move)
+        break
       case MoveType.RefillPaths:
-        return refillPaths(this.state)
+        refillPaths(this.state)
+        break
       case MoveType.SwitchFirstPlayer:
-        return switchFirstPlayer(this.state)
+        switchFirstPlayer(this.state)
+        break
       case MoveType.ScoreKeyElements:
-        return scoreKeyElements(this.state)
+        scoreKeyElements(this.state)
+        break
     }
+    return []
   }
 
   getView(): GameView {
