@@ -1,5 +1,5 @@
 import {Action, Competitive, IncompleteInformation, Rules, TimeLimit, Undo} from '@gamepark/rules-api'
-import shuffle from 'lodash.shuffle'
+import { shuffle } from 'lodash'
 import {Goals} from './cards/Goals'
 import {GorintoOptions, GorintoPlayerOptions, isGameOptions} from './GorintoOptions'
 import Landscape, {getLandscapeDiagram} from './Landscape'
