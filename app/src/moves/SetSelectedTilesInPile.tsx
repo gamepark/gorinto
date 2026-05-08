@@ -21,7 +21,7 @@ export const resetSelectedTilesInPileMove = () : ResetSelectedTilesInPile => ({
   
 export function setSelectedTilesInPath(state: GameView, move: SetSelectedTilesInPile) {
     if(canTakeTile(move.selectedTileInPile.x, move.selectedTileInPile.y, move.selectedTileInPile.z, state.tilesToTake, state.mountainBoard)){
-        if (state.selectedTilesInPile === undefined || state.selectedTilesInPile === []){
+        if (state.selectedTilesInPile === undefined || state.selectedTilesInPile.length === 0){
             state.selectedTilesInPile = [move.selectedTileInPile]
         } else {
             if (state.selectedTilesInPile.some(e => e.x === move.selectedTileInPile.x && e.y === move.selectedTileInPile.y && e.z === move.selectedTileInPile.z)){

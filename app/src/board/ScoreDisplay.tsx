@@ -9,7 +9,7 @@ export default function ScoreDisplay({score, ...props}: Props) {
   const [displayedScore, setDisplayedScore] = useState(score)
 
   useEffect(() => {
-    let interval: NodeJS.Timer | undefined = undefined
+    let interval: ReturnType<typeof setInterval> | undefined = undefined
 
     function updateDisplayedScore(score: number) {
       setDisplayedScore(displayedScore => {

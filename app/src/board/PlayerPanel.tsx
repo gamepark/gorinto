@@ -136,7 +136,7 @@ const PlayerPanel: FC<Props> = ({
                         css: speechBubbleStyle(position),
                         direction: position[0] === 0 ? SpeechBubbleDirection.TOP_RIGHT : SpeechBubbleDirection.TOP_LEFT
                       }}/>
-              : <Picture alt={t('Player avatar')} src={getKanji(color)} css={kanjiStyle}/>
+              : <Picture alt={t('Player avatar')!} src={getKanji(color)} css={kanjiStyle}/>
             }
 
 

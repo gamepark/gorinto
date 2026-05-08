@@ -1,9 +1,10 @@
-import {FailuresDialog, FullscreenDialog, Menu, useGame} from '@gamepark/react-client'
-import {DndProvider} from 'react-dnd-multi-backend'
-import HTML5ToTouch from 'react-dnd-multi-backend/dist/cjs/HTML5toTouch'
+import {FailuresDialog, FullscreenDialog, LoadingScreen, Menu, useGame} from '@gamepark/react-client'
+import {HTML5toTouch} from 'rdndmb-html5-to-touch'
+import {DndProvider} from 'react-dnd'
+import {MultiBackend} from 'react-dnd-multi-backend'
 import GameDisplay from './GameDisplay'
 import GameView from '@gamepark/gorinto/types/GameView'
-import {Header, ImagesLoader, LoadingScreen} from '@gamepark/react-components'
+import {Header, ImagesLoader} from '@gamepark/react-components'
 import {useEffect, useState} from 'react'
 import SoundLoader from './SoundLoader'
 import FirstPlayerSound from './sounds/gongv1.mp3'
@@ -27,10 +28,9 @@ function App() {
   const loading = !game || imagesLoading || isSoundsLoading || isJustDisplayed
 
   return (
-    <DndProvider options={HTML5ToTouch}>
+    <DndProvider backend={MultiBackend} options={HTML5toTouch}>
       <Header><HeaderText loading={loading} game={game}/></Header>
-      <LoadingScreen author="Richard Yaner" artist="Josh Cappel" publisher={['Grand Games Guild', 'Super Meeple']} developer="Théo Grégorio"
-                     display={loading} css={[loadingStyle, !loading && hideStyle]}/>
+      <LoadingScreen display={loading} css={[loadingStyle, !loading && hideStyle]}/>
       {!loading && audioLoader && <GameDisplay game={game}/>}
       <ImagesLoader images={Object.values(Images)} onImagesLoad={() => setImagesLoading(false)}/>
       <SoundLoader sounds={[FirstPlayerSound, MoveTileSound]} onSoundLoad={() => setSoundLoading(false)}

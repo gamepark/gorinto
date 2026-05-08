@@ -4,17 +4,16 @@ import Gorinto from '@gamepark/gorinto/Gorinto'
 import {GorintoOptionsSpec} from '@gamepark/gorinto/GorintoOptions'
 import {GameProvider, setupTranslation} from '@gamepark/react-client'
 import normalize from 'emotion-normalize'
-import React, {StrictMode} from 'react'
-import ReactDOM from 'react-dom'
+import {StrictMode} from 'react'
+import {createRoot} from 'react-dom/client'
 import App from './App'
 import GorintoAnimations from './GorintoAnimations'
 import GorintoView from './GorintoView'
 import Background from './images/BG2.jpg'
 import reportWebVitals from './reportWebVitals'
-import translations from './translations.json'
 import GorintoTutorial from './tutorial/Tutorial'
 
-setupTranslation(translations)
+setupTranslation('gorinto')
 
 const style = css`
   html {
@@ -61,9 +60,9 @@ const style = css`
   }
 `
 
-ReactDOM.render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <GameProvider game="gorinto" Rules={Gorinto} 
+    <GameProvider game="gorinto" Rules={Gorinto}
                   RulesView={GorintoView}
                   optionsSpec={GorintoOptionsSpec}
                   animations={new GorintoAnimations()}
@@ -72,8 +71,7 @@ ReactDOM.render(
       <App/>
     </GameProvider>
     <Global styles={[normalize, style]}/>
-  </StrictMode>,
-  document.getElementById('root')
+  </StrictMode>
 )
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,0 +1,22 @@
+{
+  "Void": "Vakuum",
+  "Wind": "Luft",
+  "Fire": "Feuer",
+  "Water": "Wasser",
+  "Earth": "Erde",
+  "Welcome, {playerName}": "Willkommen, {playerName}",
+  "goal1": "Werte jeden Stapel, der die <0>gleiche</0> Höhe wie ein oder mehrere deiner anderen Stapel hat.",
+  "goal2": "Werte jeden Stapel, der eine <0>andere</0> Höhe als jeder deiner anderen Stapel hat.",
+  "goal3": "Werte jeden Stapel mit einer <0>ungeraden</0> Anzahl von Steinen.",
+  "goal4": "Werte jeden Stapel mit einer <0>geraden</0> Anzahl von Steinen.",
+  "goal.c.hint": "Werte nacheinander alle 5 Elemente.",
+  "goal5": "Pro Element erhält der Spieler mit dem <0>höchsten</0> Stapel (mit mindestens einem Stein) 3 Punkte.",
+  "goal6": "Pro Element erhält der Spieler mit dem <0>niedrigsten</0> Stapel (mit mindestens einem Stein) 3 Punkte.",
+  "goal.d.hint": "Stelle dir deine Stapel der Höhe nach geordnet vor (inklusive der leeren Stapel).",
+  "goal7": "Werte jeden Stapel dessen Höhe sich vom <0>mittleren</0> Stapel <0>unterscheidet</0>.",
+  "goal8": "Werte den <0>mittleren</0> Stapel dreifach.",
+  "goal10": "Werte deinen <0>höchsten</0> Stapel.\nWerte deinen <0>niedrigsten</0> Stapel (mit mindestens einem Stein) doppelt.",
+  "goal11": "Erhalte <0>doppelt so viele Punkte</0> wie die Differenz zwischen deinem <0>höchsten</0> und <0>niedrigsten</0> Stapel beträgt.",
+  "goal.11.hint": "Leere Stapel zählen hierbei als niedrigste Stapel.",
+  "goal12": "Falls du leere Stapel hast, erhältst du null Punkte. Andernfalls werte deinen <0>niedrigsten</0> Stapel sieben mal."
+}
