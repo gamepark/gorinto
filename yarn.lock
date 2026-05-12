@@ -1070,7 +1070,7 @@
     "@babel/plugin-transform-modules-commonjs" "^7.27.1"
     "@babel/plugin-transform-typescript" "^7.28.5"
 
-"@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.6", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.6", "@babel/runtime@^7.29.0", "@babel/runtime@^7.9.2":
   version "7.29.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.29.2.tgz#9a6e2d05f4b6692e1801cd4fb176ad823930ed5e"
   integrity sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==
@@ -1440,10 +1440,10 @@
   resolved "https://registry.yarnpkg.com/@gamepark/avataaars/-/avataaars-3.0.0.tgz#6e85e066693fb75c0082b437bfe8513e77f66917"
   integrity sha512-MOe/jtEe2UkxQSfZ2TyqfRnihVBpGUeFwbM9aFZYVQoe5Jdw4kRx0bEKHHw2XnXaYJ2UEJOYys4iAdjBTv4tEg==
 
-"@gamepark/react-client@~5.25.0":
-  version "5.25.0"
-  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.25.0.tgz#f70a0a7e8ff83d89db57c7002e15886cb64b88d0"
-  integrity sha512-1EwP11Prx+g/G4zwRwf01qulbmaHagLebWb/asxqkQneASu9x3/+6uVj5x3temU57YjSJBtxsy5eaPvz8/EKAQ==
+"@gamepark/react-client@~5.25.1":
+  version "5.25.1"
+  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.25.1.tgz#ddc971d9548759ddfaf5afc061174102eef4f953"
+  integrity sha512-YXWgpxiUgw9FfaGNBH3TOnfuOcwzlcKCp7roMsHwTbLgg2lo/kYodVXQcXBI8iaNwdfqnCgFQuZ4OWPrXjfAtQ==
   dependencies:
     "@datadog/browser-logs" "^3.6.11"
     "@fortawesome/free-regular-svg-icons" "^6.1.0"

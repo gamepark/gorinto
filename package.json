@@ -13,7 +13,8 @@
     "redux": "^4.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/react": "~18.0.38",
-    "@types/react-dom": "~18.0.11"
+    "@types/react-dom": "~18.0.11",
+    "@babel/runtime": "^7.29.0"
   },
   "scripts": {
     "start": "yarn workspace @gamepark/gorinto-app run start",
