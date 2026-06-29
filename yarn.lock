@@ -1484,10 +1484,10 @@
   resolved "https://registry.yarnpkg.com/@gamepark/avataaars/-/avataaars-3.0.0.tgz#6e85e066693fb75c0082b437bfe8513e77f66917"
   integrity sha512-MOe/jtEe2UkxQSfZ2TyqfRnihVBpGUeFwbM9aFZYVQoe5Jdw4kRx0bEKHHw2XnXaYJ2UEJOYys4iAdjBTv4tEg==
 
-"@gamepark/react-client@~5.25.1":
-  version "5.25.1"
-  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.25.1.tgz#ddc971d9548759ddfaf5afc061174102eef4f953"
-  integrity sha512-YXWgpxiUgw9FfaGNBH3TOnfuOcwzlcKCp7roMsHwTbLgg2lo/kYodVXQcXBI8iaNwdfqnCgFQuZ4OWPrXjfAtQ==
+"@gamepark/react-client@~5.25.2":
+  version "5.25.2"
+  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.25.2.tgz#2bba1a64aec55ba933ffaaab0c13e7a459018adf"
+  integrity sha512-b1TSx02p2zfD0nhNBRIgDlgQmt3xna4MZdzU+VglfK0ClcZoxGBpqf4ctP+1k/zQDVE0U0o8tbRKsTQaInrVEQ==
   dependencies:
     "@datadog/browser-logs" "^3.6.11"
     "@fortawesome/free-regular-svg-icons" "^6.1.0"
@@ -1505,7 +1505,6 @@
     i18next-icu "^2.0.2"
     immer "^9.0.2"
     intl-messageformat "^9.5.2"
-    lodash.shuffle "^4.2.0"
     moment "^2.30.1"
     nosleep.js "^0.12.0"
     o9n "^2.1.0"
@@ -9709,11 +9708,6 @@ lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
-
-lodash.shuffle@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/lodash.shuffle/-/lodash.shuffle-4.2.0.tgz#145b5053cf875f6f5c2a33f48b6e9948c6ec7b4b"
-  integrity sha512-V/rTAABKLFjoecTZjKSv+A1ZomG8hZg8hlgeG6wwQVD9AGv+10zqqSf6mFq2tVA703Zd5R0YhSuSlXA+E/Ei+Q==
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
