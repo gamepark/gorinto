@@ -1,0 +1,18 @@
+{
+  "identities": "Colore del giocatore",
+  "identities.1": "Giocatore bianco",
+  "identities.2": "Giocatore nero",
+  "identities.3": "Giocatore rosso",
+  "identities.4": "Giocatore giallo",
+  "option.isCompassionRoundOrder": "Ordine di turno della Compassione",
+  "option.isCompassionRoundOrder.help": "Ogni Stagione, l’ordine dei giocatori è determinato in ordine crescente di punti Saggezza accumulati",
+  "option.isTacticalRemove": "Regola tattica per 2 giocatori",
+  "option.isTacticalRemove.help": "I giocatori scelgono quale tessera viene rimossa dal Sentiero, invece di rimuoverne una a caso",
+  "option.landscape": "Paesaggio",
+  "option.landscape.0": "Schema della Vetta",
+  "option.landscape.1": "Schema delle Onde",
+  "option.landscape.2": "Schema dell’Altopiano",
+  "option.landscape.3": "Schema del Lago",
+  "option.landscape.4": "Schema della Collina",
+  "option.landscape.help": "Per una sfida interessante, prova uno di questi paesaggi alternativi!"
+}

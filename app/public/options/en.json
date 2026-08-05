@@ -1,0 +1,18 @@
+{
+  "identities": "Player color",
+  "identities.1": "White player",
+  "identities.2": "Black player",
+  "identities.3": "Red player",
+  "identities.4": "Yellow player",
+  "option.isCompassionRoundOrder": "Compassion turn order",
+  "option.isCompassionRoundOrder.help": "Each Season, the order of the players is determined by increasing order of accumulated Wisdom points",
+  "option.isTacticalRemove": "Tactical rule for 2 players",
+  "option.isTacticalRemove.help": "Players choose which tile is removed from the Path instead of removing one randomly",
+  "option.landscape": "Landscape",
+  "option.landscape.0": "Peak diagram",
+  "option.landscape.1": "Waves diagram",
+  "option.landscape.2": "Mesa diagram",
+  "option.landscape.3": "Lake diagram",
+  "option.landscape.4": "Hill diagram",
+  "option.landscape.help": "For an interesting challenge, try one of these alternate landscapes!"
+}

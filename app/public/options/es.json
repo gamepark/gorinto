@@ -1,0 +1,18 @@
+{
+  "identities": "Color del jugador",
+  "identities.1": "Jugador blanco",
+  "identities.2": "Jugador negro",
+  "identities.3": "Jugador rojo",
+  "identities.4": "Jugador amarillo",
+  "option.isCompassionRoundOrder": "Orden de turno de la Compasión",
+  "option.isCompassionRoundOrder.help": "Cada Estación, el orden de los jugadores se determina por orden creciente de puntos de Sabiduría acumulados",
+  "option.isTacticalRemove": "Regla táctica para 2 jugadores",
+  "option.isTacticalRemove.help": "Los jugadores eligen qué loseta se retira del Camino, en vez de retirar una al azar",
+  "option.landscape": "Paisaje",
+  "option.landscape.0": "Diagrama de la Cima",
+  "option.landscape.1": "Diagrama de las Olas",
+  "option.landscape.2": "Diagrama de la Meseta",
+  "option.landscape.3": "Diagrama del Lago",
+  "option.landscape.4": "Diagrama de la Colina",
+  "option.landscape.help": "¡Para un desafío interesante, prueba uno de estos paisajes alternativos!"
+}

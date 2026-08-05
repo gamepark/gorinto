@@ -1,0 +1,18 @@
+{
+  "identities": "Couleur du joueur",
+  "identities.1": "Joueur blanc",
+  "identities.2": "Joueur noir",
+  "identities.3": "Joueur rouge",
+  "identities.4": "Joueur jaune",
+  "option.isCompassionRoundOrder": "Ordre du tour de compassion",
+  "option.isCompassionRoundOrder.help": "À chaque Saison, l’ordre des joueurs est déterminé par ordre croissant des points de Sagesse accumulés",
+  "option.isTacticalRemove": "Variante tactique pour 2 joueurs",
+  "option.isTacticalRemove.help": "Les joueurs choisissent quelle tuile retirer du Chemin au lieu de le faire au hasard",
+  "option.landscape": "Paysage",
+  "option.landscape.0": "Schéma du Pic",
+  "option.landscape.1": "Schéma des Vagues",
+  "option.landscape.2": "Schéma Mesa",
+  "option.landscape.3": "Schéma des Lacs",
+  "option.landscape.4": "Schéma de la Colline",
+  "option.landscape.help": "Pour un challenge intéressant, essayez l’un de ces paysages alternatifs !"
+}

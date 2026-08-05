@@ -1,0 +1,18 @@
+{
+  "identities": "Цвет игрока",
+  "identities.1": "Белый игрок",
+  "identities.2": "Чёрный игрок",
+  "identities.3": "Красный игрок",
+  "identities.4": "Жёлтый игрок",
+  "option.isCompassionRoundOrder": "Порядок хода Сострадания",
+  "option.isCompassionRoundOrder.help": "Каждый Сезон порядок игроков определяется по возрастанию накопленных очков Мудрости",
+  "option.isTacticalRemove": "Тактическое правило для 2 игроков",
+  "option.isTacticalRemove.help": "Игроки сами выбирают, какой тайл убрать с Пути, вместо того чтобы убирать случайный",
+  "option.landscape": "Ландшафт",
+  "option.landscape.0": "Схема Вершины",
+  "option.landscape.1": "Схема Волн",
+  "option.landscape.2": "Схема Плато",
+  "option.landscape.3": "Схема Озера",
+  "option.landscape.4": "Схема Холма",
+  "option.landscape.help": "Хотите интересное испытание? Попробуйте один из этих альтернативных ландшафтов!"
+}

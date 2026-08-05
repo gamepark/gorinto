@@ -1,0 +1,18 @@
+{
+  "identities": "Spielerfarbe",
+  "identities.1": "Weißer Spieler",
+  "identities.2": "Schwarzer Spieler",
+  "identities.3": "Roter Spieler",
+  "identities.4": "Gelber Spieler",
+  "option.isCompassionRoundOrder": "Zugreihenfolge des Mitgefühls",
+  "option.isCompassionRoundOrder.help": "In jeder Jahreszeit richtet sich die Spielerreihenfolge nach aufsteigender Anzahl gesammelter Weisheitspunkte",
+  "option.isTacticalRemove": "Taktikregel für 2 Spieler",
+  "option.isTacticalRemove.help": "Die Spieler wählen, welches Plättchen vom Pfad entfernt wird, statt eines zufällig zu entfernen",
+  "option.landscape": "Landschaft",
+  "option.landscape.0": "Gipfel-Diagramm",
+  "option.landscape.1": "Wellen-Diagramm",
+  "option.landscape.2": "Tafelberg-Diagramm",
+  "option.landscape.3": "See-Diagramm",
+  "option.landscape.4": "Hügel-Diagramm",
+  "option.landscape.help": "Für eine interessante Herausforderung, probiere eine dieser alternativen Landschaften!"
+}
