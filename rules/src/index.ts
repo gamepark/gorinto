@@ -1,2 +1,2 @@
 export {default} from './Gorinto'
-export {GorintoOptionsSpec} from './GorintoOptions'
+export {GorintoOptionsSpecV2} from './GorintoOptions'

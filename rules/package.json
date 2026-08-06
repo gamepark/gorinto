@@ -19,11 +19,11 @@
     "prepublishOnly": "tsc"
   },
   "peerDependencies": {
-    "@gamepark/rules-api": ">=5.24",
+    "@gamepark/rules-api": ">=5.26",
     "es-toolkit": "^1.0.0"
   },
   "devDependencies": {
-    "@gamepark/rules-api": "~5.24.0",
+    "@gamepark/rules-api": "~5.26.0",
     "@types/jest": "^27.0.2",
     "es-toolkit": "^1.0.0",
     "i18next": "^22.5.1",

@@ -1,5 +1,5 @@
-import {OptionsSpec} from '@gamepark/rules-api'
-import {TFunction} from 'i18next'
+import { OptionsSpecV2 } from '@gamepark/rules-api'
+import { TFunction } from 'i18next'
 import Landscape, {landscapes} from './Landscape'
 import GameState from './types/GameState'
 import PlayerColor, {playerColors} from './types/PlayerColor'
@@ -19,47 +19,24 @@ export function isGameOptions(arg: GameState | GorintoOptions): arg is GorintoOp
     return typeof (arg as GameState).season === 'undefined'
 }
 
-export const GorintoOptionsSpec: OptionsSpec<GorintoOptions> = {
-    landscape: {
-        label: (t: TFunction) => t('Landscape'),
-        help: (t: TFunction) => t('landscape.help'),
-        values: landscapes,
-        valueSpec: landscape => ({
-            label: t => {
-                switch (landscape) {
-                    case Landscape.Peak:
-                        return t('Peak diagram')
-                    case Landscape.Waves:
-                        return t('Waves diagram')
-                    case Landscape.Mesa:
-                        return t('Mesa diagram')
-                    case Landscape.Lake:
-                        return t('Lake diagram')
-                    case Landscape.Hill:
-                        return t('Hill diagram')
-                }
-            },
-            subscriberRequired: landscape !== Landscape.Peak
-        })
-    },
-    isTacticalRemove: {
-        label: (t: Function) => t('tactical.rule'),
-        help: (t: Function) => t('tactical.rule.help'),
-        subscriberRequired: true
-    },
-
-    isCompassionRoundOrder: {
-        label: (t: Function) => t('compassionate.rule'),
-        help: (t: Function) => t('compassionate.rule.help')
-    },
-
-    players: {
-        id: {
-            label: (t: TFunction) => t('Player color'),
-            values: playerColors,
-            valueSpec: color => ({label: t => getPlayerName(color, t)})
-        }
-    }
+/**
+ * The option space of gorinto: structure only.
+ *
+ * Labels live in the game's presentation document, published beside its translations at
+ * `/options/<locale>.json` and keyed by convention. Subscription and competitive gates live in
+ * the platform database, so they can change without releasing the game again.
+ *
+ * That is where the subscription gates went.
+ */
+export const GorintoOptionsSpecV2: OptionsSpecV2 = {
+  specVersion: 2,
+  players: { min: 2, max: 4 },
+  identities: { values: playerColors },
+  options: {
+    landscape: { kind: 'enum', values: landscapes },
+    isTacticalRemove: { kind: 'boolean' },
+    isCompassionRoundOrder: { kind: 'boolean' }
+  }
 }
 
 export function getPlayerName(playerId: PlayerColor, t: TFunction) {
