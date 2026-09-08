@@ -1484,17 +1484,17 @@
   resolved "https://registry.yarnpkg.com/@gamepark/avataaars/-/avataaars-3.0.0.tgz#6e85e066693fb75c0082b437bfe8513e77f66917"
   integrity sha512-MOe/jtEe2UkxQSfZ2TyqfRnihVBpGUeFwbM9aFZYVQoe5Jdw4kRx0bEKHHw2XnXaYJ2UEJOYys4iAdjBTv4tEg==
 
-"@gamepark/react-client@~5.25.3":
-  version "5.25.3"
-  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.25.3.tgz#2b6034c55eeb2c7c803139c57e5b0083321e4212"
-  integrity sha512-C87aimwX5kDLQqENTiIAiuRGIdjj9IbKNDx1SnQ77x+DVs4UHpc0Vrwj5+NTBg9qne4CwyjWy+VyDy76EUKNXw==
+"@gamepark/react-client@~5.26.1":
+  version "5.26.1"
+  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.26.1.tgz#f3751ae4c538d97adb39985c431d5a35a58a0d40"
+  integrity sha512-CsxECJ1nWwwdtC5As2Irb/mGTn5nSQ3gmuYwJQiCN+QOtvf719oUQfISRErbWiXkfaasPnzErGtyEQB/x52A8A==
   dependencies:
     "@datadog/browser-logs" "^3.6.11"
     "@fortawesome/free-regular-svg-icons" "^6.1.0"
     "@fortawesome/free-solid-svg-icons" "^6.1.0"
     "@fortawesome/react-fontawesome" "^0.2.6"
     "@gamepark/avataaars" "^3.0.0"
-    "@gamepark/rules-api" "^5.24.0"
+    "@gamepark/rules-api" "^5.26.0"
     "@tanstack/react-query" "^5.90.21"
     "@trpc/client" "^11.10.0"
     "@trpc/react-query" "^11.10.0"
@@ -1523,13 +1523,6 @@
     "@fortawesome/react-fontawesome" "^0.2.6"
     "@react-dnd/shallowequal" "^2.0.0"
     supports-webp "^2.0.1"
-
-"@gamepark/rules-api@^5.24.0":
-  version "5.24.0"
-  resolved "https://registry.yarnpkg.com/@gamepark/rules-api/-/rules-api-5.24.0.tgz#2f7426b2ac5ea50d1a49bd4f7191a15d73f05536"
-  integrity sha512-h/7EKEmMO+cTqfWx9yOREKCeIaINVfU1F1JuVbN1CQTGj3DKMghTeHvlWvcgdg1fQZkWdap/aieq2plNqpAACQ==
-  dependencies:
-    fast-deep-equal "^3.1.3"
 
 "@gamepark/rules-api@^5.26.0", "@gamepark/rules-api@~5.26.0":
   version "5.26.0"
