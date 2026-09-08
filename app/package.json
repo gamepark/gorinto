@@ -41,7 +41,9 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "deploy": "yarn build && rclone sync build gorinto:gorinto.game-park.com --progress --s3-acl=public-read"
+    "sync:hashed": "rclone sync build gorinto:gorinto.game-park.com --progress --s3-acl=public-read --include \"static/**\" -M --metadata-set \"cache-control=public, max-age=31536000, immutable\"",
+    "sync:other": "rclone sync build gorinto:gorinto.game-park.com --progress --s3-acl=public-read --exclude \"static/**\" -M --metadata-set \"cache-control=no-cache\"",
+    "deploy": "yarn build && yarn sync:hashed && yarn sync:other"
   },
   "eslintConfig": {
     "extends": [
