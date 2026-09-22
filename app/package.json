@@ -41,9 +41,10 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "sync:hashed": "rclone sync build gorinto:gorinto.game-park.com --progress --s3-acl=public-read --include \"static/**\" -M --metadata-set \"cache-control=public, max-age=31536000, immutable\"",
-    "sync:other": "rclone sync build gorinto:gorinto.game-park.com --progress --s3-acl=public-read --exclude \"static/**\" -M --metadata-set \"cache-control=no-cache\"",
-    "deploy": "yarn build && yarn sync:hashed && yarn sync:other"
+    "sync:hashed": "rclone copy build gorinto:gorinto.game-park.com --progress --s3-acl=public-read --include \"static/**\" -M --metadata-set \"cache-control=public, max-age=31536000, immutable\"",
+    "sync:other": "rclone sync build gorinto:gorinto.game-park.com --progress --s3-acl=public-read --exclude \"static/**\" --ignore-times -M --metadata-set \"cache-control=no-cache\"",
+    "sync:clean": "rclone sync build gorinto:gorinto.game-park.com --progress --s3-acl=public-read --include \"static/**\" -M --metadata-set \"cache-control=public, max-age=31536000, immutable\"",
+    "deploy": "yarn build && yarn sync:hashed && yarn sync:other && yarn sync:clean"
   },
   "eslintConfig": {
     "extends": [
