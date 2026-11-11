@@ -1484,10 +1484,10 @@
   resolved "https://registry.yarnpkg.com/@gamepark/avataaars/-/avataaars-3.0.0.tgz#6e85e066693fb75c0082b437bfe8513e77f66917"
   integrity sha512-MOe/jtEe2UkxQSfZ2TyqfRnihVBpGUeFwbM9aFZYVQoe5Jdw4kRx0bEKHHw2XnXaYJ2UEJOYys4iAdjBTv4tEg==
 
-"@gamepark/react-client@~5.26.2":
-  version "5.26.2"
-  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.26.2.tgz#400652ab8bbb28a75070085b6fca08068fe822c5"
-  integrity sha512-RQokO4JJF5aO+TOIbufPmJyAXD6FN6+Gyxh+AUVAvWxlXKtEW2TAQ88AnNV3++3wHCqhpb1h8rV/4mKIb3xoYg==
+"@gamepark/react-client@~5.27.0":
+  version "5.27.0"
+  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.27.0.tgz#69dc16e7676c5623d6804bb2bf5ccc9f51387353"
+  integrity sha512-MZL7f48cVhTUYsjRhkFc/NSYb/mlkhacieiuzNJ16JPxnH0uGMLkDxCJWXCaGgYr/9ss8jWwk1Vi3LWefgQMPw==
   dependencies:
     "@datadog/browser-logs" "^3.6.11"
     "@fortawesome/free-regular-svg-icons" "^6.1.0"
