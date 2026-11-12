@@ -1484,10 +1484,10 @@
   resolved "https://registry.yarnpkg.com/@gamepark/avataaars/-/avataaars-3.0.0.tgz#6e85e066693fb75c0082b437bfe8513e77f66917"
   integrity sha512-MOe/jtEe2UkxQSfZ2TyqfRnihVBpGUeFwbM9aFZYVQoe5Jdw4kRx0bEKHHw2XnXaYJ2UEJOYys4iAdjBTv4tEg==
 
-"@gamepark/react-client@~5.27.0":
-  version "5.27.0"
-  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.27.0.tgz#69dc16e7676c5623d6804bb2bf5ccc9f51387353"
-  integrity sha512-MZL7f48cVhTUYsjRhkFc/NSYb/mlkhacieiuzNJ16JPxnH0uGMLkDxCJWXCaGgYr/9ss8jWwk1Vi3LWefgQMPw==
+"@gamepark/react-client@~5.28.0":
+  version "5.28.0"
+  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.28.0.tgz#61505571cc9f1bfd35cb56be2a93e7dd49dd4039"
+  integrity sha512-lCBMVdMjiXQ7Ex4rYMLAzczJsnwS6Xe3PdWS+Rv9sdjaHJSXtQy6molrfnOg3dIEfjPoWbHPwvC+uXdaQNv20Q==
   dependencies:
     "@datadog/browser-logs" "^3.6.11"
     "@fortawesome/free-regular-svg-icons" "^6.1.0"
@@ -1507,7 +1507,6 @@
     intl-messageformat "^9.5.2"
     moment "^2.30.1"
     nosleep.js "^0.12.0"
-    o9n "^2.1.0"
     pusher-js "^7.0.0"
     react-infinite-scroll-component "^6.1.0"
     redux ">=4.0.5"
@@ -10635,11 +10634,6 @@ nwsapi@^2.2.0:
     "@nx/nx-linux-x64-musl" "22.7.2"
     "@nx/nx-win32-arm64-msvc" "22.7.2"
     "@nx/nx-win32-x64-msvc" "22.7.2"
-
-o9n@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/o9n/-/o9n-2.1.1.tgz#ef172b692405f748e2d55ec94b12cadbb94db0de"
-  integrity sha512-R6NCwtdFWAOXE5JE/FUF4ZX4akpXdOrGH7K3cDf5tbNtpY1x9r7Lo+n7rwcr+8e5B67dN0aVw3Yu+CCpo5lZFw==
 
 oauth-sign@~0.9.0:
   version "0.9.0"
