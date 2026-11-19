@@ -18,6 +18,7 @@ declare type Tutorial = {
   playNextMoves: (quantity?: number) => void;
   playNextMove: () => void;
   setOpponentsPlayAutomatically: (value?: boolean) => void;
+  endExplanations: () => void;
 }
 
 const TutorialPopup: FC<{ game: GameView, tutorial: Tutorial }> = ({game, tutorial}) => {
@@ -37,7 +38,18 @@ const TutorialPopup: FC<{ game: GameView, tutorial: Tutorial }> = ({game, tutori
   const platformUri = process.env.REACT_APP_PLATFORM_URI ?? 'https://game-park.com'
   const discordUri = 'https://discord.gg/nMSDRag'
 
+  // Leaving the last message of the last step ends the explanations: the platform counts the tutorial as finished
+  const endExplanationsAt = (index: number) => {
+    const lastStep = tutorialDescription.length - 1
+    if (actionsNumber >= lastStep && index >= tutorialDescription[lastStep].length - 1) tutorial.endExplanations()
+  }
+  const closeTutorial = () => {
+    if (displayPopup) endExplanationsAt(tutorialIndex)
+    setTutorialDisplay(false)
+  }
+
   const moveTutorial = (deltaMessage: number) => {
+    if (deltaMessage > 0) endExplanationsAt(tutorialIndex)
     setTutorialIndex(tutorialIndex + deltaMessage)
     setTutorialDisplay(true)
   }
@@ -99,12 +111,12 @@ const TutorialPopup: FC<{ game: GameView, tutorial: Tutorial }> = ({game, tutori
     <>
 
       <div css={[popupOverlayStyle, displayPopup ? showPopupOverlayStyle : hidePopupOverlayStyle(85, 90), style]}
-           onClick={() => setTutorialDisplay(false)}>
+           onClick={() => closeTutorial()}>
 
         <div css={[popupStyle, displayPopup ? popupPosition(currentMessage) : hidePopupStyle]}
              onClick={event => event.stopPropagation()}>
 
-          <div css={closePopupStyle} onClick={() => setTutorialDisplay(false)}><FontAwesomeIcon icon={faTimes}/></div>
+          <div css={closePopupStyle} onClick={() => closeTutorial()}><FontAwesomeIcon icon={faTimes}/></div>
 
           {currentMessage && <h2>{currentMessage.title(t)}</h2>}
           {currentMessage && <p><Trans defaults={currentMessage.text} components={[<strong/>]}/></p>}

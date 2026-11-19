@@ -1484,10 +1484,10 @@
   resolved "https://registry.yarnpkg.com/@gamepark/avataaars/-/avataaars-3.0.0.tgz#6e85e066693fb75c0082b437bfe8513e77f66917"
   integrity sha512-MOe/jtEe2UkxQSfZ2TyqfRnihVBpGUeFwbM9aFZYVQoe5Jdw4kRx0bEKHHw2XnXaYJ2UEJOYys4iAdjBTv4tEg==
 
-"@gamepark/react-client@~5.28.0":
-  version "5.28.0"
-  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.28.0.tgz#61505571cc9f1bfd35cb56be2a93e7dd49dd4039"
-  integrity sha512-lCBMVdMjiXQ7Ex4rYMLAzczJsnwS6Xe3PdWS+Rv9sdjaHJSXtQy6molrfnOg3dIEfjPoWbHPwvC+uXdaQNv20Q==
+"@gamepark/react-client@~5.29.0":
+  version "5.29.0"
+  resolved "https://registry.yarnpkg.com/@gamepark/react-client/-/react-client-5.29.0.tgz#6288e5a7e3f9cfa0e1e7d3c45c5a81c7f9cd672b"
+  integrity sha512-8Cyx33BDdBogmMn7Wy3pu1AYD/vpBO5iAyAk5TZ7pdEemJCaKGT/hGQRqRHfTjWO5dc90blo1Zg5GVxOm6QG6w==
   dependencies:
     "@datadog/browser-logs" "^3.6.11"
     "@fortawesome/free-regular-svg-icons" "^6.1.0"
